@@ -1,0 +1,287 @@
+/* ==========================================================================
+   Awwwards-Grade Keyframes, Physics & Micro-Interactions
+   ========================================================================== */
+
+/* Custom Cursor & Follower Ring */
+.custom-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent-blue);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100000;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s ease-out, opacity 0.2s ease;
+  opacity: 0;
+}
+
+.custom-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(39, 24, 126, 0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease;
+  opacity: 0;
+  backdrop-filter: blur(1px);
+}
+
+[data-theme="dark"] .custom-cursor-ring {
+  border-color: rgba(117, 139, 253, 0.4);
+}
+
+.custom-cursor-ring.cursor-hover {
+  width: 52px;
+  height: 52px;
+  background-color: rgba(39, 24, 126, 0.08);
+  border-color: var(--accent-blue);
+}
+
+[data-theme="dark"] .custom-cursor-ring.cursor-hover {
+  background-color: rgba(39, 24, 126, 0.15);
+  border-color: #758bfd;
+}
+
+@media (pointer: coarse) {
+  .custom-cursor-dot,
+  .custom-cursor-ring {
+    display: none !important;
+  }
+}
+
+/* Reveal on Scroll (Framer-style spring reveal) */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger Delays */
+.delay-1 { transition-delay: 0.08s; }
+.delay-2 { transition-delay: 0.16s; }
+.delay-3 { transition-delay: 0.24s; }
+.delay-4 { transition-delay: 0.32s; }
+
+/* Interactive 3D Card Tilt */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Sound Wave Equalizer Bars Animation */
+.sound-bars-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  width: 14px;
+}
+
+.sound-bar {
+  width: 2px;
+  background-color: currentColor;
+  border-radius: 1px;
+  height: 3px;
+  transition: height 0.2s ease;
+}
+
+.sound-bars-active .sound-bar:nth-child(1) {
+  animation: eq-pulse 0.7s infinite ease-in-out alternate;
+}
+.sound-bars-active .sound-bar:nth-child(2) {
+  animation: eq-pulse 0.9s infinite ease-in-out alternate 0.15s;
+}
+.sound-bars-active .sound-bar:nth-child(3) {
+  animation: eq-pulse 0.6s infinite ease-in-out alternate 0.3s;
+}
+
+@keyframes eq-pulse {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+
+/* Marquee / Ribbon Animation */
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Theme switch icon spin */
+.theme-icon {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .theme-icon {
+  transform: rotate(180deg);
+}
+
+/* Subtle Floating Glow Pulse */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   Viral Awwwards High-Impact Visual Effects & Overclock Mode
+   ========================================================================== */
+
+/* Overclock Laser Scanlines (Toggled on Overclock / Warp Mode) */
+.cyber-scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99998;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(39, 24, 126, 0.04) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+body.is-overclocked .cyber-scanlines {
+  opacity: 1;
+  animation: scanlines-flicker 0.15s infinite;
+}
+
+@keyframes scanlines-flicker {
+  0% { opacity: 0.85; }
+  50% { opacity: 1; }
+  100% { opacity: 0.9; }
+}
+
+/* Overclock Mode Accent Pulses */
+body.is-overclocked {
+  --accent-blue: #ff2222;
+  --accent-crimson: #ff2222;
+}
+
+body.is-overclocked .hero-name-title {
+  text-shadow: 0 0 25px rgba(39, 24, 126, 0.85), 0 0 50px rgba(39, 24, 126, 0.5);
+  animation: text-surge 2s infinite ease-in-out;
+}
+
+@keyframes text-surge {
+  0%, 100% { filter: drop-shadow(0 0 10px rgba(39, 24, 126, 0.6)); }
+  50% { filter: drop-shadow(0 0 30px rgba(255, 34, 34, 0.9)); }
+}
+
+/* Specular Glare Overlay for 3D Hologram Cards */
+.specular-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  mix-blend-mode: overlay;
+  z-index: 5;
+}
+
+.tilt-card:hover .specular-glare {
+  opacity: 1;
+}
+
+/* Kinetic Marquee Ribbon Styling */
+.marquee-ribbon-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: rgba(39, 24, 126, 0.04);
+  border-top: 1px solid rgba(39, 24, 126, 0.2);
+  border-bottom: 1px solid rgba(39, 24, 126, 0.2);
+  padding: 12px 0;
+  user-select: none;
+}
+
+[data-theme="dark"] .marquee-ribbon-container {
+  background: rgba(39, 24, 126, 0.07);
+  border-color: rgba(39, 24, 126, 0.28);
+}
+
+.marquee-content {
+  display: flex;
+  white-space: nowrap;
+  gap: 36px;
+  animation: marquee-scroll 24s linear infinite;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.marquee-content span.highlight {
+  color: var(--accent-blue);
+}
+
+.marquee-content span.sep {
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+/* Interactive Architecture Flow Diagram Pulse Nodes */
+@keyframes node-pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(39, 24, 126, 0.5); }
+  70% { box-shadow: 0 0 0 12px rgba(39, 24, 126, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(39, 24, 126, 0); }
+}
+
+.arch-node.is-active {
+  animation: node-pulse-glow 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
+  border-color: var(--accent-blue) !important;
+}
+
+/* Data packet traveling beam along SVG line */
+@keyframes dash-travel {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+.packet-beam {
+  stroke-dasharray: 6, 8;
+  animation: dash-travel 0.8s linear infinite;
+}

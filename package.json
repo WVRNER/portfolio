@@ -1,0 +1,20 @@
+{
+  "name": "wvrner",
+  "version": "2.8.0",
+  "description": "wvrner \u2014 Nima Hosseini DevOps & Infrastructure Portfolio",
+  "scripts": {
+    "dev": "npx vite",
+    "start": "npx serve .",
+    "build": "npx vite build",
+    "preview": "npx vite preview"
+  },
+  "keywords": [
+    "wvrner",
+    "devops",
+    "infrastructure",
+    "cloud",
+    "nima-hosseini"
+  ],
+  "author": "Nima Hosseini (@wvrner)",
+  "license": "MIT"
+}
