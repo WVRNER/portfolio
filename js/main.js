@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initFluidNavPill();
   initScrollReveal();
   initCardTilt();
-  initOverclockMode();
   initCompactArchSection();
   initLearningExhibition();
   initSmoothScroll();
@@ -25,6 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ==========================================================================
    1. Cinematic Intro Screen: "Good morning sunshine"
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   This function runs the opening curtain! When you first open the webpage,
+   it counts from 000% to 100% and then slides away like a magic theatre curtain.
+   -------------------------------------------------------------------------- */
 function initIntroSplash() {
   const splash = document.getElementById('introSplash');
   if (!splash) return;
@@ -55,6 +59,12 @@ function initIntroSplash() {
 /* ==========================================================================
    2. Custom Magnetic Fluid Cursor
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   This function makes a friendly little glowing circle follow your mouse
+   around the screen! When you hover over buttons, it grows bigger and snaps
+   magnetically to them like a tiny helpful magnet!
+   -------------------------------------------------------------------------- */
 function initCustomCursor() {
   if (window.matchMedia('(pointer: coarse)').matches) return;
 
@@ -114,6 +124,11 @@ function initCustomCursor() {
 let audioCtx = null;
 let soundEnabled = false;
 
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   This function creates the sound box! It lets the computer make soft, gentle
+   little blips and chimes when you click buttons, just like a video game console.
+   -------------------------------------------------------------------------- */
 function initWebAudio() {
   const toggleBtn = document.getElementById('soundToggle');
   if (!toggleBtn) return;
@@ -179,6 +194,12 @@ function playSoftTone(freq, duration, type = 'sine', gainVal = 0.035) {
 /* ==========================================================================
    4. Compact VisionOS Navigation & Magnetic Fluid Sliding Pill
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   This function controls the floating menu pill at the top of your screen.
+   When you hover over different links, a shiny white pill smoothly slides
+   underneath your mouse to highlight what you are looking at!
+   -------------------------------------------------------------------------- */
 function initFluidNavPill() {
   const navLinks = document.querySelector('.nav-links');
   const hoverPill = document.querySelector('.nav-hover-pill');
@@ -225,6 +246,12 @@ function initFluidNavPill() {
 /* ==========================================================================
    5. Theme Controller (Light / Dark Mode)
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   This function is the day/night light switch!
+   Click the sun/moon button to switch between bright daytime mode
+   and cozy nighttime dark mode. The computer remembers your choice!
+   -------------------------------------------------------------------------- */
 function initThemeToggle() {
   const toggleBtn = document.getElementById('themeToggle');
   const themeIcon = document.getElementById('themeIcon');
@@ -286,6 +313,11 @@ function updateThemeIcon(isDark) {
 /* ==========================================================================
    6. Scroll Reveal (Intersection Observer)
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   As you scroll down the page, this function spots cards coming into view
+   and gently floats them in like paper airplanes settling onto a desk!
+   -------------------------------------------------------------------------- */
 function initScrollReveal() {
   const elements = document.querySelectorAll('.reveal-on-scroll');
   if (!elements.length) return;
@@ -307,6 +339,11 @@ function initScrollReveal() {
 /* ==========================================================================
    7. Interactive 3D Card Tilt with Physics
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   When you move your mouse over cards, this function tilts them in 3D
+   space and casts a shiny glare across their surface, like tilting a shiny Pokemon card!
+   -------------------------------------------------------------------------- */
 function initCardTilt() {
   const cards = document.querySelectorAll('.tilt-card');
   
@@ -339,6 +376,11 @@ function initCardTilt() {
 /* ==========================================================================
    8. Smooth Anchor Scrolling
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   When you click any jump link (like "Currently Learning"), this function
+   smoothly glides the screen right down to that section instead of jumping instantly.
+   -------------------------------------------------------------------------- */
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -360,6 +402,11 @@ function initSmoothScroll() {
 /* ==========================================================================
    9. Live Dual World Clocks (NYC Local + UTC)
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   This function reads the real time right now and keeps digital clocks ticking
+   in the footer: one for local New York time, and one for UTC world time!
+   -------------------------------------------------------------------------- */
 function initFooterClock() {
   const localEl = document.getElementById('footerLocalTime');
   const utcEl = document.getElementById('footerUtcTime');
@@ -392,6 +439,12 @@ function initFooterClock() {
 /* ==========================================================================
    10. 1-Click Copy Email to Clipboard with Haptic Feedback
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   When you click "Copy" on Nima's email address (wvrner@outlook.com),
+   this function copies the words into your clipboard so you can paste it
+   into your email app without having to type it out!
+   -------------------------------------------------------------------------- */
 function initCopyEmail() {
   const copyBtns = document.querySelectorAll('.copy-email-btn');
   if (!copyBtns.length) return;
@@ -427,6 +480,13 @@ function initCopyEmail() {
 /* ==========================================================================
    11. Architecture Inspector Component (Awwwards Interactive Showcase)
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   This is the interactive cloud architecture card!
+   You can click the 4 stages (Browser -> Route 53 -> CloudFront -> S3) to see
+   what each one does, or click "Trace Request Flow" to watch a little light
+   zoom across the cloud, and click "Copy" to copy real Terraform code!
+   -------------------------------------------------------------------------- */
 function initCompactArchSection() {
   const flowNodes = document.querySelectorAll('.flow-node');
   const flowConnectors = document.querySelectorAll('.flow-connector');
@@ -621,13 +681,13 @@ function executeCliCommand(cmd, container) {
       responseHtml = `
         <div class="term-cmd">$ nimactl help</div>
         <div>Available commands:</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">status</span>&nbsp;&nbsp;&nbsp;&nbsp;&mdash; Inspect distributed multi-region cluster health</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">iac</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; Check Terraform state lock &amp; drift status</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">mesh</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&mdash; Inspect mTLS service mesh &amp; CDN edge routing</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">projects</span>&nbsp;&mdash; List live projects &amp; architecture repositories</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">contact</span>&nbsp;&nbsp;&mdash; Display verified email &amp; transmission links</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">whoami</span>&nbsp;&nbsp;&mdash; Print engineer credentials</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">clear</span>&nbsp;&nbsp;&nbsp;&nbsp;&mdash; Reset terminal buffer</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">status</span>&nbsp;&nbsp;&nbsp;&nbsp;,  Inspect distributed multi-region cluster health</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">iac</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,  Check Terraform state lock &amp; drift status</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">mesh</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,  Inspect mTLS service mesh &amp; CDN edge routing</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">projects</span>&nbsp;,  List live projects &amp; architecture repositories</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">contact</span>&nbsp;&nbsp;,  Display verified email &amp; transmission links</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">whoami</span>&nbsp;&nbsp;,  Print engineer credentials</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">clear</span>&nbsp;&nbsp;&nbsp;&nbsp;,  Reset terminal buffer</div>
       `;
       break;
 
@@ -736,7 +796,7 @@ function executeCliCommand(cmd, container) {
     case 'whoami':
       responseHtml = `
         <div class="term-cmd">$ whoami</div>
-        <div>Nima Hosseini (@wvrner) &mdash; Cloud &amp; DevOps Engineering</div>
+        <div>Nima Hosseini (@wvrner) ,  Cloud &amp; DevOps Engineering</div>
         <div>Focus: AWS &middot; Terraform &middot; Docker &middot; GitHub Actions CI/CD</div>
       `;
       break;
@@ -753,7 +813,7 @@ function executeCliCommand(cmd, container) {
 
     case 'clear':
       container.innerHTML = `
-        <div class="term-cmd">$ nimactl &mdash; buffer cleared. Type 'help' for commands.</div>
+        <div class="term-cmd">$ nimactl ,  buffer cleared. Type 'help' for commands.</div>
       `;
       return;
 
@@ -777,6 +837,11 @@ function executeCliCommand(cmd, container) {
 /* ==========================================================================
    13. Scroll to Top Trigger
    ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   When you reach the bottom of the page, clicking the little rocket arrow button
+   smoothly rolls you all the way back to the very top!
+   -------------------------------------------------------------------------- */
 function initBackToTop() {
   const backToTopBtn = document.getElementById('backToTopBtn');
   if (!backToTopBtn) return;
@@ -790,82 +855,12 @@ function initBackToTop() {
   });
 }
 
-/* ==========================================================================
-   Viral Awwwards Overclock / Warp Speed Mode
-   ========================================================================== */
-function initOverclockMode() {
-  const toggleBtns = document.querySelectorAll('.overclock-toggle-btn');
-  
-  function triggerOverclock() {
-    const isNow = !document.body.classList.contains('is-overclocked');
-    document.body.classList.toggle('is-overclocked', isNow);
-
-    toggleBtns.forEach(btn => {
-      const textSpan = btn.querySelector('.overclock-btn-text');
-      if (textSpan) {
-        textSpan.textContent = isNow ? '⚡ OVERCLOCKED [WARP SPEED: 4.8x]' : '⚡ OVERCLOCK SYSTEM';
-      }
-    });
-
-    if (window.cloudCanvas && typeof window.cloudCanvas.setOverclock === 'function') {
-      window.cloudCanvas.setOverclock(isNow);
-    }
-
-    if (soundEnabled && audioCtx) {
-      if (isNow) {
-        playWarpSound();
-      } else {
-        playSoftTone(440, 0.1, 'sine');
-      }
-    }
-  }
-
-  toggleBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      triggerOverclock();
-    });
-  });
-
-  window.addEventListener('keydown', (e) => {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-    if (e.key === 'w' || e.key === 'W' || e.key === '`' || e.key === '~') {
-      triggerOverclock();
-    }
-  });
-}
-
-function playWarpSound() {
-  if (!audioCtx) return;
-  try {
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(140, now);
-    osc.frequency.exponentialRampToValueAtTime(1200, now + 0.35);
-    osc.frequency.exponentialRampToValueAtTime(220, now + 0.7);
-
-    gain.gain.setValueAtTime(0.04, now);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.75);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.8);
-  } catch (e) {}
-}
-
-/* ==========================================================================
-   Live Edge Architecture Ping Simulator
-   ========================================================================== */
-// initLatencyPingSimulator replaced by initCompactArchSection
-
-/* ==========================================================================
-   Handcrafted Awwwards Learning Exhibition (Chapter Switcher & Code Tabs)
-   ========================================================================== */
+/* --------------------------------------------------------------------------
+   KID EXPLANATION:
+   This function controls the four big chapter buttons (AWS, Terraform,
+   Docker, and GitHub Actions). When you click one, it smoothly opens that
+   chapter's notes, lab commands, and architecture drawings!
+   -------------------------------------------------------------------------- */
 function initLearningExhibition() {
   const chapterBtns = document.querySelectorAll('.chapter-nav-btn');
   const chapterPanels = document.querySelectorAll('.chapter-panel');

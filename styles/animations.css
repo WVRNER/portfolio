@@ -1,4 +1,11 @@
 /* ==========================================================================
+   KID-FRIENDLY EXPLANATION OF ANIMATIONS.CSS:
+   This file is like a dance choreographer for the website!
+   It tells the buttons how to wiggle, tells the cards how to float gently,
+   tells the little lights how to blink like stars, and makes everything move
+   softly and smoothly just like a high-tech iPad!
+   ========================================================================== */
+/* ==========================================================================
    Awwwards-Grade Keyframes, Physics & Micro-Interactions
    ========================================================================== */
 
@@ -180,32 +187,6 @@
   transition: opacity 0.4s ease;
 }
 
-body.is-overclocked .cyber-scanlines {
-  opacity: 1;
-  animation: scanlines-flicker 0.15s infinite;
-}
-
-@keyframes scanlines-flicker {
-  0% { opacity: 0.85; }
-  50% { opacity: 1; }
-  100% { opacity: 0.9; }
-}
-
-/* Overclock Mode Accent Pulses */
-body.is-overclocked {
-  --accent-blue: #ff2222;
-  --accent-crimson: #ff2222;
-}
-
-body.is-overclocked .hero-name-title {
-  text-shadow: 0 0 25px rgba(39, 24, 126, 0.85), 0 0 50px rgba(39, 24, 126, 0.5);
-  animation: text-surge 2s infinite ease-in-out;
-}
-
-@keyframes text-surge {
-  0%, 100% { filter: drop-shadow(0 0 10px rgba(39, 24, 126, 0.6)); }
-  50% { filter: drop-shadow(0 0 30px rgba(255, 34, 34, 0.9)); }
-}
 
 /* Specular Glare Overlay for 3D Hologram Cards */
 .specular-glare {

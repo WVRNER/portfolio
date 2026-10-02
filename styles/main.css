@@ -1,5 +1,12 @@
 /* ==========================================================================
-   Nima Hosseini — Design System & Main Styles
+   KID-FRIENDLY EXPLANATION OF MAIN.CSS:
+   This file is the big art book for the entire website!
+   It picks the paint colors, chooses how big or small the words are,
+   decides how round the corners of buttons should be, and makes sure
+   everything looks beautiful on computers, laptops, iPads, and phones!
+   ========================================================================== */
+/* ==========================================================================
+   Nima Hosseini :  Design System & Main Styles
    Infrastructure & Cloud Engineer Portfolio
    ========================================================================== */
 
@@ -4032,10 +4039,7 @@ button {
     line-height: 1.4;
   }
 
-  .overclock-toggle-btn {
-    font-size: 11px;
-    padding: 7px 14px;
-  }
+  
 
   .hero-role-label {
     font-size: 12.5px;
@@ -4347,4 +4351,37 @@ button {
   .field-card-headline h4 {
     font-size: 21px;
   }
+}
+
+
+/* ==========================================================================
+   KID-FRIENDLY EXPLANATION FOR SYSTEMS ARCHITECTURE SECTION:
+   This section neatly holds the Design Synergy card, the Cloud Architecture
+   interactive card, and the Upcoming Labs card!
+   The headings and body text are crisp black and charcoal, while tags,
+   interactive buttons, and active tabs glow in royal #27187E purple-blue!
+   ========================================================================== */
+.systems-architecture-section {
+  padding: 40px 0 60px;
+  position: relative;
+}
+
+.diversity-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 0 var(--container-pad);
+}
+
+/* Tactile press response following Apple Design standards */
+.button:active,
+button:active,
+.fun-trace-btn:active,
+.flow-node:active,
+.console-tab:active,
+.console-copy-btn:active {
+  transform: scale(0.97) !important;
+  transition: transform 80ms ease-out !important;
 }

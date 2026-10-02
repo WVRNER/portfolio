@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>wvrner — Nima Hosseini (@wvrner) &middot; DevOps &amp; Infrastructure Systems</title>
-  <meta name="description" content="wvrner — Portfolio of Nima Hosseini (@wvrner). Building toward modern infrastructure from the network up. Currently learning AWS, Terraform, Docker, and GitHub Actions.">
+  <title>wvrner · Nima Hosseini (@wvrner) · DevOps &amp; Infrastructure Systems</title>
+  <meta name="description" content="wvrner: Portfolio of Nima Hosseini (@wvrner). Building toward modern infrastructure from the network up. Currently learning AWS, Terraform, Docker, and GitHub Actions.">
   
   <!-- Favicon with letter W in Royal Indigo #27187E -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%2327187E'/><path d='M22 28L38 74L50 44L62 74L78 28' fill='none' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/></svg>">
@@ -27,6 +27,13 @@
   <div class="cyber-scanlines" aria-hidden="true"></div>
 
   <!-- Cinematic Intro Screen: "Good morning sunshine" -->
+  <!-- =========================================================================
+       1. WELCOME SCREEN / CURTAIN (INTRO SPLASH)
+       KID-FRIENDLY EXPLANATION:
+       When you first open the webpage, this little dark curtain pops up!
+       It counts numbers really fast from 000% up to 100%, and then it dissolves
+       away smoothly just like opening the curtains at a movie theater!
+       ========================================================================= -->
   <div id="introSplash" class="intro-splash-screen" aria-hidden="true">
     <div class="intro-splash-inner">
       <div class="intro-greeting-tag">
@@ -41,7 +48,15 @@
 
   <!-- Handcrafted 3D Kinetic Celestial Astrolabe Canvas -->
   <div class="persistent-canvas-wrapper" aria-hidden="true">
-    <canvas id="heroCanvas"></canvas>
+    <!-- =========================================================================
+       2. INTERACTIVE CLOUD NETWORK CANVAS (BACKGROUND ANIMATION)
+       KID-FRIENDLY EXPLANATION:
+       This is a big invisible drawing board behind the whole page!
+       Little glowing dots and soft connected lines float around in the background
+       to show how cloud computers talk to each other across the entire planet.
+       When you move your mouse, a gentle spotlight follows your cursor!
+       ========================================================================= -->
+  <canvas id="heroCanvas"></canvas>
   </div>
 
   <!-- Background Guidelines -->
@@ -58,7 +73,7 @@
   <header class="nav-wrapper">
     <nav class="nav-island" aria-label="Main Navigation">
       <!-- Monogram W Logo -->
-      <a href="index.html" class="nav-logo-w" title="wvrner — Nima Hosseini">
+      <a href="index.html" class="nav-logo-w" title="wvrner: Nima Hosseini">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M3 5l5 14 4-10 4 10 5-14"></path>
         </svg>
@@ -116,22 +131,18 @@
   <!-- Main Content Structure -->
   <main>
     <!-- Hero Section -->
+    <!-- =========================================================================
+         4. HERO SECTION (THE BIG HELLO!)
+         KID-FRIENDLY EXPLANATION:
+         This is the big welcome section at the top of the page!
+         It introduces Nima Hosseini and explains that he loves building the
+         invisible highways and bridges that help internet applications run safely.
+         The buttons here let visitors jump down to see his projects or learn about him!
+         ========================================================================= -->
     <section class="hero-section">
       <div class="hero-content">
         <div class="hero-titles-block">
           
-          <!-- Telemetry & Overclock Action Row -->
-          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 16px;">
-            <div class="hero-telemetry-pill">
-              <span class="pulse-beacon" aria-hidden="true"></span>
-              <span>SYS // WVRNER.DEV &middot; NYC LOCAL &middot; DISTRIBUTED SYSTEMS</span>
-            </div>
-            <!-- Interactive Overclock Button -->
-            <button class="overclock-toggle-btn" type="button" title="Toggle 3D astrolabe velocity">
-              <span class="overclock-btn-text">⚡ OVERCLOCK SYSTEM</span>
-            </button>
-          </div>
-
           <span class="hero-role-label">DevOps &amp; Infrastructure Systems</span>
           <h1 class="hero-name-title">Nima Hosseini</h1>
           <p class="hero-bio-lead">
@@ -224,13 +235,22 @@
         </div>
 
         <!-- 2. HANDCRAFTED AWWWARDS "CURRENTLY LEARNING" EXHIBITION -->
-        <div id="learning-exhibition" class="learning-exhibition">
+        <!-- =========================================================================
+           5. LEARNING EXHIBITION CHAPTERS (NIMA'S FOUR BIG CLOUD TOOLS)
+           KID-FRIENDLY EXPLANATION:
+           Here are four big interactive notebooks visitors can flip through!
+           - Chapter 1: AWS (Amazon Cloud: big computers you rent over the internet)
+           - Chapter 2: Terraform (Building computers automatically by writing instructions)
+           - Chapter 3: Docker (Putting software into tidy, lightweight digital lunchboxes)
+           - Chapter 4: GitHub Actions (Helpful software robots that test and deliver code)
+           ========================================================================= -->
+      <div id="learning-exhibition" class="learning-exhibition">
           
           <div class="exhibition-header">
             <span class="exhibition-tag">02 // Active Practice &amp; Hands-On Study</span>
             <h3 class="exhibition-title">Currently Learning</h3>
             <p class="exhibition-subtitle">
-              An authentic look into what I'm actively studying, building, and stress-testing in the lab &mdash; focused on the architectural glue that connects every layer.
+              An authentic look into what I'm actively studying, building, and stress-testing in the lab, focused on the architectural glue that connects every layer.
             </p>
           </div>
 
@@ -283,7 +303,7 @@
 
                   <div class="field-note-prose">
                     <p>
-                      <strong>Architecting for Resilience &amp; Chaos:</strong> High availability isn't an accident &mdash; it's deliberate topology. Rather than merely clicking web console buttons, I’m deconstructing how distributed cloud systems survive real-world failure.
+                      <strong>Architecting for Resilience &amp; Chaos:</strong> High availability isn't an accident: it is deliberate topology. Rather than merely clicking web console buttons, I’m deconstructing how distributed cloud systems survive real-world failure.
                     </p>
                     <p>
                       In my hands-on labs, I focus on multi-AZ VPC design, private subnet routing through NAT gateways, locking S3 bucket origins behind CloudFront with Origin Access Control (OAC), and latency-based DNS routing with Route 53.
@@ -360,7 +380,7 @@
 
                 <!-- Code View -->
                 <div class="schematic-code-box">
-<pre><span style="color:#8b949e;"># aws_cloudfront.tf — Origin Access Control (OAC)</span>
+<pre><span style="color:#8b949e;"># aws_cloudfront.tf: Origin Access Control (OAC)</span>
 <span style="color:#758bfd;">resource</span> <span style="color:#ffd6a2;">"aws_cloudfront_origin_access_control"</span> <span style="color:#a0eac9;">"default"</span> {
   name                              = <span style="color:#a0eac9;">"s3-oac-prod"</span>
   origin_access_control_origin_type = <span style="color:#a0eac9;">"s3"</span>
@@ -470,7 +490,7 @@
                 </div>
 
                 <div class="schematic-code-box">
-<pre><span style="color:#8b949e;"># backend.tf — Remote State Locking</span>
+<pre><span style="color:#8b949e;"># backend.tf: Remote State Locking</span>
 <span style="color:#758bfd;">terraform</span> {
   backend <span style="color:#ffd6a2;">"s3"</span> {
     bucket         = <span style="color:#a0eac9;">"wvrner-terraform-state-prod"</span>
@@ -613,7 +633,7 @@
                       <strong>Zero-Downtime Keyless Delivery:</strong> Connecting the chain from local git push to global edge rollout. In my workflows, I configure keyless AWS OIDC authentication so no long-lived API keys ever exist in repositories.
                     </p>
                     <p>
-                      On every push to main, the runner executes automated tests, synchronizes static assets to S3, and invalidates CloudFront edge caches in under 4 seconds &mdash; eliminating manual deployment toil.
+                      On every push to main, the runner executes automated tests, synchronizes static assets to S3, and invalidates CloudFront edge caches in under 4 seconds, eliminating manual deployment toil.
                     </p>
                   </div>
                 </div>
@@ -681,7 +701,7 @@
                 </div>
 
                 <div class="schematic-code-box">
-<pre><span style="color:#8b949e;"># .github/workflows/deploy.yml — Keyless OIDC Pipeline</span>
+<pre><span style="color:#8b949e;"># .github/workflows/deploy.yml: Keyless OIDC Pipeline</span>
 <span style="color:#758bfd;">name</span>: Deploy Infrastructure
 <span style="color:#758bfd;">on</span>:
   <span style="color:#ffd6a2;">push</span>:
@@ -713,104 +733,28 @@
           </div>
         </div>
 
-        <!-- 3. What Interests Me Most: The Infrastructure Behind Applications -->
-        <div class="infra-behind-block">
-          <div class="foundations-header-row">
-            <span class="block-title-text">Core Interest &amp; Architecture</span>
-            <span class="learning-subtag">[The Infrastructure Behind Applications]</span>
-          </div>
+              <!-- =========================================================================
+           KID-FRIENDLY EXPLANATION:
+           This marks the end of the Learning Chapters (AWS, Terraform, Docker, GitHub Actions).
+           Now we step into the colorful middle-to-bottom half of the website!
+           ========================================================================= -->
+        </section>
+      </div>
 
-          <div style="font-size: clamp(16px, 1.8vw, 19px); line-height: 1.65; color: var(--text-secondary); max-width: 860px;">
-            What interests me most is the infrastructure behind applications: how systems communicate, how they are deployed, how infrastructure is provisioned and automated, and how everything is monitored and maintained.
-          </div>
-
-          <div class="infra-behind-grid">
-            <!-- Pillar A: How Systems Communicate -->
-            <div class="infra-pillar-card tilt-card">
-              <div class="specular-glare"></div>
-              <div class="infra-pillar-top">
-                <div class="infra-pillar-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                  </svg>
-                </div>
-                <span class="infra-pillar-label">Network Routing &amp; Transit</span>
-              </div>
-              <div class="infra-pillar-body">
-                <h3>How Systems Communicate</h3>
-                <p>
-                  Understanding the underlying network pathways: DNS propagation, Anycast edge routing, VPC peering, and secure encrypted transit protocols (TLS 1.3 &amp; mTLS).
-                </p>
-              </div>
-            </div>
-
-            <!-- Pillar B: How Systems Are Deployed -->
-            <div class="infra-pillar-card tilt-card">
-              <div class="specular-glare"></div>
-              <div class="infra-pillar-top">
-                <div class="infra-pillar-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="16 18 22 12 16 6"></polyline>
-                    <polyline points="8 6 2 12 8 18"></polyline>
-                  </svg>
-                </div>
-                <span class="infra-pillar-label">Pipelines &amp; Delivery</span>
-              </div>
-              <div class="infra-pillar-body">
-                <h3>How Systems Are Deployed</h3>
-                <p>
-                  Building reliable delivery pipelines: automated triggers, linting, OIDC cloud authorization, artifact staging, and zero-downtime cache invalidations.
-                </p>
-              </div>
-            </div>
-
-            <!-- Pillar C: How Infrastructure Is Provisioned & Automated -->
-            <div class="infra-pillar-card tilt-card">
-              <div class="specular-glare"></div>
-              <div class="infra-pillar-top">
-                <div class="infra-pillar-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                    <polyline points="2 17 12 22 22 17"></polyline>
-                    <polyline points="2 12 12 17 22 12"></polyline>
-                  </svg>
-                </div>
-                <span class="infra-pillar-label">IaC &amp; State Management</span>
-              </div>
-              <div class="infra-pillar-body">
-                <h3>How Infrastructure Is Provisioned &amp; Automated</h3>
-                <p>
-                  Treating infrastructure as pure code: declarative Terraform definitions, remote state locking, and deterministic provisioning without manual drift.
-                </p>
-              </div>
-            </div>
-
-            <!-- Pillar D: How Everything Is Monitored & Maintained -->
-            <div class="infra-pillar-card tilt-card">
-              <div class="specular-glare"></div>
-              <div class="infra-pillar-top">
-                <div class="infra-pillar-icon">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="20" x2="18" y2="10"></line>
-                    <line x1="12" y1="20" x2="12" y2="4"></line>
-                    <line x1="6" y1="20" x2="6" y2="14"></line>
-                  </svg>
-                </div>
-                <span class="infra-pillar-label">Telemetry &amp; Reliability</span>
-              </div>
-              <div class="infra-pillar-body">
-                <h3>How Everything Is Monitored &amp; Maintained</h3>
-                <p>
-                  Maintaining high availability through visibility: telemetry streams, real-time error budget tracking, health checks, and rapid incident response.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. Design & Systems Engineering Synergy Feature Card -->
+      <!-- =========================================================================
+           SYSTEMS ARCHITECTURE & PROJECTS SECTION (BALANCED BLACK & #27187E PALETTE)
+           KID-FRIENDLY EXPLANATION:
+           Here is where Nima shows how design and cloud engineering meet!
+           The words and titles are crisp black and charcoal so they are super easy to read,
+           and the special badges, glowing lights, and buttons are painted with royal #27187E purple-blue!
+           Here we have:
+           1. Design & Systems Synergy (How art and design make computer systems neat and tidy)
+           2. Real Cloud Architecture (The actual Terraform code running this website)
+           3. Upcoming Labs & Roadmap (Exciting new cloud experiments Nima is building)
+           ========================================================================= -->
+      <section class="systems-architecture-section" id="systems-architecture">
+        <div class="diversity-container">
+<!-- 4. Design & Systems Engineering Synergy Feature Card -->
         <div class="design-synergy-card tilt-card">
           <div class="specular-glare"></div>
           <div class="design-synergy-left">
@@ -826,7 +770,7 @@
           <div class="design-synergy-right">
             <div class="synergy-point">
               <span class="synergy-point-title">Pattern Recognition</span>
-              <span class="synergy-point-desc">Deconstructing complex architectures into clean, reusable modular primitives &mdash; exactly like design systems.</span>
+              <span class="synergy-point-desc">Deconstructing complex architectures into clean, reusable modular primitives, similar to design systems.</span>
             </div>
             <div class="synergy-point">
               <span class="synergy-point-title">Component Interaction</span>
@@ -943,7 +887,7 @@
             <div class="console-body">
               <!-- Tab 1: Real main.tf -->
               <div id="pane-tf" class="console-pane active">
-<pre><code><span class="term-dim"># infra/terraform/main.tf — Complete AWS S3 + CloudFront OAC Architecture</span>
+<pre><code><span class="term-dim"># infra/terraform/main.tf: Complete AWS S3 + CloudFront OAC Architecture</span>
 <span class="term-cyan">resource</span> <span class="term-amber">"aws_s3_bucket"</span> <span class="term-green">"portfolio"</span> {
   bucket = var.bucket_name
 }
@@ -996,7 +940,7 @@
 
               <!-- Tab 2: Real deploy.yml -->
               <div id="pane-ci" class="console-pane">
-<pre><code><span class="term-dim"># .github/workflows/deploy.yml — Keyless OIDC Continuous Deployment Pipeline</span>
+<pre><code><span class="term-dim"># .github/workflows/deploy.yml: Keyless OIDC Continuous Deployment Pipeline</span>
 <span class="term-cyan">name</span>: Deploy wvrner Portfolio to AWS
 <span class="term-cyan">on</span>:
   <span class="term-amber">push</span>:
@@ -1034,7 +978,7 @@
 
               <!-- Tab 3: Real providers.tf -->
               <div id="pane-backend" class="console-pane">
-<pre><code><span class="term-dim"># infra/terraform/providers.tf — Provider &amp; Remote S3 State Configuration</span>
+<pre><code><span class="term-dim"># infra/terraform/providers.tf: Provider &amp; Remote S3 State Configuration</span>
 <span class="term-cyan">terraform</span> {
   required_version = <span class="term-green">"&gt;= 1.5.0"</span>
 
@@ -1094,9 +1038,8 @@
           </div>
         </div>
 
+        </div>
       </section>
-
-      </div>
   </main>
 
   <!-- Rebuilt Unique & Modern Footer (wvrner Aesthetic) -->
