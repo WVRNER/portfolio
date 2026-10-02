@@ -1,54 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>wvrner · Nima Hosseini (@wvrner) · DevOps &amp; Infrastructure Systems</title>
-  <meta name="description" content="wvrner: Portfolio of Nima Hosseini (@wvrner). Building toward modern infrastructure from the network up. Currently learning AWS, Terraform, Docker, and GitHub Actions.">
-  
-  <!-- Favicon with letter W in Royal Indigo #27187E -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%2327187E'/><path d='M22 28L38 74L50 44L62 74L78 28' fill='none' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/></svg>">
-  
-  <!-- Fonts: Inter Tight & Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="styles/animations.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <title>
+      wvrner · Nima Hosseini (@wvrner) · DevOps &amp; Infrastructure Systems
+    </title>
+    <meta
+      name="description"
+      content="wvrner: Portfolio of Nima Hosseini (@wvrner). Building toward modern infrastructure from the network up. Currently learning AWS, Terraform, Docker, and GitHub Actions."
+    />
 
-  <!-- Tactile Archival Film Grain Overlay -->
-  <div class="film-grain-overlay" aria-hidden="true"></div>
+    <!-- Favicon with letter W in Royal Indigo #27187E -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%2327187E'/><path d='M22 28L38 74L50 44L62 74L78 28' fill='none' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+    />
 
-  <!-- Overclock / Warp Speed Scanlines Overlay -->
-  <div class="cyber-scanlines" aria-hidden="true"></div>
+    <!-- Fonts: Inter Tight & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Cinematic Intro Screen: "Good morning sunshine" -->
-  <!-- =========================================================================
-       1. WELCOME SCREEN / CURTAIN (INTRO SPLASH)
-       KID-FRIENDLY EXPLANATION:
-       When you first open the webpage, this little dark curtain pops up!
-       It counts numbers really fast from 000% up to 100%, and then it dissolves
-       away smoothly just like opening the curtains at a movie theater!
-       ========================================================================= -->
-  <div id="introSplash" class="intro-splash-screen" aria-hidden="true">
-    <div class="intro-splash-inner">
-      <div class="intro-greeting-tag">
-        <span class="pulse-beacon" aria-hidden="true"></span>
-        <span>SYS // WVRNER &middot; INDIGO EDITION</span>
-        <span id="introCounter" style="margin-left: 8px; color: var(--accent-blue);">000%</span>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/animations.css" />
+  </head>
+  <body>
+    <!-- Tactile Archival Film Grain Overlay -->
+    <div class="film-grain-overlay" aria-hidden="true"></div>
+
+    <!-- Overclock / Warp Speed Scanlines Overlay -->
+    <div class="cyber-scanlines" aria-hidden="true"></div>
+
+    <div id="introSplash" class="intro-splash-screen" aria-hidden="true">
+      <div class="intro-splash-inner">
+        <div class="intro-greeting-tag">
+          <span class="pulse-beacon" aria-hidden="true"></span>
+          <span>SYS // WVRNER &middot; INDIGO EDITION</span>
+          <span
+            id="introCounter"
+            style="margin-left: 8px; color: var(--accent-blue)"
+            >000%</span
+          >
+        </div>
+        <h1 class="intro-greeting-text">Good morning sunshine</h1>
+        <div class="intro-greeting-line"></div>
       </div>
-      <h1 class="intro-greeting-text">Good morning sunshine</h1>
-      <div class="intro-greeting-line"></div>
     </div>
-  </div>
 
-  <!-- Handcrafted 3D Kinetic Celestial Astrolabe Canvas -->
-  <div class="persistent-canvas-wrapper" aria-hidden="true">
-    <!-- =========================================================================
+    <!-- 3D Celestial Network Canvas -->
+    <div class="persistent-canvas-wrapper" aria-hidden="true">
+      <!-- =========================================================================
        2. INTERACTIVE CLOUD NETWORK CANVAS (BACKGROUND ANIMATION)
        KID-FRIENDLY EXPLANATION:
        This is a big invisible drawing board behind the whole page!
@@ -56,82 +65,143 @@
        to show how cloud computers talk to each other across the entire planet.
        When you move your mouse, a gentle spotlight follows your cursor!
        ========================================================================= -->
-  <canvas id="heroCanvas"></canvas>
-  </div>
-
-  <!-- Background Guidelines -->
-  <div class="bg-grid-container" aria-hidden="true">
-    <div class="bg-grid-lines">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+      <canvas id="heroCanvas"></canvas>
     </div>
-  </div>
 
-  <!-- Compact Modern Floating Island Navigation -->
-  <header class="nav-wrapper">
-    <nav class="nav-island" aria-label="Main Navigation">
-      <!-- Monogram W Logo -->
-      <a href="index.html" class="nav-logo-w" title="wvrner: Nima Hosseini">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 5l5 14 4-10 4 10 5-14"></path>
-        </svg>
-      </a>
-
-      <!-- Fluid Sliding Links -->
-      <ul class="nav-links">
-        <div class="nav-hover-pill" aria-hidden="true"></div>
-        <li><a href="about.html" class="nav-link">About</a></li>
-        <li class="nav-dropdown">
-          <a href="about.html#cv" class="nav-link" aria-haspopup="true">
-            <span>CV</span>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </a>
-          <div class="nav-cv-popover" role="menu">
-            <div class="cv-popover-inner">
-              <a href="about.html#cv" class="cv-action-btn" role="menuitem">
-                <span>View Full CV</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-              </a>
-              <a href="#" class="cv-action-btn" role="menuitem" onclick="alert('Curriculum Vitae available on about page.'); return false;">
-                <span>Download PDF</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-              </a>
-            </div>
-          </div>
-        </li>
-      </ul>
-
-      <!-- Actions: Audio, Theme Toggle & Contact -->
-      <div class="nav-actions">
-        <button id="soundToggle" class="sound-toggle-btn" type="button" aria-label="Toggle ambient UI audio">
-          <div class="sound-bars-wrapper" aria-hidden="true">
-            <div class="sound-bar"></div>
-            <div class="sound-bar"></div>
-            <div class="sound-bar"></div>
-          </div>
-          <span class="sound-btn-label">AUDIO</span>
-        </button>
-
-        <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle theme">
-          <span id="themeIcon" class="theme-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </span>
-        </button>
-        <a href="mailto:wvrner@outlook.com" class="contact-btn">Contact</a>
+    <!-- Background Guidelines -->
+    <div class="bg-grid-container" aria-hidden="true">
+      <div class="bg-grid-lines">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
-    </nav>
-  </header>
+    </div>
 
-  <!-- Main Content Structure -->
-  <main>
-    <!-- Hero Section -->
-    <!-- =========================================================================
+    <!-- Compact Modern Floating Island Navigation -->
+    <header class="nav-wrapper">
+      <nav class="nav-island" aria-label="Main Navigation">
+        <!-- Monogram W Logo -->
+        <a href="index.html" class="nav-logo-w" title="wvrner: Nima Hosseini">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3 5l5 14 4-10 4 10 5-14"></path>
+          </svg>
+        </a>
+
+        <!-- Fluid Sliding Links -->
+        <ul class="nav-links">
+          <div class="nav-hover-pill" aria-hidden="true"></div>
+          <li><a href="about.html" class="nav-link">About</a></li>
+          <li class="nav-dropdown">
+            <a href="about.html#cv" class="nav-link" aria-haspopup="true">
+              <span>CV</span>
+              <svg
+                width="10"
+                height="10"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </a>
+            <div class="nav-cv-popover" role="menu">
+              <div class="cv-popover-inner">
+                <a href="about.html#cv" class="cv-action-btn" role="menuitem">
+                  <span>View Full CV</span>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </a>
+                <a
+                  href="#"
+                  class="cv-action-btn"
+                  role="menuitem"
+                  onclick="
+                    alert('Curriculum Vitae available on about page.');
+                    return false;
+                  "
+                >
+                  <span>Download PDF</span>
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Actions: Audio, Theme Toggle & Contact -->
+        <div class="nav-actions">
+          <button
+            id="soundToggle"
+            class="sound-toggle-btn"
+            type="button"
+            aria-label="Toggle ambient UI audio"
+          >
+            <div class="sound-bars-wrapper" aria-hidden="true">
+              <div class="sound-bar"></div>
+              <div class="sound-bar"></div>
+              <div class="sound-bar"></div>
+            </div>
+            <span class="sound-btn-label">AUDIO</span>
+          </button>
+
+          <button
+            id="themeToggle"
+            class="theme-toggle-btn"
+            type="button"
+            aria-label="Toggle theme"
+          >
+            <span id="themeIcon" class="theme-icon">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                ></path>
+              </svg>
+            </span>
+          </button>
+          <a href="mailto:wvrner@outlook.com" class="contact-btn">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content Structure -->
+    <main>
+      <!-- Hero Section -->
+      <!-- =========================================================================
          4. HERO SECTION (THE BIG HELLO!)
          KID-FRIENDLY EXPLANATION:
          This is the big welcome section at the top of the page!
@@ -139,103 +209,141 @@
          invisible highways and bridges that help internet applications run safely.
          The buttons here let visitors jump down to see his projects or learn about him!
          ========================================================================= -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <div class="hero-titles-block">
-          
-          <span class="hero-role-label">DevOps &amp; Infrastructure Systems</span>
-          <h1 class="hero-name-title">Nima Hosseini</h1>
-          <p class="hero-bio-lead">
-            I’m building toward a career in DevOps and infrastructure, with a focus on understanding how modern systems work <span class="highlight-text">from the network up</span>.
-          </p>
+      <section class="hero-section">
+        <div class="hero-content">
+          <div class="hero-titles-block">
+            <span class="hero-role-label"
+              >DevOps &amp; Infrastructure Systems</span
+            >
+            <h1 class="hero-name-title">Nima Hosseini</h1>
+            <p class="hero-bio-lead">
+              I’m building toward a career in DevOps and infrastructure, with a
+              focus on understanding how modern systems work
+              <span class="highlight-text">from the network up</span>.
+            </p>
 
-          <!-- Quick Action Exploration Pills -->
-          <div class="hero-quick-actions">
-            <a href="#learning-exhibition" class="hero-action-pill primary">
-              <span>Currently Learning</span>
-              <span>&darr;</span>
-            </a>
-            <a href="about.html" class="hero-action-pill">
-              <span>About Me</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="about.html#cv" class="hero-action-pill">
-              <span>Curriculum Vitae</span>
-              <span>&rarr;</span>
-            </a>
-            <a href="mailto:wvrner@outlook.com" class="hero-action-pill">
-              <span>wvrner@outlook.com</span>
-              <span>&nearr;</span>
-            </a>
-          </div>
-
-          <!-- Scroll Hint -->
-          <div class="hero-scroll-hint">
-            <div class="scroll-mouse-icon">
-              <div class="scroll-wheel-dot"></div>
+            <!-- Quick Action Exploration Pills -->
+            <div class="hero-quick-actions">
+              <a href="#learning-exhibition" class="hero-action-pill primary">
+                <span>Currently Learning</span>
+                <span>&darr;</span>
+              </a>
+              <a href="about.html" class="hero-action-pill">
+                <span>About Me</span>
+                <span>&rarr;</span>
+              </a>
+              <a href="about.html#cv" class="hero-action-pill">
+                <span>Curriculum Vitae</span>
+                <span>&rarr;</span>
+              </a>
+              <a href="mailto:wvrner@outlook.com" class="hero-action-pill">
+                <span>wvrner@outlook.com</span>
+                <span>&nearr;</span>
+              </a>
             </div>
-            <span>Kinetic 3D Astrolabe &middot; Press [W] to Overclock</span>
+
+            <!-- Scroll Hint -->
+            <div class="hero-scroll-hint">
+              <div class="scroll-mouse-icon">
+                <div class="scroll-wheel-dot"></div>
+              </div>
+              <span>Scroll to explore</span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Kinetic Marquee Ribbon Tape -->
-    <div class="marquee-ribbon-container" aria-hidden="true">
-      <div class="marquee-content">
-        <span><span class="highlight">AWS</span> SOLUTIONS ARCHITECT</span>
-        <span class="sep">//</span>
-        <span><span class="highlight">TERRAFORM</span> INFRASTRUCTURE AS CODE</span>
-        <span class="sep">//</span>
-        <span><span class="highlight">DOCKER</span> CONTAINERS &amp; RUNTIME</span>
-        <span class="sep">//</span>
-        <span><span class="highlight">GITHUB ACTIONS</span> AUTOMATED CI/CD</span>
-        <span class="sep">//</span>
-        <span>UNDERSTANDING MODERN SYSTEMS FROM THE NETWORK UP</span>
-        <span class="sep">//</span>
-        <span>WVRNER &middot; NIMA HOSSEINI</span>
-        <span class="sep">//</span>
-        <span><span class="highlight">AWS</span> SOLUTIONS ARCHITECT</span>
-        <span class="sep">//</span>
-        <span><span class="highlight">TERRAFORM</span> INFRASTRUCTURE AS CODE</span>
-        <span class="sep">//</span>
-        <span><span class="highlight">DOCKER</span> CONTAINERS &amp; RUNTIME</span>
-        <span class="sep">//</span>
-        <span><span class="highlight">GITHUB ACTIONS</span> AUTOMATED CI/CD</span>
-      </div>
-    </div>
-
-    <!-- Structured Content Stream -->
-    <div class="home-sections-wrapper" style="padding-top: 36px;">
-      
-      <!-- Section 1: Extraordinary Awwwards "About Me & DevOps Journey" -->
-      <section id="about-devops" class="awwwards-work-section reveal-on-scroll">
-        
-        <!-- 1. Master Lead Manifesto Card -->
-        <div class="about-manifesto-card tilt-card">
-          <div class="specular-glare"></div>
-          <span class="manifesto-tag">
-            <span class="pulse-beacon" aria-hidden="true"></span>
-            <span>01 // Focus &amp; Career Trajectory</span>
-          </span>
-          <h2 class="manifesto-headline">
-            I’m building toward a career in DevOps and infrastructure, with a focus on understanding how modern systems work <span class="highlight-text">from the network up</span>.
-          </h2>
-          <p class="manifesto-sublead">
-            I’m currently developing my foundations across <span class="tag-inline">Networking</span>, <span class="tag-inline">Linux</span>, <span class="tag-inline">Cloud Infrastructure</span>, <span class="tag-inline">Git</span>, <span class="tag-inline">Containers</span>, <span class="tag-inline">CI/CD</span>, <span class="tag-inline">Infrastructure as Code</span>, <span class="tag-inline">Automation</span>, and <span class="tag-inline">Monitoring</span>. I’m learning through structured study and hands-on labs, with an emphasis on <span class="highlight-underline">understanding how the pieces connect</span> rather than simply learning individual tools.
-          </p>
-
-          <!-- Editorial Micro-Chips Row -->
-          <div class="editorial-chip-row">
-            <span class="editorial-chip">// CONNECTIVE TISSUE &gt; ISOLATED TOOLS</span>
-            <span class="editorial-chip">// ZERO CONFIGURATION DRIFT</span>
-            <span class="editorial-chip">// ARCHITECTURAL RESILIENCE</span>
-            <span class="editorial-chip">// NETWORK-FIRST MENTAL MODEL</span>
-          </div>
+      <!-- Kinetic Marquee Ribbon Tape -->
+      <div class="marquee-ribbon-container" aria-hidden="true">
+        <div class="marquee-content">
+          <span><span class="highlight">AWS</span> SOLUTIONS ARCHITECT</span>
+          <span class="sep">//</span>
+          <span
+            ><span class="highlight">TERRAFORM</span> INFRASTRUCTURE AS
+            CODE</span
+          >
+          <span class="sep">//</span>
+          <span
+            ><span class="highlight">DOCKER</span> CONTAINERS &amp;
+            RUNTIME</span
+          >
+          <span class="sep">//</span>
+          <span
+            ><span class="highlight">GITHUB ACTIONS</span> AUTOMATED CI/CD</span
+          >
+          <span class="sep">//</span>
+          <span>UNDERSTANDING MODERN SYSTEMS FROM THE NETWORK UP</span>
+          <span class="sep">//</span>
+          <span>WVRNER &middot; NIMA HOSSEINI</span>
+          <span class="sep">//</span>
+          <span><span class="highlight">AWS</span> SOLUTIONS ARCHITECT</span>
+          <span class="sep">//</span>
+          <span
+            ><span class="highlight">TERRAFORM</span> INFRASTRUCTURE AS
+            CODE</span
+          >
+          <span class="sep">//</span>
+          <span
+            ><span class="highlight">DOCKER</span> CONTAINERS &amp;
+            RUNTIME</span
+          >
+          <span class="sep">//</span>
+          <span
+            ><span class="highlight">GITHUB ACTIONS</span> AUTOMATED CI/CD</span
+          >
         </div>
+      </div>
 
-        <!-- 2. HANDCRAFTED AWWWARDS "CURRENTLY LEARNING" EXHIBITION -->
-        <!-- =========================================================================
+      <!-- Structured Content Stream -->
+      <div class="home-sections-wrapper" style="padding-top: 36px">
+        <!-- Section 1: Extraordinary Awwwards "About Me & DevOps Journey" -->
+        <section
+          id="about-devops"
+          class="awwwards-work-section reveal-on-scroll"
+        >
+          <!-- 1. Master Lead Manifesto Card -->
+          <div class="about-manifesto-card tilt-card">
+            <div class="specular-glare"></div>
+            <span class="manifesto-tag">
+              <span class="pulse-beacon" aria-hidden="true"></span>
+              <span>01 // Focus &amp; Career Trajectory</span>
+            </span>
+            <h2 class="manifesto-headline">
+              I’m building toward a career in DevOps and infrastructure, with a
+              focus on understanding how modern systems work
+              <span class="highlight-text">from the network up</span>.
+            </h2>
+            <p class="manifesto-sublead">
+              I’m currently developing my foundations across
+              <span class="tag-inline">Networking</span>,
+              <span class="tag-inline">Linux</span>,
+              <span class="tag-inline">Cloud Infrastructure</span>,
+              <span class="tag-inline">Git</span>,
+              <span class="tag-inline">Containers</span>,
+              <span class="tag-inline">CI/CD</span>,
+              <span class="tag-inline">Infrastructure as Code</span>,
+              <span class="tag-inline">Automation</span>, and
+              <span class="tag-inline">Monitoring</span>. I’m learning through
+              structured study and hands-on labs, with an emphasis on
+              <span class="highlight-underline"
+                >understanding how the pieces connect</span
+              >
+              rather than simply learning individual tools.
+            </p>
+
+            <!-- Editorial Micro-Chips Row -->
+            <div class="editorial-chip-row">
+              <span class="editorial-chip"
+                >// CONNECTIVE TISSUE &gt; ISOLATED TOOLS</span
+              >
+              <span class="editorial-chip">// ZERO CONFIGURATION DRIFT</span>
+              <span class="editorial-chip">// ARCHITECTURAL RESILIENCE</span>
+              <span class="editorial-chip">// NETWORK-FIRST MENTAL MODEL</span>
+            </div>
+          </div>
+
+          <!-- 2. HANDCRAFTED AWWWARDS "CURRENTLY LEARNING" EXHIBITION -->
+          <!-- =========================================================================
            5. LEARNING EXHIBITION CHAPTERS (NIMA'S FOUR BIG CLOUD TOOLS)
            KID-FRIENDLY EXPLANATION:
            Here are four big interactive notebooks visitors can flip through!
@@ -244,143 +352,347 @@
            - Chapter 3: Docker (Putting software into tidy, lightweight digital lunchboxes)
            - Chapter 4: GitHub Actions (Helpful software robots that test and deliver code)
            ========================================================================= -->
-      <div id="learning-exhibition" class="learning-exhibition">
-          
-          <div class="exhibition-header">
-            <span class="exhibition-tag">02 // Active Practice &amp; Hands-On Study</span>
-            <h3 class="exhibition-title">Currently Learning</h3>
-            <p class="exhibition-subtitle">
-              An authentic look into what I'm actively studying, building, and stress-testing in the lab, focused on the architectural glue that connects every layer.
-            </p>
-          </div>
+          <div id="learning-exhibition" class="learning-exhibition">
+            <div class="exhibition-header">
+              <span class="exhibition-tag"
+                >02 // Active Practice &amp; Hands-On Study</span
+              >
+              <h3 class="exhibition-title">Currently Learning</h3>
+              <p class="exhibition-subtitle">
+                An authentic look into what I'm actively studying, building, and
+                stress-testing in the lab, focused on the architectural glue
+                that connects every layer.
+              </p>
+            </div>
 
-          <!-- Tactile Chapter Navigation Strip -->
-          <div class="chapter-nav-strip">
-            <button class="chapter-nav-btn active" data-chapter="chapter-aws" type="button">
-              <span class="chapter-btn-num">01 / CLOUD</span>
-              <span class="chapter-btn-title">AWS</span>
-              <span class="chapter-btn-sub">Solutions Architect</span>
-            </button>
+            <!-- Tactile Chapter Navigation Strip -->
+            <div class="chapter-nav-strip">
+              <button
+                class="chapter-nav-btn active"
+                data-chapter="chapter-aws"
+                type="button"
+              >
+                <span class="chapter-btn-num">01 / CLOUD</span>
+                <span class="chapter-btn-title">AWS</span>
+                <span class="chapter-btn-sub">Solutions Architect</span>
+              </button>
 
-            <button class="chapter-nav-btn" data-chapter="chapter-tf" type="button">
-              <span class="chapter-btn-num">02 / PROVISIONING</span>
-              <span class="chapter-btn-title">Terraform</span>
-              <span class="chapter-btn-sub">Infrastructure as Code</span>
-            </button>
+              <button
+                class="chapter-nav-btn"
+                data-chapter="chapter-tf"
+                type="button"
+              >
+                <span class="chapter-btn-num">02 / PROVISIONING</span>
+                <span class="chapter-btn-title">Terraform</span>
+                <span class="chapter-btn-sub">Infrastructure as Code</span>
+              </button>
 
-            <button class="chapter-nav-btn" data-chapter="chapter-docker" type="button">
-              <span class="chapter-btn-num">03 / RUNTIME</span>
-              <span class="chapter-btn-title">Docker</span>
-              <span class="chapter-btn-sub">Containers &amp; Isolation</span>
-            </button>
+              <button
+                class="chapter-nav-btn"
+                data-chapter="chapter-docker"
+                type="button"
+              >
+                <span class="chapter-btn-num">03 / RUNTIME</span>
+                <span class="chapter-btn-title">Docker</span>
+                <span class="chapter-btn-sub">Containers &amp; Isolation</span>
+              </button>
 
-            <button class="chapter-nav-btn" data-chapter="chapter-actions" type="button">
-              <span class="chapter-btn-num">04 / DELIVERY</span>
-              <span class="chapter-btn-title">GitHub Actions</span>
-              <span class="chapter-btn-sub">CI/CD Automation</span>
-            </button>
-          </div>
+              <button
+                class="chapter-nav-btn"
+                data-chapter="chapter-actions"
+                type="button"
+              >
+                <span class="chapter-btn-num">04 / DELIVERY</span>
+                <span class="chapter-btn-title">GitHub Actions</span>
+                <span class="chapter-btn-sub">CI/CD Automation</span>
+              </button>
+            </div>
 
-          <!-- Chapter Panels Container -->
-          <div class="chapter-panels-container">
-            
-            <!-- PANEL 01: AWS (working toward Solutions Architect) -->
-            <div id="chapter-aws" class="chapter-panel active">
-              
-              <!-- Left: Human Field Notes -->
-              <div class="chapter-field-card tilt-card">
-                <div class="specular-glare"></div>
-                <div>
-                  <div class="field-card-top">
-                    <span class="field-chapter-num">CHAPTER 01</span>
-                    <span class="field-status-badge">TARGET: SAA-C03</span>
+            <!-- Chapter Panels Container -->
+            <div class="chapter-panels-container">
+              <!-- PANEL 01: AWS (working toward Solutions Architect) -->
+              <div id="chapter-aws" class="chapter-panel active">
+                <!-- Left: Human Field Notes -->
+                <div class="chapter-field-card tilt-card">
+                  <div class="specular-glare"></div>
+                  <div>
+                    <div class="field-card-top">
+                      <span class="field-chapter-num">CHAPTER 01</span>
+                      <span class="field-status-badge">TARGET: SAA-C03</span>
+                    </div>
+
+                    <div class="field-card-headline" style="margin-top: 14px">
+                      <h4>AWS</h4>
+                      <span class="field-card-focus-tag"
+                        >Working toward Solutions Architect</span
+                      >
+                    </div>
+
+                    <div class="field-note-prose">
+                      <p>
+                        <strong
+                          >Architecting for Resilience &amp; Chaos:</strong
+                        >
+                        High availability isn't an accident: it is deliberate
+                        topology. Rather than merely clicking web console
+                        buttons, I’m deconstructing how distributed cloud
+                        systems survive real-world failure.
+                      </p>
+                      <p>
+                        In my hands-on labs, I focus on multi-AZ VPC design,
+                        private subnet routing through NAT gateways, locking S3
+                        bucket origins behind CloudFront with Origin Access
+                        Control (OAC), and latency-based DNS routing with Route
+                        53.
+                      </p>
+                    </div>
                   </div>
 
-                  <div class="field-card-headline" style="margin-top: 14px;">
-                    <h4>AWS</h4>
-                    <span class="field-card-focus-tag">Working toward Solutions Architect</span>
-                  </div>
-
-                  <div class="field-note-prose">
-                    <p>
-                      <strong>Architecting for Resilience &amp; Chaos:</strong> High availability isn't an accident: it is deliberate topology. Rather than merely clicking web console buttons, I’m deconstructing how distributed cloud systems survive real-world failure.
-                    </p>
-                    <p>
-                      In my hands-on labs, I focus on multi-AZ VPC design, private subnet routing through NAT gateways, locking S3 bucket origins behind CloudFront with Origin Access Control (OAC), and latency-based DNS routing with Route 53.
-                    </p>
+                  <div class="field-key-points">
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[NETWORK ISOLATION]</strong> Public vs. private
+                        subnets, security groups, and NACLs.</span
+                      >
+                    </div>
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[EDGE ROUTING]</strong> CloudFront Anycast edge
+                        CDN with strict TLS 1.3 encryption.</span
+                      >
+                    </div>
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[LEAST PRIVILEGE]</strong> Scoped IAM roles
+                        with federated OIDC authentication.</span
+                      >
+                    </div>
                   </div>
                 </div>
 
-                <div class="field-key-points">
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[NETWORK ISOLATION]</strong> Public vs. private subnets, security groups, and NACLs.</span>
+                <!-- Right: Hand-Inked Architectural Schematic & Code Inspector -->
+                <div class="chapter-schematic-card tilt-card">
+                  <div class="specular-glare"></div>
+                  <div class="schematic-card-header">
+                    <span class="schematic-header-label"
+                      >// ARCHITECTURE SCHEMATIC &middot; AWS</span
+                    >
+                    <div class="schematic-tab-group">
+                      <button
+                        class="schematic-tab-btn active"
+                        data-view="schematic"
+                        type="button"
+                      >
+                        Schematic
+                      </button>
+                      <button
+                        class="schematic-tab-btn"
+                        data-view="code"
+                        type="button"
+                      >
+                        HCL Config
+                      </button>
+                    </div>
                   </div>
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[EDGE ROUTING]</strong> CloudFront Anycast edge CDN with strict TLS 1.3 encryption.</span>
+
+                  <!-- Visual Handcrafted SVG Blueprint -->
+                  <div class="schematic-visual-box">
+                    <svg
+                      class="schematic-svg"
+                      viewBox="0 0 460 260"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M 20 20 L 440 20 M 20 130 L 440 130 M 20 240 L 440 240"
+                        stroke="rgba(255,255,255,0.05)"
+                        stroke-dasharray="2,4"
+                      />
+                      <path
+                        d="M 115 20 L 115 240 M 230 20 L 230 240 M 345 20 L 345 240"
+                        stroke="rgba(255,255,255,0.05)"
+                        stroke-dasharray="2,4"
+                      />
+
+                      <!-- Route 53 Node -->
+                      <rect
+                        x="25"
+                        y="100"
+                        width="75"
+                        height="60"
+                        rx="8"
+                        stroke="#758bfd"
+                        stroke-width="1.5"
+                        fill="rgba(39,24,126,0.18)"
+                      />
+                      <text
+                        x="62"
+                        y="128"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="10"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        ROUTE 53
+                      </text>
+                      <text
+                        x="62"
+                        y="144"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        DNS Latency
+                      </text>
+
+                      <!-- Connector Line 1 -->
+                      <line
+                        x1="100"
+                        y1="130"
+                        x2="145"
+                        y2="130"
+                        stroke="#758bfd"
+                        stroke-width="1.5"
+                        stroke-dasharray="4,4"
+                      />
+
+                      <!-- CloudFront Node -->
+                      <rect
+                        x="145"
+                        y="85"
+                        width="95"
+                        height="90"
+                        rx="10"
+                        stroke="#758bfd"
+                        stroke-width="1.8"
+                        fill="rgba(39,24,126,0.28)"
+                      />
+                      <text
+                        x="192"
+                        y="118"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="11"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        CLOUDFRONT
+                      </text>
+                      <text
+                        x="192"
+                        y="136"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        450+ Edge PoPs
+                      </text>
+                      <text
+                        x="192"
+                        y="152"
+                        fill="#758bfd"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        OAC Secure Auth
+                      </text>
+
+                      <!-- Connector Line 2 -->
+                      <line
+                        x1="240"
+                        y1="130"
+                        x2="285"
+                        y2="130"
+                        stroke="#758bfd"
+                        stroke-width="1.5"
+                        stroke-dasharray="4,4"
+                      />
+
+                      <!-- S3 Private Origin Node -->
+                      <rect
+                        x="285"
+                        y="100"
+                        width="85"
+                        height="60"
+                        rx="8"
+                        stroke="#ffffff"
+                        stroke-width="1.2"
+                        fill="rgba(255,255,255,0.04)"
+                      />
+                      <text
+                        x="327"
+                        y="128"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="10"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        S3 BUCKET
+                      </text>
+                      <text
+                        x="327"
+                        y="144"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        Private Origin
+                      </text>
+
+                      <!-- VPC Boundary Box -->
+                      <rect
+                        x="270"
+                        y="55"
+                        width="170"
+                        height="150"
+                        rx="12"
+                        stroke="rgba(117,139,253,0.3)"
+                        stroke-width="1"
+                        stroke-dasharray="6,4"
+                        fill="none"
+                      />
+                      <text
+                        x="355"
+                        y="75"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        VPC SECURITY PERIMETER
+                      </text>
+
+                      <!-- Pulse Point -->
+                      <circle cx="192" cy="130" r="4" fill="#758bfd">
+                        <animate
+                          attributeName="r"
+                          values="3;7;3"
+                          dur="2s"
+                          repeatCount="indefinite"
+                        />
+                        <animate
+                          attributeName="opacity"
+                          values="1;0.3;1"
+                          dur="2s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
+                    </svg>
                   </div>
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[LEAST PRIVILEGE]</strong> Scoped IAM roles with federated OIDC authentication.</span>
-                  </div>
-                </div>
-              </div>
 
-              <!-- Right: Hand-Inked Architectural Schematic & Code Inspector -->
-              <div class="chapter-schematic-card tilt-card">
-                <div class="specular-glare"></div>
-                <div class="schematic-card-header">
-                  <span class="schematic-header-label">// ARCHITECTURE SCHEMATIC &middot; AWS</span>
-                  <div class="schematic-tab-group">
-                    <button class="schematic-tab-btn active" data-view="schematic" type="button">Schematic</button>
-                    <button class="schematic-tab-btn" data-view="code" type="button">HCL Config</button>
-                  </div>
-                </div>
-
-                <!-- Visual Handcrafted SVG Blueprint -->
-                <div class="schematic-visual-box">
-                  <svg class="schematic-svg" viewBox="0 0 460 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 20 20 L 440 20 M 20 130 L 440 130 M 20 240 L 440 240" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
-                    <path d="M 115 20 L 115 240 M 230 20 L 230 240 M 345 20 L 345 240" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
-                    
-                    <!-- Route 53 Node -->
-                    <rect x="25" y="100" width="75" height="60" rx="8" stroke="#758bfd" stroke-width="1.5" fill="rgba(39,24,126,0.18)"/>
-                    <text x="62" y="128" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">ROUTE 53</text>
-                    <text x="62" y="144" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">DNS Latency</text>
-
-                    <!-- Connector Line 1 -->
-                    <line x1="100" y1="130" x2="145" y2="130" stroke="#758bfd" stroke-width="1.5" stroke-dasharray="4,4"/>
-                    
-                    <!-- CloudFront Node -->
-                    <rect x="145" y="85" width="95" height="90" rx="10" stroke="#758bfd" stroke-width="1.8" fill="rgba(39,24,126,0.28)"/>
-                    <text x="192" y="118" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">CLOUDFRONT</text>
-                    <text x="192" y="136" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">450+ Edge PoPs</text>
-                    <text x="192" y="152" fill="#758bfd" font-family="monospace" font-size="8" text-anchor="middle">OAC Secure Auth</text>
-
-                    <!-- Connector Line 2 -->
-                    <line x1="240" y1="130" x2="285" y2="130" stroke="#758bfd" stroke-width="1.5" stroke-dasharray="4,4"/>
-
-                    <!-- S3 Private Origin Node -->
-                    <rect x="285" y="100" width="85" height="60" rx="8" stroke="#ffffff" stroke-width="1.2" fill="rgba(255,255,255,0.04)"/>
-                    <text x="327" y="128" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">S3 BUCKET</text>
-                    <text x="327" y="144" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">Private Origin</text>
-
-                    <!-- VPC Boundary Box -->
-                    <rect x="270" y="55" width="170" height="150" rx="12" stroke="rgba(117,139,253,0.3)" stroke-width="1" stroke-dasharray="6,4" fill="none"/>
-                    <text x="355" y="75" fill="#aeb8fe" font-family="monospace" font-size="8" font-weight="bold" text-anchor="middle">VPC SECURITY PERIMETER</text>
-
-                    <!-- Pulse Point -->
-                    <circle cx="192" cy="130" r="4" fill="#758bfd">
-                      <animate attributeName="r" values="3;7;3" dur="2s" repeatCount="indefinite"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
-                    </circle>
-                  </svg>
-                </div>
-
-                <!-- Code View -->
-                <div class="schematic-code-box">
-<pre><span style="color:#8b949e;"># aws_cloudfront.tf: Origin Access Control (OAC)</span>
+                  <!-- Code View -->
+                  <div class="schematic-code-box">
+                    <pre><span style="color:#8b949e;"># aws_cloudfront.tf: Origin Access Control (OAC)</span>
 <span style="color:#758bfd;">resource</span> <span style="color:#ffd6a2;">"aws_cloudfront_origin_access_control"</span> <span style="color:#a0eac9;">"default"</span> {
   name                              = <span style="color:#a0eac9;">"s3-oac-prod"</span>
   origin_access_control_origin_type = <span style="color:#a0eac9;">"s3"</span>
@@ -392,105 +704,283 @@
   bucket = aws_s3_bucket.site.id
   policy = data.aws_iam_policy_document.s3_policy.json
 }</pre>
-                </div>
-
-                <div class="schematic-card-footer">
-                  <span>DISCIPLINE: CLOUD ARCHITECTURE</span>
-                  <span style="color: var(--accent-blue);">VERIFIED // LAB_ACTIVE</span>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- PANEL 02: Terraform (infrastructure as code) -->
-            <div id="chapter-tf" class="chapter-panel">
-              
-              <!-- Left: Human Field Notes -->
-              <div class="chapter-field-card tilt-card">
-                <div class="specular-glare"></div>
-                <div>
-                  <div class="field-card-top">
-                    <span class="field-chapter-num">CHAPTER 02</span>
-                    <span class="field-status-badge">IMMUTABLE STATE</span>
                   </div>
 
-                  <div class="field-card-headline" style="margin-top: 14px;">
-                    <h4>Terraform</h4>
-                    <span class="field-card-focus-tag">Infrastructure as code</span>
-                  </div>
-
-                  <div class="field-note-prose">
-                    <p>
-                      <strong>Declarative Reality &amp; Zero Drift:</strong> The permanent shift from manual web console clicking to immutable, version-controlled state. In my labs, I treat all cloud resources as reproducible HCL modules rather than snowflakes.
-                    </p>
-                    <p>
-                      My study focuses on understanding remote state locking with DynamoDB to eliminate race conditions, structuring reusable modules, and ensuring zero configuration drift between git commits and real-world infrastructure.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="field-key-points">
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[DECLARATIVE STATE]</strong> Defining desired end state, letting Terraform graph dependencies.</span>
-                  </div>
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[STATE LOCKING]</strong> Preventing concurrent executions using distributed DynamoDB locks.</span>
-                  </div>
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[MODULARITY]</strong> Reusable blueprints for networking, storage, and security groups.</span>
+                  <div class="schematic-card-footer">
+                    <span>DISCIPLINE: CLOUD ARCHITECTURE</span>
+                    <span style="color: var(--accent-blue)"
+                      >VERIFIED // LAB_ACTIVE</span
+                    >
                   </div>
                 </div>
               </div>
 
-              <!-- Right: Hand-Inked Architectural Schematic & Code Inspector -->
-              <div class="chapter-schematic-card tilt-card">
-                <div class="specular-glare"></div>
-                <div class="schematic-card-header">
-                  <span class="schematic-header-label">// ARCHITECTURE SCHEMATIC &middot; TERRAFORM</span>
-                  <div class="schematic-tab-group">
-                    <button class="schematic-tab-btn active" data-view="schematic" type="button">Schematic</button>
-                    <button class="schematic-tab-btn" data-view="code" type="button">State Config</button>
+              <!-- PANEL 02: Terraform (infrastructure as code) -->
+              <div id="chapter-tf" class="chapter-panel">
+                <!-- Left: Human Field Notes -->
+                <div class="chapter-field-card tilt-card">
+                  <div class="specular-glare"></div>
+                  <div>
+                    <div class="field-card-top">
+                      <span class="field-chapter-num">CHAPTER 02</span>
+                      <span class="field-status-badge">IMMUTABLE STATE</span>
+                    </div>
+
+                    <div class="field-card-headline" style="margin-top: 14px">
+                      <h4>Terraform</h4>
+                      <span class="field-card-focus-tag"
+                        >Infrastructure as code</span
+                      >
+                    </div>
+
+                    <div class="field-note-prose">
+                      <p>
+                        <strong>Declarative Reality &amp; Zero Drift:</strong>
+                        The permanent shift from manual web console clicking to
+                        immutable, version-controlled state. In my labs, I treat
+                        all cloud resources as reproducible HCL modules rather
+                        than snowflakes.
+                      </p>
+                      <p>
+                        My study focuses on understanding remote state locking
+                        with DynamoDB to eliminate race conditions, structuring
+                        reusable modules, and ensuring zero configuration drift
+                        between git commits and real-world infrastructure.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="field-key-points">
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[DECLARATIVE STATE]</strong> Defining desired
+                        end state, letting Terraform graph dependencies.</span
+                      >
+                    </div>
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[STATE LOCKING]</strong> Preventing concurrent
+                        executions using distributed DynamoDB locks.</span
+                      >
+                    </div>
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[MODULARITY]</strong> Reusable blueprints for
+                        networking, storage, and security groups.</span
+                      >
+                    </div>
                   </div>
                 </div>
 
-                <div class="schematic-visual-box">
-                  <svg class="schematic-svg" viewBox="0 0 460 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 20 20 L 440 20 M 20 130 L 440 130 M 20 240 L 440 240" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
-                    
-                    <!-- Code Git Node -->
-                    <rect x="25" y="95" width="80" height="70" rx="8" stroke="#ffffff" stroke-width="1.2" fill="rgba(255,255,255,0.04)"/>
-                    <text x="65" y="125" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">*.TF FILES</text>
-                    <text x="65" y="142" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">Declarative HCL</text>
+                <!-- Right: Hand-Inked Architectural Schematic & Code Inspector -->
+                <div class="chapter-schematic-card tilt-card">
+                  <div class="specular-glare"></div>
+                  <div class="schematic-card-header">
+                    <span class="schematic-header-label"
+                      >// ARCHITECTURE SCHEMATIC &middot; TERRAFORM</span
+                    >
+                    <div class="schematic-tab-group">
+                      <button
+                        class="schematic-tab-btn active"
+                        data-view="schematic"
+                        type="button"
+                      >
+                        Schematic
+                      </button>
+                      <button
+                        class="schematic-tab-btn"
+                        data-view="code"
+                        type="button"
+                      >
+                        State Config
+                      </button>
+                    </div>
+                  </div>
 
-                    <!-- Arrow 1 -->
-                    <line x1="105" y1="130" x2="150" y2="130" stroke="#758bfd" stroke-width="1.5" stroke-dasharray="4,4"/>
+                  <div class="schematic-visual-box">
+                    <svg
+                      class="schematic-svg"
+                      viewBox="0 0 460 260"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M 20 20 L 440 20 M 20 130 L 440 130 M 20 240 L 440 240"
+                        stroke="rgba(255,255,255,0.05)"
+                        stroke-dasharray="2,4"
+                      />
 
-                    <!-- Terraform Engine Box -->
-                    <rect x="150" y="80" width="110" height="100" rx="10" stroke="#758bfd" stroke-width="1.8" fill="rgba(39,24,126,0.25)"/>
-                    <text x="205" y="115" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">TF ENGINE</text>
-                    <text x="205" y="132" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">DAG Dependency Graph</text>
-                    <text x="205" y="148" fill="#758bfd" font-family="monospace" font-size="8" text-anchor="middle">Plan &amp; Apply</text>
+                      <!-- Code Git Node -->
+                      <rect
+                        x="25"
+                        y="95"
+                        width="80"
+                        height="70"
+                        rx="8"
+                        stroke="#ffffff"
+                        stroke-width="1.2"
+                        fill="rgba(255,255,255,0.04)"
+                      />
+                      <text
+                        x="65"
+                        y="125"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="10"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        *.TF FILES
+                      </text>
+                      <text
+                        x="65"
+                        y="142"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        Declarative HCL
+                      </text>
 
-                    <!-- Arrow 2 -->
-                    <line x1="260" y1="130" x2="305" y2="130" stroke="#758bfd" stroke-width="1.5" stroke-dasharray="4,4"/>
+                      <!-- Arrow 1 -->
+                      <line
+                        x1="105"
+                        y1="130"
+                        x2="150"
+                        y2="130"
+                        stroke="#758bfd"
+                        stroke-width="1.5"
+                        stroke-dasharray="4,4"
+                      />
 
-                    <!-- Remote State Box -->
-                    <rect x="305" y="60" width="125" height="60" rx="8" stroke="#758bfd" stroke-width="1.2" fill="rgba(39,24,126,0.18)"/>
-                    <text x="367" y="88" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">S3 REMOTE STATE</text>
-                    <text x="367" y="104" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">Encrypted Storage</text>
+                      <!-- Terraform Engine Box -->
+                      <rect
+                        x="150"
+                        y="80"
+                        width="110"
+                        height="100"
+                        rx="10"
+                        stroke="#758bfd"
+                        stroke-width="1.8"
+                        fill="rgba(39,24,126,0.25)"
+                      />
+                      <text
+                        x="205"
+                        y="115"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="11"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        TF ENGINE
+                      </text>
+                      <text
+                        x="205"
+                        y="132"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        DAG Dependency Graph
+                      </text>
+                      <text
+                        x="205"
+                        y="148"
+                        fill="#758bfd"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        Plan &amp; Apply
+                      </text>
 
-                    <!-- DynamoDB Lock Box -->
-                    <rect x="305" y="140" width="125" height="60" rx="8" stroke="#758bfd" stroke-width="1.2" fill="rgba(39,24,126,0.18)"/>
-                    <text x="367" y="168" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">DYNAMODB LOCK</text>
-                    <text x="367" y="184" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">Zero Race Conditions</text>
-                  </svg>
-                </div>
+                      <!-- Arrow 2 -->
+                      <line
+                        x1="260"
+                        y1="130"
+                        x2="305"
+                        y2="130"
+                        stroke="#758bfd"
+                        stroke-width="1.5"
+                        stroke-dasharray="4,4"
+                      />
 
-                <div class="schematic-code-box">
-<pre><span style="color:#8b949e;"># backend.tf: Remote State Locking</span>
+                      <!-- Remote State Box -->
+                      <rect
+                        x="305"
+                        y="60"
+                        width="125"
+                        height="60"
+                        rx="8"
+                        stroke="#758bfd"
+                        stroke-width="1.2"
+                        fill="rgba(39,24,126,0.18)"
+                      />
+                      <text
+                        x="367"
+                        y="88"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="9"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        S3 REMOTE STATE
+                      </text>
+                      <text
+                        x="367"
+                        y="104"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        Encrypted Storage
+                      </text>
+
+                      <!-- DynamoDB Lock Box -->
+                      <rect
+                        x="305"
+                        y="140"
+                        width="125"
+                        height="60"
+                        rx="8"
+                        stroke="#758bfd"
+                        stroke-width="1.2"
+                        fill="rgba(39,24,126,0.18)"
+                      />
+                      <text
+                        x="367"
+                        y="168"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="9"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        DYNAMODB LOCK
+                      </text>
+                      <text
+                        x="367"
+                        y="184"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        Zero Race Conditions
+                      </text>
+                    </svg>
+                  </div>
+
+                  <div class="schematic-code-box">
+                    <pre><span style="color:#8b949e;"># backend.tf: Remote State Locking</span>
 <span style="color:#758bfd;">terraform</span> {
   backend <span style="color:#ffd6a2;">"s3"</span> {
     bucket         = <span style="color:#a0eac9;">"wvrner-terraform-state-prod"</span>
@@ -500,96 +990,246 @@
     encrypt        = <span style="color:#758bfd;">true</span>
   }
 }</pre>
-                </div>
-
-                <div class="schematic-card-footer">
-                  <span>DISCIPLINE: INFRASTRUCTURE AS CODE</span>
-                  <span style="color: var(--accent-blue);">ZERO_DRIFT // ENFORCED</span>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- PANEL 03: Docker (containers) -->
-            <div id="chapter-docker" class="chapter-panel">
-              
-              <!-- Left: Human Field Notes -->
-              <div class="chapter-field-card tilt-card">
-                <div class="specular-glare"></div>
-                <div>
-                  <div class="field-card-top">
-                    <span class="field-chapter-num">CHAPTER 03</span>
-                    <span class="field-status-badge">KERNEL ISOLATION</span>
                   </div>
 
-                  <div class="field-card-headline" style="margin-top: 14px;">
-                    <h4>Docker</h4>
-                    <span class="field-card-focus-tag">Containers</span>
-                  </div>
-
-                  <div class="field-note-prose">
-                    <p>
-                      <strong>Kernel Isolation from the Ground Up:</strong> Building containers from the kernel primitives up. Not merely memorizing <code>docker run</code>, but understanding how Linux cgroups, namespaces, and union filesystems construct process isolation.
-                    </p>
-                    <p>
-                      My recent labs focus on rewriting bulky 920MB runtime images into 28MB hardened Alpine/distroless builds that boot in milliseconds with minimal attack surface and zero root privileges.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="field-key-points">
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[MULTI-STAGE BUILDS]</strong> Compiling in heavy build stages, copying only static binaries to runtime.</span>
-                  </div>
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[MINIMAL ATTACK SURFACE]</strong> Eliminating package managers, shells, and root users.</span>
-                  </div>
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[COMPOSE TOPOLOGIES]</strong> Bridge networking, persistent volumes, and reverse proxy routing.</span>
+                  <div class="schematic-card-footer">
+                    <span>DISCIPLINE: INFRASTRUCTURE AS CODE</span>
+                    <span style="color: var(--accent-blue)"
+                      >ZERO_DRIFT // ENFORCED</span
+                    >
                   </div>
                 </div>
               </div>
 
-              <!-- Right: Hand-Inked Architectural Schematic & Code Inspector -->
-              <div class="chapter-schematic-card tilt-card">
-                <div class="specular-glare"></div>
-                <div class="schematic-card-header">
-                  <span class="schematic-header-label">// ARCHITECTURE SCHEMATIC &middot; DOCKER</span>
-                  <div class="schematic-tab-group">
-                    <button class="schematic-tab-btn active" data-view="schematic" type="button">Schematic</button>
-                    <button class="schematic-tab-btn" data-view="code" type="button">Dockerfile</button>
+              <!-- PANEL 03: Docker (containers) -->
+              <div id="chapter-docker" class="chapter-panel">
+                <!-- Left: Human Field Notes -->
+                <div class="chapter-field-card tilt-card">
+                  <div class="specular-glare"></div>
+                  <div>
+                    <div class="field-card-top">
+                      <span class="field-chapter-num">CHAPTER 03</span>
+                      <span class="field-status-badge">KERNEL ISOLATION</span>
+                    </div>
+
+                    <div class="field-card-headline" style="margin-top: 14px">
+                      <h4>Docker</h4>
+                      <span class="field-card-focus-tag">Containers</span>
+                    </div>
+
+                    <div class="field-note-prose">
+                      <p>
+                        <strong>Kernel Isolation from the Ground Up:</strong>
+                        Building containers from the kernel primitives up. Not
+                        merely memorizing <code>docker run</code>, but
+                        understanding how Linux cgroups, namespaces, and union
+                        filesystems construct process isolation.
+                      </p>
+                      <p>
+                        My recent labs focus on rewriting bulky 920MB runtime
+                        images into 28MB hardened Alpine/distroless builds that
+                        boot in milliseconds with minimal attack surface and
+                        zero root privileges.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="field-key-points">
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[MULTI-STAGE BUILDS]</strong> Compiling in
+                        heavy build stages, copying only static binaries to
+                        runtime.</span
+                      >
+                    </div>
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[MINIMAL ATTACK SURFACE]</strong> Eliminating
+                        package managers, shells, and root users.</span
+                      >
+                    </div>
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[COMPOSE TOPOLOGIES]</strong> Bridge
+                        networking, persistent volumes, and reverse proxy
+                        routing.</span
+                      >
+                    </div>
                   </div>
                 </div>
 
-                <div class="schematic-visual-box">
-                  <svg class="schematic-svg" viewBox="0 0 460 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 20 20 L 440 20 M 20 130 L 440 130 M 20 240 L 440 240" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
-                    
-                    <!-- Build Stage Box -->
-                    <rect x="25" y="70" width="135" height="120" rx="8" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" fill="rgba(255,255,255,0.03)"/>
-                    <text x="92" y="98" fill="#8b949e" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">STAGE 1: BUILDER</text>
-                    <text x="92" y="122" fill="#ffffff" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">FULL SDK / TOOLS</text>
-                    <text x="92" y="146" fill="#8b949e" font-family="monospace" font-size="9" text-anchor="middle">Image: ~920 MB</text>
-                    <text x="92" y="166" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">Compiler &amp; Dependencies</text>
+                <!-- Right: Hand-Inked Architectural Schematic & Code Inspector -->
+                <div class="chapter-schematic-card tilt-card">
+                  <div class="specular-glare"></div>
+                  <div class="schematic-card-header">
+                    <span class="schematic-header-label"
+                      >// ARCHITECTURE SCHEMATIC &middot; DOCKER</span
+                    >
+                    <div class="schematic-tab-group">
+                      <button
+                        class="schematic-tab-btn active"
+                        data-view="schematic"
+                        type="button"
+                      >
+                        Schematic
+                      </button>
+                      <button
+                        class="schematic-tab-btn"
+                        data-view="code"
+                        type="button"
+                      >
+                        Dockerfile
+                      </button>
+                    </div>
+                  </div>
 
-                    <!-- Filter / Strip Funnel Arrow -->
-                    <path d="M 160 130 L 225 130" stroke="#758bfd" stroke-width="2" stroke-dasharray="4,4"/>
-                    <text x="192" y="120" fill="#758bfd" font-family="monospace" font-size="8" text-anchor="middle">COPY --from</text>
+                  <div class="schematic-visual-box">
+                    <svg
+                      class="schematic-svg"
+                      viewBox="0 0 460 260"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M 20 20 L 440 20 M 20 130 L 440 130 M 20 240 L 440 240"
+                        stroke="rgba(255,255,255,0.05)"
+                        stroke-dasharray="2,4"
+                      />
 
-                    <!-- Final Minimal Stage Box -->
-                    <rect x="225" y="70" width="205" height="120" rx="10" stroke="#758bfd" stroke-width="1.8" fill="rgba(39,24,126,0.25)"/>
-                    <text x="327" y="98" fill="#758bfd" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">STAGE 2: HARDENED RUNTIME</text>
-                    <text x="327" y="124" fill="#ffffff" font-family="monospace" font-size="12" font-weight="bold" text-anchor="middle">ALPINE / DISTROLESS</text>
-                    <text x="327" y="148" fill="#a0eac9" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">Image: 28 MB (97% Reduction)</text>
-                    <text x="327" y="168" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">Non-Root &middot; 0 Shells &middot; 0 Vulnerabilities</text>
-                  </svg>
-                </div>
+                      <!-- Build Stage Box -->
+                      <rect
+                        x="25"
+                        y="70"
+                        width="135"
+                        height="120"
+                        rx="8"
+                        stroke="rgba(255,255,255,0.2)"
+                        stroke-width="1.2"
+                        fill="rgba(255,255,255,0.03)"
+                      />
+                      <text
+                        x="92"
+                        y="98"
+                        fill="#8b949e"
+                        font-family="monospace"
+                        font-size="9"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        STAGE 1: BUILDER
+                      </text>
+                      <text
+                        x="92"
+                        y="122"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="11"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        FULL SDK / TOOLS
+                      </text>
+                      <text
+                        x="92"
+                        y="146"
+                        fill="#8b949e"
+                        font-family="monospace"
+                        font-size="9"
+                        text-anchor="middle"
+                      >
+                        Image: ~920 MB
+                      </text>
+                      <text
+                        x="92"
+                        y="166"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        Compiler &amp; Dependencies
+                      </text>
 
-                <div class="schematic-code-box">
-<pre><span style="color:#8b949e;"># Multi-Stage Build: 920MB -> 28MB</span>
+                      <!-- Filter / Strip Funnel Arrow -->
+                      <path
+                        d="M 160 130 L 225 130"
+                        stroke="#758bfd"
+                        stroke-width="2"
+                        stroke-dasharray="4,4"
+                      />
+                      <text
+                        x="192"
+                        y="120"
+                        fill="#758bfd"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        COPY --from
+                      </text>
+
+                      <!-- Final Minimal Stage Box -->
+                      <rect
+                        x="225"
+                        y="70"
+                        width="205"
+                        height="120"
+                        rx="10"
+                        stroke="#758bfd"
+                        stroke-width="1.8"
+                        fill="rgba(39,24,126,0.25)"
+                      />
+                      <text
+                        x="327"
+                        y="98"
+                        fill="#758bfd"
+                        font-family="monospace"
+                        font-size="9"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        STAGE 2: HARDENED RUNTIME
+                      </text>
+                      <text
+                        x="327"
+                        y="124"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="12"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        ALPINE / DISTROLESS
+                      </text>
+                      <text
+                        x="327"
+                        y="148"
+                        fill="#a0eac9"
+                        font-family="monospace"
+                        font-size="10"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        Image: 28 MB (97% Reduction)
+                      </text>
+                      <text
+                        x="327"
+                        y="168"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        Non-Root &middot; 0 Shells &middot; 0 Vulnerabilities
+                      </text>
+                    </svg>
+                  </div>
+
+                  <div class="schematic-code-box">
+                    <pre><span style="color:#8b949e;"># Multi-Stage Build: 920MB -> 28MB</span>
 <span style="color:#758bfd;">FROM</span> golang:1.22-alpine <span style="color:#758bfd;">AS</span> builder
 <span style="color:#758bfd;">WORKDIR</span> /app
 <span style="color:#758bfd;">COPY</span> go.* ./ &amp;&amp; <span style="color:#758bfd;">RUN</span> go mod download
@@ -601,107 +1241,281 @@
 <span style="color:#758bfd;">COPY</span> --from=builder /app/server /server
 <span style="color:#758bfd;">USER</span> nonroot:nonroot
 <span style="color:#758bfd;">ENTRYPOINT</span> [<span style="color:#a0eac9;">"/server"</span>]</pre>
-                </div>
-
-                <div class="schematic-card-footer">
-                  <span>DISCIPLINE: CONTAINER RUNTIMES</span>
-                  <span style="color: var(--accent-blue);">HARDENED // 28MB_BUILD</span>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- PANEL 04: GitHub Actions (CI/CD) -->
-            <div id="chapter-actions" class="chapter-panel">
-              
-              <!-- Left: Human Field Notes -->
-              <div class="chapter-field-card tilt-card">
-                <div class="specular-glare"></div>
-                <div>
-                  <div class="field-card-top">
-                    <span class="field-chapter-num">CHAPTER 04</span>
-                    <span class="field-status-badge">PIPELINE AUTOMATED</span>
                   </div>
 
-                  <div class="field-card-headline" style="margin-top: 14px;">
-                    <h4>GitHub Actions</h4>
-                    <span class="field-card-focus-tag">CI/CD</span>
-                  </div>
-
-                  <div class="field-note-prose">
-                    <p>
-                      <strong>Zero-Downtime Keyless Delivery:</strong> Connecting the chain from local git push to global edge rollout. In my workflows, I configure keyless AWS OIDC authentication so no long-lived API keys ever exist in repositories.
-                    </p>
-                    <p>
-                      On every push to main, the runner executes automated tests, synchronizes static assets to S3, and invalidates CloudFront edge caches in under 4 seconds, eliminating manual deployment toil.
-                    </p>
-                  </div>
-                </div>
-
-                <div class="field-key-points">
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[KEYLESS OIDC]</strong> Short-lived federated credentials directly from GitHub to AWS STS.</span>
-                  </div>
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[DETERMINISTIC GATES]</strong> Automated lint, formatting checks, and security tests.</span>
-                  </div>
-                  <div class="key-point-item">
-                    <span class="key-point-bullet">&rarr;</span>
-                    <span><strong>[GLOBAL EDGE FLUSH]</strong> Instant zero-downtime cache invalidation across 450+ PoPs in &lt; 4.0s.</span>
+                  <div class="schematic-card-footer">
+                    <span>DISCIPLINE: CONTAINER RUNTIMES</span>
+                    <span style="color: var(--accent-blue)"
+                      >HARDENED // 28MB_BUILD</span
+                    >
                   </div>
                 </div>
               </div>
 
-              <!-- Right: Hand-Inked Architectural Schematic & Code Inspector -->
-              <div class="chapter-schematic-card tilt-card">
-                <div class="specular-glare"></div>
-                <div class="schematic-card-header">
-                  <span class="schematic-header-label">// ARCHITECTURE SCHEMATIC &middot; CI/CD</span>
-                  <div class="schematic-tab-group">
-                    <button class="schematic-tab-btn active" data-view="schematic" type="button">Schematic</button>
-                    <button class="schematic-tab-btn" data-view="code" type="button">Workflow YAML</button>
+              <!-- PANEL 04: GitHub Actions (CI/CD) -->
+              <div id="chapter-actions" class="chapter-panel">
+                <!-- Left: Human Field Notes -->
+                <div class="chapter-field-card tilt-card">
+                  <div class="specular-glare"></div>
+                  <div>
+                    <div class="field-card-top">
+                      <span class="field-chapter-num">CHAPTER 04</span>
+                      <span class="field-status-badge">PIPELINE AUTOMATED</span>
+                    </div>
+
+                    <div class="field-card-headline" style="margin-top: 14px">
+                      <h4>GitHub Actions</h4>
+                      <span class="field-card-focus-tag">CI/CD</span>
+                    </div>
+
+                    <div class="field-note-prose">
+                      <p>
+                        <strong>Zero-Downtime Keyless Delivery:</strong>
+                        Connecting the chain from local git push to global edge
+                        rollout. In my workflows, I configure keyless AWS OIDC
+                        authentication so no long-lived API keys ever exist in
+                        repositories.
+                      </p>
+                      <p>
+                        On every push to main, the runner executes automated
+                        tests, synchronizes static assets to S3, and invalidates
+                        CloudFront edge caches in under 4 seconds, eliminating
+                        manual deployment toil.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="field-key-points">
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[KEYLESS OIDC]</strong> Short-lived federated
+                        credentials directly from GitHub to AWS STS.</span
+                      >
+                    </div>
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[DETERMINISTIC GATES]</strong> Automated lint,
+                        formatting checks, and security tests.</span
+                      >
+                    </div>
+                    <div class="key-point-item">
+                      <span class="key-point-bullet">&rarr;</span>
+                      <span
+                        ><strong>[GLOBAL EDGE FLUSH]</strong> Instant
+                        zero-downtime cache invalidation across 450+ PoPs in
+                        &lt; 4.0s.</span
+                      >
+                    </div>
                   </div>
                 </div>
 
-                <div class="schematic-visual-box">
-                  <svg class="schematic-svg" viewBox="0 0 460 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M 20 20 L 440 20 M 20 130 L 440 130 M 20 240 L 440 240" stroke="rgba(255,255,255,0.05)" stroke-dasharray="2,4"/>
-                    
-                    <!-- Git Push Event -->
-                    <circle cx="55" cy="130" r="22" stroke="#ffffff" stroke-width="1.2" fill="rgba(255,255,255,0.04)"/>
-                    <text x="55" y="134" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">PUSH</text>
+                <!-- Right: Hand-Inked Architectural Schematic & Code Inspector -->
+                <div class="chapter-schematic-card tilt-card">
+                  <div class="specular-glare"></div>
+                  <div class="schematic-card-header">
+                    <span class="schematic-header-label"
+                      >// ARCHITECTURE SCHEMATIC &middot; CI/CD</span
+                    >
+                    <div class="schematic-tab-group">
+                      <button
+                        class="schematic-tab-btn active"
+                        data-view="schematic"
+                        type="button"
+                      >
+                        Schematic
+                      </button>
+                      <button
+                        class="schematic-tab-btn"
+                        data-view="code"
+                        type="button"
+                      >
+                        Workflow YAML
+                      </button>
+                    </div>
+                  </div>
 
-                    <!-- Connector 1 -->
-                    <line x1="77" y1="130" x2="115" y2="130" stroke="#758bfd" stroke-width="1.5" stroke-dasharray="4,4"/>
+                  <div class="schematic-visual-box">
+                    <svg
+                      class="schematic-svg"
+                      viewBox="0 0 460 260"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M 20 20 L 440 20 M 20 130 L 440 130 M 20 240 L 440 240"
+                        stroke="rgba(255,255,255,0.05)"
+                        stroke-dasharray="2,4"
+                      />
 
-                    <!-- Runner Node -->
-                    <rect x="115" y="85" width="105" height="90" rx="8" stroke="#758bfd" stroke-width="1.8" fill="rgba(39,24,126,0.25)"/>
-                    <text x="167" y="115" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">GH RUNNER</text>
-                    <text x="167" y="132" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">Lint &middot; Test &middot; Build</text>
-                    <text x="167" y="150" fill="#758bfd" font-family="monospace" font-size="8" text-anchor="middle">OIDC STS Auth</text>
+                      <!-- Git Push Event -->
+                      <circle
+                        cx="55"
+                        cy="130"
+                        r="22"
+                        stroke="#ffffff"
+                        stroke-width="1.2"
+                        fill="rgba(255,255,255,0.04)"
+                      />
+                      <text
+                        x="55"
+                        y="134"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="9"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        PUSH
+                      </text>
 
-                    <!-- Connector 2 -->
-                    <line x1="220" y1="130" x2="260" y2="130" stroke="#758bfd" stroke-width="1.5" stroke-dasharray="4,4"/>
+                      <!-- Connector 1 -->
+                      <line
+                        x1="77"
+                        y1="130"
+                        x2="115"
+                        y2="130"
+                        stroke="#758bfd"
+                        stroke-width="1.5"
+                        stroke-dasharray="4,4"
+                      />
 
-                    <!-- S3 Sync Node -->
-                    <rect x="260" y="90" width="80" height="80" rx="8" stroke="#ffffff" stroke-width="1.2" fill="rgba(255,255,255,0.04)"/>
-                    <text x="300" y="125" fill="#ffffff" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">S3 SYNC</text>
-                    <text x="300" y="142" fill="#aeb8fe" font-family="monospace" font-size="8" text-anchor="middle">Static Origin</text>
+                      <!-- Runner Node -->
+                      <rect
+                        x="115"
+                        y="85"
+                        width="105"
+                        height="90"
+                        rx="8"
+                        stroke="#758bfd"
+                        stroke-width="1.8"
+                        fill="rgba(39,24,126,0.25)"
+                      />
+                      <text
+                        x="167"
+                        y="115"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="10"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        GH RUNNER
+                      </text>
+                      <text
+                        x="167"
+                        y="132"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        Lint &middot; Test &middot; Build
+                      </text>
+                      <text
+                        x="167"
+                        y="150"
+                        fill="#758bfd"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        OIDC STS Auth
+                      </text>
 
-                    <!-- Connector 3 -->
-                    <line x1="340" y1="130" x2="375" y2="130" stroke="#758bfd" stroke-width="1.5" stroke-dasharray="4,4"/>
+                      <!-- Connector 2 -->
+                      <line
+                        x1="220"
+                        y1="130"
+                        x2="260"
+                        y2="130"
+                        stroke="#758bfd"
+                        stroke-width="1.5"
+                        stroke-dasharray="4,4"
+                      />
 
-                    <!-- Invalidation Node -->
-                    <rect x="375" y="95" width="65" height="70" rx="8" stroke="#758bfd" stroke-width="1.5" fill="rgba(39,24,126,0.3)"/>
-                    <text x="407" y="125" fill="#ffffff" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">FLUSH</text>
-                    <text x="407" y="142" fill="#758bfd" font-family="monospace" font-size="8" text-anchor="middle">CDN /*</text>
-                  </svg>
-                </div>
+                      <!-- S3 Sync Node -->
+                      <rect
+                        x="260"
+                        y="90"
+                        width="80"
+                        height="80"
+                        rx="8"
+                        stroke="#ffffff"
+                        stroke-width="1.2"
+                        fill="rgba(255,255,255,0.04)"
+                      />
+                      <text
+                        x="300"
+                        y="125"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="10"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        S3 SYNC
+                      </text>
+                      <text
+                        x="300"
+                        y="142"
+                        fill="#aeb8fe"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        Static Origin
+                      </text>
 
-                <div class="schematic-code-box">
-<pre><span style="color:#8b949e;"># .github/workflows/deploy.yml: Keyless OIDC Pipeline</span>
+                      <!-- Connector 3 -->
+                      <line
+                        x1="340"
+                        y1="130"
+                        x2="375"
+                        y2="130"
+                        stroke="#758bfd"
+                        stroke-width="1.5"
+                        stroke-dasharray="4,4"
+                      />
+
+                      <!-- Invalidation Node -->
+                      <rect
+                        x="375"
+                        y="95"
+                        width="65"
+                        height="70"
+                        rx="8"
+                        stroke="#758bfd"
+                        stroke-width="1.5"
+                        fill="rgba(39,24,126,0.3)"
+                      />
+                      <text
+                        x="407"
+                        y="125"
+                        fill="#ffffff"
+                        font-family="monospace"
+                        font-size="9"
+                        font-weight="bold"
+                        text-anchor="middle"
+                      >
+                        FLUSH
+                      </text>
+                      <text
+                        x="407"
+                        y="142"
+                        fill="#758bfd"
+                        font-family="monospace"
+                        font-size="8"
+                        text-anchor="middle"
+                      >
+                        CDN /*
+                      </text>
+                    </svg>
+                  </div>
+
+                  <div class="schematic-code-box">
+                    <pre><span style="color:#8b949e;"># .github/workflows/deploy.yml: Keyless OIDC Pipeline</span>
 <span style="color:#758bfd;">name</span>: Deploy Infrastructure
 <span style="color:#758bfd;">on</span>:
   <span style="color:#ffd6a2;">push</span>:
@@ -720,20 +1534,20 @@
           aws-region: us-east-1
       - run: aws s3 sync . s3://wvrner-prod --delete
       - run: aws cloudfront create-invalidation --distribution-id $DIST --paths "/*"</pre>
-                </div>
+                  </div>
 
-                <div class="schematic-card-footer">
-                  <span>DISCIPLINE: AUTOMATED DELIVERY</span>
-                  <span style="color: var(--accent-blue);">KEYLESS_OIDC // 3.8s_RUN</span>
+                  <div class="schematic-card-footer">
+                    <span>DISCIPLINE: AUTOMATED DELIVERY</span>
+                    <span style="color: var(--accent-blue)"
+                      >KEYLESS_OIDC // 3.8s_RUN</span
+                    >
+                  </div>
                 </div>
               </div>
-
             </div>
-
           </div>
-        </div>
 
-              <!-- =========================================================================
+          <!-- =========================================================================
            KID-FRIENDLY EXPLANATION:
            This marks the end of the Learning Chapters (AWS, Terraform, Docker, GitHub Actions).
            Now we step into the colorful middle-to-bottom half of the website!
@@ -754,140 +1568,219 @@
            ========================================================================= -->
       <section class="systems-architecture-section" id="systems-architecture">
         <div class="diversity-container">
-<!-- 4. Design & Systems Engineering Synergy Feature Card -->
-        <div class="design-synergy-card tilt-card">
-          <div class="specular-glare"></div>
-          <div class="design-synergy-left">
-            <span class="design-synergy-badge">
-              <span class="pulse-beacon" aria-hidden="true"></span>
-              <span>Design &times; DevOps Synergy</span>
-            </span>
-            <div class="design-synergy-quote">
-              &ldquo;My background in design still influences how I approach technical problems. I naturally look for patterns, understand systems by breaking them down, and think about how different components interact.&rdquo;
+          <!-- 4. Design & Systems Engineering Synergy Feature Card -->
+          <div class="design-synergy-card tilt-card">
+            <div class="specular-glare"></div>
+            <div class="design-synergy-left">
+              <span class="design-synergy-badge">
+                <span class="pulse-beacon" aria-hidden="true"></span>
+                <span>Design &times; DevOps Synergy</span>
+              </span>
+              <div class="design-synergy-quote">
+                &ldquo;My background in design still influences how I approach
+                technical problems. I naturally look for patterns, understand
+                systems by breaking them down, and think about how different
+                components interact.&rdquo;
+              </div>
+            </div>
+
+            <div class="design-synergy-right">
+              <div class="synergy-point">
+                <span class="synergy-point-title">Pattern Recognition</span>
+                <span class="synergy-point-desc"
+                  >Deconstructing complex architectures into clean, reusable
+                  modular primitives, similar to design systems.</span
+                >
+              </div>
+              <div class="synergy-point">
+                <span class="synergy-point-title">Component Interaction</span>
+                <span class="synergy-point-desc"
+                  >Designing infrastructure where decoupled micro-services,
+                  APIs, and networks communicate reliably and predictably.</span
+                >
+              </div>
             </div>
           </div>
 
-          <div class="design-synergy-right">
-            <div class="synergy-point">
-              <span class="synergy-point-title">Pattern Recognition</span>
-              <span class="synergy-point-desc">Deconstructing complex architectures into clean, reusable modular primitives, similar to design systems.</span>
-            </div>
-            <div class="synergy-point">
-              <span class="synergy-point-title">Component Interaction</span>
-              <span class="synergy-point-desc">Designing infrastructure where decoupled micro-services, APIs, and networks communicate reliably and predictably.</span>
-            </div>
-          </div>
-        </div>
+          <!-- 5. Real Infrastructure Architecture (This Website) - Compact & Fun -->
+          <div class="compact-arch-card tilt-card" id="infraShowcase">
+            <div class="specular-glare"></div>
 
-        <!-- 5. Real Infrastructure Architecture (This Website) - Compact & Fun -->
-        <div class="compact-arch-card tilt-card" id="infraShowcase">
-          <div class="specular-glare"></div>
-          
-          <!-- Compact Header Row -->
-          <div class="compact-arch-header">
-            <div class="compact-arch-title-group">
-              <div class="compact-badges-row">
-                <span class="compact-tech-pill">
-                  <span class="live-dot" aria-hidden="true"></span>
-                  <span>AWS CloudFront + S3</span>
-                </span>
-                <span class="compact-tech-pill">Terraform IaC</span>
-                <span class="compact-tech-pill">GitHub Actions CI/CD</span>
+            <!-- Compact Header Row -->
+            <div class="compact-arch-header">
+              <div class="compact-arch-title-group">
+                <div class="compact-badges-row">
+                  <span class="compact-tech-pill">
+                    <span class="live-dot" aria-hidden="true"></span>
+                    <span>AWS CloudFront + S3</span>
+                  </span>
+                  <span class="compact-tech-pill">Terraform IaC</span>
+                  <span class="compact-tech-pill">GitHub Actions CI/CD</span>
+                </div>
+                <h3 class="compact-arch-title">
+                  This website. Hosted on AWS, defined with Terraform, deployed
+                  automatically with GitHub Actions.
+                </h3>
               </div>
-              <h3 class="compact-arch-title">
-                This website. Hosted on AWS, defined with Terraform, deployed automatically with GitHub Actions.
-              </h3>
             </div>
 
-            <!-- Fun Interactive Action Button -->
-            <button id="traceFlowBtn" class="fun-trace-btn" type="button" aria-label="Simulate request flow across architecture">
-              <span class="trace-icon">⚡</span>
-              <span class="trace-text">Trace Request Flow</span>
-            </button>
-          </div>
+            <!-- Interactive 4-Node Flow Strip -->
+            <div
+              class="compact-flow-strip"
+              role="tablist"
+              aria-label="Architecture Pipeline Nodes"
+            >
+              <button
+                class="flow-node active"
+                data-node="browser"
+                data-target="pane-tf"
+                type="button"
+                role="tab"
+                aria-selected="true"
+              >
+                <span class="flow-node-num">01</span>
+                <span class="flow-node-icon">🌐</span>
+                <div class="flow-node-info">
+                  <strong class="flow-node-name">Client Browser</strong>
+                  <span class="flow-node-sub">HTTPS / TLS 1.3</span>
+                </div>
+              </button>
 
-          <!-- Interactive 4-Node Flow Strip -->
-          <div class="compact-flow-strip" role="tablist" aria-label="Architecture Pipeline Nodes">
-            <button class="flow-node active" data-node="browser" data-target="pane-tf" type="button" role="tab" aria-selected="true">
-              <span class="flow-node-num">01</span>
-              <span class="flow-node-icon">🌐</span>
-              <div class="flow-node-info">
-                <strong class="flow-node-name">Client Browser</strong>
-                <span class="flow-node-sub">HTTPS / TLS 1.3</span>
+              <div class="flow-connector" aria-hidden="true">
+                <span class="flow-pulse-dot"></span>
               </div>
-            </button>
 
-            <div class="flow-connector" aria-hidden="true">
-              <span class="flow-pulse-dot"></span>
-            </div>
+              <button
+                class="flow-node"
+                data-node="dns"
+                data-target="pane-tf"
+                type="button"
+                role="tab"
+                aria-selected="false"
+              >
+                <span class="flow-node-num">02</span>
+                <span class="flow-node-icon">🧭</span>
+                <div class="flow-node-info">
+                  <strong class="flow-node-name">Route 53</strong>
+                  <span class="flow-node-sub">Anycast DNS</span>
+                </div>
+              </button>
 
-            <button class="flow-node" data-node="dns" data-target="pane-tf" type="button" role="tab" aria-selected="false">
-              <span class="flow-node-num">02</span>
-              <span class="flow-node-icon">🧭</span>
-              <div class="flow-node-info">
-                <strong class="flow-node-name">Route 53</strong>
-                <span class="flow-node-sub">Anycast DNS</span>
+              <div class="flow-connector" aria-hidden="true">
+                <span class="flow-pulse-dot"></span>
               </div>
-            </button>
 
-            <div class="flow-connector" aria-hidden="true">
-              <span class="flow-pulse-dot"></span>
-            </div>
+              <button
+                class="flow-node"
+                data-node="cdn"
+                data-target="pane-tf"
+                type="button"
+                role="tab"
+                aria-selected="false"
+              >
+                <span class="flow-node-num">03</span>
+                <span class="flow-node-icon">⚡</span>
+                <div class="flow-node-info">
+                  <strong class="flow-node-name">CloudFront CDN</strong>
+                  <span class="flow-node-sub">Edge OAC Cache</span>
+                </div>
+              </button>
 
-            <button class="flow-node" data-node="cdn" data-target="pane-tf" type="button" role="tab" aria-selected="false">
-              <span class="flow-node-num">03</span>
-              <span class="flow-node-icon">⚡</span>
-              <div class="flow-node-info">
-                <strong class="flow-node-name">CloudFront CDN</strong>
-                <span class="flow-node-sub">Edge OAC Cache</span>
+              <div class="flow-connector" aria-hidden="true">
+                <span class="flow-pulse-dot"></span>
               </div>
-            </button>
 
-            <div class="flow-connector" aria-hidden="true">
-              <span class="flow-pulse-dot"></span>
-            </div>
-
-            <button class="flow-node" data-node="s3" data-target="pane-tf" type="button" role="tab" aria-selected="false">
-              <span class="flow-node-num">04</span>
-              <span class="flow-node-icon">🪣</span>
-              <div class="flow-node-info">
-                <strong class="flow-node-name">AWS S3 Bucket</strong>
-                <span class="flow-node-sub">Private Origin</span>
-              </div>
-            </button>
-          </div>
-
-          <!-- Dynamic Node Explainer Ribbon -->
-          <div id="flowStatusBanner" class="flow-status-banner">
-            <span class="flow-status-icon">💡</span>
-            <span id="flowStatusMsg" class="flow-status-text">
-              <strong>Client Ingress:</strong> Modern browser establishes TLS 1.3 connection to Anycast edge. Click any node to inspect its code.
-            </span>
-          </div>
-
-          <!-- Compact Mini-Code Console -->
-          <div class="compact-code-console">
-            <div class="console-top-bar">
-              <div class="console-window-dots" aria-hidden="true">
-                <span class="c-dot red"></span>
-                <span class="c-dot yellow"></span>
-                <span class="c-dot green"></span>
-              </div>
-              <div class="console-tabs" role="tablist">
-                <button class="console-tab active" data-pane="pane-tf" type="button">📄 main.tf (Terraform)</button>
-                <button class="console-tab" data-pane="pane-ci" type="button">🚀 deploy.yml (CI/CD)</button>
-                <button class="console-tab" data-pane="pane-backend" type="button">⚙️ providers.tf (State Lock)</button>
-              </div>
-              <button id="copyCodeBtn" class="console-copy-btn" type="button" aria-label="Copy active code snippet">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <span id="copyCodeLabel">Copy</span>
+              <button
+                class="flow-node"
+                data-node="s3"
+                data-target="pane-tf"
+                type="button"
+                role="tab"
+                aria-selected="false"
+              >
+                <span class="flow-node-num">04</span>
+                <span class="flow-node-icon">🪣</span>
+                <div class="flow-node-info">
+                  <strong class="flow-node-name">AWS S3 Bucket</strong>
+                  <span class="flow-node-sub">Private Origin</span>
+                </div>
               </button>
             </div>
 
-            <div class="console-body">
-              <!-- Tab 1: Real main.tf -->
-              <div id="pane-tf" class="console-pane active">
-<pre><code><span class="term-dim"># infra/terraform/main.tf: Complete AWS S3 + CloudFront OAC Architecture</span>
+            <!-- Dynamic Node Explainer Ribbon -->
+            <div id="flowStatusBanner" class="flow-status-banner">
+              <span class="flow-status-icon">💡</span>
+              <span id="flowStatusMsg" class="flow-status-text">
+                <strong>Client Ingress:</strong> Modern browser establishes TLS
+                1.3 connection to Anycast edge. Click any node to inspect its
+                code.
+              </span>
+            </div>
+
+            <!-- Compact Mini-Code Console -->
+            <div class="compact-code-console">
+              <div class="console-top-bar">
+                <div class="console-window-dots" aria-hidden="true">
+                  <span class="c-dot red"></span>
+                  <span class="c-dot yellow"></span>
+                  <span class="c-dot green"></span>
+                </div>
+                <div class="console-tabs" role="tablist">
+                  <button
+                    class="console-tab active"
+                    data-pane="pane-tf"
+                    type="button"
+                  >
+                    📄 main.tf (Terraform)
+                  </button>
+                  <button class="console-tab" data-pane="pane-ci" type="button">
+                    🚀 deploy.yml (CI/CD)
+                  </button>
+                  <button
+                    class="console-tab"
+                    data-pane="pane-backend"
+                    type="button"
+                  >
+                    ⚙️ providers.tf (State Lock)
+                  </button>
+                </div>
+                <button
+                  id="copyCodeBtn"
+                  class="console-copy-btn"
+                  type="button"
+                  aria-label="Copy active code snippet"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect
+                      x="9"
+                      y="9"
+                      width="13"
+                      height="13"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <path
+                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                    ></path>
+                  </svg>
+                  <span id="copyCodeLabel">Copy</span>
+                </button>
+              </div>
+
+              <div class="console-body">
+                <!-- Tab 1: Real main.tf -->
+                <div id="pane-tf" class="console-pane active">
+                  <pre><code><span class="term-dim"># infra/terraform/main.tf: Complete AWS S3 + CloudFront OAC Architecture</span>
 <span class="term-cyan">resource</span> <span class="term-amber">"aws_s3_bucket"</span> <span class="term-green">"portfolio"</span> {
   bucket = var.bucket_name
 }
@@ -936,11 +1829,11 @@
   bucket = aws_s3_bucket.portfolio.id
   policy = data.aws_iam_policy_document.s3_oac_policy.json
 }</code></pre>
-              </div>
+                </div>
 
-              <!-- Tab 2: Real deploy.yml -->
-              <div id="pane-ci" class="console-pane">
-<pre><code><span class="term-dim"># .github/workflows/deploy.yml: Keyless OIDC Continuous Deployment Pipeline</span>
+                <!-- Tab 2: Real deploy.yml -->
+                <div id="pane-ci" class="console-pane">
+                  <pre><code><span class="term-dim"># .github/workflows/deploy.yml: Keyless OIDC Continuous Deployment Pipeline</span>
 <span class="term-cyan">name</span>: Deploy wvrner Portfolio to AWS
 <span class="term-cyan">on</span>:
   <span class="term-amber">push</span>:
@@ -974,11 +1867,11 @@
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"</code></pre>
-              </div>
+                </div>
 
-              <!-- Tab 3: Real providers.tf -->
-              <div id="pane-backend" class="console-pane">
-<pre><code><span class="term-dim"># infra/terraform/providers.tf: Provider &amp; Remote S3 State Configuration</span>
+                <!-- Tab 3: Real providers.tf -->
+                <div id="pane-backend" class="console-pane">
+                  <pre><code><span class="term-dim"># infra/terraform/providers.tf: Provider &amp; Remote S3 State Configuration</span>
 <span class="term-cyan">terraform</span> {
   required_version = <span class="term-green">"&gt;= 1.5.0"</span>
 
@@ -1008,157 +1901,267 @@
     }
   }
 }</code></pre>
+                </div>
+              </div>
+
+              <!-- Console Micro Footer -->
+              <div class="console-footer-bar">
+                <span class="console-foot-item">
+                  <span class="term-green">&#x2714;</span> 100% Real Repository
+                  Source
+                </span>
+                <span class="console-foot-paths">
+                  <code>infra/terraform/main.tf</code> &middot;
+                  <code>.github/workflows/deploy.yml</code>
+                </span>
               </div>
             </div>
+          </div>
 
-            <!-- Console Micro Footer -->
-            <div class="console-footer-bar">
-              <span class="console-foot-item">
-                <span class="term-green">&#x2714;</span> 100% Real Repository Source
-              </span>
-              <span class="console-foot-paths">
-                <code>infra/terraform/main.tf</code> &middot; <code>.github/workflows/deploy.yml</code>
-              </span>
+          <!-- 6. Pipeline & Labs Upcoming Card -->
+          <div class="project-upcoming-card tilt-card">
+            <div class="specular-glare"></div>
+            <div class="upcoming-tag">// PIPELINE &amp; LABS</div>
+            <div>
+              <h3 class="upcoming-title">More projects coming soon.</h3>
+              <p class="upcoming-desc">
+                Currently learning, building, and turning theory into practical
+                infrastructure projects. Next up: Multi-container Docker compose
+                topologies, custom Linux network bridges, and AWS VPC peering
+                experiments.
+              </p>
+            </div>
+            <div class="learning-subtag">
+              <span
+                >Next up: Multi-container Docker compose environments &amp; AWS
+                VPC peering experiments.</span
+              >
             </div>
           </div>
-        </div>
-
-        <!-- 6. Pipeline & Labs Upcoming Card -->
-        <div class="project-upcoming-card tilt-card">
-          <div class="specular-glare"></div>
-          <div class="upcoming-tag">// PIPELINE &amp; LABS</div>
-          <div>
-            <h3 class="upcoming-title">More projects coming soon.</h3>
-            <p class="upcoming-desc">
-              Currently learning, building, and turning theory into practical infrastructure projects. Next up: Multi-container Docker compose topologies, custom Linux network bridges, and AWS VPC peering experiments.
-            </p>
-          </div>
-          <div class="learning-subtag">
-            <span>Next up: Multi-container Docker compose environments &amp; AWS VPC peering experiments.</span>
-          </div>
-        </div>
-
         </div>
       </section>
-  </main>
+    </main>
 
-  <!-- Rebuilt Unique & Modern Footer (wvrner Aesthetic) -->
-  <footer class="unique-modern-footer">
-    <div class="footer-container">
-      <div class="footer-blueprint-card">
-        <!-- Corner Crosshairs -->
-        <span class="corner-crosshair ch-tl" aria-hidden="true">+</span>
-        <span class="corner-crosshair ch-tr" aria-hidden="true">+</span>
-        <span class="corner-crosshair ch-bl" aria-hidden="true">+</span>
-        <span class="corner-crosshair ch-br" aria-hidden="true">+</span>
+    <!-- Rebuilt Unique & Modern Footer (wvrner Aesthetic) -->
+    <footer class="unique-modern-footer">
+      <div class="footer-container">
+        <div class="footer-blueprint-card">
+          <!-- Corner Crosshairs -->
+          <span class="corner-crosshair ch-tl" aria-hidden="true">+</span>
+          <span class="corner-crosshair ch-tr" aria-hidden="true">+</span>
+          <span class="corner-crosshair ch-bl" aria-hidden="true">+</span>
+          <span class="corner-crosshair ch-br" aria-hidden="true">+</span>
 
-        <!-- Top Telemetry & Live World Clock Bar -->
-        <div class="footer-telemetry-bar">
-          <div class="telemetry-item">
-            <span class="telemetry-beacon" aria-hidden="true"></span>
-            <span>SYS // STATUS: 100% NOMINAL</span>
+          <!-- Top Telemetry & Live World Clock Bar -->
+          <div class="footer-telemetry-bar">
+            <div class="telemetry-item">
+              <span class="telemetry-beacon" aria-hidden="true"></span>
+              <span>SYS // STATUS: 100% NOMINAL</span>
+            </div>
+            <div class="live-clocks-wrapper">
+              <span
+                >LOCAL:
+                <span id="footerLocalTime" class="clock-val"
+                  >--:--:--</span
+                ></span
+              >
+              <span>&middot;</span>
+              <span
+                >UTC:
+                <span id="footerUtcTime" class="clock-val"
+                  >--:--:-- UTC</span
+                ></span
+              >
+            </div>
+            <div class="telemetry-item">
+              <span>NYC // 40.7128&deg; N, 74.0060&deg; W</span>
+            </div>
           </div>
-          <div class="live-clocks-wrapper">
-            <span>LOCAL: <span id="footerLocalTime" class="clock-val">--:--:--</span></span>
-            <span>&middot;</span>
-            <span>UTC: <span id="footerUtcTime" class="clock-val">--:--:-- UTC</span></span>
-          </div>
-          <div class="telemetry-item">
-            <span>NYC // 40.7128&deg; N, 74.0060&deg; W</span>
-          </div>
-        </div>
 
-        <!-- Core Footer Grid -->
-        <div class="footer-core-grid">
-          <!-- Bio & Branding -->
-          <div class="footer-bio-col">
-            <div class="footer-brand-title">
-              <div class="nav-logo-w" style="width: 36px; height: 36px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                  <path d="M3 5l5 14 4-10 4 10 5-14"></path>
-                </svg>
+          <!-- Core Footer Grid -->
+          <div class="footer-core-grid">
+            <!-- Bio & Branding -->
+            <div class="footer-bio-col">
+              <div class="footer-brand-title">
+                <div class="nav-logo-w" style="width: 36px; height: 36px">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="width: 18px; height: 18px"
+                  >
+                    <path d="M3 5l5 14 4-10 4 10 5-14"></path>
+                  </svg>
+                </div>
+                <div>
+                  <div class="footer-name-tag">Nima Hosseini</div>
+                  <div class="footer-handle">@wvrner</div>
+                </div>
               </div>
-              <div>
-                <div class="footer-name-tag">Nima Hosseini</div>
-                <div class="footer-handle">@wvrner</div>
+              <p class="footer-desc-text">
+                DevOps &amp; Infrastructure Systems. Designing automated
+                pipelines, resilient AWS architectures, and understanding modern
+                systems from the network up.
+              </p>
+            </div>
+
+            <!-- Direct Comms Box -->
+            <div class="footer-comms-card">
+              <div class="comms-header-label">
+                // DIRECT COMMS &amp; TRANSMISSION
+              </div>
+              <div class="comms-email-display">
+                <span>wvrner@outlook.com</span>
+                <button
+                  class="copy-email-btn"
+                  data-email="wvrner@outlook.com"
+                  type="button"
+                  aria-label="Copy email address"
+                >
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                  >
+                    <rect
+                      x="9"
+                      y="9"
+                      width="13"
+                      height="13"
+                      rx="2"
+                      ry="2"
+                    ></rect>
+                    <path
+                      d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                    ></path>
+                  </svg>
+                  <span class="copy-btn-text">Copy Email</span>
+                </button>
+              </div>
+              <div class="comms-action-row">
+                <a href="mailto:wvrner@outlook.com" class="comms-send-btn">
+                  <span>Launch email client &rarr;</span>
+                </a>
               </div>
             </div>
-            <p class="footer-desc-text">
-              DevOps &amp; Infrastructure Systems. Designing automated pipelines, resilient AWS architectures, and understanding modern systems from the network up.
-            </p>
-          </div>
 
-          <!-- Direct Comms Box -->
-          <div class="footer-comms-card">
-            <div class="comms-header-label">// DIRECT COMMS &amp; TRANSMISSION</div>
-            <div class="comms-email-display">
-              <span>wvrner@outlook.com</span>
-              <button class="copy-email-btn" data-email="wvrner@outlook.com" type="button" aria-label="Copy email address">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <span class="copy-btn-text">Copy Email</span>
-              </button>
+            <!-- Verified Networks -->
+            <div class="footer-networks-col">
+              <div class="networks-header-label">// VERIFIED PROTOCOLS</div>
+              <ul class="footer-nav-list">
+                <li>
+                  <a
+                    href="https://github.com/wvrner"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="network-link-item"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                      ></path>
+                    </svg>
+                    <span>GitHub</span>
+                    <span class="network-badge">@wvrner</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://linkedin.com/in/wvrner"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="network-link-item"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path
+                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                      ></path>
+                      <rect x="2" y="9" width="4" height="12"></rect>
+                      <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                    <span>LinkedIn</span>
+                    <span class="network-badge">@wvrner</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="about.html#cv" class="network-link-item">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                      ></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                      <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span>Curriculum Vitae</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="about.html" class="network-link-item">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="12" y1="16" x2="12" y2="12"></line>
+                      <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span>About Biography</span>
+                  </a>
+                </li>
+              </ul>
             </div>
-            <div class="comms-action-row">
-              <a href="mailto:wvrner@outlook.com" class="comms-send-btn">
-                <span>Launch email client &rarr;</span>
-              </a>
-            </div>
           </div>
 
-          <!-- Verified Networks -->
-          <div class="footer-networks-col">
-            <div class="networks-header-label">// VERIFIED PROTOCOLS</div>
-            <ul class="footer-nav-list">
-              <li>
-                <a href="https://github.com/wvrner" target="_blank" rel="noopener noreferrer" class="network-link-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  <span>GitHub</span>
-                  <span class="network-badge">@wvrner</span>
-                </a>
-              </li>
-              <li>
-                <a href="https://linkedin.com/in/wvrner" target="_blank" rel="noopener noreferrer" class="network-link-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                  <span>LinkedIn</span>
-                  <span class="network-badge">@wvrner</span>
-                </a>
-              </li>
-              <li>
-                <a href="about.html#cv" class="network-link-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                  <span>Curriculum Vitae</span>
-                </a>
-              </li>
-              <li>
-                <a href="about.html" class="network-link-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                  <span>About Biography</span>
-                </a>
-              </li>
-            </ul>
+          <!-- Giant Typographic Horizon Wordmark -->
+          <div class="footer-horizon-wordmark" aria-hidden="true">
+            <span class="wordmark-text">WVRNER</span>
+          </div>
+
+          <!-- Bottom Telemetry & Navigation Bar -->
+          <div class="footer-sub-bar">
+            <span>SYS_ID: WVRNER-2026 // BUILD: v2.8.0-PROD</span>
+            <span
+              >&copy; 2026 Nima Hosseini (@wvrner). All rights reserved.</span
+            >
+            <button id="backToTopBtn" class="back-to-top-trigger" type="button">
+              <span>[ &uarr; BACK TO TOP ]</span>
+            </button>
           </div>
         </div>
-
-        <!-- Giant Typographic Horizon Wordmark -->
-        <div class="footer-horizon-wordmark" aria-hidden="true">
-          <span class="wordmark-text">WVRNER</span>
-        </div>
-
-        <!-- Bottom Telemetry & Navigation Bar -->
-        <div class="footer-sub-bar">
-          <span>SYS_ID: WVRNER-2026 // BUILD: v2.8.0-PROD</span>
-          <span>&copy; 2026 Nima Hosseini (@wvrner). All rights reserved.</span>
-          <button id="backToTopBtn" class="back-to-top-trigger" type="button">
-            <span>[ &uarr; BACK TO TOP ]</span>
-          </button>
-        </div>
-
       </div>
-    </div>
-  </footer>
+    </footer>
 
-  <!-- Scripts -->
-  <script src="js/hero-canvas.js"></script>
-  <script src="js/main.js"></script>
-</body>
+    <!-- Scripts -->
+    <script src="js/hero-canvas.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>

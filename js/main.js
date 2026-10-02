@@ -484,14 +484,12 @@ function initCopyEmail() {
    KID EXPLANATION:
    This is the interactive cloud architecture card!
    You can click the 4 stages (Browser -> Route 53 -> CloudFront -> S3) to see
-   what each one does, or click "Trace Request Flow" to watch a little light
-   zoom across the cloud, and click "Copy" to copy real Terraform code!
+   what each one does, and click "Copy" to copy real Terraform code!
    -------------------------------------------------------------------------- */
 function initCompactArchSection() {
   const flowNodes = document.querySelectorAll('.flow-node');
   const flowConnectors = document.querySelectorAll('.flow-connector');
   const flowStatusMsg = document.getElementById('flowStatusMsg');
-  const traceBtn = document.getElementById('traceFlowBtn');
   const consoleTabs = document.querySelectorAll('.console-tab');
   const consolePanes = document.querySelectorAll('.console-pane');
   const copyBtn = document.getElementById('copyCodeBtn');
@@ -572,60 +570,10 @@ function initCompactArchSection() {
     });
   }
 
-  // Fun Request Tracer Button
-  if (traceBtn) {
-    let isTracing = false;
-    traceBtn.addEventListener('click', () => {
-      if (isTracing) return;
-      isTracing = true;
-      traceBtn.style.pointerEvents = 'none';
-
-      const traceMessages = [
-        '🌐 <strong>Step 1 (Ingress):</strong> Client initiates TLS 1.3 handshake to wvrner.com...',
-        '🧭 <strong>Step 2 (DNS):</strong> AWS Route 53 Anycast resolves alias to nearest CloudFront PoP...',
-        '⚡ <strong>Step 3 (Edge CDN):</strong> CloudFront Edge verifies cache & validates Origin Access Control (OAC)...',
-        '🪣 <strong>Step 4 (Origin):</strong> AWS S3 Bucket verifies SigV4 authorization & delivers assets...'
-      ];
-
-      flowNodes.forEach((node, i) => {
-        setTimeout(() => {
-          flowNodes.forEach(n => n.classList.remove('tracing', 'active'));
-          node.classList.add('tracing', 'active');
-          if (flowConnectors[i - 1]) flowConnectors[i - 1].classList.add('active');
-
-          if (flowStatusMsg && traceMessages[i]) {
-            flowStatusMsg.innerHTML = traceMessages[i];
-          }
-
-          if (typeof soundEnabled !== 'undefined' && soundEnabled && typeof audioCtx !== 'undefined' && audioCtx) {
-            playSoftTone(440 + i * 180, 0.06, 'sine', 0.03);
-          }
-        }, i * 360);
-      });
-
-      // Complete Trace
-      setTimeout(() => {
-        flowConnectors.forEach(c => c.classList.remove('active'));
-        flowNodes.forEach(n => n.classList.remove('tracing'));
-        const browserNode = document.querySelector('.flow-node[data-node="browser"]');
-        if (browserNode) browserNode.classList.add('active');
-
-        if (flowStatusMsg) {
-          flowStatusMsg.innerHTML = '✨ <strong>Result:</strong> HTTP 200 OK &middot; CloudFront Cache Hit &middot; S3 OAC Enforced &middot; Zero manual console clicks';
-        }
-
-        traceBtn.style.pointerEvents = '';
-        isTracing = false;
-
-        if (typeof soundEnabled !== 'undefined' && soundEnabled && typeof audioCtx !== 'undefined' && audioCtx) {
-          playSoftTone(1100, 0.1, 'triangle', 0.04);
-        }
-      }, flowNodes.length * 360 + 350);
-    });
-  }
 }
 
 /* ==========================================================================
+   12. Real Interactive Cloud Terminal CLI/* ==========================================================================
    12. Real Interactive Cloud Terminal CLI (`nimactl`)
    ========================================================================== */
 function initInteractiveTerminal() {

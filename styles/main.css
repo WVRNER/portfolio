@@ -1745,44 +1745,6 @@ button {
   margin: 0;
 }
 
-/* Fun Trace Request Button */
-.fun-trace-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, rgba(39, 24, 126, 0.12), rgba(99, 102, 241, 0.16));
-  border: 1px solid rgba(99, 102, 241, 0.35);
-  color: var(--text-heading);
-  font-family: ui-monospace, SFMono-Regular, monospace;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.15);
-}
-
-.fun-trace-btn:hover {
-  background: var(--text-primary);
-  color: var(--bg-body);
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
-}
-
-.fun-trace-btn:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.fun-trace-btn .trace-icon {
-  display: inline-block;
-  transition: transform 0.2s ease;
-}
-
-.fun-trace-btn:hover .trace-icon {
-  transform: rotate(15deg) scale(1.15);
-}
-
 /* Compact Flow Strip */
 .compact-flow-strip {
   display: flex;
@@ -4249,11 +4211,7 @@ button {
     display: none;
   }
 
-  .fun-trace-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
+  
   /* Terminal Card */
   .terminal-card {
     border-radius: 18px;
@@ -4378,7 +4336,6 @@ button {
 /* Tactile press response following Apple Design standards */
 .button:active,
 button:active,
-.fun-trace-btn:active,
 .flow-node:active,
 .console-tab:active,
 .console-copy-btn:active {
