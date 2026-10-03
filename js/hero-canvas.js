@@ -1,9 +1,4 @@
 /* ==========================================================================
-   KID-FRIENDLY EXPLANATION OF HERO-CANVAS.JS:
-   Imagine a big black sheet of paper behind your screen, and someone using
-   glow-in-the-dark chalk to draw floating stars and connect them with laser lines!
-   When you move your mouse, a friendly spotlight shines around it.
-   This file does all the math to make those stars float, breathe, and connect smoothly!
    ========================================================================== */
 /**
  * Handcrafted 3D Kinetic Celestial Astrolabe & Orbital Resonance Engine
