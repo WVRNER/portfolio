@@ -1,5 +1,5 @@
 /**
- * WVRNER × GUMROAD INTERACTIVE JAVASCRIPT
+ * WVRNER INTERACTIVE CLIENT SCRIPT
  * Neubrutalist Interactions & Micro-Interactions
  * Nima Hosseini (@wvrner) · DevOps & Infrastructure Systems
  */
@@ -316,7 +316,7 @@ function handleTerminalCommand(cmd, screen) {
     case 'contact':
       output = `
         <div class="term-cmd">$ nimactl contact</div>
-        <div>Telegram:&nbsp;<a href="https://t.me/wvrner" target="_blank" rel="noopener" style="color: var(--gum-blue);">t.me/wvrner</a></div>
+        <div>Telegram:&nbsp;<a href="https://t.me/wvrner" target="_blank" rel="noopener" style="color: var(--gum-blue);">Telegram</a></div>
         <div>Email:&nbsp;&nbsp;&nbsp;<a href="mailto:wvrner@outlook.com" style="color: var(--gum-pink);">wvrner@outlook.com</a></div>
         <div>GitHub:&nbsp;&nbsp;<a href="https://github.com/wvrner" target="_blank" rel="noopener" style="color: var(--gum-yellow);">github.com/wvrner</a></div>
       `;

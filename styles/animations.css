@@ -1,5 +1,5 @@
 /* ==========================================================================
-   GUMROAD DESIGN SYSTEM ANIMATIONS & KEYFRAMES
+   NEUBRUTALIST SYSTEM ANIMATIONS & KEYFRAMES
    Tactile, Springy, Neo-Brutalist Micro-Interactions
    ========================================================================== */
 
@@ -148,7 +148,7 @@
   transform: scale(0.96) translateY(2px) !important;
 }
 
-/* 7. Wiggle on Hover for Fun Gumroad Accents */
+/* 7. Wiggle Animation for Interactive Accent Cards */
 @keyframes neo-wiggle {
   0%, 100% { transform: rotate(0deg); }
   25% { transform: rotate(-6deg); }

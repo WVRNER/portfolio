@@ -9,22 +9,17 @@
     <meta name="theme-color" content="#FFC900" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <title>About &amp; CV · Nima Hosseini (@wvrner) · Gumroad Edition</title>
+    <title>About &amp; CV · Nima Hosseini (@wvrner) · DevOps &amp; Infrastructure Systems</title>
     <meta
       name="description"
       content="Biography and Curriculum Vitae of Nima Hosseini (@wvrner) - DevOps & Infrastructure Systems. Background in design, understanding cloud systems from the network up."
     />
 
-    <!-- Favicon: W in #f6e490 on #0029ff background -->
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230029ff'/><text x='50' y='73' font-family='Plus Jakarta Sans, Arial Black, system-ui, sans-serif' font-weight='900' font-size='66' text-anchor='middle' fill='%23f6e490'>W</text></svg>"
-    />
-    <link
-      rel="apple-touch-icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%230029ff'/><text x='50' y='73' font-family='Plus Jakarta Sans, Arial Black, system-ui, sans-serif' font-weight='900' font-size='66' text-anchor='middle' fill='%23f6e490'>W</text></svg>"
-    />
+    <!-- Favicon & Search Bar Icon: Letter W (#f6e490) on #0029ff Background -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230029ff%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2248%22%20font-family%3D%22system-ui%2C%20-apple-system%2C%20%27Plus%20Jakarta%20Sans%27%2C%20sans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2246%22%20text-anchor%3D%22middle%22%20fill%3D%22%23f6e490%22%3EW%3C/text%3E%3C/svg%3E" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230029ff%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2248%22%20font-family%3D%22system-ui%2C%20-apple-system%2C%20%27Plus%20Jakarta%20Sans%27%2C%20sans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2246%22%20text-anchor%3D%22middle%22%20fill%3D%22%23f6e490%22%3EW%3C/text%3E%3C/svg%3E" />
+    <link rel="shortcut icon" href="favicon.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -39,7 +34,7 @@
     <link rel="stylesheet" href="styles/animations.css" />
   </head>
   <body>
-    <!-- Top Sticky Gumroad Navigation Bar -->
+    <!-- Top Sticky Main Navigation Bar -->
     <header class="gum-nav-wrapper">
       <nav class="gum-nav-inner" aria-label="Main Navigation">
         <div class="gum-logo-group">
@@ -54,37 +49,11 @@
           <span class="gum-role-tag">SYS // BIOGRAPHY &amp; CV</span>
         </div>
 
-        <!-- Navigation Links: Only About & CV -->
-        <ul class="gum-nav-links">
-          <!-- [COMMENTED NAV LINKS - Preserved for future reuse]
-          <li class="gum-nav-item"><a href="index.html">Home</a></li>
-          <li class="gum-nav-item"><a href="index.html#learning-exhibition">Currently Learning</a></li>
-          <li class="gum-nav-item"><a href="index.html#systems-architecture">Architecture</a></li>
-          <li class="gum-nav-item"><a href="index.html#interactive-cli">Terminal</a></li>
-          -->
-          <li class="gum-nav-item"><a href="about.html" class="active">About Me</a></li>
-          <li class="gum-nav-item"><a href="#cv">CV</a></li>
-        </ul>
-
-        <div class="gum-nav-actions">
-          <!-- Telegram ID Pill -->
-          <a
-            href="https://t.me/wvrner"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="gum-btn gum-btn-white"
-            title="Telegram: @wvrner"
-            style="display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; font-size: 13px;"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.63 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.42-1.43-.88.03-.24.37-.49 1.02-.75 3.98-1.73 6.64-2.87 7.97-3.44 3.79-1.62 4.58-1.9 5.09-1.91.11 0 .37.03.53.17.14.12.18.28.2.45-.01.07-.01.21-.02.31z"/>
-            </svg>
-            <span>t.me/wvrner</span>
-          </a>
-
-          <a href="mailto:wvrner@outlook.com" class="gum-btn gum-btn-yellow" style="padding: 7px 14px; font-size: 13px;"
-            >Contact</a
-          >
+        <!-- Navigation Buttons: About, CV, and Contact placed side-by-side -->
+        <div class="gum-nav-btn-group">
+          <a href="about.html" class="gum-btn gum-btn-black gum-nav-btn active">About</a>
+          <a href="#cv" class="gum-btn gum-btn-white gum-nav-btn">CV</a>
+          <a href="mailto:wvrner@outlook.com" class="gum-btn gum-btn-yellow gum-nav-btn">Contact</a>
         </div>
       </nav>
     </header>
@@ -149,7 +118,7 @@
                 class="gum-btn gum-btn-white"
                 style="width: 100%"
               >
-                <span>Telegram: @wvrner (t.me/wvrner) &rarr;</span>
+                <span>Telegram &rarr;</span>
               </a>
               <a
                 href="#cv"
@@ -289,7 +258,7 @@
                       text-decoration: underline;
                       font-weight: 700;
                     "
-                    >t.me/wvrner (@wvrner)</a
+                    >Telegram</a
                   ><br />
                   &bull; Email:
                   <a
@@ -406,7 +375,7 @@
                   href="https://t.me/wvrner"
                   target="_blank"
                   rel="noopener noreferrer"
-                  >➔ Telegram: @wvrner (t.me/wvrner)</a
+                  >➔ Telegram</a
                 >
               </li>
               <li>
@@ -442,7 +411,7 @@
         <div class="footer-giant-wordmark" aria-hidden="true">WVRNER</div>
 
         <div class="footer-bottom-bar">
-          <span>SYS_ID: WVRNER-2026 // BUILD: v2.8.0-GUMROAD</span>
+          <span>SYS_ID: WVRNER-2026 // BUILD: v2.8.0</span>
           <span>&copy; 2026 Nima Hosseini (@wvrner). All rights reserved.</span>
           <button id="backToTopBtn" class="gum-btn gum-btn-white" type="button">
             <span>[ &uarr; BACK TO TOP ]</span>

@@ -1,10 +1,8 @@
-
 /* ==========================================================================
-   Pixelated Retro / Figma Mouse Cursors
+   MINIMALIST MOUSE CURSOR (Figma Canvas Arrow & Pointer)
    ========================================================================== */
 :root {
-  --cursor-arrow: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAZElEQVR42uXVQQ4AEAxEUfe/dFmQiJQK823MXl8EI1lJImM1KNAcFMCQHkCQEZAjHiBFZoAMWQESJAKukR3gCtkFjpHokMeoHhpzi9pAKeKVnRzwhsiQ2WK8ZZ9XOboL/N/+OxmNTiPr7VuI4gAAAABJRU5ErkJggg==") 0 0, default;
-  --cursor-pointer: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAaElEQVR42t3V0QoAEAwF0P3/T88LpWXt2lzJLS9iJwQRP9obJTrCQv4GjqAe4PYj6DxoB4C20w6qAEoFvJUcBSAEBJZzQsDGFkMSnkU1VCC6E28D6DNCLZ4CMg8gtfgVAEKqf4OC7eM0V/hZ0VkEGPEAAAAASUVORK5CYII=") 6 1, pointer;
+  --cursor-arrow: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4.5%203L11.5%2020L14.5%2013.5L21%2011L4.5%203Z%22%20fill%3D%22%23000000%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%221.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") 4 3, default;
 }
 
 html, body {
@@ -20,6 +18,7 @@ input[type="button"],
 label,
 select,
 .gum-btn,
+.gum-nav-btn,
 .gum-topic-pill,
 .node-btn,
 .chapter-tab-btn,
@@ -28,7 +27,7 @@ select,
 .copy-email-trigger,
 .gum-logo-pill,
 summary {
-  cursor: var(--cursor-pointer);
+  cursor: pointer;
 }
 
 input[type="text"],
@@ -37,14 +36,17 @@ textarea {
   cursor: text;
 }
 
+
+
+
 /* ==========================================================================
-   WVRNER × GUMROAD DESIGN SYSTEM
+   WVRNER DESIGN SYSTEM · Neubrutalist Engineering Portfolio
    Authentic Neubrutalist Web Interface for Nima Hosseini (@wvrner)
-   DevOps & Infrastructure Systems · Built with Gumroad Aesthetic
+   DevOps & Infrastructure Systems · High-Density Cloud Architecture
    ========================================================================== */
 
 :root {
-  /* Gumroad Signature Color Palette */
+  /* Core Color Palette & Variables */
   --bg-canvas: #F4F4F0;
   --bg-card: #FFFFFF;
   --bg-card-alt: #FFFDF5;
@@ -52,7 +54,7 @@ textarea {
   --text-muted: #555555;
   --text-dim: #777777;
 
-  /* Candy Accents (Gumroad Palette) */
+  /* High-Contrast Accent Tokens */
   --gum-yellow: #FFC900;
   --gum-pink: #FF90E8;
   --gum-green: #90E8D0;
@@ -147,7 +149,7 @@ button {
 }
 
 /* ==========================================================================
-   GUMROAD TOP NAVIGATION BAR
+   TOP NAVIGATION BAR (Header & Actions)
    Sticky, Solid Black Border Bottom, High-Contrast Pill Buttons
    ========================================================================== */
 .gum-nav-wrapper {
@@ -160,6 +162,45 @@ button {
   background-color: var(--bg-canvas);
   border-bottom: var(--border-md);
   transition: background-color 0.25s ease;
+}
+
+
+/* Top Navigation Button Group (About, CV, Contact side-by-side) */
+.gum-nav-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gum-nav-btn {
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: var(--border-md);
+  box-shadow: 2px 2px 0px #000000;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.gum-nav-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.gum-nav-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px #000000;
+}
+
+.gum-nav-btn.active {
+  background: var(--text-main);
+  color: var(--bg-canvas);
+  border-color: var(--text-main);
 }
 
 .gum-nav-inner {
@@ -236,7 +277,7 @@ button {
   }
 }
 
-/* Nav Search Bar (Gumroad Style) */
+/* Nav Search Bar (Preserved Component) */
 .gum-nav-search {
   flex: 1;
   max-width: 320px;
@@ -310,7 +351,46 @@ button {
 }
 
 @media (max-width: 768px) {
-  .gum-nav-inner {
+  
+/* Top Navigation Button Group (About, CV, Contact side-by-side) */
+.gum-nav-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gum-nav-btn {
+  font-weight: 700;
+  font-size: 13.5px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: var(--border-md);
+  box-shadow: 2px 2px 0px #000000;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.gum-nav-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.gum-nav-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px #000000;
+}
+
+.gum-nav-btn.active {
+  background: var(--text-main);
+  color: var(--bg-canvas);
+  border-color: var(--text-main);
+}
+
+.gum-nav-inner {
     padding: 0 16px;
     gap: 8px;
   }
@@ -420,7 +500,7 @@ button {
 }
 
 /* ==========================================================================
-   HERO SECTION (GUMROAD "GO FROM 0 TO $1" HERO ARCHITECTURE)
+   HERO SECTION (Cloud Architecture & Systems Philosophy)
    Bold typography, sticker accents, floating coins, high-energy layout
    ========================================================================== */
 .gum-hero {
@@ -531,7 +611,7 @@ button {
   box-shadow: var(--shadow-hover-md);
 }
 
-/* Floating Decorative Stickers (Gumroad Coins & Stamps) */
+/* Floating Decorative Badges & Primitives */
 .hero-visual-stage {
   position: relative;
   min-height: 420px;
@@ -702,7 +782,7 @@ button {
 }
 
 /* ==========================================================================
-   FEATURE CARDS GRID (GUMROAD "SELL ANYTHING" 4-PANEL LAYOUT)
+   FEATURE CARDS GRID (4-Panel Architecture Showcase)
    Bold black borders between all cells, candy backgrounds, rich data
    ========================================================================== */
 .gum-section {
@@ -836,7 +916,7 @@ button {
 }
 
 /* ==========================================================================
-   THE "WVRNER WAY" / GUMROAD SMALL BETS SECTION
+   THE "WVRNER WAY" / ENGINEERING MANIFESTO
    Contrasting black block with playful arrows & step chips
    ========================================================================== */
 .gum-manifesto-strip {
@@ -875,7 +955,7 @@ button {
   line-height: 1.6;
 }
 
-/* Step Pills Chain (Gumroad "Start Small -> Learn Quickly") */
+/* Step Pills Workflow Chain */
 .manifesto-steps-chain {
   display: flex;
   align-items: center;
@@ -942,7 +1022,7 @@ button {
 }
 
 /* ==========================================================================
-   STAT COUNTER BANNER (GUMROAD "$1,964,052" HERO BANNER)
+   STAT COUNTER BANNER (Cloud Architecture Metrics)
    ========================================================================== */
 .gum-stat-banner {
   max-width: var(--max-width);
@@ -1498,7 +1578,7 @@ button {
 
 /* ==========================================================================
    UNLIMITED POSSIBILITIES / SKILLS & TOPICS MATRIX
-   Gumroad-Style Filterable Pill Cloud
+   Filterable Tooling Pill Cloud
    ========================================================================== */
 .gum-pills-matrix {
   display: flex;
@@ -1727,7 +1807,7 @@ button {
 }
 
 /* ==========================================================================
-   DIRECT COMMS & NEWSLETTER BANNER (GUMROAD SUBSCRIBE BANNER)
+   DIRECT COMMS & TRANSMISSION BANNER
    ========================================================================== */
 .gum-newsletter-strip {
   background: var(--gum-yellow);
@@ -1781,7 +1861,7 @@ button {
 }
 
 /* ==========================================================================
-   GUMROAD SIGNATURE FOOTER
+   SITE FOOTER & METRICS BAR
    Multi-Column, Bold Borders, Live NYC & UTC Clocks, Horizon Wordmark
    ========================================================================== */
 .gum-footer {
