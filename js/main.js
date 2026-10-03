@@ -589,6 +589,45 @@ function initHeroDock() {
 }
 
 /* ==========================================================================
+   Accordion Auto-Expand for Anchors & Keyboard Handling
+   ========================================================================== */
+function initAccordions() {
+  const cards = document.querySelectorAll('.gum-accordion-card');
+  if (!cards.length) return;
+
+  cards.forEach(card => {
+    const summary = card.querySelector('.gum-accordion-summary');
+    card.addEventListener('toggle', () => {
+      if (summary) {
+        summary.setAttribute('aria-expanded', card.open ? 'true' : 'false');
+      }
+    });
+  });
+
+  const checkHash = () => {
+    const hash = window.location.hash;
+    if (hash === '#cv') {
+      const bgCard = document.getElementById('background-section');
+      if (bgCard) {
+        bgCard.open = true;
+        setTimeout(() => {
+          const cvElem = document.getElementById('cv');
+          if (cvElem) cvElem.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+      }
+    } else if (hash) {
+      const targetCard = document.querySelector(hash);
+      if (targetCard && targetCard.classList.contains('gum-accordion-card')) {
+        targetCard.open = true;
+      }
+    }
+  };
+
+  checkHash();
+  window.addEventListener('hashchange', checkHash);
+}
+
+/* ==========================================================================
    App Initialization
    ========================================================================== */
 function initApp() {
@@ -606,6 +645,7 @@ function initApp() {
   initBackToTop();
   initNavSearch();
   initHashScroll();
+  initAccordions();
 }
 
 if (document.readyState === 'loading') {
