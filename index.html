@@ -44,6 +44,21 @@
   </head>
   <body>
     <!-- =========================================================================
+         PAGE ARCHITECTURE DIAGRAM
+         =========================================================================
+         [01] INTRO SPLASH      -> Session greeting & dissolution overlay
+         [02] NAVIGATION        -> Sticky header: brand mark, page navigation & contact CTA
+         [03] HERO SECTION      -> Primary value proposition & Platform Toolkit bento card
+         [04] MARQUEE TICKER 1  -> Cloud & IaC focus tracks ribbon
+         [05] SECTION 01        -> Core Disciplines: Built from the network up (4-Quad Grid)
+         [06] SECTION 02        -> Currently Learning: Interactive Labs & Architectural Schematics
+         [07] SYSTEMS TOPOLOGY  -> Real Cloud Infrastructure: Browser -> Route 53 -> CloudFront -> S3
+         [08] ROADMAP & LABS    -> Upcoming pipeline milestones
+         [09] TRANSMISSION      -> Direct communication & messaging channels
+         [10] PANORAMA          -> Neubrutalist cloud infrastructure vector artwork
+         [11] FOOTER            -> NYC & UTC world clocks, telemetry health, & site wordmark
+         ========================================================================= -->
+    <!-- =========================================================================
          INTRO SPLASH SCREEN
          Displays "Good Morning!" for about 2 seconds, then smoothly dissolves.
          ========================================================================= -->
@@ -146,7 +161,7 @@
 
           </div>
 
-          <!-- Right: Core Infrastructure & Cloud Stack (Active Plate) -->
+          <!-- Right: Core Infrastructure & Cloud Stack (Platform Toolkit) -->
           <div class="hero-inspector-stage">
             <div class="hero-stack-card">
               <div class="stack-card-header">
@@ -155,13 +170,12 @@
                   <span class="stage-dot yellow"></span>
                   <span class="stage-dot green"></span>
                 </div>
-                <span class="stack-card-title">INFRASTRUCTURE &amp; CLOUD // CORE STACK</span>
-                <span class="stack-badge-active">ACTIVE PLATE</span>
+                <span class="stack-card-title">PLATFORM TOOLKIT</span>
+                <span class="stack-badge-active"><span class="pulse-dot"></span> LIVE</span>
               </div>
 
               <div class="stack-card-intro">
-                <span class="stack-intro-kicker">ON MY PLATE &middot; PLATFORM TOOLKIT</span>
-                <p class="stack-intro-desc">Understanding modern systems from the network up &middot; declarative, containerized, and automated.</p>
+                <p class="stack-intro-desc">Core cloud systems built from the network up &middot; declarative &amp; automated.</p>
               </div>
 
               <!-- 4 Core Pillars Grid -->
@@ -169,7 +183,7 @@
                 <!-- 01 AWS -->
                 <div class="stack-pillar-item pillar-aws">
                   <div class="pillar-icon-box">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                       <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
                     </svg>
                   </div>
@@ -178,14 +192,20 @@
                       <strong class="pillar-name">AWS</strong>
                       <span class="pillar-badge">Cloud Architecture</span>
                     </div>
-                    <p class="pillar-desc">Multi-AZ VPC topology, isolated private subnets, S3 storage, and CloudFront edge routing.</p>
+                    <div class="pillar-specs-row">
+                      <span class="pillar-spec">Multi-AZ VPC</span>
+                      <span class="pillar-spec-dot">&middot;</span>
+                      <span class="pillar-spec">Private Subnets</span>
+                      <span class="pillar-spec-dot">&middot;</span>
+                      <span class="pillar-spec">CloudFront OAC</span>
+                    </div>
                   </div>
                 </div>
 
                 <!-- 02 Terraform -->
                 <div class="stack-pillar-item pillar-tf">
                   <div class="pillar-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path d="M1.5 2.25v9.14l7.5 4.33V6.58L1.5 2.25zm8.25 4.33v9.14l7.5 4.33V10.91l-7.5-4.33zm8.25-4.33v9.14l4.5 2.6V4.85l-4.5-2.6zm-8.25 10.1l7.5 4.33v9.14l-7.5-4.33v-9.14z"/>
                     </svg>
                   </div>
@@ -194,30 +214,42 @@
                       <strong class="pillar-name">Terraform</strong>
                       <span class="pillar-badge">Infrastructure as Code</span>
                     </div>
-                    <p class="pillar-desc">Declarative HCL provisioning, remote S3 state with DynamoDB distributed locking, and zero drift.</p>
+                    <div class="pillar-specs-row">
+                      <span class="pillar-spec">Declarative HCL</span>
+                      <span class="pillar-spec-dot">&middot;</span>
+                      <span class="pillar-spec">S3 State</span>
+                      <span class="pillar-spec-dot">&middot;</span>
+                      <span class="pillar-spec">DynamoDB Lock</span>
+                    </div>
                   </div>
                 </div>
 
                 <!-- 03 Docker -->
                 <div class="stack-pillar-item pillar-docker">
                   <div class="pillar-icon-box">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.186.185.186zm0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.186.185.186zm-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186zm-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.186.186.186zm5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185zm-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.186v1.888c0 .102.083.185.185.185zm-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186H5.136a.186.186 0 00-.186.186v1.888c0 .102.084.185.186.185zm-2.928 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186H2.208a.185.185 0 00-.185.186v1.888c0 .102.083.185.185.185m21.652-.294c-.219-.16-.957-.463-2.185-.296-.328-.396-.757-.723-1.266-.94-.852-.364-1.848-.383-2.82-.057-.14-.73-.553-1.374-1.157-1.802-.857-.607-1.93-.836-2.997-.638l-.138.026v2.327c0 .193-.086.376-.234.502l-1.045.887c-.368.312-.87.404-1.328.243-.459-.16-.763-.585-.763-1.066V8.67h-.795v2.964a.795.795 0 01-.795.795H.795A.795.795 0 000 13.224c0 3.863 2.502 6.816 6.326 7.424 1.15.182 2.336.19 3.5.023 2.946-.421 5.378-2.28 6.468-4.945.342-.838.547-1.74.606-2.666 1.488-.137 2.457-.852 2.766-1.182.202-.216.27-.52.176-.807a.972.972 0 00-.479-.579"/>
                     </svg>
                   </div>
                   <div class="pillar-content">
                     <div class="pillar-title-row">
                       <strong class="pillar-name">Docker</strong>
-                      <span class="pillar-badge">Containers &amp; Isolation</span>
+                      <span class="pillar-badge">Runtime Isolation</span>
                     </div>
-                    <p class="pillar-desc">Multi-stage builds, hardened non-root distroless runtimes, and Linux namespace isolation.</p>
+                    <div class="pillar-specs-row">
+                      <span class="pillar-spec">Multi-Stage</span>
+                      <span class="pillar-spec-dot">&middot;</span>
+                      <span class="pillar-spec">Distroless Runtimes</span>
+                      <span class="pillar-spec-dot">&middot;</span>
+                      <span class="pillar-spec">cgroups</span>
+                    </div>
                   </div>
                 </div>
 
                 <!-- 04 Kubernetes -->
                 <div class="stack-pillar-item pillar-k8s">
                   <div class="pillar-icon-box">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path d="M12 2a.96.96 0 00-.48.13L3.84 6.58a.96.96 0 00-.48.83v8.9c0 .34.18.66.48.83l7.68 4.45c.3.17.66.17.96 0l7.68-4.45c.3-.17.48-.49.48-.83v-8.9a.96.96 0 00-.48-.83L12.48 2.13A.96.96 0 0012 2zm0 2.21l6.2 3.59-1.87 1.08-4.33-2.5V4.21zm-1 0v2.17l-4.33 2.5-1.87-1.08L11 4.21zM4.88 8.74l1.88 1.08v4.99l-1.88-1.08V8.74zm14.24 0v4.99l-1.88 1.08v-4.99l1.88-1.08zm-7.62 1.34l3.5 2.02v4.04l-3.5 2.02-3.5-2.02v-4.04l3.5-2.02zm-6.62 5.92l1.87 1.08L11 19.58v2.17l-6.2-3.59zm14.24 0l-4.33 2.5v2.17l6.2-3.59-1.87-1.08z"/>
                     </svg>
                   </div>
@@ -226,7 +258,13 @@
                       <strong class="pillar-name">Kubernetes</strong>
                       <span class="pillar-badge">Cluster Orchestration</span>
                     </div>
-                    <p class="pillar-desc">Declarative cluster manifests, workload deployments, self-healing pods, and service ingress.</p>
+                    <div class="pillar-specs-row">
+                      <span class="pillar-spec">Cluster Manifests</span>
+                      <span class="pillar-spec-dot">&middot;</span>
+                      <span class="pillar-spec">Pods</span>
+                      <span class="pillar-spec-dot">&middot;</span>
+                      <span class="pillar-spec">Service Ingress</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -235,11 +273,10 @@
               <div class="stack-card-footer">
                 <div class="stack-status-info">
                   <span class="live-dot-green"></span>
-                  <span>Declarative &middot; Automated CI/CD &middot; Immutable</span>
+                  <span>Zero Drift &middot; Automated &middot; Immutable</span>
                 </div>
-                <a href="#learning-exhibition" class="stack-deep-link">Deep Dive &rarr;</a>
-              </div>
-            </div>
+                <a href="#foundations" class="stack-deep-link">Core Principles &rarr;</a>
+              </div>            </div>
           </div>
         </div>
       </section>
@@ -447,133 +484,10 @@
         </div>
       </section>
 
-      <!-- The "WVRNER Way" Engineering Manifesto -->
       <!-- =========================================================================
-           [COMMENTED SECTION - REUSABLE]
-           SECTION: "The WVRNER Way" Engineering Manifesto (Declarative Systems Philosophy)
-           HEADING: "Instead of building snowflakes... start writing declarative code!"
-           DESCRIPTION: Contains the 4-step workflow (Start Small -> Understand Connections ->
-                        Automate Everything -> Zero Drift) and 4 editorial micro-cards on
-                        Connective Tissue, Design x Systems Synergy, Resilience, and Network-First.
-           TO RE-ENABLE: Remove the opening 
-      
-      <section class="gum-manifesto-strip">
-        <div class="gum-manifesto-inner">
-          <div class="manifesto-header-row">
-            <span
-              class="hero-sub-label"
-              style="
-                background: var(--gum-pink);
-                border-color: #ffffff;
-                color: #000000;
-              "
-              >PHILOSOPHY &middot; THE WVRNER WAY</span
-            >
-            <h2 class="manifesto-lead-title">
-              Instead of building snowflakes...<br />
-              <span style="color: var(--gum-yellow)"
-                >start writing declarative code!</span
-              >
-            </h2>
-            <p class="manifesto-sub-lead">
-              You know all those great architecture ideas you have? We want you
-              to build them, test them, and find out what works. You don't just
-              click web console buttons—you understand how modern systems work
-              from the network up.
-            </p>
-          </div>
-
-          [-- Step Chain (Start Small -> Learn Quickly) --]
-          <div class="manifesto-steps-chain">
-            <div class="manifesto-step-chip">01 Start Small</div>
-            <span class="manifesto-arrow">&rarr;</span>
-            <div class="manifesto-step-chip pink">
-              02 Understand Connections
-            </div>
-            <span class="manifesto-arrow">&rarr;</span>
-            <div class="manifesto-step-chip green">03 Automate Everything</div>
-            <span class="manifesto-arrow">&rarr;</span>
-            <div class="manifesto-step-chip blue">04 Zero Drift</div>
-          </div>
-
-          [-- Editorial Micro-Chips Grid --]
-          <div class="manifesto-micro-grid">
-            <div class="manifesto-quote-card">
-              <span class="card-topic">// CONNECTIVE TISSUE</span>
-              <p class="card-quote">
-                &ldquo;Understanding how the pieces connect rather than simply
-                learning individual tools. Systems are defined by their
-                interfaces.&rdquo;
-              </p>
-            </div>
-            <div class="manifesto-quote-card">
-              <span class="card-topic">// DESIGN &times; SYSTEMS</span>
-              <p class="card-quote">
-                &ldquo;My background in design still influences how I approach
-                technical problems: looking for patterns, decomposing complexity
-                into clean primitives.&rdquo;
-              </p>
-            </div>
-            <div class="manifesto-quote-card">
-              <span class="card-topic">// ARCHITECTURAL RESILIENCE</span>
-              <p class="card-quote">
-                &ldquo;High availability isn't an accident: it is deliberate
-                topology. Multi-AZ, OAC-signed S3 origins, and Anycast Route 53
-                routing.&rdquo;
-              </p>
-            </div>
-            <div class="manifesto-quote-card">
-              <span class="card-topic">// NETWORK-FIRST MENTAL MODEL</span>
-              <p class="card-quote">
-                &ldquo;Subnets, routing tables, security groups, and TLS 1.3
-                encryption before application runtimes ever touch the
-                wire.&rdquo;
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      -->
-
-      <!-- Stat Counter Banner ($1,964,052 Style) -->
-      <!-- =========================================================================
-           [COMMENTED SECTION - REUSABLE]
-           SECTION: Cloud Architecture Ingress Metrics (Stat Counter Banner)
-           HEADING: "// CLOUD ARCHITECTURE INGRESS METRICS · 450+ Edge PoPs"
-           DESCRIPTION: Numerical stat box showing 450+ Edge PoPs, TLS 1.3,
-                        OAC signatures, and 99.992% nominal uptime SLA.
-           TO RE-ENABLE: Remove the opening 
-      
-      <div class="gum-stat-banner">
-        <div class="stat-banner-box">
-          <div class="stat-left">
-            <span class="stat-label"
-              >// CLOUD ARCHITECTURE INGRESS METRICS</span
-            >
-            <div class="stat-number">
-              <span class="accent-pink">450+ Edge PoPs</span>
-            </div>
-            <p class="stat-desc">
-              Global AWS CloudFront Points of Presence delivering static assets
-              with low TTFB, TLS 1.3, and Origin Access Control (OAC)
-              signatures.
-            </p>
-          </div>
-          <div class="stat-right">
-            <span class="stat-badge-pill"
-              >LIVE TELEMETRY: 99.992% NOMINAL SLA</span
-            >
-            <p class="stat-desc">
-              "Originally, taking pre-orders or deploying infrastructure
-              manually led to snowflakes. Today, 100% of this site's deployment
-              is declarative Terraform IaC and automated keyless GitHub Actions
-              CI/CD."
-            </p>
-          </div>
-        </div>
-      </div>
-      -->
-
+           SECTION 02: CURRENTLY LEARNING EXHIBITION
+           Interactive Deep-Dive Labs with Schematics and Code Configurations
+           ========================================================================= -->
       <!-- Section: Currently Learning Exhibition (4 Chapters with SVG Schematics & Code) -->
       <section class="gum-section" id="learning-exhibition">
         <div class="section-lead-block">
@@ -1737,345 +1651,13 @@
             inspect its architecture.
           </div>
 
-          <!-- =========================================================================
-               [COMMENTED SECTION - REUSABLE]
-               SECTION: Systems Architecture Terminal & Code Console Window
-               DESCRIPTION: Interactive macOS style terminal window showing tabbed code
-                            for main.tf (Terraform), deploy.yml (CI/CD), and providers.tf (State Lock).
-               TO RE-ENABLE: Remove the opening 
           
-          [-- Code Console Window --]
-          <div class="code-console-window">
-            <div class="console-title-bar">
-              <div class="console-dots-wrapper">
-                <span class="stage-dot red"></span>
-                <span class="stage-dot yellow"></span>
-                <span class="stage-dot green"></span>
-              </div>
-
-              <div
-                class="console-tab-group"
-                role="tablist"
-                aria-label="Code Snippets"
-              >
-                <button
-                  class="console-tab-pill active"
-                  data-pane="pane-tf"
-                  type="button"
-                  role="tab"
-                >
-                  📄 main.tf (Terraform)
-                </button>
-                <button
-                  class="console-tab-pill"
-                  data-pane="pane-ci"
-                  type="button"
-                  role="tab"
-                >
-                  🚀 deploy.yml (CI/CD)
-                </button>
-                <button
-                  class="console-tab-pill"
-                  data-pane="pane-backend"
-                  type="button"
-                  role="tab"
-                >
-                  ⚙️ providers.tf (State Lock)
-                </button>
-              </div>
-
-              <button
-                id="copyCodeBtn"
-                class="console-copy-btn"
-                type="button"
-                aria-label="Copy active code snippet"
-              >
-                <span>📋</span>
-                <span id="copyCodeLabel">COPY CODE</span>
-              </button>
-            </div>
-
-            <div class="console-code-scroll">
-              [-- Tab 1: main.tf --]
-              <div id="pane-tf" class="console-pane active">
-                <pre><code><span class="syn-comm"># infra/terraform/main.tf: Complete AWS S3 + CloudFront OAC Architecture</span>
-<span class="syn-kw">resource</span> <span class="syn-type">"aws_s3_bucket"</span> <span class="syn-str">"portfolio"</span> {
-  bucket = var.bucket_name
-}
-
-<span class="syn-kw">resource</span> <span class="syn-type">"aws_s3_bucket_public_access_block"</span> <span class="syn-str">"portfolio"</span> {
-  bucket                  = aws_s3_bucket.portfolio.id
-  block_public_acls       = <span class="syn-bool">true</span>
-  block_public_policy     = <span class="syn-bool">true</span>
-  ignore_public_acls      = <span class="syn-bool">true</span>
-  restrict_public_buckets = <span class="syn-bool">true</span>
-}
-
-<span class="syn-kw">resource</span> <span class="syn-type">"aws_cloudfront_origin_access_control"</span> <span class="syn-str">"portfolio"</span> {
-  name                              = <span class="syn-str">"${var.bucket_name}-oac"</span>
-  origin_access_control_origin_type = <span class="syn-str">"s3"</span>
-  signing_behavior                  = <span class="syn-str">"always"</span>
-  signing_protocol                  = <span class="syn-str">"sigv4"</span>
-}
-
-<span class="syn-kw">resource</span> <span class="syn-type">"aws_cloudfront_distribution"</span> <span class="syn-str">"portfolio"</span> {
-  enabled             = <span class="syn-bool">true</span>
-  is_ipv6_enabled     = <span class="syn-bool">true</span>
-  default_root_object = <span class="syn-str">"index.html"</span>
-
-  origin {
-    domain_name              = aws_s3_bucket.portfolio.bucket_regional_domain_name
-    origin_id                = <span class="syn-str">"S3-${aws_s3_bucket.portfolio.id}"</span>
-    origin_access_control_id = aws_cloudfront_origin_access_control.portfolio.id
-  }
-
-  default_cache_behavior {
-    target_origin_id       = <span class="syn-str">"S3-${aws_s3_bucket.portfolio.id}"</span>
-    viewer_protocol_policy = <span class="syn-str">"redirect-to-https"</span>
-    allowed_methods        = [<span class="syn-str">"GET"</span>, <span class="syn-str">"HEAD"</span>, <span class="syn-str">"OPTIONS"</span>]
-    cached_methods         = [<span class="syn-str">"GET"</span>, <span class="syn-str">"HEAD"</span>]
-    compress               = <span class="syn-bool">true</span>
-  }
-
-  viewer_certificate {
-    cloudfront_default_certificate = <span class="syn-bool">true</span>
-    minimum_protocol_version       = <span class="syn-str">"TLSv1.2_2021"</span>
-  }
-}
-
-<span class="syn-kw">resource</span> <span class="syn-type">"aws_s3_bucket_policy"</span> <span class="syn-str">"portfolio"</span> {
-  bucket = aws_s3_bucket.portfolio.id
-  policy = data.aws_iam_policy_document.s3_oac_policy.json
-}</code></pre>
-              </div>
-
-              [-- Tab 2: deploy.yml --]
-              <div id="pane-ci" class="console-pane">
-                <pre><code><span class="syn-comm"># .github/workflows/deploy.yml: Keyless OIDC Continuous Deployment Pipeline</span>
-<span class="syn-kw">name</span>: Deploy wvrner Portfolio to AWS
-<span class="syn-kw">on</span>:
-  <span class="syn-type">push</span>:
-    branches: [ main ]
-
-<span class="syn-kw">permissions</span>:
-  id-token: write <span class="syn-comm"># Required for requesting JWT from GitHub OIDC provider</span>
-  contents: read
-
-<span class="syn-kw">jobs</span>:
-  <span class="syn-type">deploy</span>:
-    name: Sync Assets &amp; Invalidate CDN
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
-      - name: Configure AWS Credentials (Keyless OIDC)
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions-portfolio-deploy
-          aws-region: us-east-1
-
-      - name: Sync Static Assets to S3
-        run: |
-          aws s3 sync . s3://${{ secrets.AWS_S3_BUCKET_NAME }} \
-            --delete --exclude ".git/*" --exclude "infra/*"
-
-      - name: Invalidate CloudFront Edge Cache
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
-            --paths "/*"</code></pre>
-              </div>
-
-              [-- Tab 3: providers.tf --]
-              <div id="pane-backend" class="console-pane">
-                <pre><code><span class="syn-comm"># infra/terraform/providers.tf: Provider &amp; Remote S3 State Configuration</span>
-<span class="syn-kw">terraform</span> {
-  required_version = <span class="syn-str">"&gt;= 1.5.0"</span>
-
-  required_providers {
-    aws = {
-      source  = <span class="syn-str">"hashicorp/aws"</span>
-      version = <span class="syn-str">"~&gt; 5.0"</span>
-    }
-  }
-
-  backend <span class="syn-str">"s3"</span> {
-    bucket         = <span class="syn-str">"wvrner-terraform-state"</span>
-    key            = <span class="syn-str">"portfolio/terraform.tfstate"</span>
-    region         = <span class="syn-str">"us-east-1"</span>
-    dynamodb_table = <span class="syn-str">"wvrner-terraform-locks"</span>
-    encrypt        = <span class="syn-bool">true</span>
-  }
-}
-
-<span class="syn-kw">provider</span> <span class="syn-type">"aws"</span> {
-  region = var.aws_region
-  default_tags {
-    tags = {
-      Project     = <span class="syn-str">"wvrner"</span>
-      Environment = var.environment
-      ManagedBy   = <span class="syn-str">"Terraform"</span>
-    }
-  }
-}</code></pre>
-              </div>
-            </div>
-          </div>
-          -->
         </div>
       </section>
 
-      <!-- Section: Technology & Tooling Filter Matrix -->
       <!-- =========================================================================
-           [COMMENTED SECTION - REUSABLE]
-           SECTION: Unlimited Possibilities (Technology & Tooling Filter Matrix)
-           HEADING: "Unlimited possibilities."
-           DESCRIPTION: Interactive filterable pill cloud with 20+ technologies:
-                        AWS, Terraform, Docker, GitHub Actions, Route 53, CloudFront OAC,
-                        S3, DynamoDB, Linux cgroups, namespaces, Distroless, OIDC, TLS 1.3, etc.
-           TO RE-ENABLE: Remove the opening 
-      <!--
-      <section class="gum-section" id="topics-matrix">
-        <div class="section-lead-block">
-          <span class="section-pill-tag">03 // Technology &amp; Tooling</span>
-          <h2 class="section-big-title">Unlimited possibilities.</h2>
-          <p class="section-subtitle">
-            Explore the technologies, services, protocols, and design primitives
-            actively studied and integrated across wvrner infrastructure labs.
-          </p>
-        </div>
-
-        <div class="gum-pills-matrix">
-          <button class="gum-topic-pill active" type="button">
-            <span>☁️</span> AWS SAA-C03
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>⚡</span> Terraform HCL
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🐳</span> Docker Containers
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🚀</span> GitHub Actions CI/CD
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🌐</span> Route 53 Anycast DNS
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🛡️</span> CloudFront OAC
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🪣</span> S3 Private Origin
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🔒</span> DynamoDB State Lock
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🐧</span> Linux Kernel Cgroups
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>📦</span> Linux Namespaces
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🌱</span> 28MB Distroless Runtime
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🔑</span> Keyless OIDC STS
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🔐</span> TLS 1.3 Encryption
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🏗️</span> Multi-AZ VPC Design
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🚪</span> NAT Gateways
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🧱</span> Network ACLs &amp; SGs
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🎯</span> Least Privilege IAM
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🔁</span> Zero Configuration Drift
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>🧩</span> Design &times; DevOps Synergy
-          </button>
-          <button class="gum-topic-pill" type="button">
-            <span>📊</span> Prometheus &amp; Monitoring
-          </button>
-        </div>
-      </section>
-      -->
-
-      <!-- Section: Interactive Cloud Terminal CLI (`nimactl`) -->
-      <!-- =========================================================================
-           [COMMENTED SECTION - REUSABLE]
-           SECTION: Interactive Cloud Terminal CLI ()
-           HEADING: "Interactive Terminal: nimactl"
-           DESCRIPTION: Live browser-based terminal console supporting real-time commands:
-                        'help', 'status', 'aws', 'terraform', 'docker', 'actions', 'projects', 'whoami', 'contact', 'clear'.
-           TO RE-ENABLE: Remove the opening 
-      <!--
-      <section class="gum-section" id="interactive-cli">
-        <div class="section-lead-block">
-          <span class="section-pill-tag">04 // Live Simulation Terminal</span>
-          <h2 class="section-big-title">Interactive Terminal: nimactl</h2>
-          <p class="section-subtitle">
-            An authentic command-line console to query cluster status, inspect
-            Terraform state, run Docker statistics, or view contact information.
-          </p>
-        </div>
-
-        <div class="gum-terminal-card">
-          <div class="terminal-header">
-            <div class="console-dots-wrapper">
-              <span class="stage-dot red"></span>
-              <span class="stage-dot yellow"></span>
-              <span class="stage-dot green"></span>
-            </div>
-            <span class="term-title-tag"
-              >nimactl v2.8.0 // CONNECTED TO WVRNER CLOUD</span
-            >
-            <span style="font-family: var(--font-mono); font-size: 11px"
-              >BASH</span
-            >
-          </div>
-
-          <div id="termScreen" class="terminal-screen">
-            <div>
-              Welcome to <span class="term-cyan">nimactl</span> &middot; Cloud
-              &amp; Infrastructure CLI
-            </div>
-            <div>
-              Type <span class="term-cmd">'help'</span> to see available
-              commands, or test
-              <span class="term-cmd">'status'</span>,
-              <span class="term-cmd">'aws'</span>,
-              <span class="term-cmd">'terraform'</span>,
-              <span class="term-cmd">'docker'</span>,
-              <span class="term-cmd">'actions'</span>,
-              <span class="term-cmd">'projects'</span>.
-            </div>
-          </div>
-
-          <form id="termForm" class="terminal-input-bar">
-            <span class="term-prompt">wvrner@cloud:~$</span>
-            <input
-              type="text"
-              id="termInput"
-              autocomplete="off"
-              spellcheck="false"
-              placeholder="type a command, e.g. 'status' or 'help' and press Enter..."
-            />
-          </form>
-        </div>
-      </section>
-      -->
-
+           SECTION 04: UPCOMING PIPELINE & LAB EXPERIMENTS
+           ========================================================================= -->
       <!-- Pipeline & Labs Upcoming Card -->
       <section class="gum-section" style="padding-top: 0">
         <div
@@ -2438,9 +2020,7 @@
               <li>
                 <a href="#systems-architecture">➔ AWS + Terraform Setup</a>
               </li>
-              <!-- [COMMENTED FOOTER LINK - Terminal CLI: Remove comments to re-enable]
-              <li><a href="#interactive-cli">➔ nimactl Terminal</a></li>
-              -->
+              
               <li><a href="about.html">➔ Biography &amp; Foundations</a></li>
               <li><a href="about.html#cv">➔ Full Curriculum Vitae</a></li>
             </ul>
