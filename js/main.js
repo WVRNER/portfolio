@@ -626,6 +626,59 @@ function initNavSearch() {
   });
 }
 
+
+/* ==========================================================================
+   14. Smooth Hash Scroll for Safari (#cv Anchor Clearance)
+   ========================================================================== */
+function initHashScroll() {
+  function scrollToTarget(id) {
+    const el = document.getElementById(id.replace('#', ''));
+    if (el) {
+      const topOffset = 86;
+      const elPos = el.getBoundingClientRect().top + window.pageYOffset - topOffset;
+      try {
+        window.scrollTo({ top: elPos, behavior: 'smooth' });
+      } catch (e) {
+        window.scrollTo(0, elPos);
+      }
+    }
+  }
+
+  // Smooth in-page anchor clicks for Safari
+  document.querySelectorAll('a[href^="#"], a[href*="about.html#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      const hashIdx = href.indexOf('#');
+      if (hashIdx === -1) return;
+      const hash = href.slice(hashIdx);
+      const isAboutPage = window.location.pathname.endsWith('about.html') || window.location.href.includes('about.html');
+      const isInternal = href.startsWith('#') || isAboutPage;
+
+      if (isInternal && document.querySelector(hash)) {
+        e.preventDefault();
+        scrollToTarget(hash);
+        if (history.pushState) {
+          history.pushState(null, '', hash);
+        } else {
+          window.location.hash = hash;
+        }
+      }
+    });
+  });
+
+  // If page loads with a hash, wait for layout/fonts and scroll
+  if (window.location.hash) {
+    setTimeout(() => {
+      scrollToTarget(window.location.hash);
+    }, 180);
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        scrollToTarget(window.location.hash);
+      }, 100);
+    }, { once: true });
+  }
+}
+
 /* ==========================================================================
    App Initialization (Safari BFCache & Document Ready Resilient)
    ========================================================================== */
@@ -644,6 +697,7 @@ function initApp() {
   initCopyEmail();
   initBackToTop();
   initNavSearch();
+  initHashScroll();
 }
 
 if (document.readyState === 'loading') {
