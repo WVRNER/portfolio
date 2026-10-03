@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="styles/animations.css" />
   </head>
   <body>
-    <!-- =========================================================================
+        <!-- =========================================================================
          PAGE ARCHITECTURE DIAGRAM
          =========================================================================
          [01] INTRO SPLASH      -> Session greeting & dissolution overlay
@@ -99,189 +99,43 @@
 
     <!-- Main Content Area -->
     <main>
-      <!-- Hero Section: High-Density, Purposeful Architecture (Understand Before Scroll) -->
-      <section class="gum-hero" id="hero">
-        <div class="gum-hero-grid">
-          <!-- Left: Big Expressive Lead Column -->
-          <div class="gum-hero-lead">
-            <!-- High-Impact Main Title -->
-            <h1 class="hero-main-title">
-              Make the Cut
-              <span class="hero-title-badge">in systems</span>.
-            </h1>
-
-            <p class="hero-desc-lead">
-              DevOps &amp; Infrastructure Systems Engineer. Designing declarative AWS architectures with Terraform, automated keyless GitHub Actions CI/CD pipelines, and hardened container runtimes with zero drift.
-            </p>
-
-            <!-- Quick Action Button Row (Sharp Rectangles) -->
-            <div class="hero-cta-group">
-              <a
-                href="#systems-architecture"
-                class="gum-btn-wide-rect"
-              >
-                <span>Explore Live Setup</span>
-                <span>&rarr;</span>
-              </a>
-              <a
-                href="about.html#cv"
-                class="gum-btn-round-black"
-              >
-                <span>CV</span>
-                <span>&nearr;</span>
-              </a>
-              <a
-                href="#learning-exhibition"
-                class="gum-btn-round-white"
-              >
-                <span>Currently Learning</span>
-                <span>&darr;</span>
-              </a>
-            </div>
+            <!-- Hero Section: Centered Neubrutalist Architecture -->
+      <section class="gum-hero gum-hero-centered" id="hero">
+        <div class="gum-hero-centered-inner">
+          <!-- Tag Badge -->
+          <div class="hero-sub-label">
+            <span class="neo-pulse-dot" aria-hidden="true"></span>
+            <span>SYS_ID: WVRNER-2026 // FROM THE NETWORK UP</span>
           </div>
 
-          <!-- Right: How You Got Here (Cloudflare Edge Telemetry Panel) -->
-          <div class="hero-telemetry-stage">
-            <aside class="trace-panel" aria-labelledby="tracePanelHeading">
-              <div class="trace-panel-header">
-                <div class="trace-header-left">
-                  <span class="trace-status-dot" aria-hidden="true"></span>
-                  <span class="trace-header-tag">EDGE INGRESS</span>
-                </div>
-                <h2 id="tracePanelHeading" class="trace-panel-title">How you got here</h2>
-              </div>
+          <!-- Main Title -->
+          <h1 class="hero-main-title">
+            Make the Cut
+            <span class="hero-title-badge">in systems</span>.
+          </h1>
 
-              <!-- Loading State -->
-              <div id="traceLoading" class="trace-status-box trace-loading" aria-live="polite">
-                <span class="trace-spinner" aria-hidden="true"></span>
-                <span>Resolving edge trace...</span>
-              </div>
+          <!-- Lead Description -->
+          <p class="hero-desc-lead">
+            DevOps &amp; Infrastructure Systems Engineer. Designing declarative AWS architectures with Terraform, automated keyless GitHub Actions CI/CD pipelines, and hardened container runtimes with zero drift.
+          </p>
 
-              <!-- Telemetry Metrics List (Populated via JS) -->
-              <dl id="traceDataList" class="trace-metrics-list" style="display: none;">
-                <!-- Colo -->
-                <div class="trace-metric-item">
-                  <div class="trace-metric-top">
-                    <dt class="trace-metric-label">Data Center (colo)</dt>
-                    <dd id="traceColo" class="trace-badge badge-colo">--</dd>
-                  </div>
-                  <p class="trace-metric-desc">The closest Cloudflare Anycast edge facility routing your network packets.</p>
-                </div>
-
-                <!-- HTTP Version -->
-                <div class="trace-metric-item">
-                  <div class="trace-metric-top">
-                    <dt class="trace-metric-label">Protocol (http)</dt>
-                    <dd id="traceHttp" class="trace-badge badge-http">--</dd>
-                  </div>
-                  <p class="trace-metric-desc">The negotiated application protocol stream delivering site assets with low latency.</p>
-                </div>
-
-                <!-- TLS Version -->
-                <div class="trace-metric-item">
-                  <div class="trace-metric-top">
-                    <dt class="trace-metric-label">Encryption (tls)</dt>
-                    <dd id="traceTls" class="trace-badge badge-tls">--</dd>
-                  </div>
-                  <p class="trace-metric-desc">The cryptographic handshake protocol encrypting your connection in transit.</p>
-                </div>
-
-                <!-- Scheme -->
-                <div class="trace-metric-item">
-                  <div class="trace-metric-top">
-                    <dt class="trace-metric-label">Transport (visit_scheme)</dt>
-                    <dd id="traceScheme" class="trace-badge badge-scheme">--</dd>
-                  </div>
-                  <p class="trace-metric-desc">The secure transfer URI scheme ensuring verified HTTPS certificate protection.</p>
-                </div>
-              </dl>
-
-              <!-- Friendly Fallback (When running locally or proxy is offline) -->
-              <div id="traceFallback" class="trace-status-box trace-fallback" style="display: none;">
-                <p class="fallback-title">⚡ Local or Direct Preview</p>
-                <p class="fallback-note">Cloudflare edge telemetry activates when accessed via the proxied production domain.</p>
-              </div>
-
-              <div class="trace-panel-footer">
-                <span class="trace-privacy-text">🔒 Privacy First: Zero tracking. IP address is never read, stored, or sent.</span>
-              </div>
-            </aside>
+          <!-- Quick Action Button Row (Centered) -->
+          <div class="hero-cta-group">
+            <a href="#systems-architecture" class="gum-btn-wide-rect">
+              <span>Explore Live Setup</span>
+              <span>&rarr;</span>
+            </a>
+            <a href="about.html#cv" class="gum-btn-round-black">
+              <span>CV</span>
+              <span>&nearr;</span>
+            </a>
+            <a href="#learning-exhibition" class="gum-btn-round-white">
+              <span>Currently Learning</span>
+              <span>&darr;</span>
+            </a>
           </div>
         </div>
       </section>
-
-      <!-- Marquee Ribbon 1: High Energy Yellow -->
-      <div class="gum-marquee-banner" aria-hidden="true">
-        <div class="gum-marquee-track">
-          <div class="marquee-item">
-            <span>AWS SOLUTIONS ARCHITECT</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>TERRAFORM INFRASTRUCTURE AS CODE</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>DOCKER CONTAINERS &amp; RUNTIME ISOLATION</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>GITHUB ACTIONS AUTOMATED CI/CD</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>UNDERSTANDING MODERN SYSTEMS FROM THE NETWORK UP</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>ZERO CONFIGURATION DRIFT</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>WVRNER &middot; NIMA HOSSEINI</span>
-            <span class="marquee-star">&#10022;</span>
-          </div>
-          <!-- Duplicate for seamless infinite loop -->
-          <div class="marquee-item">
-            <span>AWS SOLUTIONS ARCHITECT</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>TERRAFORM INFRASTRUCTURE AS CODE</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>DOCKER CONTAINERS &amp; RUNTIME ISOLATION</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>GITHUB ACTIONS AUTOMATED CI/CD</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>UNDERSTANDING MODERN SYSTEMS FROM THE NETWORK UP</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>ZERO CONFIGURATION DRIFT</span>
-            <span class="marquee-star">&#10022;</span>
-            <span>WVRNER &middot; NIMA HOSSEINI</span>
-            <span class="marquee-star">&#10022;</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Marquee Ribbon 2: Bubblegum Pink Monospace Sub-Ribbon -->
-      <div class="gum-marquee-banner pink" aria-hidden="true">
-        <div class="gum-marquee-track reverse">
-          <div class="marquee-item">
-            <span>SYS_ID: WVRNER-2026</span>
-            <span>//</span>
-            <span>NYC COORDINATES: 40.7128&deg; N, 74.0060&deg; W</span>
-            <span>//</span>
-            <span>SIGV4 CLOUDFRONT OAC ENFORCED</span>
-            <span>//</span>
-            <span>DYNAMODB REMOTE STATE LOCKING</span>
-            <span>//</span>
-            <span>NON-ROOT DISTROLESS RUNTIME</span>
-            <span>//</span>
-            <span>KEYLESS OIDC STS FEDERATION</span>
-            <span>//</span>
-          </div>
-          <div class="marquee-item">
-            <span>SYS_ID: WVRNER-2026</span>
-            <span>//</span>
-            <span>NYC COORDINATES: 40.7128&deg; N, 74.0060&deg; W</span>
-            <span>//</span>
-            <span>SIGV4 CLOUDFRONT OAC ENFORCED</span>
-            <span>//</span>
-            <span>DYNAMODB REMOTE STATE LOCKING</span>
-            <span>//</span>
-            <span>NON-ROOT DISTROLESS RUNTIME</span>
-            <span>//</span>
-            <span>KEYLESS OIDC STS FEDERATION</span>
-            <span>//</span>
-          </div>
-        </div>
-      </div>
 
       <!-- Section: 4 Core Architectural Principles (Reliability, Cloud Ingress, Kernel Security, Automation) -->
       <section class="gum-section" id="foundations">
@@ -2035,6 +1889,5 @@
 
     <!-- Scripts -->
     <script src="js/main.js"></script>
-    <script src="js/trace.js"></script>
   </body>
 </html>
