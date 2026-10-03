@@ -1498,7 +1498,7 @@ button {
 
 /* Node Explainer Status Box */
 .node-status-toast {
-  background: var(--gum-yellow);
+  background: var(--gum-green);
   color: #000000;
   border: var(--border-md);
   border-radius: 10px;
@@ -1837,76 +1837,215 @@ button {
 }
 
 /* ==========================================================================
-   DIRECT COMMS & TRANSMISSION BANNER
+   DIRECT COMMS & TRANSMISSION GALLERY SECTION (40% Bigger Tiles, Frameless Artwork)
    ========================================================================== */
-.gum-newsletter-strip {
-  background: var(--gum-yellow);
-  color: #000000;
-  border-top: var(--border-lg);
-  border-bottom: var(--border-lg);
-  padding: 60px 24px;
+.transmission-gallery-section {
+  max-width: 1440px;
+  margin: 90px auto 0;
+  padding: 0 32px;
 }
 
-.newsletter-inner {
-  max-width: var(--max-width);
-  margin: 0 auto;
+.transmission-gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .transmission-gallery-grid {
+    grid-template-columns: 1.4fr 1.15fr 1.15fr;
+    gap: 32px;
+  }
+  .tile-offset {
+    margin-top: 48px; /* Sits visibly a bit lower */
+  }
+}
+
+.gallery-tile {
+  background: #FFFFFF;
+  border: var(--border-lg);
+  border-radius: 14px !important;
+  box-shadow: 8px 8px 0px #000000;
+  padding: 46px 38px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  text-align: center;
+  justify-content: space-between;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 380px;
 }
 
-.newsletter-title {
-  font-size: clamp(30px, 4.5vw, 52px);
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+.gallery-tile:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0px #000000;
 }
 
-.newsletter-sub {
-  font-size: 17px;
-  max-width: 640px;
-  color: #222222;
+.tile-big {
+  background: var(--gum-pink);
+  color: #000000;
 }
 
-.newsletter-action-box {
+.tile-subhead {
+  background: #FFFFFF;
+  color: #000000;
+}
+
+/* Tile 3: Drawing with NO frame and NO shadows */
+.tile-artwork {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+  padding: 0 !important;
+  min-height: 380px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
   justify-content: center;
 }
 
-.newsletter-input-pill {
-  background: #FFFFFF;
-  border: var(--border-md);
-  border-radius: var(--radius-pill);
-  padding: 14px 24px;
+.tile-artwork:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.tile-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.tile-chip {
   font-family: var(--font-mono);
-  font-size: 15px;
-  font-weight: 700;
-  box-shadow: var(--shadow-sm);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: #000000;
+  color: #FFFFFF;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.tile-dot-live {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.08);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.tile-big-title {
+  font-size: clamp(34px, 4.2vw, 54px);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
   color: #000000;
+  margin-bottom: 24px;
+}
+
+.tile-meta-footer {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.75);
+  letter-spacing: 0.04em;
+  border-top: 1.5px solid rgba(0, 0, 0, 0.2);
+  padding-top: 18px;
+}
+
+.tile-desc {
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 700;
+  line-height: 1.45;
+  color: #111111;
+  margin-bottom: 28px;
+}
+
+.tile-specs-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tile-spec {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.05);
+  border: 1.5px solid rgba(0, 0, 0, 0.18);
+  padding: 4px 10px;
+  border-radius: 4px;
+  color: #222222;
+}
+
+.gallery-drawing-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-drawing-wrap svg {
+  max-height: 330px;
+  width: 100%;
+}
+
+.gallery-action-box {
+  margin: 64px auto 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Outlined Contact Button (Bigger, No Shadow, Black Hover) */
+.gallery-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  background: transparent !important;
+  color: #000000 !important;
+  border: 3px solid #000000 !important;
+  border-radius: 0px !important;
+  padding: 22px 64px;
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  box-shadow: none !important;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-contact-btn:hover {
+  background: #000000 !important; /* Goes fill black on hover */
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+  transform: translateY(-2px);
 }
 
 /* ==========================================================================
-   SITE FOOTER & METRICS BAR
-   Multi-Column, Bold Borders, Live NYC & UTC Clocks, Horizon Wordmark
+   SITE FOOTER & METRICS BAR (Deep Black #000000 to Bottom, Larger & Wider)
    ========================================================================== */
 .gum-footer {
-  background: var(--bg-canvas);
-  border-top: var(--border-lg);
-  padding: 70px 24px 40px;
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border-top: 3px solid #000000;
+  padding: 90px 48px 60px;
   margin-top: auto;
+  width: 100%;
 }
 
 .gum-footer-inner {
-  max-width: var(--max-width);
+  max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 56px;
 }
 
 .footer-top-telemetry {
@@ -1914,105 +2053,151 @@ button {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
-  border-bottom: var(--border-md);
-  padding-bottom: 24px;
+  gap: 20px;
+  border-bottom: 1.5px solid #222222;
+  padding-bottom: 28px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
+  color: #CCCCCC;
 }
 
 .telemetry-status-badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--gum-green);
-  color: #000000;
-  padding: 4px 12px;
+  background: #18181B;
+  color: #90E8D0;
+  padding: 5px 14px;
   border-radius: var(--radius-pill);
-  border: var(--border-sm);
+  border: 1px solid #333333;
 }
 
 .telemetry-clocks {
   display: flex;
+  align-items: center;
   gap: 16px;
+  color: #999999;
+}
+
+.telemetry-clocks strong {
+  color: #FFFFFF;
 }
 
 .footer-cols-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 40px;
+  gap: 48px;
 }
 
 @media (min-width: 860px) {
   .footer-cols-grid {
-    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 72px;
   }
 }
 
 .footer-brand-col {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
-.footer-brand-title {
-  font-size: 24px;
-  font-weight: 900;
+/* Footer W Nima Hosseini Monogram Pill: Pure Black & White */
+.footer-brand-col .gum-logo-pill {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border: 2px solid #FFFFFF !important;
+  box-shadow: none !important;
+}
+
+.footer-brand-col .gum-logo-pill:hover {
+  background: #EEEEEE !important;
+  color: #000000 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.footer-brand-col .gum-logo-pill .logo-w {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2px solid #000000 !important;
+}
+
+.footer-brand-role {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: #EEEEEE;
 }
 
 .footer-brand-desc {
-  font-size: 14.5px;
-  line-height: 1.6;
-  color: var(--text-muted);
-  max-width: 400px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #AAAAAA;
+  max-width: 480px;
 }
 
 .footer-links-col h5 {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 16px;
+  color: #FFFFFF;
+  margin-bottom: 20px;
 }
 
 .footer-links-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
 }
 
 .footer-links-list a {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  color: var(--text-muted);
-  transition: all 0.15s ease;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: all 0.18s ease;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
+}
+
+.footer-protocol-icon {
+  width: 18px;
+  height: 18px;
+  color: #FFFFFF;
+  fill: currentColor;
+  flex-shrink: 0;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .footer-links-list a:hover {
-  color: var(--text-main);
-  text-decoration: underline;
-  transform: translateX(3px);
+  color: var(--gum-yellow);
+  transform: translateX(4px);
 }
 
-/* Giant Typography Wordmark (WVRNER) */
+.footer-links-list a:hover .footer-protocol-icon {
+  color: var(--gum-yellow);
+  transform: scale(1.15);
+}
+
+/* Giant Typography Wordmark (WVRNER) on Deep Black */
 .footer-giant-wordmark {
-  font-size: clamp(60px, 14vw, 180px);
+  font-size: clamp(70px, 15vw, 210px);
   font-weight: 900;
   line-height: 0.85;
   letter-spacing: -0.05em;
   text-align: center;
-  color: var(--text-main);
+  color: #FFFFFF;
   opacity: 0.12;
   user-select: none;
-  padding: 20px 0;
-  border-top: var(--border-sm);
-  border-bottom: var(--border-sm);
+  padding: 30px 0;
+  border-top: 1px solid #222222;
+  border-bottom: 1px solid #222222;
 }
 
 .footer-bottom-bar {
@@ -2020,10 +2205,22 @@ button {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 20px;
   font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--text-muted);
+  font-size: 12.5px;
+  color: #888888;
+}
+
+.footer-bottom-bar #backToTopBtn {
+  background: #111116;
+  color: #FFFFFF;
+  border: 1.5px solid #444444;
+}
+
+.footer-bottom-bar #backToTopBtn:hover {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
 }
 
 /* ==========================================================================
@@ -2361,36 +2558,20 @@ button {
 }
 
 /* ==========================================================================
-   Panoramic Cloud & Infrastructure Illustration Strip (Bigger & Crisp)
+   Panoramic Cloud & Infrastructure Illustration Strip (Full Width Edge-to-Edge)
    ========================================================================== */
 .infra-illustration-strip {
-  max-width: 1360px;
-  margin: 70px auto 0;
-  border: 3px solid #000000;
-  border-radius: 16px !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin: 70px 0 0 0 !important;
+  border: none !important;
+  border-top: var(--border-lg) !important;
+  border-bottom: var(--border-lg) !important;
+  border-radius: 0px !important;
   overflow: hidden;
-  box-shadow: 8px 8px 0px #000000;
+  box-shadow: none !important;
   background: #E8F5EE;
-}
-
-.illustration-header-strip {
-  background: #000000;
-  color: #FFFFFF;
-  padding: 12px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-}
-
-.illustration-header-strip .strip-badge {
-  background: var(--gum-yellow);
-  color: #000000;
-  padding: 3px 10px;
-  border-radius: 4px;
+  padding: 0 !important;
 }
 
 .illustration-svg-wrap {
@@ -2407,7 +2588,7 @@ button {
   display: block;
   width: 100%;
   height: auto;
-  min-height: 440px;
+  min-height: 380px;
 }
 
 @media (max-width: 768px) {
@@ -2451,8 +2632,6 @@ button {
 
 .gum-cv-card,
 .gum-infra-card,
-.gum-newsletter-strip,
-.infra-illustration-strip,
 .hero-stack-card,
 .hero-stage-card,
 .stack-node-card,
@@ -2556,13 +2735,21 @@ button {
 /* ==========================================================================
    CONTACT BUTTON HOVER (Clean & Static - No Wiggle/Animation)
    ========================================================================== */
+/* Contact buttons hover: goes to same color as background */
+.gum-nav-cta-rect:hover,
 .nav-contact-btn:hover,
-a.nav-contact-btn:hover,
-a[href="mailto:wvrner@outlook.com"]:hover {
+a.nav-contact-btn:hover {
   animation: none !important;
-  background-color: var(--gum-yellow) !important;
+  background: #FFFFFF !important; /* Matches navbar background */
   color: #000000 !important;
-  box-shadow: 4px 4px 0px #000000 !important;
+  box-shadow: none !important;
+}
+
+.gallery-contact-btn:hover {
+  animation: none !important;
+  background: #000000 !important; /* Goes fill black on hover */
+  color: #FFFFFF !important;
+  box-shadow: none !important;
 }
 
 /* Ensure buttons DO NOT have wiggle or bounce animations */
@@ -3017,7 +3204,7 @@ a[href="mailto:wvrner@outlook.com"]:hover {
 a.nav-contact-btn:hover,
 .gum-nav-cta-rect:hover {
   animation: none !important;
-  background: var(--gum-yellow) !important;
+  background: #FFFFFF !important;
   color: #000000 !important;
 }
 
@@ -3639,16 +3826,16 @@ a[href*="#cv"].gum-btn:active {
     box-shadow: none !important;
   }
 
-  /* Panoramic Illustration Strip on Mobile - Framed */
+  /* Panoramic Illustration Strip on Mobile - Full Width Edge-to-Edge */
   .infra-illustration-strip {
-    margin: 36px 16px 0;
-    border-radius: 14px !important;
-    border: var(--border-lg);
-    box-shadow: 6px 6px 0px #000000;
-  }
-  .illustration-header-strip {
-    padding: 9px 12px;
-    font-size: 10px;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 36px 0 0 0 !important;
+    border-radius: 0px !important;
+    border: none !important;
+    border-top: var(--border-lg) !important;
+    border-bottom: var(--border-lg) !important;
+    box-shadow: none !important;
   }
   .illustration-svg-wrap svg {
     min-width: 760px;
@@ -3656,26 +3843,50 @@ a[href*="#cv"].gum-btn:active {
     height: 260px;
   }
 
-  /* Newsletter / Direct Comms on Mobile - Framed */
-  .gum-newsletter-strip {
-    padding: 28px 16px;
-    margin: 36px 16px;
-    border-radius: 14px !important;
-    border: var(--border-lg);
-    box-shadow: var(--shadow-md);
+  /* Transmission Gallery on Mobile */
+  .transmission-gallery-section {
+    padding: 0 16px;
+    margin-top: 50px;
   }
-  .newsletter-title {
-    font-size: clamp(24px, 5.5vw, 32px);
+  .transmission-gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
-  .newsletter-action-box {
-    flex-direction: column;
-    width: 100%;
+  .tile-offset {
+    margin-top: 0;
   }
-  .newsletter-input-pill,
-  .newsletter-action-box .gum-btn {
+  .gallery-tile {
+    min-height: auto;
+    padding: 34px 24px;
+  }
+  .tile-big-title {
+    font-size: 28px;
+  }
+  .tile-desc {
+    font-size: 19px;
+  }
+  .tile-artwork {
+    min-height: 240px;
+    padding: 10px 0 !important;
+  }
+  .gallery-drawing-wrap svg {
+    max-height: 270px;
+  }
+  .gallery-contact-btn {
     width: 100%;
     justify-content: center;
-    border-radius: 8px !important;
+    padding: 18px 32px;
+    font-size: 20px;
+    box-shadow: none !important;
+  }
+
+  /* Footer on Mobile */
+  .gum-footer {
+    padding: 60px 20px 40px !important;
+  }
+  .footer-cols-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
   }
 }
 
@@ -3709,5 +3920,127 @@ a[href*="#cv"].gum-btn:active {
   }
   .hero-identity-tag .tag-name {
     font-size: 13.5px;
+  }
+}
+
+/* More projects coming soon: Outlined Frame, No Background Color */
+.card-outlined-frame {
+  background: transparent !important;
+  border: 3px solid #000000 !important;
+  box-shadow: none !important;
+}
+
+.card-outlined-frame:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* ==========================================================================
+   DUOLINGO-STYLE FIRE ANIMATION (Shown & Animated ONLY on Hover)
+   ========================================================================== */
+.duo-fire-anim {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  vertical-align: middle;
+  width: 0;
+  max-width: 0;
+  opacity: 0;
+  margin-left: 0;
+  overflow: hidden;
+  transform: scale(0.3) rotate(-15deg);
+  transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              max-width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease,
+              margin-left 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.duo-fire-svg {
+  display: block;
+  transform-origin: 50% 90%;
+  animation: none; /* Not constantly animating! */
+  filter: drop-shadow(0 2px 5px rgba(255, 69, 0, 0.5));
+}
+
+.duo-fire-inner {
+  transform-origin: 50% 85%;
+  animation: none;
+}
+
+.gallery-fire-scale .duo-fire-svg {
+  width: 24px;
+  height: 28px;
+}
+
+/* On Button Hover: Reveal and Animate Fire ONLY on Hover */
+.gum-nav-cta-rect:hover .duo-fire-anim,
+.nav-contact-btn:hover .duo-fire-anim,
+a.nav-contact-btn:hover .duo-fire-anim {
+  width: 20px;
+  max-width: 20px;
+  opacity: 1;
+  margin-left: 8px;
+  transform: scale(1) rotate(0deg);
+}
+
+.gallery-contact-btn:hover .duo-fire-anim {
+  width: 26px;
+  max-width: 26px;
+  opacity: 1;
+  margin-left: 12px;
+  transform: scale(1) rotate(0deg);
+}
+
+.gum-nav-cta-rect:hover .duo-fire-svg,
+.nav-contact-btn:hover .duo-fire-svg,
+a.nav-contact-btn:hover .duo-fire-svg,
+.gallery-contact-btn:hover .duo-fire-svg {
+  animation: duoFireFlame 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+}
+
+.gum-nav-cta-rect:hover .duo-fire-inner,
+.nav-contact-btn:hover .duo-fire-inner,
+a.nav-contact-btn:hover .duo-fire-inner,
+.gallery-contact-btn:hover .duo-fire-inner {
+  animation: duoFireCore 0.9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+}
+
+@keyframes duoFireFlame {
+  0% {
+    transform: scale(1, 1) rotate(0deg);
+  }
+  20% {
+    transform: scale(1.08, 0.94) rotate(-3.5deg);
+  }
+  45% {
+    transform: scale(0.95, 1.07) rotate(3deg);
+  }
+  70% {
+    transform: scale(1.05, 0.97) rotate(-2deg);
+  }
+  85% {
+    transform: scale(0.98, 1.03) rotate(1.5deg);
+  }
+  100% {
+    transform: scale(1, 1) rotate(0deg);
+  }
+}
+
+@keyframes duoFireCore {
+  0% {
+    transform: scale(0.94, 0.92) translateY(0.5px);
+    opacity: 0.92;
+  }
+  50% {
+    transform: scale(1.12, 1.08) translateY(-1px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.96, 0.95) translateY(0.2px);
+    opacity: 0.95;
   }
 }

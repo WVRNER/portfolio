@@ -85,25 +85,34 @@
           >
             <span class="logo-text">wvrner</span>
           </a>
-          <a
-            href="https://github.com/wvrner"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="nav-github-badge"
-            title="GitHub: @wvrner"
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-            </svg>
-            <span>@wvrner ★</span>
-          </a>
+
         </div>
 
         <!-- Navigation Cluster: Round About (black bg), Round CV (white bg), Wide Rect Contact -->
         <div class="gum-nav-right-cluster">
           <a href="about.html" class="gum-nav-pill-black">About</a>
           <a href="about.html#cv" class="gum-nav-pill-white">CV</a>
-          <a href="mailto:wvrner@outlook.com" class="gum-nav-cta-rect nav-contact-btn">Contact</a>
+          <a href="mailto:wvrner@outlook.com" class="gum-nav-cta-rect nav-contact-btn">
+            <span>Contact</span>
+            <span class="duo-fire-anim" aria-hidden="true">
+              <svg class="duo-fire-svg" viewBox="0 0 24 28" width="18" height="21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="duoFireGradOuter" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#FF3800" />
+                    <stop offset="45%" stop-color="#FF7A00" />
+                    <stop offset="100%" stop-color="#FFB300" />
+                  </linearGradient>
+                  <linearGradient id="duoFireGradInner" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#FFA000" />
+                    <stop offset="65%" stop-color="#FFD600" />
+                    <stop offset="100%" stop-color="#FFF566" />
+                  </linearGradient>
+                </defs>
+                <path class="duo-fire-outer" d="M12 1.5 C12 1.5, 14.5 5.5, 17.2 8.8 C19.6 11.5, 21.5 14.6, 21.5 18 C21.5 23.2, 17.2 27, 12 27 C6.8 27, 2.5 23.2, 2.5 18 C2.5 13.6, 5.2 10.2, 8.2 7 C8.2 9.8, 9.8 11.2, 11 11.2 C11 9.2, 11.5 4.8, 12 1.5 Z" fill="url(#duoFireGradOuter)" />
+                <path class="duo-fire-inner" d="M12 12.8 C13.2 12.8, 14.6 14.8, 16 16.8 C16.8 17.8, 17.2 19, 17.2 20.4 C17.2 23.4, 14.8 25.5, 12 25.5 C9.2 25.5, 6.8 23.4, 6.8 20.4 C6.8 18.2, 8.4 16.2, 10 14.6 C10.8 15.8, 11.2 16.4, 12 16.4 C12 15.2, 11.8 14, 12 12.8 Z" fill="url(#duoFireGradInner)" />
+              </svg>
+            </span>
+          </a>
         </div>
       </nav>
     </header>
@@ -1594,17 +1603,12 @@
         <div class="gum-infra-card">
           <div class="infra-header-row">
             <div class="infra-badges-list">
-              <span class="infra-badge">AWS CloudFront + S3</span>
-              <span class="infra-badge" style="background: var(--gum-pink)"
-                >Terraform IaC</span
-              >
-              <span class="infra-badge" style="background: var(--gum-yellow)"
-                >GitHub Actions CI/CD</span
-              >
+              <span class="infra-badge" style="background: var(--gum-green)">GitHub Pages CDN</span>
+              <span class="infra-badge" style="background: var(--gum-pink)">Git Version Control</span>
+              <span class="infra-badge" style="background: var(--gum-blue)">Zero Dependencies</span>
             </div>
             <h3 class="infra-card-title">
-              This website. Hosted on AWS, defined with Terraform, deployed
-              automatically with GitHub Actions.
+              This website. Hosted on GitHub Pages, version-controlled with Git, deployed automatically on push.
             </h3>
           </div>
 
@@ -1622,50 +1626,47 @@
             >
               <span class="node-btn-step">STEP 01</span>
               <span class="node-btn-title">🌐 Client Browser</span>
-              <span class="node-btn-desc">HTTPS / TLS 1.3 Ingress</span>
+              <span class="node-btn-desc">HTTPS &amp; TLS 1.3 Ingress</span>
             </button>
 
-            <button class="node-btn" data-node="dns" type="button" role="tab">
+            <button class="node-btn" data-node="repo" type="button" role="tab">
               <span class="node-btn-step">STEP 02</span>
-              <span class="node-btn-title">🧭 Route 53</span>
-              <span class="node-btn-desc">Anycast Latency DNS</span>
+              <span class="node-btn-title">🐙 GitHub Repo</span>
+              <span class="node-btn-desc">Declarative Git Source</span>
             </button>
 
             <button class="node-btn" data-node="cdn" type="button" role="tab">
               <span class="node-btn-step">STEP 03</span>
-              <span class="node-btn-title">⚡ CloudFront CDN</span>
-              <span class="node-btn-desc">Edge OAC Cache Origin</span>
+              <span class="node-btn-title">⚡ GitHub Pages CDN</span>
+              <span class="node-btn-desc">Global Anycast Edge</span>
             </button>
 
-            <button class="node-btn" data-node="s3" type="button" role="tab">
+            <button class="node-btn" data-node="static" type="button" role="tab">
               <span class="node-btn-step">STEP 04</span>
-              <span class="node-btn-title">🪣 AWS S3 Bucket</span>
-              <span class="node-btn-desc">Private Static Origin</span>
+              <span class="node-btn-title">📄 Pure Semantic Web</span>
+              <span class="node-btn-desc">Native HTML5, CSS &amp; JS</span>
             </button>
           </div>
 
           <!-- Explainer Toast Banner -->
           <div id="nodeStatusToast" class="node-status-toast">
-            🌐 <strong>01 / Client Ingress:</strong> Modern browser establishes
-            TLS 1.3 encrypted connection to the Anycast edge. Click any node to
-            inspect its architecture.
+            🌐 <strong>01 / Client Ingress:</strong> Modern browser establishes TLS 1.3 encrypted connection to the Anycast edge. Click any node to inspect the real deployment architecture.
           </div>
-
-          
         </div>
       </section>
 
       <!-- =========================================================================
            SECTION 04: UPCOMING PIPELINE & LAB EXPERIMENTS
            ========================================================================= -->
-      <!-- Pipeline & Labs Upcoming Card -->
+      <!-- Pipeline & Labs Upcoming Card (Outlined Frame, No Background Color) -->
       <section class="gum-section" style="padding-top: 0">
         <div
-          class="quad-card card-yellow"
+          class="quad-card card-outlined-frame"
           style="
-            border: var(--border-lg);
+            background: transparent !important;
+            border: 3px solid #000000 !important;
             border-radius: var(--radius-card);
-            box-shadow: var(--shadow-lg);
+            box-shadow: none !important;
           "
         >
           <span
@@ -1701,35 +1702,167 @@
         </div>
       </section>
 
-      <!-- Section: Direct Transmission & Contact Block -->
-      <section class="gum-newsletter-strip">
-        <div class="newsletter-inner">
-          <span
-            class="hero-sub-label"
-            style="background: #ffffff; color: #000000"
-            >DIRECT COMMS &amp; TRANSMISSION</span
-          >
-          <h2 class="newsletter-title">Have a project or want to connect?</h2>
-          <p class="newsletter-sub">
-            Let's discuss infrastructure design, cloud architecture, or upcoming
-            engineering opportunities.
-          </p>
-          <div class="newsletter-action-box">
-            <div class="newsletter-input-pill">✉️ Cloud &amp; Infrastructure Inquiries</div>
-            <button
-              class="gum-btn gum-btn-black copy-email-trigger bounce-on-click"
-              data-email="wvrner@outlook.com"
-              type="button"
-            >
-              <span>📋 Copy Email</span>
-            </button>
-            <a
-              href="mailto:wvrner@outlook.com"
-              class="gum-btn gum-btn-white bounce-on-click"
-            >
-              <span>Launch Email Client &rarr;</span>
-            </a>
+      <!-- Section: Direct Comms & Transmission Gallery -->
+      <section class="transmission-gallery-section" id="contact" aria-label="Direct Comms &amp; Transmission">
+        <div class="section-lead-block" style="margin-bottom: 24px;">
+          <span class="section-pill-tag">04 // DIRECT COMMS &amp; TRANSMISSION</span>
+        </div>
+
+        <div class="transmission-gallery-grid">
+          <!-- Tile 1: Big Tile -->
+          <div class="gallery-tile tile-big">
+            <div class="tile-card-header">
+              <span class="tile-chip">// 01 &middot; TRANSMISSION</span>
+              <span class="tile-dot-live"><span class="pulse-dot"></span> OPEN</span>
+            </div>
+            <h2 class="tile-big-title">Have a project or want to connect?</h2>
+            <div class="tile-meta-footer">
+              <span>CLOUD ARCHITECTURE &middot; DEVSECOPS &middot; PLATFORM</span>
+            </div>
           </div>
+
+          <!-- Tile 2: A bit lower (offset) -->
+          <div class="gallery-tile tile-subhead tile-offset">
+            <div class="tile-card-header">
+              <span class="tile-chip">// 02 &middot; COLLABORATION</span>
+            </div>
+            <p class="tile-desc">
+              Let's discuss infrastructure design, cloud architecture, or upcoming engineering opportunities.
+            </p>
+            <div class="tile-specs-chips">
+              <span class="tile-spec">AWS Multi-AZ</span>
+              <span class="tile-spec">Terraform</span>
+              <span class="tile-spec">Docker</span>
+              <span class="tile-spec">CI/CD</span>
+            </div>
+          </div>
+
+          <!-- Tile 3: Tile with a drawing (Frameless & Shadowless) -->
+          <div class="gallery-tile tile-artwork">
+            <div class="gallery-drawing-wrap">
+              <svg viewBox="0 0 360 300" width="100%" height="auto" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Complete Transmission Mast, Antenna &amp; Waves">
+                <!-- Ground Baseline -->
+                <line x1="60" y1="285" x2="300" y2="285" stroke="#000000" stroke-width="3" stroke-linecap="round" />
+                
+                <!-- Foundation Footing Blocks -->
+                <rect x="98" y="281" width="24" height="8" rx="2" fill="#000000" />
+                <rect x="238" y="281" width="24" height="8" rx="2" fill="#000000" />
+
+                <!-- Main Lattice Tower Legs -->
+                <line x1="110" y1="285" x2="162" y2="148" stroke="#000000" stroke-width="3.5" stroke-linecap="round" />
+                <line x1="250" y1="285" x2="198" y2="148" stroke="#000000" stroke-width="3.5" stroke-linecap="round" />
+                <line x1="180" y1="285" x2="180" y2="148" stroke="#000000" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Horizontal Cross Beams -->
+                <line x1="124" y1="240" x2="236" y2="240" stroke="#000000" stroke-width="2.5" />
+                <line x1="140" y1="195" x2="220" y2="195" stroke="#000000" stroke-width="2.5" />
+                <line x1="155" y1="155" x2="205" y2="155" stroke="#000000" stroke-width="2.5" />
+
+                <!-- Diagonal X-Truss Bracing (Tiers 1, 2, 3) -->
+                <!-- Tier 1: Base to 240 -->
+                <line x1="110" y1="285" x2="180" y2="240" stroke="#000000" stroke-width="2" />
+                <line x1="180" y1="285" x2="124" y2="240" stroke="#000000" stroke-width="2" />
+                <line x1="180" y1="285" x2="236" y2="240" stroke="#000000" stroke-width="2" />
+                <line x1="250" y1="285" x2="180" y2="240" stroke="#000000" stroke-width="2" />
+                <!-- Tier 2: 240 to 195 -->
+                <line x1="124" y1="240" x2="180" y2="195" stroke="#000000" stroke-width="2" />
+                <line x1="180" y1="240" x2="140" y2="195" stroke="#000000" stroke-width="2" />
+                <line x1="180" y1="240" x2="220" y2="195" stroke="#000000" stroke-width="2" />
+                <line x1="236" y1="240" x2="180" y2="195" stroke="#000000" stroke-width="2" />
+                <!-- Tier 3: 195 to 155 -->
+                <line x1="140" y1="195" x2="180" y2="155" stroke="#000000" stroke-width="2" />
+                <line x1="180" y1="195" x2="155" y2="155" stroke="#000000" stroke-width="2" />
+                <line x1="180" y1="195" x2="205" y2="155" stroke="#000000" stroke-width="2" />
+                <line x1="220" y1="195" x2="180" y2="155" stroke="#000000" stroke-width="2" />
+
+                <!-- Equipment Platform with Safety Railing -->
+                <rect x="150" y="145" width="60" height="7" rx="2" fill="#000000" />
+                <line x1="152" y1="140" x2="208" y2="140" stroke="#000000" stroke-width="2" />
+                <line x1="155" y1="145" x2="155" y2="140" stroke="#000000" stroke-width="2" />
+                <line x1="205" y1="145" x2="205" y2="140" stroke="#000000" stroke-width="2" />
+
+                <!-- Parabolic Microwave Dish on Tower -->
+                <path d="M 125 152 A 28 28 0 0 1 152 125 Z" fill="#FFC900" stroke="#000000" stroke-width="2.5" stroke-linejoin="round" />
+                <line x1="140" y1="136" x2="130" y2="126" stroke="#000000" stroke-width="2" stroke-linecap="round" />
+                <circle cx="128" cy="124" r="3.5" fill="#FF90E8" stroke="#000000" stroke-width="1.5" />
+
+                <!-- Upper Spire Mast -->
+                <line x1="180" y1="145" x2="180" y2="80" stroke="#000000" stroke-width="3" stroke-linecap="round" />
+                <!-- Spire Cross Dipoles -->
+                <line x1="166" y1="120" x2="194" y2="120" stroke="#000000" stroke-width="2" stroke-linecap="round" />
+                <line x1="170" y1="102" x2="190" y2="102" stroke="#000000" stroke-width="2" stroke-linecap="round" />
+                <!-- Transmitter Beacon Radome -->
+                <circle cx="180" cy="80" r="8" fill="#FF90E8" stroke="#000000" stroke-width="2.5" />
+                <circle cx="180" cy="80" r="3" fill="#FFC900" />
+
+                <!-- Whip Antenna Spire Tip -->
+                <line x1="180" y1="72" x2="180" y2="50" stroke="#000000" stroke-width="2.5" stroke-linecap="round" />
+                <circle cx="180" cy="48" r="4" fill="#FF3800" stroke="#000000" stroke-width="2" />
+
+                <!-- Complete Concentric Transmission Waves (Radiating outward, unclipped) -->
+                <!-- Wave 1 (Inner Arc) -->
+                <path d="M 158 44 A 24 24 0 0 1 202 44" stroke="#000000" stroke-width="2.5" stroke-linecap="round" />
+                <path d="M 152 54 A 28 28 0 0 0 152 42" stroke="#000000" stroke-width="2.5" stroke-linecap="round" />
+                <path d="M 208 42 A 28 28 0 0 1 208 54" stroke="#000000" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Wave 2 (Mid Arc) -->
+                <path d="M 142 32 A 44 44 0 0 1 218 32" stroke="#000000" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4 3" />
+                <path d="M 134 60 A 48 48 0 0 0 134 36" stroke="#000000" stroke-width="2.5" stroke-linecap="round" />
+                <path d="M 226 36 A 48 48 0 0 1 226 60" stroke="#000000" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Wave 3 (Outer Arc - Electric Mint) -->
+                <path d="M 124 20 A 64 64 0 0 1 236 20" stroke="#23A094" stroke-width="3" stroke-linecap="round" />
+                <path d="M 114 66 A 70 70 0 0 0 114 30" stroke="#23A094" stroke-width="2.5" stroke-linecap="round" />
+                <path d="M 246 30 A 70 70 0 0 1 246 66" stroke="#23A094" stroke-width="2.5" stroke-linecap="round" />
+
+                <!-- Wave 4 (Far Field Wide Reach) -->
+                <path d="M 106 8 A 86 86 0 0 1 254 8" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-dasharray="5 4" />
+                <path d="M 94 72 A 92 92 0 0 0 94 24" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4" />
+                <path d="M 266 24 A 92 92 0 0 1 266 72" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4" />
+
+                <!-- Floating Neubrutalist Clouds & Packet Nodes -->
+                <!-- Top Right Cloud -->
+                <g transform="translate(255, 68)">
+                  <path d="M 10 18 A 12 12 0 0 1 28 8 A 15 15 0 0 1 52 14 A 12 12 0 0 1 60 26 L 6 26 A 8 8 0 0 1 10 18 Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
+                </g>
+                <!-- Lower Left Cloud -->
+                <g transform="translate(35, 175)">
+                  <path d="M 8 16 A 11 11 0 0 1 24 7 A 13 13 0 0 1 45 12 A 10 10 0 0 1 54 24 L 5 24 A 7 7 0 0 1 8 16 Z" fill="#FFFFFF" stroke="#000000" stroke-width="2" stroke-linejoin="round" />
+                </g>
+
+                <!-- Signal Packet Sparkles -->
+                <text x="285" y="125" font-family="monospace" font-size="14" font-weight="900" fill="#000000">+</text>
+                <text x="65" y="140" font-family="monospace" font-size="12" font-weight="900" fill="#23A094">*</text>
+                <circle cx="288" cy="150" r="3.5" fill="#FF90E8" stroke="#000000" stroke-width="1.5" />
+                <circle cx="75" cy="95" r="2.5" fill="#FFC900" stroke="#000000" stroke-width="1.5" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Outlined Button with No Rounded Corners (Goes to Emailing) -->
+        <div class="gallery-action-box">
+          <a href="mailto:wvrner@outlook.com" class="gallery-contact-btn">
+            <span>Contact</span>
+            <span class="duo-fire-anim gallery-fire-scale" aria-hidden="true">
+              <svg class="duo-fire-svg" viewBox="0 0 24 28" width="24" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="duoFireGradOuterGal" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#FF3800" />
+                    <stop offset="45%" stop-color="#FF7A00" />
+                    <stop offset="100%" stop-color="#FFB300" />
+                  </linearGradient>
+                  <linearGradient id="duoFireGradInnerGal" x1="0%" y1="100%" x2="0%" y2="0%">
+                    <stop offset="0%" stop-color="#FFA000" />
+                    <stop offset="65%" stop-color="#FFD600" />
+                    <stop offset="100%" stop-color="#FFF566" />
+                  </linearGradient>
+                </defs>
+                <path class="duo-fire-outer" d="M12 1.5 C12 1.5, 14.5 5.5, 17.2 8.8 C19.6 11.5, 21.5 14.6, 21.5 18 C21.5 23.2, 17.2 27, 12 27 C6.8 27, 2.5 23.2, 2.5 18 C2.5 13.6, 5.2 10.2, 8.2 7 C8.2 9.8, 9.8 11.2, 11 11.2 C11 9.2, 11.5 4.8, 12 1.5 Z" fill="url(#duoFireGradOuterGal)" />
+                <path class="duo-fire-inner" d="M12 12.8 C13.2 12.8, 14.6 14.8, 16 16.8 C16.8 17.8, 17.2 19, 17.2 20.4 C17.2 23.4, 14.8 25.5, 12 25.5 C9.2 25.5, 6.8 23.4, 6.8 20.4 C6.8 18.2, 8.4 16.2, 10 14.6 C10.8 15.8, 11.2 16.4, 12 16.4 C12 15.2, 11.8 14, 12 12.8 Z" fill="url(#duoFireGradInnerGal)" />
+              </svg>
+            </span>
+          </a>
         </div>
       </section>
     </main>
@@ -1742,10 +1875,7 @@
          observing "100% SLA" on a park bench, and a walking engineer with "PASS ✔" alerts.
          ========================================================================= -->
     <section class="infra-illustration-strip" aria-label="Cloud & Infrastructure Production Scene">
-      <div class="illustration-header-strip">
-        <span class="strip-label">// AUTONOMOUS CLOUD INFRASTRUCTURE IN PRODUCTION · ZERO DRIFT</span>
-        <span class="strip-badge">AWS S3 + CLOUDFRONT LIVE</span>
-      </div>
+
       <div class="illustration-svg-wrap">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" width="100%" height="auto" preserveAspectRatio="xMidYMid meet" style="display: block;">
           <defs>
@@ -1988,7 +2118,7 @@
           </div>
         </div>
 
-        <!-- 3-Column Footer Grid -->
+        <!-- 2-Column Wide Footer Grid (No Direct Links) -->
         <div class="footer-cols-grid">
           <!-- Col 1: Bio & Branding -->
           <div class="footer-brand-col">
@@ -1996,13 +2126,7 @@
               <span class="logo-w">W</span>
               <span>Nima Hosseini</span>
             </div>
-            <div
-              style="
-                font-family: var(--font-mono);
-                font-size: 13px;
-                font-weight: 700;
-              "
-            >
+            <div class="footer-brand-role">
               @wvrner &middot; DevOps &amp; Infrastructure Systems
             </div>
             <p class="footer-brand-desc">
@@ -2011,58 +2135,54 @@
             </p>
           </div>
 
-          <!-- Col 2: Navigation Links -->
-          <div class="footer-links-col">
-            <h5>// DIRECT LINKS</h5>
-            <ul class="footer-links-list">
-              <li><a href="index.html">➔ Home Architecture</a></li>
-              <li><a href="#learning-exhibition">➔ Currently Learning</a></li>
-              <li>
-                <a href="#systems-architecture">➔ AWS + Terraform Setup</a>
-              </li>
-              
-              <li><a href="about.html">➔ Biography &amp; Foundations</a></li>
-              <li><a href="about.html#cv">➔ Full Curriculum Vitae</a></li>
-            </ul>
-          </div>
-
-          <!-- Col 3: Verified Protocols -->
+          <!-- Col 2: Verified Protocols with White Icons -->
           <div class="footer-links-col">
             <h5>// VERIFIED PROTOCOLS</h5>
             <ul class="footer-links-list">
               <li>
-                <a
-                  href="https://t.me/wvrner"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >➔ Telegram</a
-                >
+                <a href="https://t.me/wvrner" target="_blank" rel="noopener noreferrer">
+                  <svg class="footer-protocol-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                  </svg>
+                  <span>Telegram</span>
+                </a>
               </li>
               <li>
-                <a
-                  href="https://github.com/wvrner"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >➔ GitHub: @wvrner</a
-                >
+                <a href="https://github.com/wvrner" target="_blank" rel="noopener noreferrer">
+                  <svg class="footer-protocol-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                  </svg>
+                  <span>GitHub: @wvrner</span>
+                </a>
               </li>
               <li>
-                <a
-                  href="https://linkedin.com/in/wvrner"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >➔ LinkedIn: @wvrner</a
-                >
+                <a href="https://linkedin.com/in/wvrner" target="_blank" rel="noopener noreferrer">
+                  <svg class="footer-protocol-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+                  </svg>
+                  <span>LinkedIn: @wvrner</span>
+                </a>
               </li>
               <li>
-                <a href="mailto:wvrner@outlook.com"
-                  >➔ Send Email (Direct)</a
-                >
+                <a href="mailto:wvrner@outlook.com">
+                  <svg class="footer-protocol-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect width="20" height="16" x="2" y="4" rx="2"/>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                  </svg>
+                  <span>Email (Direct)</span>
+                </a>
               </li>
               <li>
-                <a href="about.html#cv"
-                  >➔ Download Curriculum Vitae (PDF/Web)</a
-                >
+                <a href="about.html#cv">
+                  <svg class="footer-protocol-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                  </svg>
+                  <span>Curriculum Vitae (PDF/Web)</span>
+                </a>
               </li>
             </ul>
           </div>

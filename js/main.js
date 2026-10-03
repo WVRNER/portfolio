@@ -158,10 +158,10 @@ function initInfraNodeFlow() {
   if (!nodeButtons.length) return;
 
   const nodeDetails = {
-    browser: '🌐 <strong>01 / Client Ingress:</strong> Modern browser establishes TLS 1.3 encrypted connection to the Anycast edge. Click any node to inspect its architecture.',
-    dns: '🧭 <strong>02 / AWS Route 53:</strong> Latency-based Anycast DNS alias record directs user requests to the closest global CloudFront PoP.',
-    cdn: '⚡ <strong>03 / CloudFront CDN:</strong> Origin Access Control (OAC) signs requests using SigV4. Cached assets returned with low TTFB from 450+ edge locations.',
-    s3: '🪣 <strong>04 / AWS S3 Bucket:</strong> Private origin bucket. Public access is 100% blocked; accessed exclusively via SigV4 CloudFront OAC.'
+    browser: '🌐 <strong>01 / Client Ingress:</strong> Modern browser establishes TLS 1.3 encrypted connection to the Anycast edge. Click any node to inspect the real deployment architecture.',
+    repo: '🐙 <strong>02 / GitHub Source:</strong> Every release is committed and pushed directly to GitHub. Fully auditable git commit log with zero hidden dependencies or config drift.',
+    cdn: '⚡ <strong>03 / GitHub Pages CDN:</strong> Fast Anycast edge caching delivers assets across global PoPs with low latency, Brotli compression, and automatic HTTPS certificates.',
+    static: '📄 <strong>04 / Pure Semantic Web:</strong> Direct static file serving. Zero heavy frameworks, zero runtime hydration delays, and sub-100ms load times worldwide.'
   };
 
   nodeButtons.forEach(btn => {
