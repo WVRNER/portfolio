@@ -508,11 +508,63 @@ function initHashScroll() {
   }
 }
 
+
+/* ==========================================================================
+   Hero Architecture Inspector Dock (Pillar Switcher)
+   ========================================================================== */
+function initHeroDock() {
+  const dockBtns = document.querySelectorAll('.stage-dock-btn');
+  const dockTitle = document.getElementById('heroDockTitle');
+  const dockDesc = document.getElementById('heroDockDesc');
+  const dockTags = document.getElementById('heroDockTags');
+  if (!dockBtns.length || !dockTitle || !dockDesc) return;
+
+  const data = {
+    aws: {
+      title: 'AWS Cloud Architecture',
+      desc: 'Multi-AZ topology with Anycast Route 53 DNS, CloudFront edge caching, and private S3 origins protected by strict SigV4 Origin Access Control (OAC).',
+      tags: ['Route 53', 'CloudFront OAC', 'S3 Bucket', 'TLS 1.3', '99.992% SLA']
+    },
+    terraform: {
+      title: 'Terraform IaC & State Locking',
+      desc: '100% declarative HCL infrastructure with remote S3 state storage, DynamoDB distributed locking, and automated zero-drift enforcement.',
+      tags: ['Declarative HCL', 'S3 Backend', 'DynamoDB Lock', 'Zero Drift', 'v1.5+']
+    },
+    docker: {
+      title: 'Hardened Linux Containers',
+      desc: 'Container kernel isolation with cgroups v2 and Linux namespaces. Multi-stage builds shrinking heavy 920MB SDKs into 28MB distroless runtimes.',
+      tags: ['Distroless', 'cgroups v2', 'Non-Root User', 'Minimal Attack Surface']
+    },
+    actions: {
+      title: 'Automated CI/CD Pipelines',
+      desc: 'Keyless GitHub Actions workflows using OIDC STS authentication to assume IAM roles without long-lived secrets, invalidating edge caches in <4.0s.',
+      tags: ['Keyless OIDC', 'GitHub Actions', 'Cache Invalidation', 'STS Role Assume']
+    }
+  };
+
+  dockBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-pillar');
+      if (!data[key]) return;
+
+      dockBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      dockTitle.textContent = data[key].title;
+      dockDesc.textContent = data[key].desc;
+      if (dockTags) {
+        dockTags.innerHTML = data[key].tags.map(function(t) { return "<span class=\"stage-tag\">" + t + "</span>"; }).join("");
+      }
+    });
+  });
+}
+
 /* ==========================================================================
    App Initialization
    ========================================================================== */
 function initApp() {
   initIntroSplash();
+  initHeroDock();
   initChapterTabs();
   initVisualizerToggles();
   initInfraNodeFlow();

@@ -84,9 +84,9 @@ textarea {
   --shadow-active: 1px 1px 0px #000000;
 
   /* Radii */
-  --radius-pill: 9999px;
-  --radius-card: 16px;
-  --radius-sm: 8px;
+  --radius-pill: 0px;
+  --radius-card: 0px;
+  --radius-sm: 0px;
   --radius-none: 0px;
 
   /* Typography */
@@ -600,16 +600,16 @@ button {
   margin-top: 10px;
 }
 
-.hero-cta-group .gum-btn {
-  font-size: 16px;
-  padding: 14px 32px;
-  box-shadow: var(--shadow-md);
+.hero-cta-group .gum-btn,
+.hero-cta-group a {
+  box-shadow: none !important;
 }
 
-.hero-cta-group .gum-btn:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: var(--shadow-hover-md);
+.hero-cta-group .gum-btn:hover,
+.hero-cta-group a:hover {
+  box-shadow: none !important;
 }
+
 
 /* Floating Decorative Badges & Primitives */
 .hero-visual-stage {
@@ -2089,4 +2089,1259 @@ button {
 .gum-section[id],
 [id] {
   scroll-margin-top: 86px;
+}
+
+/* ==========================================================================
+   Hero Section Enhancements: Breathing Room, Identity & Architecture Dock
+   ========================================================================== */
+.gum-hero {
+  position: relative;
+  padding: 100px 24px 80px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-bottom: var(--border-md);
+  min-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-identity-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gum-yellow);
+  color: #000000;
+  border: var(--border-md);
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  width: fit-content;
+  box-shadow: 2px 2px 0px #000000;
+  margin-bottom: 8px;
+}
+
+.hero-identity-tag .live-pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #0029ff;
+  display: inline-block;
+  box-shadow: 0 0 6px #0029ff;
+  animation: pulse-beacon 1.8s infinite;
+}
+
+@keyframes pulse-beacon {
+  0%, 100% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+.hero-identity-tag .tag-name {
+  font-weight: 900;
+  color: #000000;
+}
+
+.hero-identity-tag .tag-sep {
+  opacity: 0.4;
+  font-weight: 900;
+}
+
+.hero-identity-tag .tag-role {
+  color: #27187E;
+  font-weight: 700;
+}
+
+.hero-inspector-stage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-stage-card {
+  background: var(--bg-card);
+  border: var(--border-lg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-stage-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 0px #000000;
+}
+
+.stage-card-header {
+  background: #000000;
+  color: #FFFFFF;
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.live-badge-mini {
+  background: #4ADE80;
+  color: #000000;
+  font-size: 9.5px;
+  font-weight: 900;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.stage-dock-nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: #000000;
+  border-bottom: var(--border-md);
+  padding: 2px;
+  gap: 2px;
+}
+
+.stage-dock-btn {
+  background: #1A1A1A;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage-dock-btn:hover {
+  background: #333333;
+}
+
+.stage-dock-btn.active {
+  background: #FFC900;
+  color: #000000;
+}
+
+.stage-dock-body {
+  padding: 28px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dock-pillar-heading {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.dock-pillar-desc {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  min-height: 58px;
+}
+
+.dock-pillar-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.stage-tag {
+  background: var(--bg-canvas);
+  color: var(--text-main);
+  border: 1.5px solid #000000;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.stage-dock-footer {
+  background: var(--bg-canvas);
+  border-top: var(--border-sm);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.dock-status-metric .metric-label {
+  color: var(--text-muted);
+  margin-right: 6px;
+}
+
+.dock-status-metric .metric-val {
+  color: #10B981;
+  font-weight: 900;
+}
+
+.dock-deep-link {
+  color: var(--royal-indigo);
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.hero-scroll-cue {
+  display: flex;
+  justify-content: center;
+  margin-top: 56px;
+}
+
+.scroll-cue-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 6px 16px;
+  border: 1.5px dashed var(--text-muted);
+  border-radius: var(--radius-pill);
+  transition: all 0.2s ease;
+}
+
+.scroll-cue-link:hover {
+  color: #000000;
+  border-color: #000000;
+  background: var(--gum-yellow);
+}
+
+.scroll-cue-link .scroll-arrow {
+  animation: bounce-arrow 1.6s infinite ease-in-out;
+}
+
+@keyframes bounce-arrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+/* ==========================================================================
+   Panoramic Cloud & Infrastructure Illustration Strip
+   ========================================================================== */
+.infra-illustration-strip {
+  max-width: var(--max-width);
+  margin: 60px auto 0;
+  border: var(--border-lg);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: #E8F5EE;
+}
+
+.illustration-header-strip {
+  background: #000000;
+  color: #FFFFFF;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.illustration-header-strip .strip-badge {
+  background: var(--gum-yellow);
+  color: #000000;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.illustration-svg-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
+.illustration-svg-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .gum-hero {
+    padding: 60px 16px 50px;
+  }
+  .stage-dock-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dock-pillar-desc {
+    min-height: auto;
+  }
+  .infra-illustration-strip {
+    margin: 40px 16px 0;
+    border-radius: 12px;
+  }
+}
+
+/* ==========================================================================
+   RECTANGULAR BUTTONS & CONTROLS (Authentic Gumroad Neubrutalism)
+   ========================================================================== */
+.gum-btn,
+.gum-nav-btn,
+.nav-contact-btn,
+.hero-cta-group a,
+.stage-dock-btn,
+.stage-tag,
+.node-btn,
+.chapter-tab-btn,
+.vis-toggle-btn,
+.console-tab-pill,
+.console-copy-btn,
+.copy-email-trigger,
+.gum-topic-pill,
+.gum-logo-pill,
+.logo-w,
+.nav-github-badge,
+.hero-title-badge,
+.hero-identity-tag,
+.node-status-toast,
+.infra-badge,
+.section-pill-tag,
+.cv-avatar-big,
+.cv-profile-col,
+.cv-block,
+.gum-cv-card,
+.gum-infra-card,
+.gum-newsletter-strip,
+.infra-illustration-strip,
+.hero-stage-card,
+.stack-node-card,
+.metric-chip {
+  border-radius: 0px !important;
+}
+
+/* Nav Logo Link & GitHub Badge */
+.gum-logo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  color: #000000;
+}
+
+.nav-github-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #FFFFFF;
+  color: #000000;
+  border: 1.5px solid #000000;
+  padding: 3px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 1.5px 1.5px 0px #000000;
+  transition: all 0.15s ease;
+}
+
+.nav-github-badge:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 2.5px 2.5px 0px #000000;
+  background: #F4F4F0;
+}
+
+/* Nav Buttons: About, CV, Contact side-by-side */
+.gum-nav-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gum-nav-btn {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13.5px;
+  padding: 8px 18px;
+  border: 2px solid #000000;
+  background: #FFFFFF;
+  color: #000000;
+  box-shadow: 2.5px 2.5px 0px #000000;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.gum-nav-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4.5px 4.5px 0px #000000;
+}
+
+.gum-nav-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px #000000;
+}
+
+.gum-nav-btn.active {
+  background: #000000;
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   EXCLUSIVE HOVER ANIMATION: ONLY ON CONTACT BUTTON
+   ========================================================================== */
+@keyframes contact-wiggle {
+  0% { transform: translate(-2px, -2px) rotate(0deg); }
+  25% { transform: translate(-2px, -2px) rotate(-3.5deg); }
+  50% { transform: translate(-2px, -2px) rotate(3.5deg); }
+  75% { transform: translate(-2px, -2px) rotate(-2deg); }
+  100% { transform: translate(-2px, -2px) rotate(0deg); }
+}
+
+.nav-contact-btn:hover,
+a.nav-contact-btn:hover,
+a[href="mailto:wvrner@outlook.com"]:hover {
+  animation: contact-wiggle 0.35s ease-in-out infinite alternate !important;
+  background-color: var(--gum-yellow) !important;
+  color: #000000 !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+/* Ensure other buttons DO NOT have wiggle or bounce animations */
+.gum-btn:not(.nav-contact-btn):hover,
+.gum-nav-btn:not(.nav-contact-btn):hover,
+.hero-cta-group a:not(.nav-contact-btn):hover {
+  animation: none !important;
+}
+
+/* ==========================================================================
+   HERO SECTION: SPACE USED WISELY (UNDERSTAND BEFORE SCROLL)
+   ========================================================================== */
+.gum-hero {
+  position: relative;
+  padding: 44px 24px 40px !important;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-bottom: var(--border-md);
+  min-height: auto !important;
+  display: block !important;
+}
+
+.gum-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .gum-hero-grid {
+    grid-template-columns: 1.15fr 0.95fr;
+    gap: 36px;
+  }
+}
+
+/* ==========================================================================
+   ACTIVE CLOUD & INFRASTRUCTURE STACK CARD (Hero Right Column)
+   ========================================================================== */
+.hero-stack-card {
+  background: var(--bg-card);
+  border: var(--border-lg);
+  border-radius: 0px !important;
+  box-shadow: 6px 6px 0px #000000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hero-stack-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 0px #000000;
+}
+
+.stack-card-header {
+  background: #000000;
+  color: #FFFFFF;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.stack-card-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #FFFFFF;
+}
+
+.stack-badge-active {
+  background: var(--gum-yellow);
+  color: #000000;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 900;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.stack-card-intro {
+  padding: 16px 20px 12px;
+  background: #FFFDF5;
+  border-bottom: 1.5px solid #000000;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.stack-intro-kicker {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #666666;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.stack-intro-desc {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.stack-pillars-list {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg-canvas);
+}
+
+.stack-pillar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 0px !important;
+  box-shadow: 2.5px 2.5px 0px #000000;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.stack-pillar-item:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4.5px 4.5px 0px #000000;
+}
+
+.pillar-aws:hover {
+  background-color: #FFF9DB !important;
+}
+
+.pillar-tf:hover {
+  background-color: #FFEBF9 !important;
+}
+
+.pillar-docker:hover {
+  background-color: #E8FAF4 !important;
+}
+
+.pillar-k8s:hover {
+  background-color: #EDF3FF !important;
+}
+
+.pillar-icon-box {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border: 2px solid #000000;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1.5px 1.5px 0px #000000;
+}
+
+.pillar-aws .pillar-icon-box {
+  background: var(--gum-yellow);
+  color: #000000;
+}
+
+.pillar-tf .pillar-icon-box {
+  background: var(--gum-pink);
+  color: #000000;
+}
+
+.pillar-docker .pillar-icon-box {
+  background: var(--gum-green);
+  color: #000000;
+}
+
+.pillar-k8s .pillar-icon-box {
+  background: var(--gum-blue);
+  color: #000000;
+}
+
+.pillar-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.pillar-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pillar-name {
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  color: #000000;
+}
+
+.pillar-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #222222;
+  background: rgba(0,0,0,0.06);
+  padding: 1px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,0.15);
+}
+
+.pillar-desc {
+  font-size: 12px;
+  line-height: 1.45;
+  color: #555555;
+  margin: 0;
+}
+
+.stack-card-footer {
+  padding: 12px 18px;
+  background: #FFFFFF;
+  border-top: 2px solid #000000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.stack-status-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #333333;
+}
+
+.stack-deep-link {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: #000000;
+  text-decoration: underline;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+}
+
+.stack-deep-link:hover {
+  color: var(--royal-indigo);
+}
+
+@media (max-width: 768px) {
+  .gum-nav-inner {
+    padding: 0 14px;
+    gap: 8px;
+  }
+  .gum-nav-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  .logo-text {
+    font-size: 22px;
+  }
+  .nav-github-badge {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   AUTHENTIC GUMROAD NAVIGATION BAR & BUTTON SYSTEM
+   ========================================================================== */
+
+/* 1. Gumroad Full-Width Navbar */
+.gum-nav-wrapper {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #FFFFFF;
+  border-bottom: 2px solid #000000;
+}
+
+.gum-nav-inner {
+  width: 100%;
+  max-width: 100%;
+  height: 68px;
+  padding: 0 0 0 28px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.gum-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gum-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  color: #000000;
+}
+
+/* GitHub Stars Pill (Matches Gumroad Navbar 9.7K badge) */
+.nav-github-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFFFFF;
+  color: #000000;
+  border: 1.8px solid #000000;
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 1.5px 1.5px 0px #000000;
+  transition: all 0.15s ease;
+}
+
+.nav-github-badge:hover {
+  background: #000000;
+  color: #FFFFFF;
+  border-color: #000000;
+  transform: translate(-1px, -1px);
+  box-shadow: 2.5px 2.5px 0px #000000;
+}
+
+/* Navbar Right Navigation Cluster */
+.gum-nav-right-cluster {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 12px;
+}
+
+/* Round Black Pill with White Text (Matches 'About' in Gumroad Screenshot) */
+.gum-nav-pill-black {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  color: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 9999px;
+  padding: 8px 22px;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.gum-nav-pill-black:hover {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #000000;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #000000;
+}
+
+/* Round White Pill with Black Text (CV - No Shadows) */
+.gum-nav-pill-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  color: #000000;
+  border: 2px solid #000000;
+  border-radius: 9999px;
+  padding: 8px 22px;
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  box-shadow: none !important;
+}
+
+.gum-nav-pill-white:hover {
+  background: #000000;
+  color: #FFFFFF;
+  border-color: #000000;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.gum-nav-pill-white:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Wide Rectangular Full-Height Contact CTA (Matches 'Start selling' in Gumroad Screenshot) */
+.gum-nav-cta-rect {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 68px;
+  padding: 0 34px;
+  background: #000000;
+  color: #FFFFFF;
+  border-left: 2px solid #000000;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 0px;
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+/* Exclusive Contact Hover Animation */
+@keyframes contact-wiggle {
+  0% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-2px) rotate(-3deg); }
+  50% { transform: translateY(-2px) rotate(3deg); }
+  75% { transform: translateY(-2px) rotate(-1.5deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+
+.nav-contact-btn:hover,
+a.nav-contact-btn:hover,
+.gum-nav-cta-rect:hover {
+  animation: contact-wiggle 0.35s ease-in-out infinite alternate !important;
+  background: var(--gum-yellow) !important;
+  color: #000000 !important;
+}
+
+/* No animation on other buttons */
+.gum-btn:not(.nav-contact-btn):hover,
+.gum-nav-pill-black:hover,
+.gum-nav-pill-white:hover,
+.gum-btn-wide-rect:hover,
+.gum-btn-round-black:hover,
+.gum-btn-round-white:hover {
+  animation: none !important;
+}
+
+/* ==========================================================================
+   2. BUTTON VARIANTS (Wide Rectangle Canvas BG, Round Black, Round White)
+   No shadows on: Explore Live Setup, Curriculum Vitae, Currently Learning, CV
+   Bigger sizing for first scroll and responsive mobile layout
+   ========================================================================== */
+
+/* Variant A: Wide Rectangular Button (Explore Live Setup - Same color as canvas, inverts to black on hover, NO SHADOWS, BIGGER) */
+.gum-btn-wide-rect {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  padding: 16px 36px;
+  min-height: 56px;
+  border-radius: 0px !important;
+  border: 2.5px solid #000000;
+  background-color: var(--bg-canvas);
+  color: #000000;
+  box-shadow: none !important;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  text-decoration: none;
+}
+
+.gum-btn-wide-rect:hover {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #000000 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.gum-btn-wide-rect:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Variant B: Round Button with Black Background & White Text (Curriculum Vitae - Inverts to White on hover, NO SHADOWS, BIGGER) */
+.gum-btn-round-black {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  padding: 16px 34px;
+  min-height: 56px;
+  border-radius: 9999px !important;
+  border: 2.5px solid #000000;
+  background-color: #000000;
+  color: #FFFFFF;
+  box-shadow: none !important;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  text-decoration: none;
+}
+
+.gum-btn-round-black:hover {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.gum-btn-round-black:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Variant C: Round Button with White Background & Black Text (Currently Learning - Inverts to Black on hover, NO SHADOWS, BIGGER) */
+.gum-btn-round-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  padding: 16px 34px;
+  min-height: 56px;
+  border-radius: 9999px !important;
+  border: 2.5px solid #000000;
+  background-color: #FFFFFF;
+  color: #000000;
+  box-shadow: none !important;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  text-decoration: none;
+}
+
+.gum-btn-round-white:hover {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #000000 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.gum-btn-round-white:active {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Explicit No Shadows on Explore Live Setup, Curriculum Vitae, Currently Learning, and CV */
+.gum-btn-wide-rect,
+.gum-btn-round-black,
+.gum-btn-round-white,
+.gum-nav-pill-white,
+.hero-cta-group a,
+a[title*="Curriculum Vitae"],
+a[href*="#cv"].gum-btn {
+  box-shadow: none !important;
+}
+
+.gum-btn-wide-rect:hover,
+.gum-btn-round-black:hover,
+.gum-btn-round-white:hover,
+.gum-nav-pill-white:hover,
+.hero-cta-group a:hover,
+a[title*="Curriculum Vitae"]:hover,
+a[href*="#cv"].gum-btn:hover {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.gum-btn-wide-rect:active,
+.gum-btn-round-black:active,
+.gum-btn-round-white:active,
+.gum-nav-pill-white:active,
+.hero-cta-group a:active,
+a[title*="Curriculum Vitae"]:active,
+a[href*="#cv"].gum-btn:active {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* General .gum-btn (Canvas Background with Black Inversion Hover) */
+.gum-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  padding: 12px 26px;
+  border-radius: 0px;
+  border: var(--border-md);
+  background-color: var(--bg-canvas);
+  color: #000000;
+  box-shadow: 3.5px 3.5px 0px #000000;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+
+.gum-btn:hover {
+  background-color: #000000;
+  color: #FFFFFF;
+  border-color: #000000;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px #000000;
+}
+
+.gum-btn-white {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+.gum-btn-yellow {
+  background-color: var(--gum-yellow);
+  color: #000000;
+}
+
+.gum-btn-pink {
+  background-color: var(--gum-pink);
+  color: #000000;
+}
+
+.gum-btn-black {
+  background-color: #000000;
+  color: #FFFFFF;
+}
+
+.gum-btn-black:hover {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+/* ==========================================================================
+   AUTHENTIC MOBILE EXPERIENCE (Looks Absolutely Amazing on Mobile)
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Sticky Navigation Bar */
+  .gum-nav-inner {
+    padding: 0 0 0 16px;
+    height: 60px;
+    gap: 8px;
+  }
+  .logo-text {
+    font-size: 24px;
+  }
+  .nav-github-badge {
+    display: none;
+  }
+  .gum-nav-right-cluster {
+    gap: 8px;
+  }
+  .gum-nav-pill-black {
+    padding: 6px 15px;
+    font-size: 12.5px;
+  }
+  .gum-nav-pill-white {
+    padding: 6px 15px;
+    font-size: 12.5px;
+    box-shadow: none !important;
+  }
+  .gum-nav-cta-rect {
+    height: 60px;
+    padding: 0 20px;
+    font-size: 13.5px;
+  }
+
+  /* First Scroll (Hero Section) on Mobile */
+  .gum-hero {
+    padding: 30px 16px 36px;
+  }
+  .gum-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .hero-identity-tag {
+    font-size: 11px;
+    padding: 5px 12px;
+    gap: 6px;
+    flex-wrap: wrap;
+    line-height: 1.4;
+  }
+  .hero-main-title {
+    font-size: clamp(34px, 8.5vw, 48px);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+  .hero-title-badge {
+    padding: 3px 14px;
+    border-radius: 10px;
+  }
+  .hero-desc-lead {
+    font-size: 15.5px;
+    line-height: 1.55;
+  }
+
+  /* First Scroll Buttons on Mobile: Large, Confident, Full-Width Stacked Touch Targets */
+  .hero-cta-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .hero-cta-group .gum-btn-wide-rect,
+  .hero-cta-group .gum-btn-round-black,
+  .hero-cta-group .gum-btn-round-white {
+    width: 100%;
+    font-size: 16.5px;
+    font-weight: 800;
+    padding: 16px 20px;
+    min-height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: none !important;
+  }
+
+  /* Active Cloud Stack Card on Mobile */
+  .hero-inspector-stage {
+    width: 100%;
+  }
+  .hero-stack-card {
+    width: 100%;
+    max-width: 100%;
+  }
+  .stack-card-intro {
+    padding: 14px 16px 10px;
+  }
+  .stack-pillars-list {
+    padding: 12px;
+    gap: 8px;
+  }
+  .stack-pillar-item {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+  .pillar-icon-box {
+    width: 36px;
+    height: 36px;
+  }
+  .pillar-name {
+    font-size: 14px;
+  }
+  .pillar-badge {
+    font-size: 9.5px;
+    padding: 1px 5px;
+  }
+  .pillar-desc {
+    font-size: 11.5px;
+    line-height: 1.4;
+  }
+  .stack-card-footer {
+    padding: 10px 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
+@media (max-width: 420px) {
+  .gum-nav-inner {
+    padding: 0 0 0 12px;
+    height: 56px;
+  }
+  .logo-text {
+    font-size: 22px;
+  }
+  .gum-nav-right-cluster {
+    gap: 5px;
+  }
+  .gum-nav-pill-black,
+  .gum-nav-pill-white {
+    padding: 6px 11px;
+    font-size: 11.5px;
+  }
+  .gum-nav-cta-rect {
+    height: 56px;
+    padding: 0 15px;
+    font-size: 12.5px;
+  }
+  .hero-main-title {
+    font-size: 32px;
+  }
 }
