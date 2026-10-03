@@ -81,160 +81,172 @@
         <!-- ===================================================================
              SECTION 01: Background
              =================================================================== -->
-        <details class="gum-accordion-card" id="background-section">
-          <summary class="gum-accordion-summary" role="button" aria-expanded="false">
+        <div class="gum-accordion-card" id="background-section">
+          <button type="button" class="gum-accordion-trigger" aria-expanded="false" aria-controls="acc-body-01">
             <div class="accordion-header-left">
               <span class="accordion-num">01</span>
               <h2 class="accordion-title">Background</h2>
             </div>
             <div class="accordion-plus-btn" aria-hidden="true">+</div>
-          </summary>
-          <div class="gum-accordion-content-wrapper"><div class="gum-accordion-body">
-            <p style="margin-bottom: 16px;">
-              My technical journey is rooted in visual pattern systems, interface architecture, and creative engineering. Over time, my fascination shifted deeper into the stack: understanding the hidden machinery that keeps digital products reliable, performant, and secure at scale.
-            </p>
-            <p style="margin-bottom: 16px;">
-              I’m building toward a dedicated career in <strong>DevOps and Cloud Infrastructure Systems</strong>, developing disciplined hands-on capabilities across:
-            </p>
-            <ul style="margin-left: 20px; margin-bottom: 20px; line-height: 1.8;">
-              <li><strong>Networking Primitives:</strong> TCP/IP, DNS records &amp; Anycast propagation, TLS 1.3 handshakes, subnets, CIDR calculations, and VPC isolation.</li>
-              <li><strong>Linux Systems Administration:</strong> Shell automation (Bash/Zsh), kernel cgroups &amp; namespaces, process lifecycles, and systemd services.</li>
-              <li><strong>Container Architecture (Docker):</strong> Immutable image layers, multi-stage builds, runtime isolation, and microservice networking bridges.</li>
-              <li><strong>Declarative IaC (Terraform):</strong> Reusable HCL modules, remote state locking with DynamoDB, and deterministic provisioning with zero config drift.</li>
-              <li><strong>Automated CI/CD (GitHub Actions):</strong> Keyless OIDC authentication, automated linting &amp; test runners, and instant edge CDN invalidation.</li>
-            </ul>
+          </button>
+          <div id="acc-body-01" class="gum-accordion-collapse" role="region">
+            <div class="gum-accordion-inner">
+              <div class="gum-accordion-body">
+                <p style="margin-bottom: 16px;">
+                  My technical journey is rooted in visual pattern systems, interface architecture, and creative engineering. Over time, my fascination shifted deeper into the stack: understanding the hidden machinery that keeps digital products reliable, performant, and secure at scale.
+                </p>
+                <p style="margin-bottom: 16px;">
+                  I’m building toward a dedicated career in <strong>DevOps and Cloud Infrastructure Systems</strong>, developing disciplined hands-on capabilities across:
+                </p>
+                <ul style="margin-left: 20px; margin-bottom: 20px; line-height: 1.8;">
+                  <li><strong>Networking Primitives:</strong> TCP/IP, DNS records &amp; Anycast propagation, TLS 1.3 handshakes, subnets, CIDR calculations, and VPC isolation.</li>
+                  <li><strong>Linux Systems Administration:</strong> Shell automation (Bash/Zsh), kernel cgroups &amp; namespaces, process lifecycles, and systemd services.</li>
+                  <li><strong>Container Architecture (Docker):</strong> Immutable image layers, multi-stage builds, runtime isolation, and microservice networking bridges.</li>
+                  <li><strong>Declarative IaC (Terraform):</strong> Reusable HCL modules, remote state locking with DynamoDB, and deterministic provisioning with zero config drift.</li>
+                  <li><strong>Automated CI/CD (GitHub Actions):</strong> Keyless OIDC authentication, automated linting &amp; test runners, and instant edge CDN invalidation.</li>
+                </ul>
 
-            <!-- Curriculum Vitae & Transmission Hub Anchor -->
-            <div id="cv" style="margin-top: 28px; padding-top: 20px; border-top: 2px dashed rgba(0,0,0,0.15);">
-              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
-                <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 800; text-transform: uppercase;">// CURRICULUM VITAE &amp; CHANNELS</span>
-                <span class="section-pill-tag" style="background: var(--gum-green); color: #000000;">READY FOR ROLES</span>
-              </div>
-              <div class="about-chips-list">
-                <a href="mailto:wvrner@outlook.com" class="about-chip chip-yellow" style="text-decoration: none;">&bull; Email: wvrner@outlook.com</a>
-                <a href="https://t.me/wvrner" target="_blank" rel="noopener noreferrer" class="about-chip chip-pink" style="text-decoration: none;">&bull; Telegram: @wvrner</a>
-                <a href="https://github.com/wvrner" target="_blank" rel="noopener noreferrer" class="about-chip chip-blue" style="text-decoration: none;">&bull; GitHub: github.com/wvrner</a>
-                <a href="https://linkedin.com/in/wvrner" target="_blank" rel="noopener noreferrer" class="about-chip chip-green" style="text-decoration: none;">&bull; LinkedIn: Nima Hosseini</a>
+                <!-- Curriculum Vitae & Transmission Hub Anchor -->
+                <div id="cv" style="margin-top: 28px; padding-top: 20px; border-top: 2px dashed rgba(0,0,0,0.15);">
+                  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+                    <span style="font-family: var(--font-mono); font-size: 13px; font-weight: 800; text-transform: uppercase;">// CURRICULUM VITAE &amp; CHANNELS</span>
+                    <span class="section-pill-tag" style="background: var(--gum-green); color: #000000;">READY FOR ROLES</span>
+                  </div>
+                  <div class="about-chips-list">
+                    <a href="mailto:wvrner@outlook.com" class="about-chip chip-yellow" style="text-decoration: none;">&bull; Email: wvrner@outlook.com</a>
+                    <a href="https://t.me/wvrner" target="_blank" rel="noopener noreferrer" class="about-chip chip-pink" style="text-decoration: none;">&bull; Telegram: @wvrner</a>
+                    <a href="https://github.com/wvrner" target="_blank" rel="noopener noreferrer" class="about-chip chip-blue" style="text-decoration: none;">&bull; GitHub: github.com/wvrner</a>
+                    <a href="https://linkedin.com/in/wvrner" target="_blank" rel="noopener noreferrer" class="about-chip chip-green" style="text-decoration: none;">&bull; LinkedIn: Nima Hosseini</a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div></div>
-        </details>
+          </div>
+        </div>
 
         <!-- ===================================================================
              SECTION 02: My philosophy
              =================================================================== -->
-        <details class="gum-accordion-card" id="philosophy-section">
-          <summary class="gum-accordion-summary" role="button" aria-expanded="false">
+        <div class="gum-accordion-card" id="philosophy-section">
+          <button type="button" class="gum-accordion-trigger" aria-expanded="false" aria-controls="acc-body-02">
             <div class="accordion-header-left">
               <span class="accordion-num">02</span>
               <h2 class="accordion-title">My philosophy</h2>
             </div>
             <div class="accordion-plus-btn" aria-hidden="true">+</div>
-          </summary>
-          <div class="gum-accordion-content-wrapper"><div class="gum-accordion-body">
-            <p style="margin-bottom: 16px;">
-              Technical tools change rapidly, but fundamental engineering mental models endure. These four core tenets govern how I approach every system:
-            </p>
-            
-            <div style="display: grid; gap: 18px; margin-top: 18px;">
-              <div style="background: rgba(0,0,0,0.03); border: 2px solid #000000; border-radius: 8px; padding: 18px 20px;">
-                <strong style="display: block; font-size: 17px; margin-bottom: 6px;">1. From the Network Up</strong>
-                <p style="margin: 0; font-size: 15px; color: #444;">
-                  Never treat networking as an afterthought. Real software reliability starts with how packets are routed, how DNS resolves, how TLS handshakes execute, and where security boundaries live.
+          </button>
+          <div id="acc-body-02" class="gum-accordion-collapse" role="region">
+            <div class="gum-accordion-inner">
+              <div class="gum-accordion-body">
+                <p style="margin-bottom: 16px;">
+                  Technical tools change rapidly, but fundamental engineering mental models endure. These four core tenets govern how I approach every system:
                 </p>
-              </div>
+                
+                <div style="display: grid; gap: 18px; margin-top: 18px;">
+                  <div style="background: rgba(0,0,0,0.03); border: 2px solid #000000; border-radius: 8px; padding: 18px 20px;">
+                    <strong style="display: block; font-size: 17px; margin-bottom: 6px;">1. From the Network Up</strong>
+                    <p style="margin: 0; font-size: 15px; color: #444;">
+                      Never treat networking as an afterthought. Real software reliability starts with how packets are routed, how DNS resolves, how TLS handshakes execute, and where security boundaries live.
+                    </p>
+                  </div>
 
-              <div style="background: rgba(0,0,0,0.03); border: 2px solid #000000; border-radius: 8px; padding: 18px 20px;">
-                <strong style="display: block; font-size: 17px; margin-bottom: 6px;">2. Declarative by Default</strong>
-                <p style="margin: 0; font-size: 15px; color: #444;">
-                  Manual console tweaking creates unrepeatable snowflakes. Every piece of infrastructure must be codified in version-controlled declarations that are self-documenting and mathematically reproducible.
-                </p>
-              </div>
+                  <div style="background: rgba(0,0,0,0.03); border: 2px solid #000000; border-radius: 8px; padding: 18px 20px;">
+                    <strong style="display: block; font-size: 17px; margin-bottom: 6px;">2. Declarative by Default</strong>
+                    <p style="margin: 0; font-size: 15px; color: #444;">
+                      Manual console tweaking creates unrepeatable snowflakes. Every piece of infrastructure must be codified in version-controlled declarations that are self-documenting and mathematically reproducible.
+                    </p>
+                  </div>
 
-              <div style="background: rgba(0,0,0,0.03); border: 2px solid #000000; border-radius: 8px; padding: 18px 20px;">
-                <strong style="display: block; font-size: 17px; margin-bottom: 6px;">3. Simplicity is a Discipline</strong>
-                <p style="margin: 0; font-size: 15px; color: #444;">
-                  Over-engineering is the enemy of uptime. Removing unnecessary build steps, reducing layers of abstraction, and maintaining lean runtime environments eliminates the fragility that causes midnight outages.
-                </p>
-              </div>
+                  <div style="background: rgba(0,0,0,0.03); border: 2px solid #000000; border-radius: 8px; padding: 18px 20px;">
+                    <strong style="display: block; font-size: 17px; margin-bottom: 6px;">3. Simplicity is a Discipline</strong>
+                    <p style="margin: 0; font-size: 15px; color: #444;">
+                      Over-engineering is the enemy of uptime. Removing unnecessary build steps, reducing layers of abstraction, and maintaining lean runtime environments eliminates the fragility that causes midnight outages.
+                    </p>
+                  </div>
 
-              <div style="background: rgba(0,0,0,0.03); border: 2px solid #000000; border-radius: 8px; padding: 18px 20px;">
-                <strong style="display: block; font-size: 17px; margin-bottom: 6px;">4. Design Meets Systems Architecture</strong>
-                <p style="margin: 0; font-size: 15px; color: #444;">
-                  Great architecture communicates clearly. The same visual principles that govern good interface design—spatial hierarchy, deliberate constraints, and instant readability—belong in infrastructure topology and codebases.
-                </p>
+                  <div style="background: rgba(0,0,0,0.03); border: 2px solid #000000; border-radius: 8px; padding: 18px 20px;">
+                    <strong style="display: block; font-size: 17px; margin-bottom: 6px;">4. Design Meets Systems Architecture</strong>
+                    <p style="margin: 0; font-size: 15px; color: #444;">
+                      Great architecture communicates clearly. The same visual principles that govern good interface design—spatial hierarchy, deliberate constraints, and instant readability—belong in infrastructure topology and codebases.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-          </div></div>
-        </details>
+          </div>
+        </div>
 
         <!-- ===================================================================
              SECTION 03: things I love
              =================================================================== -->
-        <details class="gum-accordion-card" id="things-i-love-section">
-          <summary class="gum-accordion-summary" role="button" aria-expanded="false">
+        <div class="gum-accordion-card" id="things-i-love-section">
+          <button type="button" class="gum-accordion-trigger" aria-expanded="false" aria-controls="acc-body-03">
             <div class="accordion-header-left">
               <span class="accordion-num">03</span>
               <h2 class="accordion-title">things I love</h2>
             </div>
             <div class="accordion-plus-btn" aria-hidden="true">+</div>
-          </summary>
-          <div class="gum-accordion-content-wrapper"><div class="gum-accordion-body">
-            <p style="margin-bottom: 18px;">
-              The tools, crafts, and obsessions that fuel my day-to-day work:
-            </p>
+          </button>
+          <div id="acc-body-03" class="gum-accordion-collapse" role="region">
+            <div class="gum-accordion-inner">
+              <div class="gum-accordion-body">
+                <p style="margin-bottom: 18px;">
+                  The tools, crafts, and obsessions that fuel my day-to-day work:
+                </p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px;">
-              <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
-                <span style="font-size: 24px; display: block; margin-bottom: 6px;">⌨️</span>
-                <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Terminal Workflows</strong>
-                <p style="font-size: 14px; color: #555; margin: 0;">Vim keybindings, tmux multiplexing, lean shell pipelines, and staying in the flow without leaving the keyboard.</p>
-              </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                  <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
+                    <span style="font-size: 24px; display: block; margin-bottom: 6px;">⌨️</span>
+                    <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Terminal Workflows</strong>
+                    <p style="font-size: 14px; color: #555; margin: 0;">Vim keybindings, tmux multiplexing, lean shell pipelines, and staying in the flow without leaving the keyboard.</p>
+                  </div>
 
-              <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
-                <span style="font-size: 24px; display: block; margin-bottom: 6px;">⚡</span>
-                <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Fast Static Web</strong>
-                <p style="font-size: 14px; color: #555; margin: 0;">Pure semantic HTML5, zero framework bloat, instant edge CDN distribution, and sub-100ms response times.</p>
-              </div>
+                  <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
+                    <span style="font-size: 24px; display: block; margin-bottom: 6px;">⚡</span>
+                    <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Fast Static Web</strong>
+                    <p style="font-size: 14px; color: #555; margin: 0;">Pure semantic HTML5, zero framework bloat, instant edge CDN distribution, and sub-100ms response times.</p>
+                  </div>
 
-              <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
-                <span style="font-size: 24px; display: block; margin-bottom: 6px;">🎨</span>
-                <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Neubrutalist Aesthetics</strong>
-                <p style="font-size: 14px; color: #555; margin: 0;">Bold black borders, playful candy pop accents, zero-blur drop shadows, and typography with real personality.</p>
-              </div>
+                  <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
+                    <span style="font-size: 24px; display: block; margin-bottom: 6px;">🎨</span>
+                    <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Neubrutalist Aesthetics</strong>
+                    <p style="font-size: 14px; color: #555; margin: 0;">Bold black borders, playful candy pop accents, zero-blur drop shadows, and typography with real personality.</p>
+                  </div>
 
-              <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
-                <span style="font-size: 24px; display: block; margin-bottom: 6px;">🔍</span>
-                <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Packet &amp; Network Peeking</strong>
-                <p style="font-size: 14px; color: #555; margin: 0;">Digging into DNS propagation, analyzing TLS handshakes with curl -v, and watching packets cross virtual bridges.</p>
-              </div>
+                  <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
+                    <span style="font-size: 24px; display: block; margin-bottom: 6px;">🔍</span>
+                    <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Packet &amp; Network Peeking</strong>
+                    <p style="font-size: 14px; color: #555; margin: 0;">Digging into DNS propagation, analyzing TLS handshakes with curl -v, and watching packets cross virtual bridges.</p>
+                  </div>
 
-              <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
-                <span style="font-size: 24px; display: block; margin-bottom: 6px;">🐧</span>
-                <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Linux Internals</strong>
-                <p style="font-size: 14px; color: #555; margin: 0;">Understanding how the kernel isolates processes, mounts filesystems, manages memory limits, and drives containers.</p>
-              </div>
+                  <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
+                    <span style="font-size: 24px; display: block; margin-bottom: 6px;">🐧</span>
+                    <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Linux Internals</strong>
+                    <p style="font-size: 14px; color: #555; margin: 0;">Understanding how the kernel isolates processes, mounts filesystems, manages memory limits, and drives containers.</p>
+                  </div>
 
-              <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
-                <span style="font-size: 24px; display: block; margin-bottom: 6px;">🏗️</span>
-                <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Declarative Architecture</strong>
-                <p style="font-size: 14px; color: #555; margin: 0;">Watching complex cloud systems spin up deterministically from a single Terraform plan and Git push.</p>
+                  <div style="border: 2px solid #000000; border-radius: 8px; padding: 16px; background: #FFFFFF;">
+                    <span style="font-size: 24px; display: block; margin-bottom: 6px;">🏗️</span>
+                    <strong style="font-size: 16px; display: block; margin-bottom: 4px;">Declarative Architecture</strong>
+                    <p style="font-size: 14px; color: #555; margin: 0;">Watching complex cloud systems spin up deterministically from a single Terraform plan and Git push.</p>
+                  </div>
+                </div>
+
+                <!-- Chips Cluster -->
+                <div class="about-chips-list">
+                  <span class="about-chip chip-yellow">#Linux</span>
+                  <span class="about-chip chip-pink">#Docker</span>
+                  <span class="about-chip chip-green">#Terraform</span>
+                  <span class="about-chip chip-blue">#Networking</span>
+                  <span class="about-chip">#ZeroDrift</span>
+                  <span class="about-chip chip-pink">#Neubrutalism</span>
+                  <span class="about-chip chip-yellow">#SpaceMono</span>
+                  <span class="about-chip chip-green">#OpenSource</span>
+                </div>
               </div>
             </div>
-
-            <!-- Chips Cluster -->
-            <div class="about-chips-list">
-              <span class="about-chip chip-yellow">#Linux</span>
-              <span class="about-chip chip-pink">#Docker</span>
-              <span class="about-chip chip-green">#Terraform</span>
-              <span class="about-chip chip-blue">#Networking</span>
-              <span class="about-chip">#ZeroDrift</span>
-              <span class="about-chip chip-pink">#Neubrutalism</span>
-              <span class="about-chip chip-yellow">#SpaceMono</span>
-              <span class="about-chip chip-green">#OpenSource</span>
-            </div>
-          </div></div>
-        </details>
+          </div>
+        </div>
 
       </div>
     </main>

@@ -589,92 +589,26 @@ function initHeroDock() {
 }
 
 /* ==========================================================================
-   Smooth Animated Accordions for Reading Comfort & Ease
+   Smooth Animated Accordions for Reading Comfort & Ease (CSS Grid Driven)
    ========================================================================== */
 function initAccordions() {
   const cards = document.querySelectorAll('.gum-accordion-card');
   if (!cards.length) return;
 
   cards.forEach(card => {
-    const summary = card.querySelector('.gum-accordion-summary');
-    const wrapper = card.querySelector('.gum-accordion-content-wrapper');
-    const body = card.querySelector('.gum-accordion-body');
-    if (!summary || !wrapper || !body) return;
+    const trigger = card.querySelector('.gum-accordion-trigger');
+    if (!trigger) return;
 
-    // Initialize state
-    if (!card.hasAttribute('open')) {
-      wrapper.style.height = '0px';
-      wrapper.style.opacity = '0';
-      wrapper.style.display = 'none';
-      body.style.transform = 'translateY(-6px)';
-      card.classList.remove('is-open');
-      summary.setAttribute('aria-expanded', 'false');
-    } else {
-      wrapper.style.height = 'auto';
-      wrapper.style.opacity = '1';
-      wrapper.style.display = 'block';
-      body.style.transform = 'translateY(0)';
-      card.classList.add('is-open');
-      summary.setAttribute('aria-expanded', 'true');
-    }
-
-    summary.addEventListener('click', (e) => {
-      e.preventDefault(); // Take manual control for silky smooth transition
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
       const isOpen = card.classList.contains('is-open');
 
       if (isOpen) {
-        // Smoothly collapse
-        wrapper.style.height = wrapper.scrollHeight + 'px';
-        wrapper.style.opacity = '1';
-        body.style.transform = 'translateY(0)';
-
-        // Force reflow
-        wrapper.offsetHeight;
-
-        wrapper.style.height = '0px';
-        wrapper.style.opacity = '0';
-        body.style.transform = 'translateY(-6px)';
         card.classList.remove('is-open');
-        summary.setAttribute('aria-expanded', 'false');
-
-        const onTransitionEnd = (evt) => {
-          if (evt.propertyName === 'height') {
-            wrapper.removeEventListener('transitionend', onTransitionEnd);
-            if (!card.classList.contains('is-open')) {
-              wrapper.style.display = 'none';
-              card.removeAttribute('open');
-            }
-          }
-        };
-        wrapper.addEventListener('transitionend', onTransitionEnd);
+        trigger.setAttribute('aria-expanded', 'false');
       } else {
-        // Smoothly expand
-        card.setAttribute('open', '');
         card.classList.add('is-open');
-        summary.setAttribute('aria-expanded', 'true');
-        wrapper.style.display = 'block';
-
-        const targetHeight = wrapper.scrollHeight;
-        wrapper.style.height = '0px';
-        wrapper.style.opacity = '0';
-        body.style.transform = 'translateY(-6px)';
-
-        // Force reflow
-        wrapper.offsetHeight;
-
-        wrapper.style.height = targetHeight + 'px';
-        wrapper.style.opacity = '1';
-        body.style.transform = 'translateY(0)';
-
-        const onTransitionEnd = (evt) => {
-          if (evt.propertyName === 'height') {
-            wrapper.removeEventListener('transitionend', onTransitionEnd);
-            if (card.classList.contains('is-open')) {
-              wrapper.style.height = 'auto'; // Fluid responsive height
-            }
-          }
-        };
-        wrapper.addEventListener('transitionend', onTransitionEnd);
+        trigger.setAttribute('aria-expanded', 'true');
       }
     });
   });
@@ -684,22 +618,20 @@ function initAccordions() {
     if (hash === '#cv') {
       const bgCard = document.getElementById('background-section');
       if (bgCard) {
-        if (!bgCard.classList.contains('is-open')) {
-          const summary = bgCard.querySelector('.gum-accordion-summary');
-          if (summary) summary.click();
-        }
+        bgCard.classList.add('is-open');
+        const trigger = bgCard.querySelector('.gum-accordion-trigger');
+        if (trigger) trigger.setAttribute('aria-expanded', 'true');
         setTimeout(() => {
           const cvElem = document.getElementById('cv');
           if (cvElem) cvElem.scrollIntoView({ behavior: 'smooth' });
-        }, 250);
+        }, 350);
       }
     } else if (hash) {
       const targetCard = document.querySelector(hash);
       if (targetCard && targetCard.classList.contains('gum-accordion-card')) {
-        if (!targetCard.classList.contains('is-open')) {
-          const summary = targetCard.querySelector('.gum-accordion-summary');
-          if (summary) summary.click();
-        }
+        targetCard.classList.add('is-open');
+        const trigger = targetCard.querySelector('.gum-accordion-trigger');
+        if (trigger) trigger.setAttribute('aria-expanded', 'true');
       }
     }
   };

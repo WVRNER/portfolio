@@ -3977,7 +3977,7 @@ a[href*="#cv"].gum-btn:active {
 
 
 /* ==========================================================================
-   ABOUT PAGE: LEAD SENTENCE & 3 ACCORDION SECTIONS WITH [+] BUTTON
+   ABOUT PAGE: ULTRA-SMOOTH, SLOW ACCORDION EXPANSION (CSS GRID)
    ========================================================================== */
 .about-hero-block {
   max-width: 900px;
@@ -4016,33 +4016,32 @@ a[href*="#cv"].gum-btn:active {
   background: #FFFFFF;
   border: var(--border-lg);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-md);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 4px 4px 0px #000000;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
 }
 
 .gum-accordion-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px #000000;
 }
 
-.gum-accordion-summary {
+.gum-accordion-trigger {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 26px 32px;
   cursor: pointer;
   user-select: none;
-  list-style: none;
   background: #FFFFFF;
-  transition: background-color 0.15s ease;
+  border: none;
+  text-align: left;
+  transition: background-color 0.3s ease;
+  font-family: inherit;
 }
 
-.gum-accordion-summary::-webkit-details-marker {
-  display: none;
-}
-
-.gum-accordion-summary:hover {
+.gum-accordion-trigger:hover {
   background: #FAFAF7;
 }
 
@@ -4085,19 +4084,36 @@ a[href*="#cv"].gum-btn:active {
   font-weight: 900;
   line-height: 1;
   flex-shrink: 0;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease;
   box-shadow: 2px 2px 0px #000000;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s ease;
 }
 
-.gum-accordion-card[open] .accordion-plus-btn {
+.gum-accordion-card.is-open .accordion-plus-btn {
   transform: rotate(45deg);
   background: var(--gum-pink);
 }
 
-.gum-accordion-content-wrapper {
+/* CSS Grid 0fr -> 1fr: The smoothest, slowest, and most reliable height transition */
+.gum-accordion-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.65s ease;
+  opacity: 0;
+}
+
+.gum-accordion-card.is-open .gum-accordion-collapse {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.gum-accordion-inner {
   overflow: hidden;
-  transition: height 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
-  will-change: height, opacity;
+  transform: translateY(-12px);
+  transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gum-accordion-card.is-open .gum-accordion-inner {
+  transform: translateY(0);
 }
 
 .gum-accordion-body {
@@ -4108,18 +4124,6 @@ a[href*="#cv"].gum-btn:active {
   font-size: 17px;
   line-height: 1.8;
   color: #1A1A1A;
-  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes accordionOpen {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .about-chips-list {
@@ -4146,7 +4150,7 @@ a[href*="#cv"].gum-btn:active {
 .about-chip.chip-blue { background: var(--gum-blue); }
 
 @media (max-width: 768px) {
-  .gum-accordion-summary {
+  .gum-accordion-trigger {
     padding: 20px 20px;
   }
   .gum-accordion-body {
@@ -4354,3 +4358,4 @@ a[href*="#cv"].gum-btn:active {
   display: block;
   line-height: 1.4;
 }
+
