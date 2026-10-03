@@ -835,14 +835,14 @@ button {
   line-height: 1.6;
 }
 
-/* 4-Grid Container (Framed Architecture Showcase) */
+/* 4-Grid Container (Framed Architecture Showcase - Sharp Rectangles, Box Shadow Restored) */
 .gum-quad-grid {
   display: grid;
   grid-template-columns: 1fr;
   border: var(--border-lg);
-  border-radius: 14px !important;
+  border-radius: 0px !important;
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg) !important;
   background: #000000;
   gap: 2px;
 }
@@ -862,11 +862,13 @@ button {
   position: relative;
   transition: transform 0.2s ease;
   color: #000000;
-  border-radius: 12px !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
 }
 
 .quad-card:hover {
   z-index: 2;
+  box-shadow: none !important;
 }
 
 .quad-card.card-yellow { background: var(--gum-yellow); }
@@ -882,7 +884,8 @@ button {
   background: #000000;
   color: #FFFFFF;
   padding: 3px 10px;
-  border-radius: var(--radius-pill);
+  border-radius: 0px !important;
+  box-shadow: none !important;
   width: fit-content;
   margin-bottom: 12px;
 }
@@ -1117,8 +1120,8 @@ button {
 .gum-exhibition-wrapper {
   background: var(--bg-card);
   border: var(--border-lg);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-lg);
+  border-radius: 0px !important;
+  box-shadow: none !important;
   overflow: hidden;
   margin-top: 30px;
 }
@@ -1226,7 +1229,8 @@ button {
   font-size: 11.5px;
   font-weight: 800;
   padding: 4px 12px;
-  border-radius: var(--radius-pill);
+  border-radius: 0px !important;
+  box-shadow: none !important;
   border: var(--border-md);
   background: var(--gum-yellow);
   color: #000000;
@@ -1262,7 +1266,8 @@ button {
   gap: 10px;
   background: var(--bg-canvas);
   border: var(--border-sm);
-  border-radius: 12px;
+  border-radius: 0px !important;
+  box-shadow: none !important;
   padding: 18px;
 }
 
@@ -1285,12 +1290,12 @@ button {
   background: #000000;
   color: #FFFFFF;
   border: var(--border-md);
-  border-radius: 14px;
+  border-radius: 0px !important;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  box-shadow: var(--shadow-md);
+  box-shadow: none !important;
 }
 
 .visualizer-top-bar {
@@ -1318,7 +1323,8 @@ button {
   font-size: 11px;
   font-weight: 700;
   padding: 4px 10px;
-  border-radius: var(--radius-pill);
+  border-radius: 0px !important;
+  box-shadow: none !important;
   border: 1px solid #444444;
   background: #222222;
   color: #CCCCCC;
@@ -1346,6 +1352,12 @@ button {
   max-height: 260px;
 }
 
+.vis-svg-container svg rect,
+.chapter-visualizer-column svg rect {
+  rx: 0 !important;
+  ry: 0 !important;
+}
+
 .vis-code-container {
   display: none;
   font-family: var(--font-mono);
@@ -1354,7 +1366,8 @@ button {
   color: #E2E8F0;
   background: #111116;
   border: 1px solid #333333;
-  border-radius: 8px;
+  border-radius: 0px !important;
+  box-shadow: none !important;
   padding: 16px;
   overflow-x: auto;
   max-height: 260px;
@@ -1362,6 +1375,32 @@ button {
 
 .vis-code-container.active {
   display: block;
+}
+
+/* ==========================================================================
+   STRICT SHARP RECTANGLES & SHADOW RULES FOR:
+   1. Built from the network up (#foundations) -> Sharp corners + Box shadow restored
+   2. Currently Learning (#learning-exhibition) -> Sharp corners + Zero shadow
+   ========================================================================== */
+#foundations .gum-quad-grid {
+  border-radius: 0px !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+#foundations .gum-quad-grid * {
+  border-radius: 0px !important;
+  box-shadow: none !important;
+}
+
+#learning-exhibition .gum-exhibition-wrapper,
+#learning-exhibition .gum-exhibition-wrapper * {
+  border-radius: 0px !important;
+  box-shadow: none !important;
+}
+
+#learning-exhibition .gum-exhibition-wrapper svg rect {
+  rx: 0 !important;
+  ry: 0 !important;
 }
 
 /* ==========================================================================
@@ -2415,8 +2454,6 @@ button {
 .gum-btn-wide-rect,
 .stage-dock-btn,
 .node-btn,
-.chapter-tab-btn,
-.vis-toggle-btn,
 .console-tab-pill,
 .console-copy-btn,
 .copy-email-trigger,
@@ -2442,11 +2479,6 @@ button {
 .cv-avatar-big,
 .cv-profile-col,
 .cv-block,
-.gum-quad-grid,
-.quad-card,
-.gum-exhibition-wrapper,
-.chapter-key-takeaways,
-.chapter-visualizer-column,
 .code-console-window {
   border-radius: 14px !important;
 }
@@ -3415,16 +3447,17 @@ a[href*="#cv"].gum-btn:active {
     line-height: 1.45;
   }
   .gum-quad-grid {
-    border-radius: 14px !important;
+    border-radius: 0px !important;
     border: var(--border-lg);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-md) !important;
     overflow: hidden;
     grid-template-columns: 1fr !important;
   }
   .quad-card {
     padding: 24px 18px;
     gap: 14px;
-    border-radius: 12px !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
   }
   .quad-card-title {
     font-size: 21px;
@@ -3493,9 +3526,9 @@ a[href*="#cv"].gum-btn:active {
     line-height: 1.4;
   }
   .gum-exhibition-wrapper {
-    border-radius: 14px !important;
+    border-radius: 0px !important;
     border: var(--border-lg);
-    box-shadow: var(--shadow-md);
+    box-shadow: none !important;
     margin-top: 14px;
     background: #FFFFFF;
     overflow: hidden;
@@ -3507,6 +3540,8 @@ a[href*="#cv"].gum-btn:active {
     width: 100%;
     border-bottom: 2px solid #000000;
     scrollbar-width: none;
+    border-radius: 0px !important;
+    box-shadow: none !important;
   }
   .chapter-nav-bar::-webkit-scrollbar {
     display: none;
@@ -3519,6 +3554,8 @@ a[href*="#cv"].gum-btn:active {
     align-items: center;
     justify-content: center;
     border-right: 2px solid #000000;
+    border-radius: 0px !important;
+    box-shadow: none !important;
   }
   .tab-num {
     font-size: 8.5px;
@@ -3535,6 +3572,8 @@ a[href*="#cv"].gum-btn:active {
     padding: 14px 16px;
     gap: 10px;
     background: #FFFFFF;
+    border-radius: 0px !important;
+    box-shadow: none !important;
   }
   .chapter-content-body.active {
     display: flex;
@@ -3546,6 +3585,8 @@ a[href*="#cv"].gum-btn:active {
   .chapter-badge {
     font-size: 9.5px;
     padding: 2px 7px;
+    border-radius: 0px !important;
+    box-shadow: none !important;
   }
   .chapter-headline h4 {
     font-size: 18px;
@@ -3566,9 +3607,10 @@ a[href*="#cv"].gum-btn:active {
   .chapter-key-takeaways {
     padding: 8px 10px;
     gap: 4px;
-    border-radius: 6px !important;
+    border-radius: 0px !important;
     background: #F8F8F5;
     border: 1.5px solid #000000;
+    box-shadow: none !important;
   }
   .takeaway-item {
     font-size: 11px;
@@ -3578,7 +3620,8 @@ a[href*="#cv"].gum-btn:active {
   .chapter-visualizer-column {
     padding: 8px 10px;
     gap: 6px;
-    border-radius: 8px !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
   }
   .visualizer-top-bar {
     padding-bottom: 6px;
@@ -3589,6 +3632,8 @@ a[href*="#cv"].gum-btn:active {
   .vis-toggle-btn {
     font-size: 9px;
     padding: 2px 6px;
+    border-radius: 0px !important;
+    box-shadow: none !important;
   }
   .vis-svg-container {
     min-height: 115px;
@@ -3597,10 +3642,17 @@ a[href*="#cv"].gum-btn:active {
   .vis-svg-container svg {
     max-height: 125px;
   }
+  .vis-svg-container svg rect,
+  .chapter-visualizer-column svg rect {
+    rx: 0 !important;
+    ry: 0 !important;
+  }
   .vis-code-container {
     font-size: 10px;
     max-height: 135px;
     padding: 8px;
+    border-radius: 0px !important;
+    box-shadow: none !important;
   }
 
   /* Panoramic Illustration Strip on Mobile - Framed */
