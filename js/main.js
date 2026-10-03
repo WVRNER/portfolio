@@ -589,7 +589,7 @@ function initHeroDock() {
 }
 
 /* ==========================================================================
-   Accordion Auto-Expand for Anchors & Keyboard Handling
+   Smooth Animated Accordions for Reading Comfort & Ease
    ========================================================================== */
 function initAccordions() {
   const cards = document.querySelectorAll('.gum-accordion-card');
@@ -597,9 +597,84 @@ function initAccordions() {
 
   cards.forEach(card => {
     const summary = card.querySelector('.gum-accordion-summary');
-    card.addEventListener('toggle', () => {
-      if (summary) {
-        summary.setAttribute('aria-expanded', card.open ? 'true' : 'false');
+    const wrapper = card.querySelector('.gum-accordion-content-wrapper');
+    const body = card.querySelector('.gum-accordion-body');
+    if (!summary || !wrapper || !body) return;
+
+    // Initialize state
+    if (!card.hasAttribute('open')) {
+      wrapper.style.height = '0px';
+      wrapper.style.opacity = '0';
+      wrapper.style.display = 'none';
+      body.style.transform = 'translateY(-6px)';
+      card.classList.remove('is-open');
+      summary.setAttribute('aria-expanded', 'false');
+    } else {
+      wrapper.style.height = 'auto';
+      wrapper.style.opacity = '1';
+      wrapper.style.display = 'block';
+      body.style.transform = 'translateY(0)';
+      card.classList.add('is-open');
+      summary.setAttribute('aria-expanded', 'true');
+    }
+
+    summary.addEventListener('click', (e) => {
+      e.preventDefault(); // Take manual control for silky smooth transition
+      const isOpen = card.classList.contains('is-open');
+
+      if (isOpen) {
+        // Smoothly collapse
+        wrapper.style.height = wrapper.scrollHeight + 'px';
+        wrapper.style.opacity = '1';
+        body.style.transform = 'translateY(0)';
+
+        // Force reflow
+        wrapper.offsetHeight;
+
+        wrapper.style.height = '0px';
+        wrapper.style.opacity = '0';
+        body.style.transform = 'translateY(-6px)';
+        card.classList.remove('is-open');
+        summary.setAttribute('aria-expanded', 'false');
+
+        const onTransitionEnd = (evt) => {
+          if (evt.propertyName === 'height') {
+            wrapper.removeEventListener('transitionend', onTransitionEnd);
+            if (!card.classList.contains('is-open')) {
+              wrapper.style.display = 'none';
+              card.removeAttribute('open');
+            }
+          }
+        };
+        wrapper.addEventListener('transitionend', onTransitionEnd);
+      } else {
+        // Smoothly expand
+        card.setAttribute('open', '');
+        card.classList.add('is-open');
+        summary.setAttribute('aria-expanded', 'true');
+        wrapper.style.display = 'block';
+
+        const targetHeight = wrapper.scrollHeight;
+        wrapper.style.height = '0px';
+        wrapper.style.opacity = '0';
+        body.style.transform = 'translateY(-6px)';
+
+        // Force reflow
+        wrapper.offsetHeight;
+
+        wrapper.style.height = targetHeight + 'px';
+        wrapper.style.opacity = '1';
+        body.style.transform = 'translateY(0)';
+
+        const onTransitionEnd = (evt) => {
+          if (evt.propertyName === 'height') {
+            wrapper.removeEventListener('transitionend', onTransitionEnd);
+            if (card.classList.contains('is-open')) {
+              wrapper.style.height = 'auto'; // Fluid responsive height
+            }
+          }
+        };
+        wrapper.addEventListener('transitionend', onTransitionEnd);
       }
     });
   });
@@ -609,16 +684,22 @@ function initAccordions() {
     if (hash === '#cv') {
       const bgCard = document.getElementById('background-section');
       if (bgCard) {
-        bgCard.open = true;
+        if (!bgCard.classList.contains('is-open')) {
+          const summary = bgCard.querySelector('.gum-accordion-summary');
+          if (summary) summary.click();
+        }
         setTimeout(() => {
           const cvElem = document.getElementById('cv');
           if (cvElem) cvElem.scrollIntoView({ behavior: 'smooth' });
-        }, 150);
+        }, 250);
       }
     } else if (hash) {
       const targetCard = document.querySelector(hash);
       if (targetCard && targetCard.classList.contains('gum-accordion-card')) {
-        targetCard.open = true;
+        if (!targetCard.classList.contains('is-open')) {
+          const summary = targetCard.querySelector('.gum-accordion-summary');
+          if (summary) summary.click();
+        }
       }
     }
   };
