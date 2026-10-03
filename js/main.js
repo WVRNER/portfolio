@@ -1,134 +1,85 @@
 /**
- * Awwwards-Grade Interactive Architecture & Micro-Interactions
- * Nima Hosseini (@wvrner) Portfolio
+ * WVRNER × GUMROAD INTERACTIVE JAVASCRIPT
+ * Full-Featured Neubrutalist Micro-Interactions & State Management
+ * Nima Hosseini (@wvrner) · DevOps & Infrastructure Systems
  */
 
 document.addEventListener('DOMContentLoaded', () => {
   initIntroSplash();
-  initCustomCursor();
-  initWebAudio();
   initThemeToggle();
-  initFluidNavPill();
-  initScrollReveal();
-  initCardTilt();
-  initCompactArchSection();
-  initLearningExhibition();
-  initSmoothScroll();
-  initFooterClock();
-  initCopyEmail();
-  // initCompactArchSection handles both
+  initWebAudio();
+  initChapterTabs();
+  initVisualizerToggles();
+  initInfraNodeFlow();
+  initConsoleTabs();
+  initCopyCodeButtons();
   initInteractiveTerminal();
+  initTopicPills();
+  initLiveClocks();
+  initCopyEmail();
   initBackToTop();
+  initNavSearch();
 });
 
 /* ==========================================================================
-   1. Cinematic Intro Screen: "Good morning sunshine"
+   0. Intro Splash Screen ("Good Morning!" ~2s Fade)
    ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   This function runs the opening curtain! When you first open the webpage,
-   it counts from 000% to 100% and then slides away like a magic theatre curtain.
-   -------------------------------------------------------------------------- */
 function initIntroSplash() {
   const splash = document.getElementById('introSplash');
   if (!splash) return;
 
-  const counterEl = document.getElementById('introCounter');
-  let count = 0;
-  
-  if (counterEl) {
-    const counterTimer = setInterval(() => {
-      count += Math.floor(Math.random() * 12) + 5;
-      if (count >= 100) {
-        count = 100;
-        clearInterval(counterTimer);
-      }
-      counterEl.textContent = count.toString().padStart(3, '0') + '%';
-    }, 45);
-  }
-
-  // Smooth cinematic curtain dissolve after 1.5s
   setTimeout(() => {
     splash.classList.add('fade-out');
     setTimeout(() => {
       splash.style.display = 'none';
-    }, 850);
-  }, 1600);
+    }, 750);
+  }, 2000);
 }
 
 /* ==========================================================================
-   2. Custom Magnetic Fluid Cursor
+   1. Theme Switcher (Gumroad Light / Dark Neubrutalism)
    ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   This function makes a friendly little glowing circle follow your mouse
-   around the screen! When you hover over buttons, it grows bigger and snaps
-   magnetically to them like a tiny helpful magnet!
-   -------------------------------------------------------------------------- */
-function initCustomCursor() {
-  if (window.matchMedia('(pointer: coarse)').matches) return;
+function initThemeToggle() {
+  const toggleBtn = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  if (!toggleBtn) return;
 
-  let dot = document.querySelector('.custom-cursor-dot');
-  let ring = document.querySelector('.custom-cursor-ring');
+  const savedTheme = localStorage.getItem('gumroad-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  if (!dot) {
-    dot = document.createElement('div');
-    dot.className = 'custom-cursor-dot';
-    document.body.appendChild(dot);
+  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    updateThemeIcon(true);
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    updateThemeIcon(false);
   }
 
-  if (!ring) {
-    ring = document.createElement('div');
-    ring.className = 'custom-cursor-ring';
-    document.body.appendChild(ring);
-  }
+  toggleBtn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const isDark = current === 'dark';
+    const next = isDark ? 'light' : 'dark';
 
-  let mouseX = -100;
-  let mouseY = -100;
-  let ringX = -100;
-  let ringY = -100;
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('gumroad-theme', next);
+    updateThemeIcon(!isDark);
 
-  window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.opacity = '1';
-    ring.style.opacity = '1';
-    dot.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
-  }, { passive: true });
-
-  document.addEventListener('mouseleave', () => {
-    dot.style.opacity = '0';
-    ring.style.opacity = '0';
-  });
-
-  // Render loop with spring lerp
-  function renderCursor() {
-    ringX += (mouseX - ringX) * 0.16;
-    ringY += (mouseY - ringY) * 0.16;
-    ring.style.transform = `translate(${ringX - 16}px, ${ringY - 16}px)`;
-    requestAnimationFrame(renderCursor);
-  }
-  requestAnimationFrame(renderCursor);
-
-  // Hover target scale expansion
-  const interactiveTargets = 'a, button, input, .tilt-card, .cv-action-btn, .inspector-btn, .terminal-tab';
-  document.querySelectorAll(interactiveTargets).forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('cursor-hover'));
+    playChime(isDark ? 520 : 780, 0.08, 'sine');
   });
 }
 
+function updateThemeIcon(isDark) {
+  const themeIcon = document.getElementById('themeIcon');
+  if (!themeIcon) return;
+  themeIcon.innerHTML = isDark ? '☀️' : '🌙';
+}
+
 /* ==========================================================================
-   3. Synthesized Web Audio Micro-Soundscape (Organic & Soft)
+   2. Web Audio Synthesizer (Retro Neubrutalist Blips)
    ========================================================================== */
 let audioCtx = null;
-let soundEnabled = false;
+let soundEnabled = true;
 
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   This function creates the sound box! It lets the computer make soft, gentle
-   little blips and chimes when you click buttons, just like a video game console.
-   -------------------------------------------------------------------------- */
 function initWebAudio() {
   const toggleBtn = document.getElementById('soundToggle');
   if (!toggleBtn) return;
@@ -138,40 +89,45 @@ function initWebAudio() {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       audioCtx = new AudioContext();
     }
-
     if (audioCtx.state === 'suspended') {
       audioCtx.resume();
     }
 
     soundEnabled = !soundEnabled;
-    toggleBtn.classList.toggle('is-active', soundEnabled);
     toggleBtn.classList.toggle('sound-bars-active', soundEnabled);
-
-    const label = toggleBtn.querySelector('.sound-btn-label');
+    const label = toggleBtn.querySelector('.sound-label');
     if (label) {
-      label.textContent = soundEnabled ? 'AUDIO: ON' : 'AUDIO: MUTED';
+      label.textContent = soundEnabled ? 'SFX: ON' : 'SFX: OFF';
     }
 
     if (soundEnabled) {
-      playSoftTone(600, 0.08, 'sine');
-      setTimeout(() => playSoftTone(900, 0.09, 'sine'), 60);
+      playChime(640, 0.06, 'triangle');
+      setTimeout(() => playChime(920, 0.08, 'triangle'), 60);
     }
   });
 
-  // Attach subtle audio blips to buttons
-  document.querySelectorAll('a, button').forEach(el => {
+  // Attach hover & click sound to buttons & pills
+  document.querySelectorAll('a, button, .gum-topic-pill, .node-btn, .chapter-tab-btn').forEach(el => {
     el.addEventListener('mouseenter', () => {
-      if (soundEnabled && audioCtx) playSoftTone(1200, 0.02, 'sine', 0.015);
+      if (soundEnabled && audioCtx) playChime(1100, 0.015, 'sine', 0.012);
     });
     el.addEventListener('click', () => {
-      if (soundEnabled && audioCtx) playSoftTone(880, 0.04, 'triangle', 0.03);
+      if (soundEnabled && audioCtx) playChime(850, 0.035, 'triangle', 0.025);
     });
   });
 }
 
-function playSoftTone(freq, duration, type = 'sine', gainVal = 0.035) {
-  if (!soundEnabled || !audioCtx) return;
+function playChime(freq, duration, type = 'sine', gainVal = 0.03) {
+  if (!soundEnabled) return;
   try {
+    if (!audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContext();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
     const osc = audioCtx.createOscillator();
     const gain = audioCtx.createGain();
 
@@ -186,249 +142,344 @@ function playSoftTone(freq, duration, type = 'sine', gainVal = 0.035) {
 
     osc.start();
     osc.stop(audioCtx.currentTime + duration);
-  } catch (err) {
-    // Graceful fallback
+  } catch (e) {
+    // Ignore audio errors
   }
 }
 
 /* ==========================================================================
-   4. Compact VisionOS Navigation & Magnetic Fluid Sliding Pill
+   3. Currently Learning Exhibition (4 Chapters Tabs)
    ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   This function controls the floating menu pill at the top of your screen.
-   When you hover over different links, a shiny white pill smoothly slides
-   underneath your mouse to highlight what you are looking at!
-   -------------------------------------------------------------------------- */
-function initFluidNavPill() {
-  const navLinks = document.querySelector('.nav-links');
-  const hoverPill = document.querySelector('.nav-hover-pill');
-  if (!navLinks || !hoverPill) return;
+function initChapterTabs() {
+  const tabs = document.querySelectorAll('.chapter-tab-btn');
+  const panels = document.querySelectorAll('.chapter-content-body');
+  if (!tabs.length) return;
 
-  const items = navLinks.querySelectorAll('.nav-link');
-  const activeItem = navLinks.querySelector('.nav-link.active');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetId = tab.getAttribute('data-target');
 
-  function updatePill(el) {
-    if (!el) {
-      hoverPill.style.opacity = '0';
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+
+      tab.classList.add('active');
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) {
+        targetPanel.classList.add('active');
+      }
+
+      playChime(750, 0.04, 'triangle');
+    });
+  });
+}
+
+/* ==========================================================================
+   4. Schematic Blueprint vs Code View Toggles
+   ========================================================================== */
+function initVisualizerToggles() {
+  document.querySelectorAll('.chapter-visualizer-column').forEach(container => {
+    const buttons = container.querySelectorAll('.vis-toggle-btn');
+    const svgBox = container.querySelector('.vis-svg-container');
+    const codeBox = container.querySelector('.vis-code-container');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.getAttribute('data-view');
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        if (view === 'schematic') {
+          if (svgBox) svgBox.style.display = 'flex';
+          if (codeBox) codeBox.classList.remove('active');
+        } else {
+          if (svgBox) svgBox.style.display = 'none';
+          if (codeBox) codeBox.classList.add('active');
+        }
+
+        playChime(950, 0.03, 'sine');
+      });
+    });
+  });
+}
+
+/* ==========================================================================
+   5. Real Architecture 4-Node Flow Strip
+   ========================================================================== */
+function initInfraNodeFlow() {
+  const nodeButtons = document.querySelectorAll('.node-btn');
+  const statusToast = document.getElementById('nodeStatusToast');
+  if (!nodeButtons.length) return;
+
+  const nodeDetails = {
+    browser: '🌐 <strong>01 / Client Ingress:</strong> Modern browser establishes TLS 1.3 encrypted connection to the Anycast edge. Click any node to inspect its architecture.',
+    dns: '🧭 <strong>02 / AWS Route 53:</strong> Latency-based Anycast DNS alias record directs user requests to the closest global CloudFront PoP.',
+    cdn: '⚡ <strong>03 / CloudFront CDN:</strong> Origin Access Control (OAC) signs requests using SigV4. Cached assets returned with low TTFB from 450+ edge locations.',
+    s3: '🪣 <strong>04 / AWS S3 Bucket:</strong> Private origin bucket. Public access is 100% blocked; accessed exclusively via SigV4 CloudFront OAC.'
+  };
+
+  nodeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nodeKey = btn.getAttribute('data-node');
+      nodeButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (statusToast && nodeDetails[nodeKey]) {
+        statusToast.innerHTML = nodeDetails[nodeKey];
+      }
+
+      // Automatically focus on main.tf in the console
+      const tfTab = document.querySelector('.console-tab-pill[data-pane="pane-tf"]');
+      if (tfTab && !tfTab.classList.contains('active')) {
+        tfTab.click();
+      }
+
+      playChime(880, 0.04, 'triangle');
+    });
+  });
+}
+
+/* ==========================================================================
+   6. Code Console Tabs
+   ========================================================================== */
+function initConsoleTabs() {
+  const tabs = document.querySelectorAll('.console-tab-pill');
+  const panes = document.querySelectorAll('.console-pane');
+  if (!tabs.length) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetPaneId = tab.getAttribute('data-pane');
+      tabs.forEach(t => t.classList.remove('active'));
+      panes.forEach(p => p.classList.remove('active'));
+
+      tab.classList.add('active');
+      const pane = document.getElementById(targetPaneId);
+      if (pane) pane.classList.add('active');
+
+      playChime(1020, 0.03, 'sine');
+    });
+  });
+}
+
+/* ==========================================================================
+   7. Copy Code Button
+   ========================================================================== */
+function initCopyCodeButtons() {
+  const copyBtn = document.getElementById('copyCodeBtn');
+  const copyLabel = document.getElementById('copyCodeLabel');
+  if (!copyBtn) return;
+
+  copyBtn.addEventListener('click', () => {
+    const activePane = document.querySelector('.console-pane.active');
+    if (!activePane) return;
+
+    const textToCopy = activePane.innerText || activePane.textContent;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      if (copyLabel) copyLabel.textContent = 'COPIED! ✔';
+      copyBtn.style.background = '#4ADE80';
+      copyBtn.style.color = '#000000';
+
+      playChime(1200, 0.06, 'sine');
+      setTimeout(() => playChime(1600, 0.08, 'sine'), 50);
+
+      setTimeout(() => {
+        if (copyLabel) copyLabel.textContent = 'COPY CODE';
+        copyBtn.style.background = '';
+        copyBtn.style.color = '';
+      }, 2000);
+    }).catch(() => {
+      if (copyLabel) copyLabel.textContent = 'COPIED!';
+      setTimeout(() => {
+        if (copyLabel) copyLabel.textContent = 'COPY CODE';
+      }, 1500);
+    });
+  });
+}
+
+/* ==========================================================================
+   8. Interactive Cloud Terminal CLI (`nimactl`)
+   ========================================================================== */
+function initInteractiveTerminal() {
+  const form = document.getElementById('termForm');
+  const input = document.getElementById('termInput');
+  const screen = document.getElementById('termScreen');
+  if (!form || !input || !screen) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const command = input.value.trim().toLowerCase();
+    if (!command) return;
+
+    input.value = '';
+    handleTerminalCommand(command, screen);
+  });
+}
+
+function handleTerminalCommand(cmd, screen) {
+  const div = document.createElement('div');
+  div.style.marginTop = '10px';
+  div.style.borderTop = '1px dashed #333344';
+  div.style.paddingTop = '8px';
+
+  let output = '';
+
+  switch (cmd) {
+    case 'help':
+      output = `
+        <div class="term-cmd">$ nimactl help</div>
+        <div>Available commands in this cluster:</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">status</span>&nbsp;&nbsp;&nbsp;&nbsp;· Global CloudFront CDN &amp; S3 telemetry health</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">aws</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· Solutions Architect (SAA-C03) track &amp; services</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">terraform</span>&nbsp;· IaC state locking &amp; zero drift check</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">docker</span>&nbsp;&nbsp;&nbsp;&nbsp;· Container kernel isolation &amp; 28MB distroless builds</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">actions</span>&nbsp;&nbsp;&nbsp;· Keyless GitHub Actions OIDC pipeline status</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">mesh</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· mTLS 1.3 &amp; Anycast edge routing telemetry</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">projects</span>&nbsp;&nbsp;· Active project repositories &amp; lab topologies</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">whoami</span>&nbsp;&nbsp;&nbsp;&nbsp;· Nima Hosseini credentials &amp; focus</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">contact</span>&nbsp;&nbsp;&nbsp;· Direct transmission links (Email, GitHub, LinkedIn)</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">clear</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· Clear terminal output</div>
+      `;
+      break;
+
+    case 'status':
+      output = `
+        <div class="term-cmd">$ nimactl status --all</div>
+        <div><span class="term-green">✔</span> AWS CloudFront Edge PoPs: <span class="term-cyan">[HEALTHY]</span> 450+ PoPs online · Latency p99: 14ms</div>
+        <div><span class="term-green">✔</span> AWS S3 Bucket Origin: <span class="term-cyan">[ENCRYPTED]</span> SigV4 OAC Enforced · Public Access: 0%</div>
+        <div><span class="term-green">✔</span> Uptime SLA: <span class="term-cyan">99.992% Nominal</span></div>
+      `;
+      break;
+
+    case 'aws':
+    case 'solutions-architect':
+      output = `
+        <div class="term-cmd">$ nimactl aws --track</div>
+        <div><span class="term-green">✔</span> Target: AWS Certified Solutions Architect - Associate (SAA-C03)</div>
+        <div><span class="term-green">✔</span> Disciplines: Multi-AZ VPC Design · Route 53 Anycast · CloudFront OAC · IAM Least-Privilege</div>
+        <div class="term-dim">→ Mental model: Designing resilient distributed systems from the network up.</div>
+      `;
+      break;
+
+    case 'terraform':
+    case 'iac':
+      output = `
+        <div class="term-cmd">$ nimactl terraform --verify-state</div>
+        <div><span class="term-green">✔</span> Remote State: AWS S3 + DynamoDB Distributed State Locking</div>
+        <div><span class="term-green">✔</span> Configuration Drift: 0 unmanaged resources detected</div>
+        <div><span class="term-green">✔</span> Modules: Networking, Storage, Security Groups, IAM</div>
+      `;
+      break;
+
+    case 'docker':
+    case 'containers':
+      output = `
+        <div class="term-cmd">$ nimactl docker stats</div>
+        <div><span class="term-green">✔</span> Isolation Primitives: Linux cgroups &amp; namespaces</div>
+        <div><span class="term-green">✔</span> Optimization: Multi-stage Dockerfile (920MB SDK → 28MB Distroless runtime)</div>
+        <div><span class="term-green">✔</span> Attack Surface: 97% reduction · Non-root user · 0 shells · 0 CVEs</div>
+      `;
+      break;
+
+    case 'actions':
+    case 'ci':
+    case 'cd':
+      output = `
+        <div class="term-cmd">$ nimactl actions status</div>
+        <div><span class="term-green">✔</span> Authentication: Keyless AWS OIDC Federated Token (Zero static API keys)</div>
+        <div><span class="term-green">✔</span> S3 Sync: Automated static asset synchronization</div>
+        <div><span class="term-green">✔</span> Edge Invalidation: CloudFront CDN flushed in &lt; 4.0s</div>
+      `;
+      break;
+
+    case 'mesh':
+      output = `
+        <div class="term-cmd">$ nimactl mesh inspect</div>
+        <div><span class="term-green">✔</span> TLS Version: TLS 1.3 strictly enforced</div>
+        <div><span class="term-green">✔</span> Cache Hit Ratio: 98.6% (Anycast Edge CDN)</div>
+      `;
+      break;
+
+    case 'projects':
+      output = `
+        <div class="term-cmd">$ nimactl projects list</div>
+        <div>[1] <span class="term-cyan">Cloud Architecture Site</span>: AWS (S3+CloudFront) · Terraform IaC · GitHub Actions CI/CD</div>
+        <div>[2] <span class="term-cyan">Hardened Container Runtime</span>: Multi-stage Golang + Distroless (28MB image)</div>
+        <div>[3] <span class="term-dim">Upcoming Labs</span>: Multi-container Compose topologies &amp; AWS VPC peering</div>
+      `;
+      break;
+
+    case 'whoami':
+      output = `
+        <div class="term-cmd">$ whoami</div>
+        <div>Nima Hosseini (@wvrner) · DevOps &amp; Infrastructure Systems</div>
+        <div>Focus: Understanding modern systems from the network up.</div>
+        <div>Location: New York City (40.7128° N, 74.0060° W)</div>
+      `;
+      break;
+
+    case 'contact':
+      output = `
+        <div class="term-cmd">$ nimactl contact</div>
+        <div>Email: <a href="mailto:wvrner@outlook.com" style="color:#38BDF8; text-decoration:underline;">wvrner@outlook.com</a></div>
+        <div>GitHub: <a href="https://github.com/wvrner" target="_blank" style="color:#38BDF8; text-decoration:underline;">github.com/wvrner</a></div>
+        <div>LinkedIn: <a href="https://linkedin.com/in/wvrner" target="_blank" style="color:#38BDF8; text-decoration:underline;">linkedin.com/in/wvrner</a></div>
+      `;
+      break;
+
+    case 'clear':
+      screen.innerHTML = `
+        <div>Type <span class="term-cyan">'help'</span> to see available commands.</div>
+      `;
       return;
-    }
-    const navRect = navLinks.getBoundingClientRect();
-    const elRect = el.getBoundingClientRect();
 
-    hoverPill.style.width = `${elRect.width}px`;
-    hoverPill.style.height = `${elRect.height}px`;
-    hoverPill.style.transform = `translateX(${elRect.left - navRect.left}px)`;
-    hoverPill.style.opacity = '1';
+    default:
+      output = `
+        <div class="term-cmd">$ ${cmd}</div>
+        <div style="color: #FF6B6B;">Command not found: '${cmd}'. Type 'help' for available commands.</div>
+      `;
+      break;
   }
 
-  if (activeItem) {
-    setTimeout(() => updatePill(activeItem), 60);
-  }
-
-  items.forEach(item => {
-    item.addEventListener('mouseenter', () => updatePill(item));
-  });
-
-  navLinks.addEventListener('mouseleave', () => {
-    if (activeItem) {
-      updatePill(activeItem);
-    } else {
-      hoverPill.style.opacity = '0';
-    }
-  });
-
-  window.addEventListener('resize', () => {
-    if (activeItem) updatePill(activeItem);
-  });
+  div.innerHTML = output;
+  screen.appendChild(div);
+  screen.scrollTop = screen.scrollHeight;
+  playChime(680, 0.04, 'square', 0.02);
 }
 
 /* ==========================================================================
-   5. Theme Controller (Light / Dark Mode)
+   9. Unlimited Possibilities Category Pills
    ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   This function is the day/night light switch!
-   Click the sun/moon button to switch between bright daytime mode
-   and cozy nighttime dark mode. The computer remembers your choice!
-   -------------------------------------------------------------------------- */
-function initThemeToggle() {
-  const toggleBtn = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  if (!toggleBtn) return;
-
-  const savedTheme = localStorage.getItem('theme');
-  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  
-  if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    updateThemeIcon(true);
-  } else {
-    document.documentElement.setAttribute('data-theme', 'light');
-    updateThemeIcon(false);
-  }
-
-  toggleBtn.addEventListener('click', () => {
-    const currentTheme = document.documentElement.getAttribute('data-theme');
-    const isDark = currentTheme === 'dark';
-    const nextTheme = isDark ? 'light' : 'dark';
-    
-    document.documentElement.setAttribute('data-theme', nextTheme);
-    localStorage.setItem('theme', nextTheme);
-    updateThemeIcon(!isDark);
-
-    if (soundEnabled && audioCtx) {
-      playSoftTone(isDark ? 520 : 780, 0.08, 'sine');
-    }
-  });
-}
-
-function updateThemeIcon(isDark) {
-  const themeIcon = document.getElementById('themeIcon');
-  if (!themeIcon) return;
-  
-  if (isDark) {
-    themeIcon.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-      </svg>
-    `;
-  } else {
-    themeIcon.innerHTML = `
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-      </svg>
-    `;
-  }
-}
-
-/* ==========================================================================
-   6. Scroll Reveal (Intersection Observer)
-   ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   As you scroll down the page, this function spots cards coming into view
-   and gently floats them in like paper airplanes settling onto a desk!
-   -------------------------------------------------------------------------- */
-function initScrollReveal() {
-  const elements = document.querySelectorAll('.reveal-on-scroll');
-  if (!elements.length) return;
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-revealed');
-      }
-    });
-  }, {
-    threshold: 0.10,
-    rootMargin: '0px 0px -40px 0px'
-  });
-
-  elements.forEach(el => observer.observe(el));
-}
-
-/* ==========================================================================
-   7. Interactive 3D Card Tilt with Physics
-   ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   When you move your mouse over cards, this function tilts them in 3D
-   space and casts a shiny glare across their surface, like tilting a shiny Pokemon card!
-   -------------------------------------------------------------------------- */
-function initCardTilt() {
-  const cards = document.querySelectorAll('.tilt-card');
-  
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = ((y - centerY) / centerY) * -3.0;
-      const rotateY = ((x - centerX) / centerX) * 3.0;
-      
-      card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-2px)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
-      card.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
-    });
-
-    card.addEventListener('mouseenter', () => {
-      card.style.transition = 'transform 0.1s ease-out';
+function initTopicPills() {
+  const pills = document.querySelectorAll('.gum-topic-pill');
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pill.classList.toggle('active');
+      playChime(pill.classList.contains('active') ? 950 : 720, 0.03, 'sine');
     });
   });
 }
 
 /* ==========================================================================
-   8. Smooth Anchor Scrolling
+   10. Live Dual World Clocks (NYC EST & UTC)
    ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   When you click any jump link (like "Currently Learning"), this function
-   smoothly glides the screen right down to that section instead of jumping instantly.
-   -------------------------------------------------------------------------- */
-function initSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const targetId = this.getAttribute('href');
-      if (targetId === '#') return;
-      
-      const targetEl = document.querySelector(targetId);
-      if (targetEl) {
-        e.preventDefault();
-        targetEl.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    });
-  });
-}
-
-/* ==========================================================================
-   9. Live Dual World Clocks (NYC Local + UTC)
-   ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   This function reads the real time right now and keeps digital clocks ticking
-   in the footer: one for local New York time, and one for UTC world time!
-   -------------------------------------------------------------------------- */
-function initFooterClock() {
-  const localEl = document.getElementById('footerLocalTime');
-  const utcEl = document.getElementById('footerUtcTime');
+function initLiveClocks() {
+  const localEl = document.getElementById('footerLocalClock');
+  const utcEl = document.getElementById('footerUtcClock');
   if (!localEl && !utcEl) return;
 
   function update() {
     const now = new Date();
-    
     if (localEl) {
-      const localStr = now.toLocaleTimeString('en-US', {
+      localEl.textContent = now.toLocaleTimeString('en-US', {
         timeZone: 'America/New_York',
         hour12: false,
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit'
       }) + ' EST';
-      localEl.textContent = localStr;
     }
-
     if (utcEl) {
-      const utcStr = now.toISOString().slice(11, 19) + ' UTC';
-      utcEl.textContent = utcStr;
+      utcEl.textContent = now.toISOString().slice(11, 19) + ' UTC';
     }
   }
 
@@ -437,431 +488,62 @@ function initFooterClock() {
 }
 
 /* ==========================================================================
-   10. 1-Click Copy Email to Clipboard with Haptic Feedback
+   11. Copy Email Button with Haptic Toast
    ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   When you click "Copy" on Nima's email address (wvrner@outlook.com),
-   this function copies the words into your clipboard so you can paste it
-   into your email app without having to type it out!
-   -------------------------------------------------------------------------- */
 function initCopyEmail() {
-  const copyBtns = document.querySelectorAll('.copy-email-btn');
-  if (!copyBtns.length) return;
-
-  copyBtns.forEach(btn => {
+  document.querySelectorAll('.copy-email-trigger').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const email = btn.getAttribute('data-email') || 'wvrner@outlook.com';
-      
+
       navigator.clipboard.writeText(email).then(() => {
-        const textSpan = btn.querySelector('.copy-btn-text');
-        const originalText = textSpan ? textSpan.textContent : 'Copy Email';
-        
-        btn.classList.add('is-copied');
-        if (textSpan) textSpan.textContent = 'Copied to clipboard!';
+        const orig = btn.innerText;
+        btn.innerText = 'COPIED TO CLIPBOARD! ✔';
+        btn.style.background = '#FFC900';
+        btn.style.color = '#000000';
 
-        if (soundEnabled && audioCtx) {
-          playSoftTone(880, 0.05, 'sine');
-          setTimeout(() => playSoftTone(1320, 0.08, 'sine'), 50);
-        }
-        
+        playChime(1100, 0.05, 'sine');
+        setTimeout(() => playChime(1450, 0.08, 'sine'), 50);
+
         setTimeout(() => {
-          btn.classList.remove('is-copied');
-          if (textSpan) textSpan.textContent = originalText;
+          btn.innerText = orig;
+          btn.style.background = '';
+          btn.style.color = '';
         }, 2200);
-      }).catch(err => {
-        console.error('Clipboard copy failed:', err);
       });
     });
   });
 }
 
 /* ==========================================================================
-   11. Architecture Inspector Component (Awwwards Interactive Showcase)
+   12. Back to Top Button
    ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   This is the interactive cloud architecture card!
-   You can click the 4 stages (Browser -> Route 53 -> CloudFront -> S3) to see
-   what each one does, and click "Copy" to copy real Terraform code!
-   -------------------------------------------------------------------------- */
-function initCompactArchSection() {
-  const flowNodes = document.querySelectorAll('.flow-node');
-  const flowConnectors = document.querySelectorAll('.flow-connector');
-  const flowStatusMsg = document.getElementById('flowStatusMsg');
-  const consoleTabs = document.querySelectorAll('.console-tab');
-  const consolePanes = document.querySelectorAll('.console-pane');
-  const copyBtn = document.getElementById('copyCodeBtn');
-  const copyLabel = document.getElementById('copyCodeLabel');
-
-  if (!flowNodes.length) return;
-
-  const nodeExplanations = {
-    browser: '<strong>Client Ingress:</strong> Modern browser establishes TLS 1.3 connection to Anycast edge. Click any node to inspect its code.',
-    dns: '<strong>AWS Route 53:</strong> Latency-based Anycast DNS alias record directs user requests to the closest global CloudFront PoP.',
-    cdn: '<strong>CloudFront CDN:</strong> Origin Access Control (OAC) signs requests using SigV4. Cached assets returned with low TTFB.',
-    s3: '<strong>AWS S3 Bucket:</strong> Private origin bucket. Public access is 100% blocked; accessed exclusively via SigV4 CloudFront OAC.'
-  };
-
-  // Node Click Handlers
-  flowNodes.forEach(node => {
-    node.addEventListener('click', () => {
-      const nodeKey = node.getAttribute('data-node');
-      flowNodes.forEach(n => {
-        n.classList.remove('active');
-        n.setAttribute('aria-selected', 'false');
-      });
-      node.classList.add('active');
-      node.setAttribute('aria-selected', 'true');
-
-      if (flowStatusMsg && nodeExplanations[nodeKey]) {
-        flowStatusMsg.innerHTML = nodeExplanations[nodeKey];
-      }
-
-      // Switch to main.tf tab if not already on it
-      const targetTab = document.querySelector('.console-tab[data-pane="pane-tf"]');
-      if (targetTab && !targetTab.classList.contains('active')) {
-        targetTab.click();
-      }
-
-      if (typeof soundEnabled !== 'undefined' && soundEnabled && typeof audioCtx !== 'undefined' && audioCtx) {
-        playSoftTone(880, 0.04, 'sine', 0.02);
-      }
-    });
-  });
-
-  // Console Tab Handlers
-  consoleTabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const paneId = tab.getAttribute('data-pane');
-      consoleTabs.forEach(t => t.classList.remove('active'));
-      consolePanes.forEach(p => p.classList.remove('active'));
-
-      tab.classList.add('active');
-      const targetPane = document.getElementById(paneId);
-      if (targetPane) targetPane.classList.add('active');
-
-      if (typeof soundEnabled !== 'undefined' && soundEnabled && typeof audioCtx !== 'undefined' && audioCtx) {
-        playSoftTone(960, 0.03, 'sine', 0.015);
-      }
-    });
-  });
-
-  // Copy Code Button
-  if (copyBtn && copyLabel) {
-    copyBtn.addEventListener('click', () => {
-      const activePane = document.querySelector('.console-pane.active');
-      if (!activePane) return;
-      const codeText = activePane.innerText || activePane.textContent;
-      navigator.clipboard.writeText(codeText).then(() => {
-        copyLabel.textContent = 'Copied! ✔';
-        copyBtn.style.borderColor = '#10b981';
-        copyBtn.style.color = '#10b981';
-        setTimeout(() => {
-          copyLabel.textContent = 'Copy';
-          copyBtn.style.borderColor = '';
-          copyBtn.style.color = '';
-        }, 2000);
-      }).catch(() => {
-        copyLabel.textContent = 'Copied!';
-        setTimeout(() => { copyLabel.textContent = 'Copy'; }, 1500);
-      });
-    });
-  }
-
-}
-
-/* ==========================================================================
-   12. Real Interactive Cloud Terminal CLI/* ==========================================================================
-   12. Real Interactive Cloud Terminal CLI (`nimactl`)
-   ========================================================================== */
-function initInteractiveTerminal() {
-  const tabs = document.querySelectorAll('.terminal-tab');
-  const panes = document.querySelectorAll('.terminal-pane');
-  const form = document.getElementById('terminalForm');
-  const input = document.getElementById('termInput');
-  const outputBody = document.querySelector('.terminal-body');
-
-  if (tabs.length && panes.length) {
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        const targetId = tab.getAttribute('data-target');
-        tabs.forEach(t => t.classList.remove('active'));
-        panes.forEach(p => p.classList.remove('active'));
-
-        tab.classList.add('active');
-        const targetPane = document.getElementById(targetId);
-        if (targetPane) {
-          targetPane.classList.add('active');
-        }
-
-        if (soundEnabled && audioCtx) {
-          playSoftTone(1050, 0.03, 'sine');
-        }
-      });
-    });
-  }
-
-  // Active CLI input processor
-  if (form && input && outputBody) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const val = input.value.trim().toLowerCase();
-      if (!val) return;
-
-      input.value = '';
-      executeCliCommand(val, outputBody);
-    });
-  }
-}
-
-function executeCliCommand(cmd, container) {
-  const responseDiv = document.createElement('div');
-  responseDiv.style.marginTop = '12px';
-  responseDiv.style.borderTop = '1px solid rgba(255,255,255,0.08)';
-  responseDiv.style.paddingTop = '8px';
-
-  let responseHtml = '';
-
-  switch (cmd) {
-    case 'help':
-      responseHtml = `
-        <div class="term-cmd">$ nimactl help</div>
-        <div>Available commands:</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">status</span>&nbsp;&nbsp;&nbsp;&nbsp;,  Inspect distributed multi-region cluster health</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">iac</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,  Check Terraform state lock &amp; drift status</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">mesh</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,  Inspect mTLS service mesh &amp; CDN edge routing</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">projects</span>&nbsp;,  List live projects &amp; architecture repositories</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">contact</span>&nbsp;&nbsp;,  Display verified email &amp; transmission links</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">whoami</span>&nbsp;&nbsp;,  Print engineer credentials</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">clear</span>&nbsp;&nbsp;&nbsp;&nbsp;,  Reset terminal buffer</div>
-      `;
-      break;
-
-    case 'status':
-    case 'cluster':
-      responseHtml = `
-        <div class="term-cmd">$ nimactl cluster status --all-regions</div>
-        <div><span class="term-green">&#x2714;</span> us-east-1 (N. Virginia): <span class="term-cyan">[HEALTHY]</span> pods: 412/412 &middot; p99: 14ms</div>
-        <div><span class="term-green">&#x2714;</span> eu-central-1 (Frankfurt): <span class="term-cyan">[HEALTHY]</span> pods: 288/288 &middot; p99: 18ms</div>
-        <div><span class="term-green">&#x2714;</span> ap-southeast-1 (Singapore): <span class="term-cyan">[HEALTHY]</span> pods: 196/196 &middot; p99: 22ms</div>
-      `;
-      break;
-
-    case 'aws':
-    case 'solutions-architect':
-      responseHtml = `
-        <div class="term-cmd">$ nimactl aws status --cert</div>
-        <div><span class="term-green">&#x2714;</span> Track: AWS Solutions Architect (SAA-C03) [ACTIVE]</div>
-        <div><span class="term-green">&#x2714;</span> Core Services: Route 53 &middot; CloudFront CDN &middot; S3 (OAC) &middot; VPC &middot; IAM</div>
-        <div><span class="term-dim">&rarr; Multi-AZ resilient topologies &amp; Least-Privilege boundaries</span></div>
-      `;
-      break;
-
-    case 'docker':
-    case 'containers':
-      responseHtml = `
-        <div class="term-cmd">$ docker stats --all</div>
-        <div><span class="term-green">&#x2714;</span> Runtime: containerd / Linux cgroups &amp; namespaces</div>
-        <div><span class="term-green">&#x2714;</span> Optimization: Multi-stage Dockerfile (920MB &rarr; 28MB Alpine base)</div>
-        <div><span class="term-green">&#x2714;</span> CVE Scan: 0 critical vulnerabilities detected</div>
-      `;
-      break;
-
-    case 'github-actions':
-    case 'ci':
-    case 'cd':
-      responseHtml = `
-        <div class="term-cmd">$ gh workflow view deploy.yml</div>
-        <div><span class="term-green">&#x2714;</span> Status: ACTIVE &middot; Trigger: Push to main</div>
-        <div><span class="term-green">&#x2714;</span> Authentication: Keyless AWS OIDC Federated Token</div>
-        <div><span class="term-green">&#x2714;</span> Edge Cache Invalidation: CloudFront flushed in 0.9s</div>
-      `;
-      break;
-
-    case 'learn':
-    case 'learning':
-      responseHtml = `
-        <div class="term-cmd">$ nimactl learn list</div>
-        <div>Currently learning:</div>
-        <div>&nbsp;&nbsp;[1] <span class="term-cyan">AWS</span> (working toward Solutions Architect)</div>
-        <div>&nbsp;&nbsp;[2] <span class="term-cyan">Terraform</span> (infrastructure as code)</div>
-        <div>&nbsp;&nbsp;[3] <span class="term-cyan">Docker</span> (containers)</div>
-        <div>&nbsp;&nbsp;[4] <span class="term-cyan">GitHub Actions</span> (CI/CD)</div>
-      `;
-      break;
-
-    case 'warp':
-    case 'overclock':
-      const isOverclocked = !document.body.classList.contains('is-overclocked');
-      document.body.classList.toggle('is-overclocked', isOverclocked);
-      if (window.cloudCanvas && typeof window.cloudCanvas.setOverclock === 'function') {
-        window.cloudCanvas.setOverclock(isOverclocked);
-      }
-      responseHtml = `
-        <div class="term-cmd">$ nimactl overclock</div>
-        <div><span class="term-green">&#x2714;</span> Overclock State: ${isOverclocked ? 'WARP SPEED [PARTICLES ACCELERATED 4.8X]' : 'NORMAL NOMINAL'}</div>
-      `;
-      break;
-
-    case 'ping':
-      responseHtml = `
-        <div class="term-cmd">$ ping -c 3 cdn.wvrner.com</div>
-        <div>64 bytes from d2xyz.cloudfront.net: icmp_seq=1 ttl=58 time=12.4 ms</div>
-        <div>64 bytes from d2xyz.cloudfront.net: icmp_seq=2 ttl=58 time=13.1 ms</div>
-        <div>64 bytes from d2xyz.cloudfront.net: icmp_seq=3 ttl=58 time=11.9 ms</div>
-        <div>--- cdn.wvrner.com ping statistics --- rtt min/avg/max = 11.9/12.4/13.1 ms</div>
-      `;
-      break;
-
-    case 'iac':
-    case 'terraform':
-      responseHtml = `
-        <div class="term-cmd">$ nimactl iac verify --state-check</div>
-        <div><span class="term-green">&#x2714;</span> State Storage: AWS S3 + DynamoDB state locking [ACTIVE]</div>
-        <div><span class="term-green">&#x2714;</span> Drift Check: 0 unmanaged resources across 14 modules</div>
-        <div><span class="term-green">&#x2714;</span> GitOps Sync: In sync with github.com/wvrner/portfolio</div>
-      `;
-      break;
-
-    case 'mesh':
-      responseHtml = `
-        <div class="term-cmd">$ nimactl mesh inspect</div>
-        <div><span class="term-green">&#x2714;</span> mTLS 1.3: STRICT_ENFORCED across all ingress paths</div>
-        <div><span class="term-green">&#x2714;</span> Edge Cache Hit Ratio: 98.4% (CloudFront Anycast)</div>
-      `;
-      break;
-
-    case 'projects':
-      responseHtml = `
-        <div class="term-cmd">$ nimactl projects list</div>
-        <div>[1] <span class="term-cyan">This Website</span>: AWS (S3+CloudFront) &middot; Terraform &middot; GitHub Actions</div>
-        <div>[2] <span class="term-dim">Homelab K8s Cluster</span>: Microservices &middot; Istio mTLS [IN PROGRESS]</div>
-      `;
-      break;
-
-    case 'whoami':
-      responseHtml = `
-        <div class="term-cmd">$ whoami</div>
-        <div>Nima Hosseini (@wvrner) ,  Cloud &amp; DevOps Engineering</div>
-        <div>Focus: AWS &middot; Terraform &middot; Docker &middot; GitHub Actions CI/CD</div>
-      `;
-      break;
-
-    case 'contact':
-    case 'email':
-      responseHtml = `
-        <div class="term-cmd">$ nimactl comms contact</div>
-        <div>Email: <span class="term-cyan">wvrner@outlook.com</span></div>
-        <div>GitHub: <a href="https://github.com/wvrner" target="_blank" style="color:#f87171; text-decoration:underline;">github.com/wvrner</a></div>
-        <div>LinkedIn: <a href="https://linkedin.com/in/wvrner" target="_blank" style="color:#f87171; text-decoration:underline;">linkedin.com/in/wvrner</a></div>
-      `;
-      break;
-
-    case 'clear':
-      container.innerHTML = `
-        <div class="term-cmd">$ nimactl ,  buffer cleared. Type 'help' for commands.</div>
-      `;
-      return;
-
-    default:
-      responseHtml = `
-        <div class="term-cmd">$ ${cmd}</div>
-        <div style="color: #f85149;">Command not recognized: '${cmd}'. Type 'help' to see available commands.</div>
-      `;
-      break;
-  }
-
-  responseDiv.innerHTML = responseHtml;
-  container.appendChild(responseDiv);
-  container.scrollTop = container.scrollHeight;
-
-  if (soundEnabled && audioCtx) {
-    playSoftTone(740, 0.04, 'square', 0.015);
-  }
-}
-
-/* ==========================================================================
-   13. Scroll to Top Trigger
-   ========================================================================== */
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   When you reach the bottom of the page, clicking the little rocket arrow button
-   smoothly rolls you all the way back to the very top!
-   -------------------------------------------------------------------------- */
 function initBackToTop() {
-  const backToTopBtn = document.getElementById('backToTopBtn');
-  if (!backToTopBtn) return;
-
-  backToTopBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+  const btn = document.getElementById('backToTopBtn');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    playChime(900, 0.05, 'sine');
   });
 }
 
-/* --------------------------------------------------------------------------
-   KID EXPLANATION:
-   This function controls the four big chapter buttons (AWS, Terraform,
-   Docker, and GitHub Actions). When you click one, it smoothly opens that
-   chapter's notes, lab commands, and architecture drawings!
-   -------------------------------------------------------------------------- */
-function initLearningExhibition() {
-  const chapterBtns = document.querySelectorAll('.chapter-nav-btn');
-  const chapterPanels = document.querySelectorAll('.chapter-panel');
+/* ==========================================================================
+   13. Nav Search Quick Filter
+   ========================================================================== */
+function initNavSearch() {
+  const searchInput = document.getElementById('navSearchInput');
+  if (!searchInput) return;
 
-  if (chapterBtns.length && chapterPanels.length) {
-    chapterBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = btn.getAttribute('data-chapter');
-
-        chapterBtns.forEach(b => b.classList.remove('active'));
-        chapterPanels.forEach(p => p.classList.remove('active'));
-
-        btn.classList.add('active');
-        const targetPanel = document.getElementById(targetId);
-        if (targetPanel) {
-          targetPanel.classList.add('active');
-        }
-
-        if (soundEnabled && audioCtx) {
-          playSoftTone(580, 0.06, 'sine', 0.025);
-          setTimeout(() => playSoftTone(870, 0.08, 'sine', 0.02), 40);
-        }
-      });
+  searchInput.addEventListener('input', (e) => {
+    const val = e.target.value.toLowerCase();
+    const pills = document.querySelectorAll('.gum-topic-pill');
+    pills.forEach(pill => {
+      const text = pill.textContent.toLowerCase();
+      if (!val || text.includes(val)) {
+        pill.style.display = 'inline-flex';
+      } else {
+        pill.style.display = 'none';
+      }
     });
-  }
-
-  // Toggle between Schematic Blueprint and Code Inspector inside each panel
-  document.querySelectorAll('.chapter-panel').forEach(panel => {
-    const tabBtns = panel.querySelectorAll('.schematic-tab-btn');
-    const visualBox = panel.querySelector('.schematic-visual-box');
-    const codeBox = panel.querySelector('.schematic-code-box');
-
-    if (tabBtns.length && visualBox && codeBox) {
-      tabBtns.forEach(tab => {
-        tab.addEventListener('click', () => {
-          const view = tab.getAttribute('data-view');
-          tabBtns.forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-
-          if (view === 'code') {
-            visualBox.style.display = 'none';
-            codeBox.classList.add('active');
-          } else {
-            codeBox.classList.remove('active');
-            visualBox.style.display = 'flex';
-          }
-
-          if (soundEnabled && audioCtx) {
-            playSoftTone(980, 0.03, 'sine', 0.015);
-          }
-        });
-      });
-    }
   });
 }

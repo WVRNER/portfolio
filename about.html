@@ -1,296 +1,433 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>About & CV :  Nima Hosseini (@wvrner)</title>
-  <meta name="description" content="About Nima Hosseini :  Infrastructure & Cloud Engineer.">
-  
-  <!-- Favicon with letter W -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%2327187E'/><path d='M22 28L38 74L50 44L62 74L78 28' fill='none' stroke='white' stroke-width='9' stroke-linecap='round' stroke-linejoin='round'/></svg>">
-  
-  <!-- Fonts: Inter Tight & Inter :  100% Free SIL Open Font License (OFL 1.1) for Unlimited Commercial Deployment -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="styles/main.css">
-  <link rel="stylesheet" href="styles/animations.css">
-</head>
-<body>
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
+    />
+    <title>About &amp; CV · Nima Hosseini (@wvrner) · Gumroad Edition</title>
+    <meta
+      name="description"
+      content="Biography and Curriculum Vitae of Nima Hosseini (@wvrner) - DevOps & Infrastructure Systems. Background in design, understanding cloud systems from the network up."
+    />
 
-  <!-- Persistent Viewport Ambient Cloud Mesh Canvas (Never cuts off on scroll) -->
-  <div class="persistent-canvas-wrapper" aria-hidden="true">
-    <canvas id="heroCanvas"></canvas>
-  </div>
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23FFC900' stroke='%23000000' stroke-width='8'/><path d='M22 28L38 74L50 44L62 74L78 28' fill='none' stroke='%23000000' stroke-width='11' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+    />
 
-  <!-- Background Guidelines -->
-  <div class="bg-grid-container" aria-hidden="true">
-    <div class="bg-grid-lines">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Compact Modern Floating Island Navigation -->
-  <header class="nav-wrapper">
-    <nav class="nav-island" aria-label="Main Navigation">
-      <!-- Monogram W Logo -->
-      <a href="index.html" class="nav-logo-w" title="Nima Hosseini (@wvrner)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 5l5 14 4-10 4 10 5-14"></path>
-        </svg>
-      </a>
-
-      <!-- Fluid Sliding Links -->
-      <ul class="nav-links">
-        <div class="nav-hover-pill" aria-hidden="true"></div>
-        <li><a href="about.html" class="nav-link active">About</a></li>
-        <li class="nav-dropdown">
-          <a href="about.html#cv" class="nav-link" aria-haspopup="true">
-            <span>CV</span>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/animations.css" />
+  </head>
+  <body>
+    <!-- Top Sticky Gumroad Navigation Bar -->
+    <header class="gum-nav-wrapper">
+      <nav class="gum-nav-inner" aria-label="Main Navigation">
+        <div class="gum-logo-group">
+          <a
+            href="index.html"
+            class="gum-logo-pill"
+            title="Nima Hosseini (@wvrner)"
+          >
+            <span class="logo-w">W</span>
+            <span>wvrner</span>
           </a>
-          <div class="nav-cv-popover" role="menu">
-            <div class="cv-popover-inner">
-              <a href="about.html#cv" class="cv-action-btn" role="menuitem">
-                <span>View Full CV</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <span class="gum-role-tag">SYS // BIOGRAPHY &amp; CV</span>
+        </div>
+
+        <!-- Navigation Links: Only About & CV -->
+        <ul class="gum-nav-links">
+          <!-- [COMMENTED NAV LINKS - Preserved for future reuse]
+          <li class="gum-nav-item"><a href="index.html">Home</a></li>
+          <li class="gum-nav-item"><a href="index.html#learning-exhibition">Currently Learning</a></li>
+          <li class="gum-nav-item"><a href="index.html#systems-architecture">Architecture</a></li>
+          <li class="gum-nav-item"><a href="index.html#interactive-cli">Terminal</a></li>
+          -->
+          <li class="gum-nav-item"><a href="about.html" class="active">About</a></li>
+          <li class="gum-nav-item"><a href="about.html#cv">CV</a></li>
+        </ul>
+
+        <div class="gum-nav-actions">
+          <button
+            id="soundToggle"
+            class="gum-btn gum-btn-white sound-bars-active"
+            type="button"
+            aria-label="Toggle sound effects"
+            style="padding: 7px 14px"
+          >
+            <div class="sound-bars-wrapper" aria-hidden="true">
+              <div class="sound-bar"></div>
+              <div class="sound-bar"></div>
+              <div class="sound-bar"></div>
+            </div>
+            <span class="sound-label" style="font-size: 11px">SFX: ON</span>
+          </button>
+
+          <button
+            id="themeToggle"
+            class="gum-icon-btn"
+            type="button"
+            aria-label="Toggle theme"
+          >
+            <span id="themeIcon">🌙</span>
+          </button>
+
+          <a href="mailto:wvrner@outlook.com" class="gum-btn gum-btn-yellow"
+            >Contact</a
+          >
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main About Content -->
+    <main class="gum-section">
+      <div class="section-lead-block">
+        <span class="section-pill-tag">01 // Biography &amp; Experience</span>
+        <h1 class="section-big-title">About Nima Hosseini</h1>
+        <p class="section-subtitle">
+          DevOps &amp; Infrastructure Systems. Background in design, bridging
+          visual pattern systems with resilient cloud architecture.
+        </p>
+      </div>
+
+      <!-- CV & Profile Card Container -->
+      <div class="gum-cv-card">
+        <div class="cv-grid-layout">
+          <!-- Left: Profile Portrait / Card -->
+          <div class="cv-profile-col">
+            <div class="cv-avatar-big">W</div>
+            <h2 class="cv-profile-name">Nima Hosseini</h2>
+            <div class="cv-profile-handle">@wvrner</div>
+            <span
+              class="section-pill-tag"
+              style="background: var(--gum-yellow); color: #000000"
+              >DevOps &amp; Infrastructure</span
+            >
+            <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6">
+              Focused on cloud infrastructure, distributed systems, site
+              reliability, and automation.
+            </p>
+
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+                margin-top: 10px;
+              "
+            >
+              <button
+                class="gum-btn gum-btn-pink copy-email-trigger"
+                data-email="wvrner@outlook.com"
+                type="button"
+                style="width: 100%"
+              >
+                <span>Copy Email</span>
+              </button>
+              <a
+                href="mailto:wvrner@outlook.com"
+                class="gum-btn gum-btn-white"
+                style="width: 100%"
+              >
+                <span>Send Email &rarr;</span>
               </a>
-              <a href="#" class="cv-action-btn" role="menuitem" onclick="alert('Attach your CV/Resume PDF link here'); return false;">
-                <span>Download PDF</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <a
+                href="#"
+                class="gum-btn gum-btn-yellow"
+                style="width: 100%"
+                onclick="
+                  alert(
+                    'Curriculum Vitae text and project details available below.',
+                  );
+                  return false;
+                "
+              >
+                <span>Download CV (PDF)</span>
               </a>
             </div>
           </div>
-        </li>
-      </ul>
 
-      <!-- Actions: Audio, Theme Toggle & Contact -->
-      <div class="nav-actions">
-        <button id="soundToggle" class="sound-toggle-btn" type="button" aria-label="Toggle ambient UI audio">
-          <div class="sound-bars-wrapper" aria-hidden="true">
-            <div class="sound-bar"></div>
-            <div class="sound-bar"></div>
-            <div class="sound-bar"></div>
+          <!-- Right: Biography & Story -->
+          <div class="cv-details-col">
+            <div
+              class="hero-desc-lead"
+              style="font-size: 20px; font-weight: 600; color: var(--text-main)"
+            >
+              I’m building toward a career in DevOps and infrastructure, with a
+              focus on understanding how modern systems work
+              <span class="hero-title-italic">from the network up</span>.
+            </div>
+
+            <!-- Block 1: Foundations -->
+            <div class="cv-block">
+              <h3 class="cv-block-title">
+                Core Foundations &amp; Hands-On Study
+              </h3>
+              <div class="cv-block-text">
+                <p style="margin-bottom: 12px">
+                  I’m currently developing my foundations across
+                  <strong>Networking</strong>, <strong>Linux</strong>,
+                  <strong>Cloud Infrastructure</strong>, <strong>Git</strong>,
+                  <strong>Containers</strong>, <strong>CI/CD</strong>,
+                  <strong>Infrastructure as Code</strong>,
+                  <strong>Automation</strong>, and <strong>Monitoring</strong>.
+                  I’m learning through structured study and hands-on labs, with
+                  an emphasis on
+                  <strong
+                    >understanding how the pieces connect rather than simply
+                    learning individual tools</strong
+                  >.
+                </p>
+                <p>
+                  What interests me most is the infrastructure behind
+                  applications: how systems communicate, how they are deployed,
+                  how infrastructure is provisioned and automated, and how
+                  everything is monitored and maintained.
+                </p>
+              </div>
+            </div>
+
+            <!-- Block 2: Design Synergy -->
+            <div class="cv-block">
+              <h3 class="cv-block-title">
+                Design &times; Systems Thinking Synergy
+              </h3>
+              <div class="cv-block-text">
+                <p style="margin-bottom: 12px">
+                  My background in design still influences how I approach
+                  technical problems. I naturally look for patterns, understand
+                  systems by breaking them down, and think about how different
+                  components interact.
+                </p>
+                <p>
+                  Currently learning, building, and turning theory into
+                  practical infrastructure projects.
+                </p>
+              </div>
+            </div>
+
+            <!-- Block 3: Curriculum Vitae -->
+            <div id="cv" class="cv-block">
+              <h3 class="cv-block-title">Curriculum Vitae &middot; Skills &amp; Projects</h3>
+              <div class="cv-block-text">
+                <p style="margin-bottom: 16px">
+                  <strong
+                    style="
+                      display: block;
+                      font-size: 16px;
+                      color: var(--text-main);
+                      margin-bottom: 6px;
+                    "
+                    >// CURRENTLY LEARNING &amp; STUDY TRACKS</strong
+                  >
+                  &bull; <strong>AWS</strong>: Working toward Solutions
+                  Architect (SAA-C03), Route 53 Anycast, CloudFront OAC, S3,
+                  VPC, NAT Gateways, IAM Least-Privilege.<br />
+                  &bull; <strong>Terraform</strong>: Infrastructure as Code,
+                  declarative HCL, remote state locking with DynamoDB, modular
+                  reusable architectures.<br />
+                  &bull; <strong>Docker</strong>: Containers &amp; isolation,
+                  Linux kernel primitives (cgroups &amp; namespaces),
+                  multi-stage builds (920MB SDK &rarr; 28MB distroless
+                  runtime).<br />
+                  &bull; <strong>GitHub Actions</strong>: CI/CD automation,
+                  keyless AWS OIDC STS authentication, automated tests, global
+                  CDN cache invalidation in &lt; 4.0s.
+                </p>
+
+                <p style="margin-bottom: 16px">
+                  <strong
+                    style="
+                      display: block;
+                      font-size: 16px;
+                      color: var(--text-main);
+                      margin-bottom: 6px;
+                    "
+                    >// ACTIVE PROJECT LABS</strong
+                  >
+                  &bull; <strong>Cloud Architecture Website:</strong> Hosted on
+                  AWS S3 &amp; CloudFront CDN, defined declaratively with
+                  Terraform IaC, deployed automatically via GitHub Actions CI/CD
+                  with instant edge cache flush.<br />
+                  &bull; <strong>Dockerized Micro-Service Labs:</strong>
+                  Multi-container compose topologies, custom Linux network
+                  bridging, and reverse-proxy routing experiments.
+                </p>
+
+                <p>
+                  <strong
+                    style="
+                      display: block;
+                      font-size: 16px;
+                      color: var(--text-main);
+                      margin-bottom: 6px;
+                    "
+                    >// DIRECT TRANSMISSION</strong
+                  >
+                  &bull; Email:
+                  <a
+                    href="mailto:wvrner@outlook.com"
+                    style="
+                      color: var(--royal-indigo);
+                      text-decoration: underline;
+                      font-weight: 700;
+                    "
+                    >wvrner@outlook.com</a
+                  ><br />
+                  &bull; GitHub:
+                  <a
+                    href="https://github.com/wvrner"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="
+                      color: var(--royal-indigo);
+                      text-decoration: underline;
+                      font-weight: 700;
+                    "
+                    >github.com/wvrner</a
+                  ><br />
+                  &bull; LinkedIn:
+                  <a
+                    href="https://linkedin.com/in/wvrner"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="
+                      color: var(--royal-indigo);
+                      text-decoration: underline;
+                      font-weight: 700;
+                    "
+                    >linkedin.com/in/wvrner</a
+                  >
+                </p>
+              </div>
+            </div>
           </div>
-          <span class="sound-btn-label">AUDIO</span>
-        </button>
-
-        <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle theme">
-          <span id="themeIcon" class="theme-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-            </svg>
-          </span>
-        </button>
-        <a href="mailto:wvrner@outlook.com" class="contact-btn">Contact</a>
-      </div>
-    </nav>
-  </header>
-
-  <!-- About Content Section -->
-  <main class="about-hero">
-    <h1 class="about-header-pill reveal-on-scroll">About &amp; Experience</h1>
-
-    <div class="about-profile-grid">
-      <!-- Left: Profile Portrait / Card -->
-      <div class="about-photo-wrapper reveal-on-scroll">
-        <div class="about-card-portrait">
-          <div class="about-avatar-large">
-            <span>W</span>
-          </div>
-          <div class="about-name-tag">Nima Hosseini</div>
-          <div class="about-role-tag">DevOps &amp; Infrastructure Systems</div>
-          <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin-top: 4px;">
-            Focused on cloud infrastructure, distributed systems, site reliability, and automation.
-          </p>
         </div>
       </div>
+    </main>
 
-      <!-- Right: Biography & Story (Easily editable by user) -->
-      <div class="about-info-stream">
-        <div class="about-lead-bio reveal-on-scroll">
-          I’m building toward a career in DevOps and infrastructure, with a focus on understanding how modern systems work <span class="highlight-text">from the network up</span>.
-        </div>
-
-        <!-- Section: Foundations -->
-        <div class="about-section-block reveal-on-scroll delay-1">
-          <h2 class="about-block-title">Core Foundations &amp; Hands-On Study</h2>
-          <div class="about-block-text">
-            <p>
-              I’m currently developing my foundations across networking, Linux, cloud infrastructure, Git, containers, CI/CD, infrastructure as code, automation, and monitoring. I’m learning through structured study and hands-on labs, with an emphasis on understanding how the pieces connect rather than simply learning individual tools.
-            </p>
-            <p>
-              What interests me most is the infrastructure behind applications: how systems communicate, how they are deployed, how infrastructure is provisioned and automated, and how everything is monitored and maintained.
-            </p>
+    <!-- Footer -->
+    <footer class="gum-footer">
+      <div class="gum-footer-inner">
+        <div class="footer-top-telemetry">
+          <div class="telemetry-status-badge">
+            <span class="neo-pulse-dot" aria-hidden="true"></span>
+            <span>SYS STATUS: 100% NOMINAL</span>
           </div>
-        </div>
 
-        <!-- Section: Design Influence -->
-        <div class="about-section-block reveal-on-scroll delay-2">
-          <h2 class="about-block-title">Design &times; Systems Thinking</h2>
-          <div class="about-block-text">
-            <p>
-              My background in design still influences how I approach technical problems. I naturally look for patterns, understand systems by breaking them down, and think about how different components interact.
-            </p>
-            <p>
-              Currently learning, building, and turning theory into practical infrastructure projects.
-            </p>
-          </div>
-        </div>
-
-        <!-- Section: CV / Experience -->
-        <div id="cv" class="about-section-block reveal-on-scroll delay-3" style="padding-top: 10px;">
-          <h2 class="about-block-title">Curriculum Vitae</h2>
-          <div class="about-block-text">
-            <p>
-              <strong>Currently Learning:</strong><br>
-              &bull; <strong>AWS</strong> (working toward Solutions Architect ,  SAA-C03)<br>
-              &bull; <strong>Terraform</strong> (infrastructure as code ,  declarative HCL, remote state locking)<br>
-              &bull; <strong>Docker</strong> (containers ,  runtime isolation, multi-stage builds, compose)<br>
-              &bull; <strong>GitHub Actions</strong> (CI/CD ,  automated workflows, keyless OIDC auth, edge invalidation)
-            </p>
-            <p>
-              <strong>Active Project Labs:</strong><br>
-              &bull; <strong>Cloud Architecture Website:</strong> Hosted on AWS S3 &amp; CloudFront CDN, defined declaratively with Terraform IaC, deployed automatically via GitHub Actions CI/CD with cache invalidation.<br>
-              &bull; <strong>Dockerized Micro-Service Labs:</strong> Multi-container compose topologies, custom network bridging, and reverse-proxy routing experiments.
-            </p>
-            <p>
-              <strong>Direct Comms:</strong><br>
-              &bull; Email: <a href="mailto:wvrner@outlook.com" style="color: var(--accent-blue); text-decoration: underline;">wvrner@outlook.com</a><br>
-              &bull; GitHub: <a href="https://github.com/wvrner" target="_blank" rel="noopener noreferrer" style="color: var(--accent-blue); text-decoration: underline;">github.com/wvrner</a><br>
-              &bull; LinkedIn: <a href="https://linkedin.com/in/wvrner" target="_blank" rel="noopener noreferrer" style="color: var(--accent-blue); text-decoration: underline;">linkedin.com/in/wvrner</a>
-            </p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </main>
-
-  <!-- Rebuilt Unique & Modern Footer (Ignoring WCAG for High-End Engineering Aesthetic) -->
-  <footer class="unique-modern-footer">
-    <div class="footer-container">
-      <div class="footer-blueprint-card">
-        <!-- Corner Crosshairs -->
-        <span class="corner-crosshair ch-tl" aria-hidden="true">+</span>
-        <span class="corner-crosshair ch-tr" aria-hidden="true">+</span>
-        <span class="corner-crosshair ch-bl" aria-hidden="true">+</span>
-        <span class="corner-crosshair ch-br" aria-hidden="true">+</span>
-
-        <!-- Top Telemetry & Live World Clock Bar -->
-        <div class="footer-telemetry-bar">
-          <div class="telemetry-item">
-            <span class="telemetry-beacon" aria-hidden="true"></span>
-            <span>SYS // STATUS: 99.992% NOMINAL</span>
-          </div>
-          <div class="live-clocks-wrapper">
-            <span>LOCAL: <span id="footerLocalTime" class="clock-val">--:--:--</span></span>
+          <div class="telemetry-clocks">
+            <span
+              >NYC LOCAL: <strong id="footerLocalClock">--:--:--</strong></span
+            >
             <span>&middot;</span>
-            <span>UTC: <span id="footerUtcTime" class="clock-val">--:--:-- UTC</span></span>
+            <span>UTC: <strong id="footerUtcClock">--:--:-- UTC</strong></span>
           </div>
-          <div class="telemetry-item">
+
+          <div>
             <span>NYC // 40.7128&deg; N, 74.0060&deg; W</span>
           </div>
         </div>
 
-        <!-- Core Footer Grid -->
-        <div class="footer-core-grid">
-          <!-- Bio & Branding -->
-          <div class="footer-bio-col">
-            <div class="footer-brand-title">
-              <div class="nav-logo-w" style="width: 36px; height: 36px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                  <path d="M3 5l5 14 4-10 4 10 5-14"></path>
-                </svg>
-              </div>
-              <div>
-                <div class="footer-name-tag">Nima Hosseini</div>
-                <div class="footer-handle">@wvrner</div>
-              </div>
+        <div class="footer-cols-grid">
+          <div class="footer-brand-col">
+            <div class="gum-logo-pill" style="width: fit-content">
+              <span class="logo-w">W</span>
+              <span>Nima Hosseini</span>
             </div>
-            <p class="footer-desc-text">
-              Infrastructure &amp; Cloud Engineer. Designing distributed architectures, automated pipelines, and highly resilient cloud platforms.
+            <div
+              style="
+                font-family: var(--font-mono);
+                font-size: 13px;
+                font-weight: 700;
+              "
+            >
+              @wvrner &middot; DevOps &amp; Infrastructure Systems
+            </div>
+            <p class="footer-brand-desc">
+              Designing automated pipelines, resilient AWS architectures, and
+              understanding modern systems from the network up.
             </p>
           </div>
 
-          <!-- Direct Comms Box -->
-          <div class="footer-comms-card">
-            <div class="comms-header-label">// DIRECT COMMS &amp; TRANSMISSION</div>
-            <div class="comms-email-display">
-              <span>wvrner@outlook.com</span>
-              <button class="copy-email-btn" data-email="wvrner@outlook.com" type="button" aria-label="Copy email address">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <span class="copy-btn-text">Copy Email</span>
-              </button>
-            </div>
-            <div class="comms-action-row">
-              <a href="mailto:wvrner@outlook.com" class="comms-send-btn">
-                <span>Launch email client &rarr;</span>
-              </a>
-            </div>
+          <div class="footer-links-col">
+            <h5>// DIRECT LINKS</h5>
+            <ul class="footer-links-list">
+              <li><a href="index.html">➔ Home Architecture</a></li>
+              <li>
+                <a href="index.html#learning-exhibition"
+                  >➔ Currently Learning</a
+                >
+              </li>
+              <li>
+                <a href="index.html#systems-architecture"
+                  >➔ AWS + Terraform Setup</a
+                >
+              </li>
+              <li>
+                <a href="index.html#interactive-cli">➔ nimactl Terminal</a>
+              </li>
+              <li><a href="about.html">➔ Biography &amp; Foundations</a></li>
+              <li><a href="about.html#cv">➔ Full Curriculum Vitae</a></li>
+            </ul>
           </div>
 
-          <!-- Verified Networks -->
-          <div class="footer-networks-col">
-            <div class="networks-header-label">// VERIFIED PROTOCOLS</div>
-            <ul class="footer-nav-list">
+          <div class="footer-links-col">
+            <h5>// VERIFIED PROTOCOLS</h5>
+            <ul class="footer-links-list">
               <li>
-                <a href="https://github.com/wvrner" target="_blank" rel="noopener noreferrer" class="network-link-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                  <span>GitHub</span>
-                  <span class="network-badge">@wvrner</span>
-                </a>
+                <a
+                  href="https://github.com/wvrner"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >➔ GitHub: @wvrner</a
+                >
               </li>
               <li>
-                <a href="https://linkedin.com/in/wvrner" target="_blank" rel="noopener noreferrer" class="network-link-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                  <span>LinkedIn</span>
-                  <span class="network-badge">@wvrner</span>
-                </a>
+                <a
+                  href="https://linkedin.com/in/wvrner"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >➔ LinkedIn: @wvrner</a
+                >
               </li>
               <li>
-                <a href="about.html#cv" class="network-link-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                  <span>Curriculum Vitae</span>
-                </a>
+                <a href="mailto:wvrner@outlook.com"
+                  >➔ Email: wvrner@outlook.com</a
+                >
               </li>
               <li>
-                <a href="index.html" class="network-link-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                  <span>Home Architecture</span>
-                </a>
+                <a href="about.html#cv"
+                  >➔ Download Curriculum Vitae (PDF/Web)</a
+                >
               </li>
             </ul>
           </div>
         </div>
 
-        <!-- Giant Typographic Horizon Wordmark -->
-        <div class="footer-horizon-wordmark" aria-hidden="true">
-          <span class="wordmark-text">WVRNER</span>
-        </div>
+        <div class="footer-giant-wordmark" aria-hidden="true">WVRNER</div>
 
-        <!-- Bottom Telemetry & Navigation Bar -->
-        <div class="footer-sub-bar">
-          <span>SYS_ID: NH-2026 // BUILD: v2.6.4-PROD</span>
+        <div class="footer-bottom-bar">
+          <span>SYS_ID: WVRNER-2026 // BUILD: v2.8.0-GUMROAD</span>
           <span>&copy; 2026 Nima Hosseini (@wvrner). All rights reserved.</span>
-          <button id="backToTopBtn" class="back-to-top-trigger" type="button">
+          <button id="backToTopBtn" class="gum-btn gum-btn-white" type="button">
             <span>[ &uarr; BACK TO TOP ]</span>
           </button>
         </div>
-
       </div>
-    </div>
-  </footer>
+    </footer>
 
-  <!-- Scripts -->
-  <script src="js/hero-canvas.js"></script>
-  <script src="js/main.js"></script>
-</body>
+    <script src="js/main.js"></script>
+  </body>
 </html>

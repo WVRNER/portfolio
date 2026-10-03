@@ -1,268 +1,204 @@
 /* ==========================================================================
-   KID-FRIENDLY EXPLANATION OF ANIMATIONS.CSS:
-   This file is like a dance choreographer for the website!
-   It tells the buttons how to wiggle, tells the cards how to float gently,
-   tells the little lights how to blink like stars, and makes everything move
-   softly and smoothly just like a high-tech iPad!
-   ========================================================================== */
-/* ==========================================================================
-   Awwwards-Grade Keyframes, Physics & Micro-Interactions
+   GUMROAD DESIGN SYSTEM ANIMATIONS & KEYFRAMES
+   Tactile, Springy, Neo-Brutalist Micro-Interactions
    ========================================================================== */
 
-/* Custom Cursor & Follower Ring */
-.custom-cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 6px;
-  height: 6px;
-  background-color: var(--accent-blue);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 100000;
-  transform: translate(-50%, -50%);
-  transition: transform 0.08s ease-out, opacity 0.2s ease;
-  opacity: 0;
-}
-
-.custom-cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 32px;
-  height: 32px;
-  border: 1px solid rgba(39, 24, 126, 0.45);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%);
-  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.2s ease;
-  opacity: 0;
-  backdrop-filter: blur(1px);
-}
-
-[data-theme="dark"] .custom-cursor-ring {
-  border-color: rgba(117, 139, 253, 0.4);
-}
-
-.custom-cursor-ring.cursor-hover {
-  width: 52px;
-  height: 52px;
-  background-color: rgba(39, 24, 126, 0.08);
-  border-color: var(--accent-blue);
-}
-
-[data-theme="dark"] .custom-cursor-ring.cursor-hover {
-  background-color: rgba(39, 24, 126, 0.15);
-  border-color: #758bfd;
-}
-
-@media (pointer: coarse) {
-  .custom-cursor-dot,
-  .custom-cursor-ring {
-    display: none !important;
+/* 1. Continuous Marquee Ticker */
+@keyframes gum-marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 
-/* Reveal on Scroll (Framer-style spring reveal) */
-.reveal-on-scroll {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+@keyframes gum-marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
 }
 
-.reveal-on-scroll.is-revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger Delays */
-.delay-1 { transition-delay: 0.08s; }
-.delay-2 { transition-delay: 0.16s; }
-.delay-3 { transition-delay: 0.24s; }
-.delay-4 { transition-delay: 0.32s; }
-
-/* Interactive 3D Card Tilt */
-.tilt-card {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  will-change: transform;
-}
-
-/* Sound Wave Equalizer Bars Animation */
-.sound-bars-wrapper {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 12px;
-  width: 14px;
-}
-
-.sound-bar {
-  width: 2px;
-  background-color: currentColor;
-  border-radius: 1px;
-  height: 3px;
-  transition: height 0.2s ease;
-}
-
-.sound-bars-active .sound-bar:nth-child(1) {
-  animation: eq-pulse 0.7s infinite ease-in-out alternate;
-}
-.sound-bars-active .sound-bar:nth-child(2) {
-  animation: eq-pulse 0.9s infinite ease-in-out alternate 0.15s;
-}
-.sound-bars-active .sound-bar:nth-child(3) {
-  animation: eq-pulse 0.6s infinite ease-in-out alternate 0.3s;
-}
-
-@keyframes eq-pulse {
-  0% { height: 3px; }
-  100% { height: 12px; }
-}
-
-/* Marquee / Ribbon Animation */
-@keyframes marquee-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-marquee {
+.gum-marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-scroll 28s linear infinite;
+  animation: gum-marquee 30s linear infinite;
 }
 
-.animate-marquee:hover {
+.gum-marquee-track:hover {
   animation-play-state: paused;
 }
 
-/* Theme switch icon spin */
-.theme-icon {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+.gum-marquee-track.reverse {
+  animation: gum-marquee-reverse 32s linear infinite;
 }
 
-[data-theme="dark"] .theme-icon {
-  transform: rotate(180deg);
-}
-
-/* Subtle Floating Glow Pulse */
-@keyframes pulse-ring {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(2.4); opacity: 0; }
-}
-
-@keyframes radar-sweep {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* ==========================================================================
-   Viral Awwwards High-Impact Visual Effects & Overclock Mode
-   ========================================================================== */
-
-/* Overclock Laser Scanlines (Toggled on Overclock / Warp Mode) */
-.cyber-scanlines {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 99998;
-  background: linear-gradient(
-    rgba(18, 16, 16, 0) 50%, 
-    rgba(39, 24, 126, 0.04) 50%
-  ), linear-gradient(
-    90deg,
-    rgba(255, 0, 0, 0.03),
-    rgba(0, 255, 0, 0.01),
-    rgba(0, 0, 255, 0.03)
-  );
-  background-size: 100% 3px, 6px 100%;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-
-/* Specular Glare Overlay for 3D Hologram Cards */
-.specular-glare {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  mix-blend-mode: overlay;
-  z-index: 5;
-}
-
-.tilt-card:hover .specular-glare {
-  opacity: 1;
-}
-
-/* Kinetic Marquee Ribbon Styling */
-.marquee-ribbon-container {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-  background: rgba(39, 24, 126, 0.04);
-  border-top: 1px solid rgba(39, 24, 126, 0.2);
-  border-bottom: 1px solid rgba(39, 24, 126, 0.2);
-  padding: 12px 0;
-  user-select: none;
-}
-
-[data-theme="dark"] .marquee-ribbon-container {
-  background: rgba(39, 24, 126, 0.07);
-  border-color: rgba(39, 24, 126, 0.28);
-}
-
-.marquee-content {
-  display: flex;
-  white-space: nowrap;
-  gap: 36px;
-  animation: marquee-scroll 24s linear infinite;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-}
-
-.marquee-content span.highlight {
-  color: var(--accent-blue);
-}
-
-.marquee-content span.sep {
-  color: var(--text-muted);
-  opacity: 0.6;
-}
-
-/* Interactive Architecture Flow Diagram Pulse Nodes */
-@keyframes node-pulse-glow {
-  0% { box-shadow: 0 0 0 0 rgba(39, 24, 126, 0.5); }
-  70% { box-shadow: 0 0 0 12px rgba(39, 24, 126, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(39, 24, 126, 0); }
-}
-
-.arch-node.is-active {
-  animation: node-pulse-glow 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
-  border-color: var(--accent-blue) !important;
-}
-
-/* Data packet traveling beam along SVG line */
-@keyframes dash-travel {
-  to {
-    stroke-dashoffset: -40;
+/* 2. Playful Floating / Bobbing Stickers */
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(var(--rot, -3deg));
+  }
+  50% {
+    transform: translateY(-8px) rotate(calc(var(--rot, -3deg) + 2deg));
   }
 }
 
-.packet-beam {
-  stroke-dasharray: 6, 8;
-  animation: dash-travel 0.8s linear infinite;
+@keyframes float-reverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(var(--rot, 4deg));
+  }
+  50% {
+    transform: translateY(-10px) rotate(calc(var(--rot, 4deg) - 2deg));
+  }
+}
+
+.float-sticker-1 {
+  --rot: -5deg;
+  animation: float-gentle 4s ease-in-out infinite;
+}
+
+.float-sticker-2 {
+  --rot: 6deg;
+  animation: float-reverse 4.5s ease-in-out infinite 0.5s;
+}
+
+.float-sticker-3 {
+  --rot: -8deg;
+  animation: float-gentle 5s ease-in-out infinite 1s;
+}
+
+.float-sticker-4 {
+  --rot: 4deg;
+  animation: float-reverse 4.2s ease-in-out infinite 1.5s;
+}
+
+/* 3. 3D Spinning Gold Monogram Coin */
+@keyframes coin-spin {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+.coin-spin-anim {
+  animation: coin-spin 6s linear infinite;
+  transform-style: preserve-3d;
+}
+
+/* 4. Pulse Beacon & Live Dots */
+@keyframes neo-pulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.4);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 8px rgba(0, 0, 0, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.neo-pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #000000;
+  display: inline-block;
+  animation: neo-pulse 2s infinite cubic-bezier(0.45, 0, 0.55, 1);
+}
+
+[data-theme="dark"] .neo-pulse-dot {
+  background-color: #FFC900;
+  box-shadow: 0 0 8px #FFC900;
+}
+
+/* 5. Audio Wave Bars */
+@keyframes sound-wave-1 {
+  0%, 100% { height: 4px; }
+  50% { height: 16px; }
+}
+
+@keyframes sound-wave-2 {
+  0%, 100% { height: 14px; }
+  50% { height: 6px; }
+}
+
+@keyframes sound-wave-3 {
+  0%, 100% { height: 8px; }
+  50% { height: 18px; }
+}
+
+.sound-bars-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 16px;
+}
+
+.sound-bar {
+  width: 2.5px;
+  background-color: currentColor;
+  border-radius: 1px;
+}
+
+.sound-bars-active .sound-bar:nth-child(1) {
+  animation: sound-wave-1 0.7s ease-in-out infinite;
+}
+
+.sound-bars-active .sound-bar:nth-child(2) {
+  animation: sound-wave-2 0.5s ease-in-out infinite 0.1s;
+}
+
+.sound-bars-active .sound-bar:nth-child(3) {
+  animation: sound-wave-3 0.8s ease-in-out infinite 0.2s;
+}
+
+/* 6. Click Bouncy Spring */
+.bounce-on-click:active {
+  transform: scale(0.96) translateY(2px) !important;
+}
+
+/* 7. Wiggle on Hover for Fun Gumroad Accents */
+@keyframes neo-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-6deg); }
+  75% { transform: rotate(6deg); }
+}
+
+.hover-wiggle:hover {
+  animation: neo-wiggle 0.35s ease-in-out 2;
+}
+
+/* 8. Slide In Reveal for Elements */
+@keyframes slide-up-fade {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
