@@ -1,3 +1,42 @@
+
+/* ==========================================================================
+   Pixelated Retro / Figma Mouse Cursors
+   ========================================================================== */
+:root {
+  --cursor-arrow: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAZElEQVR42uXVQQ4AEAxEUfe/dFmQiJQK823MXl8EI1lJImM1KNAcFMCQHkCQEZAjHiBFZoAMWQESJAKukR3gCtkFjpHokMeoHhpzi9pAKeKVnRzwhsiQ2WK8ZZ9XOboL/N/+OxmNTiPr7VuI4gAAAABJRU5ErkJggg==") 0 0, default;
+  --cursor-pointer: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAaElEQVR42t3V0QoAEAwF0P3/T88LpWXt2lzJLS9iJwQRP9obJTrCQv4GjqAe4PYj6DxoB4C20w6qAEoFvJUcBSAEBJZzQsDGFkMSnkU1VCC6E28D6DNCLZ4CMg8gtfgVAEKqf4OC7eM0V/hZ0VkEGPEAAAAASUVORK5CYII=") 6 1, pointer;
+}
+
+html, body {
+  cursor: var(--cursor-arrow);
+}
+
+a,
+button,
+[role="button"],
+[role="tab"],
+input[type="submit"],
+input[type="button"],
+label,
+select,
+.gum-btn,
+.gum-topic-pill,
+.node-btn,
+.chapter-tab-btn,
+.vis-toggle-btn,
+.console-tab-pill,
+.copy-email-trigger,
+.gum-logo-pill,
+summary {
+  cursor: var(--cursor-pointer);
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  cursor: text;
+}
+
 /* ==========================================================================
    WVRNER × GUMROAD DESIGN SYSTEM
    Authentic Neubrutalist Web Interface for Nima Hosseini (@wvrner)
@@ -58,31 +97,7 @@
 }
 
 /* Dark Mode (High-Contrast Neubrutalist) */
-[data-theme="dark"] {
-  --bg-canvas: #0A0A0C;
-  --bg-card: #15161E;
-  --bg-card-alt: #1E202B;
-  --text-main: #FFFFFF;
-  --text-muted: #B4B4BC;
-  --text-dim: #7C7D8A;
 
-  --gum-white: #15161E;
-  --gum-black: #FFFFFF;
-
-  --border-sm: 1.5px solid #FFFFFF;
-  --border-md: 2px solid #FFFFFF;
-  --border-lg: 3px solid #FFFFFF;
-  --border-xl: 4px solid #FFFFFF;
-
-  --shadow-sm: 3px 3px 0px #FFFFFF;
-  --shadow-md: 5px 5px 0px #FFFFFF;
-  --shadow-lg: 8px 8px 0px #FFFFFF;
-  --shadow-xl: 12px 12px 0px #FFFFFF;
-
-  --shadow-hover-sm: 5px 5px 0px #FFFFFF;
-  --shadow-hover-md: 8px 8px 0px #FFFFFF;
-  --shadow-active: 1px 1px 0px #FFFFFF;
-}
 
 /* Base Reset */
 *, *::before, *::after {
@@ -188,16 +203,20 @@ button {
 }
 
 .gum-logo-pill .logo-w {
-  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  background-color: #0029ff;
+  color: #f6e490;
+  border: 2px solid #000000;
+  border-radius: 7px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  background: #000000;
-  color: #FFFFFF;
-  border-radius: 50%;
-  font-size: 13px;
+  font-family: var(--font-display);
   font-weight: 900;
+  font-size: 17px;
+  box-shadow: 2px 2px 0px #000000;
+  transition: transform 0.15s ease;
 }
 
 .gum-role-tag {
@@ -373,11 +392,7 @@ button {
   border-color: #000000;
 }
 
-[data-theme="dark"] .gum-btn-black {
-  background: #FFFFFF;
-  color: #000000;
-  border-color: #FFFFFF;
-}
+
 
 .gum-icon-btn {
   width: 40px;
@@ -482,9 +497,7 @@ button {
   color: var(--royal-indigo);
 }
 
-[data-theme="dark"] .hero-title-italic {
-  color: var(--gum-blue);
-}
+
 
 .hero-desc-lead {
   font-size: clamp(17px, 2vw, 22px);
@@ -974,9 +987,7 @@ button {
   text-decoration: underline wavy var(--gum-pink) 3px;
 }
 
-[data-theme="dark"] .stat-number span.accent-pink {
-  color: var(--gum-pink);
-}
+
 
 .stat-label {
   font-size: 18px;
@@ -1146,9 +1157,7 @@ button {
   color: var(--royal-indigo);
 }
 
-[data-theme="dark"] .chapter-headline .focus-tag {
-  color: var(--gum-blue);
-}
+
 
 .chapter-prose {
   font-size: 15.5px;
@@ -1181,9 +1190,7 @@ button {
   color: var(--royal-indigo);
 }
 
-[data-theme="dark"] .takeaway-bullet {
-  color: var(--gum-yellow);
-}
+
 
 /* Chapter Blueprint & Code Visualizer */
 .chapter-visualizer-column {
@@ -1650,14 +1657,15 @@ button {
 .cv-avatar-big {
   width: 90px;
   height: 90px;
-  background: var(--gum-yellow);
-  color: #000000;
+  background-color: #0029ff;
+  color: #f6e490;
   border: var(--border-lg);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-family: var(--font-display);
+  font-size: 44px;
   font-weight: 900;
   box-shadow: var(--shadow-sm);
 }

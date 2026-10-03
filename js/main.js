@@ -1,34 +1,12 @@
 /**
- * WVRNER × GUMROAD INTERACTIVE JAVASCRIPT (Cross-Browser & Safari-Hardened)
- * Full-Featured Neubrutalist Micro-Interactions & State Management
+ * WVRNER × GUMROAD INTERACTIVE JAVASCRIPT
+ * Neubrutalist Interactions & Micro-Interactions
  * Nima Hosseini (@wvrner) · DevOps & Infrastructure Systems
  */
 
 /* ==========================================================================
-   Cross-Browser Safe Utilities (Safari Storage & Clipboard Resiliency)
+   Cross-Browser Safe Utilities (Clipboard & Resiliency)
    ========================================================================== */
-function getSafeStorage(key, fallback = null) {
-  try {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      const val = window.localStorage.getItem(key);
-      return val !== null ? val : fallback;
-    }
-  } catch (e) {
-    // Safari Private Browsing, file:// protocol, or restricted cookies
-  }
-  return fallback;
-}
-
-function setSafeStorage(key, value) {
-  try {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.setItem(key, value);
-    }
-  } catch (e) {
-    // Safari Private Browsing or quota exceeded
-  }
-}
-
 function safeCopyText(text, onSuccess, onError) {
   if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext !== false) {
     navigator.clipboard.writeText(text).then(() => {
@@ -83,147 +61,16 @@ function initIntroSplash() {
     }, 750);
   };
 
-  // Immediate tap/click fallback so Safari mobile & desktop users are never trapped
+  // Immediate tap/click fallback so users are never trapped
   splash.addEventListener('click', dismiss);
   splash.addEventListener('touchstart', dismiss, { passive: true });
 
-  // Standard timed dissolve after ~1.8s
+  // Timed dissolve after ~1.8s
   setTimeout(dismiss, 1800);
 }
 
 /* ==========================================================================
-   1. Theme Switcher (Gumroad Light / Dark Neubrutalism)
-   ========================================================================== */
-function initThemeToggle() {
-  const toggleBtn = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  if (!toggleBtn) return;
-
-  const savedTheme = getSafeStorage('gumroad-theme');
-  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    updateThemeIcon(true);
-  } else {
-    document.documentElement.setAttribute('data-theme', 'light');
-    updateThemeIcon(false);
-  }
-
-  toggleBtn.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    const isDark = current === 'dark';
-    const next = isDark ? 'light' : 'dark';
-
-    document.documentElement.setAttribute('data-theme', next);
-    setSafeStorage('gumroad-theme', next);
-    updateThemeIcon(!isDark);
-
-    playChime(isDark ? 520 : 780, 0.08, 'sine');
-  });
-}
-
-function updateThemeIcon(isDark) {
-  const themeIcon = document.getElementById('themeIcon');
-  if (!themeIcon) return;
-  themeIcon.innerHTML = isDark ? '☀️' : '🌙';
-}
-
-/* ==========================================================================
-   2. Web Audio Synthesizer (Retro Neubrutalist Blips - Safari/iOS Resilient)
-   ========================================================================== */
-let audioCtx = null;
-let soundEnabled = true;
-
-function getAudioContext() {
-  if (!audioCtx && typeof window !== 'undefined') {
-    try {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (AudioContextClass) {
-        audioCtx = new AudioContextClass();
-      }
-    } catch (e) {
-      audioCtx = null;
-    }
-  }
-  return audioCtx;
-}
-
-function unlockAudioOnGesture() {
-  const ctx = getAudioContext();
-  if (ctx && ctx.state === 'suspended') {
-    ctx.resume().catch(() => {});
-  }
-}
-
-function initWebAudio() {
-  const toggleBtn = document.getElementById('soundToggle');
-  if (!toggleBtn) return;
-
-  // Unlock iOS Safari WebAudio on first touch/click
-  window.addEventListener('touchstart', unlockAudioOnGesture, { once: true, passive: true });
-  window.addEventListener('click', unlockAudioOnGesture, { once: true });
-
-  toggleBtn.addEventListener('click', () => {
-    unlockAudioOnGesture();
-
-    soundEnabled = !soundEnabled;
-    toggleBtn.classList.toggle('sound-bars-active', soundEnabled);
-    const label = toggleBtn.querySelector('.sound-label');
-    if (label) {
-      label.textContent = soundEnabled ? 'SFX: ON' : 'SFX: OFF';
-    }
-
-    if (soundEnabled) {
-      playChime(640, 0.06, 'triangle');
-      setTimeout(() => playChime(920, 0.08, 'triangle'), 60);
-    }
-  });
-
-  // Attach hover & click sound to buttons & pills
-  document.querySelectorAll('a, button, .gum-topic-pill, .node-btn, .chapter-tab-btn').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      if (soundEnabled && audioCtx) playChime(1100, 0.015, 'sine', 0.012);
-    });
-    el.addEventListener('click', () => {
-      if (soundEnabled) {
-        unlockAudioOnGesture();
-        playChime(850, 0.035, 'triangle', 0.025);
-      }
-    });
-  });
-}
-
-function playChime(freq, duration, type = 'sine', gainVal = 0.03) {
-  if (!soundEnabled) return;
-  try {
-    const ctx = getAudioContext();
-    if (!ctx) return;
-    if (ctx.state === 'suspended') {
-      ctx.resume().catch(() => {});
-    }
-
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, ctx.currentTime);
-
-    gain.gain.setValueAtTime(gainVal, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start();
-    osc.stop(ctx.currentTime + duration);
-  } catch (e) {
-    // Suppress WebAudio permission or buffer errors on mobile
-  }
-}
-
-/* ==========================================================================
-   3. Currently Learning Exhibition (4 Chapters Tabs)
+   1. Currently Learning Exhibition (4 Chapters Tabs)
    ========================================================================== */
 function initChapterTabs() {
   const tabs = document.querySelectorAll('.chapter-tab-btn');
@@ -242,14 +89,12 @@ function initChapterTabs() {
       if (targetPanel) {
         targetPanel.classList.add('active');
       }
-
-      playChime(750, 0.04, 'triangle');
     });
   });
 }
 
 /* ==========================================================================
-   4. Schematic Blueprint vs Code View Toggles
+   2. Schematic Blueprint vs Code View Toggles
    ========================================================================== */
 function initVisualizerToggles() {
   document.querySelectorAll('.chapter-visualizer-column').forEach(container => {
@@ -270,15 +115,13 @@ function initVisualizerToggles() {
           if (svgBox) svgBox.style.display = 'none';
           if (codeBox) codeBox.classList.add('active');
         }
-
-        playChime(950, 0.03, 'sine');
       });
     });
   });
 }
 
 /* ==========================================================================
-   5. Real Architecture 4-Node Flow Strip
+   3. Real Architecture 4-Node Flow Strip
    ========================================================================== */
 function initInfraNodeFlow() {
   const nodeButtons = document.querySelectorAll('.node-btn');
@@ -307,14 +150,12 @@ function initInfraNodeFlow() {
       if (tfTab && !tfTab.classList.contains('active')) {
         tfTab.click();
       }
-
-      playChime(880, 0.04, 'triangle');
     });
   });
 }
 
 /* ==========================================================================
-   6. Code Console Tabs
+   4. Code Console Tabs
    ========================================================================== */
 function initConsoleTabs() {
   const tabs = document.querySelectorAll('.console-tab-pill');
@@ -330,14 +171,12 @@ function initConsoleTabs() {
       tab.classList.add('active');
       const pane = document.getElementById(targetPaneId);
       if (pane) pane.classList.add('active');
-
-      playChime(1020, 0.03, 'sine');
     });
   });
 }
 
 /* ==========================================================================
-   7. Copy Code Button (Safari Safe)
+   5. Copy Code Button
    ========================================================================== */
 function initCopyCodeButtons() {
   const copyBtn = document.getElementById('copyCodeBtn');
@@ -354,9 +193,6 @@ function initCopyCodeButtons() {
       copyBtn.style.background = '#4ADE80';
       copyBtn.style.color = '#000000';
 
-      playChime(1200, 0.06, 'sine');
-      setTimeout(() => playChime(1600, 0.08, 'sine'), 50);
-
       setTimeout(() => {
         if (copyLabel) copyLabel.textContent = 'COPY CODE';
         copyBtn.style.background = '';
@@ -372,7 +208,7 @@ function initCopyCodeButtons() {
 }
 
 /* ==========================================================================
-   8. Interactive Terminal: nimactl (Reusable Simulation)
+   6. Interactive Terminal: nimactl (Simulation)
    ========================================================================== */
 function initInteractiveTerminal() {
   const form = document.getElementById('termForm');
@@ -410,7 +246,7 @@ function handleTerminalCommand(cmd, screen) {
         <div>&nbsp;&nbsp;<span class="term-cyan">actions</span>&nbsp;&nbsp;&nbsp;· Keyless OIDC AWS deployment status</div>
         <div>&nbsp;&nbsp;<span class="term-cyan">projects</span>&nbsp;&nbsp;· Systems engineering portfolio catalogue</div>
         <div>&nbsp;&nbsp;<span class="term-cyan">whoami</span>&nbsp;&nbsp;&nbsp;&nbsp;· Nima Hosseini profile &amp; architecture bio</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">contact</span>&nbsp;&nbsp;&nbsp;· Fast SMTP/PGP communication routes</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">contact</span>&nbsp;&nbsp;&nbsp;· Fast Telegram/SMTP routes</div>
         <div>&nbsp;&nbsp;<span class="term-cyan">clear</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· Clear the terminal buffer</div>
       `;
       break;
@@ -480,6 +316,7 @@ function handleTerminalCommand(cmd, screen) {
     case 'contact':
       output = `
         <div class="term-cmd">$ nimactl contact</div>
+        <div>Telegram:&nbsp;<a href="https://t.me/wvrner" target="_blank" rel="noopener" style="color: var(--gum-blue);">t.me/wvrner</a></div>
         <div>Email:&nbsp;&nbsp;&nbsp;<a href="mailto:wvrner@outlook.com" style="color: var(--gum-pink);">wvrner@outlook.com</a></div>
         <div>GitHub:&nbsp;&nbsp;<a href="https://github.com/wvrner" target="_blank" rel="noopener" style="color: var(--gum-yellow);">github.com/wvrner</a></div>
       `;
@@ -502,24 +339,22 @@ function handleTerminalCommand(cmd, screen) {
   div.innerHTML = output;
   screen.appendChild(div);
   screen.scrollTop = screen.scrollHeight;
-  playChime(680, 0.04, 'square', 0.02);
 }
 
 /* ==========================================================================
-   9. Unlimited Possibilities Category Pills
+   7. Unlimited Possibilities Category Pills
    ========================================================================== */
 function initTopicPills() {
   const pills = document.querySelectorAll('.gum-topic-pill');
   pills.forEach(pill => {
     pill.addEventListener('click', () => {
       pill.classList.toggle('active');
-      playChime(pill.classList.contains('active') ? 950 : 720, 0.03, 'sine');
     });
   });
 }
 
 /* ==========================================================================
-   10. Live Dual World Clocks (NYC EST & UTC - Safari Resilient)
+   8. Live Dual World Clocks (NYC EST & UTC)
    ========================================================================== */
 function initLiveClocks() {
   const localEl = document.getElementById('footerLocalClock');
@@ -538,7 +373,6 @@ function initLiveClocks() {
           second: '2-digit'
         }) + ' EST';
       } catch (e) {
-        // Fallback for older WebKit engines without IANA timezone
         const utcHours = now.getUTCHours();
         const estHours = (utcHours - 5 + 24) % 24;
         const pad = (n) => String(n).padStart(2, '0');
@@ -560,7 +394,7 @@ function initLiveClocks() {
 }
 
 /* ==========================================================================
-   11. Copy Email Button with Haptic Toast (Safari Safe)
+   9. Copy Email Button with Haptic Toast
    ========================================================================== */
 function initCopyEmail() {
   document.querySelectorAll('.copy-email-trigger').forEach(btn => {
@@ -573,9 +407,6 @@ function initCopyEmail() {
         btn.innerText = 'COPIED TO CLIPBOARD! ✔';
         btn.style.background = '#FFC900';
         btn.style.color = '#000000';
-
-        playChime(1100, 0.05, 'sine');
-        setTimeout(() => playChime(1450, 0.08, 'sine'), 50);
 
         setTimeout(() => {
           btn.innerText = orig;
@@ -590,7 +421,7 @@ function initCopyEmail() {
 }
 
 /* ==========================================================================
-   12. Back to Top Button
+   10. Back to Top Button
    ========================================================================== */
 function initBackToTop() {
   const btn = document.getElementById('backToTopBtn');
@@ -601,12 +432,11 @@ function initBackToTop() {
     } catch (e) {
       window.scrollTo(0, 0);
     }
-    playChime(900, 0.05, 'sine');
   });
 }
 
 /* ==========================================================================
-   13. Nav Search Quick Filter
+   11. Nav Search Quick Filter
    ========================================================================== */
 function initNavSearch() {
   const searchInput = document.getElementById('navSearchInput');
@@ -626,9 +456,8 @@ function initNavSearch() {
   });
 }
 
-
 /* ==========================================================================
-   14. Smooth Hash Scroll for Safari (#cv Anchor Clearance)
+   12. Smooth Hash Scroll for Safari & Anchors (#cv Clearance)
    ========================================================================== */
 function initHashScroll() {
   function scrollToTarget(id) {
@@ -680,12 +509,10 @@ function initHashScroll() {
 }
 
 /* ==========================================================================
-   App Initialization (Safari BFCache & Document Ready Resilient)
+   App Initialization
    ========================================================================== */
 function initApp() {
   initIntroSplash();
-  initThemeToggle();
-  initWebAudio();
   initChapterTabs();
   initVisualizerToggles();
   initInfraNodeFlow();
@@ -703,7 +530,6 @@ function initApp() {
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp);
 } else {
-  // If Safari has already parsed DOM or loaded from BFCache
   initApp();
 }
 
