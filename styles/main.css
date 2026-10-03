@@ -291,8 +291,24 @@ button {
 }
 
 @media (max-width: 768px) {
+  .gum-nav-inner {
+    padding: 0 16px;
+    gap: 8px;
+  }
+  .gum-role-tag {
+    display: none !important;
+  }
   .gum-nav-links {
-    display: none;
+    display: flex !important;
+    gap: 6px;
+  }
+  .gum-nav-item a {
+    font-size: 13px;
+    padding: 6px 12px;
+    white-space: nowrap;
+  }
+  .gum-nav-actions {
+    gap: 6px;
   }
 }
 
@@ -1625,7 +1641,10 @@ button {
   border-radius: 14px;
   padding: 32px 20px;
   box-shadow: var(--shadow-sm);
-  height: fit-content;
+  align-self: start;
+  height: auto;
+  min-height: -webkit-fit-content;
+  min-height: fit-content;
 }
 
 .cv-avatar-big {
@@ -1974,4 +1993,12 @@ button {
   border: var(--border-sm);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-sm);
+}
+
+/* Safari Anchor Scroll Clearance for Sticky Navigation */
+#cv,
+.cv-block[id],
+.gum-section[id],
+[id] {
+  scroll-margin-top: 86px;
 }
