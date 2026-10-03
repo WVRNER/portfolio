@@ -1,39 +1,94 @@
 /**
- * WVRNER × GUMROAD INTERACTIVE JAVASCRIPT
+ * WVRNER × GUMROAD INTERACTIVE JAVASCRIPT (Cross-Browser & Safari-Hardened)
  * Full-Featured Neubrutalist Micro-Interactions & State Management
  * Nima Hosseini (@wvrner) · DevOps & Infrastructure Systems
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-  initIntroSplash();
-  initThemeToggle();
-  initWebAudio();
-  initChapterTabs();
-  initVisualizerToggles();
-  initInfraNodeFlow();
-  initConsoleTabs();
-  initCopyCodeButtons();
-  initInteractiveTerminal();
-  initTopicPills();
-  initLiveClocks();
-  initCopyEmail();
-  initBackToTop();
-  initNavSearch();
-});
+/* ==========================================================================
+   Cross-Browser Safe Utilities (Safari Storage & Clipboard Resiliency)
+   ========================================================================== */
+function getSafeStorage(key, fallback = null) {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      const val = window.localStorage.getItem(key);
+      return val !== null ? val : fallback;
+    }
+  } catch (e) {
+    // Safari Private Browsing, file:// protocol, or restricted cookies
+  }
+  return fallback;
+}
+
+function setSafeStorage(key, value) {
+  try {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      window.localStorage.setItem(key, value);
+    }
+  } catch (e) {
+    // Safari Private Browsing or quota exceeded
+  }
+}
+
+function safeCopyText(text, onSuccess, onError) {
+  if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext !== false) {
+    navigator.clipboard.writeText(text).then(() => {
+      if (onSuccess) onSuccess();
+    }).catch(() => {
+      fallbackCopyText(text, onSuccess, onError);
+    });
+  } else {
+    fallbackCopyText(text, onSuccess, onError);
+  }
+}
+
+function fallbackCopyText(text, onSuccess, onError) {
+  try {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.setAttribute('readonly', '');
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-9999px';
+    textArea.style.top = '-9999px';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    const successful = document.execCommand('copy');
+    document.body.removeChild(textArea);
+    if (successful) {
+      if (onSuccess) onSuccess();
+    } else {
+      if (onError) onError();
+    }
+  } catch (err) {
+    if (onError) onError(err);
+  }
+}
 
 /* ==========================================================================
-   0. Intro Splash Screen ("Good Morning!" ~2s Fade)
+   0. Intro Splash Screen ("Good Morning!" ~2s Fade with Tap & BFCache Fallback)
    ========================================================================== */
 function initIntroSplash() {
   const splash = document.getElementById('introSplash');
   if (!splash) return;
 
-  setTimeout(() => {
+  let dismissed = false;
+  const dismiss = () => {
+    if (dismissed) return;
+    dismissed = true;
     splash.classList.add('fade-out');
+    splash.style.pointerEvents = 'none';
     setTimeout(() => {
       splash.style.display = 'none';
     }, 750);
-  }, 2000);
+  };
+
+  // Immediate tap/click fallback so Safari mobile & desktop users are never trapped
+  splash.addEventListener('click', dismiss);
+  splash.addEventListener('touchstart', dismiss, { passive: true });
+
+  // Standard timed dissolve after ~1.8s
+  setTimeout(dismiss, 1800);
 }
 
 /* ==========================================================================
@@ -44,8 +99,8 @@ function initThemeToggle() {
   const themeIcon = document.getElementById('themeIcon');
   if (!toggleBtn) return;
 
-  const savedTheme = localStorage.getItem('gumroad-theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedTheme = getSafeStorage('gumroad-theme');
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
     document.documentElement.setAttribute('data-theme', 'dark');
@@ -61,7 +116,7 @@ function initThemeToggle() {
     const next = isDark ? 'light' : 'dark';
 
     document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('gumroad-theme', next);
+    setSafeStorage('gumroad-theme', next);
     updateThemeIcon(!isDark);
 
     playChime(isDark ? 520 : 780, 0.08, 'sine');
@@ -75,23 +130,42 @@ function updateThemeIcon(isDark) {
 }
 
 /* ==========================================================================
-   2. Web Audio Synthesizer (Retro Neubrutalist Blips)
+   2. Web Audio Synthesizer (Retro Neubrutalist Blips - Safari/iOS Resilient)
    ========================================================================== */
 let audioCtx = null;
 let soundEnabled = true;
+
+function getAudioContext() {
+  if (!audioCtx && typeof window !== 'undefined') {
+    try {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioContextClass) {
+        audioCtx = new AudioContextClass();
+      }
+    } catch (e) {
+      audioCtx = null;
+    }
+  }
+  return audioCtx;
+}
+
+function unlockAudioOnGesture() {
+  const ctx = getAudioContext();
+  if (ctx && ctx.state === 'suspended') {
+    ctx.resume().catch(() => {});
+  }
+}
 
 function initWebAudio() {
   const toggleBtn = document.getElementById('soundToggle');
   if (!toggleBtn) return;
 
+  // Unlock iOS Safari WebAudio on first touch/click
+  window.addEventListener('touchstart', unlockAudioOnGesture, { once: true, passive: true });
+  window.addEventListener('click', unlockAudioOnGesture, { once: true });
+
   toggleBtn.addEventListener('click', () => {
-    if (!audioCtx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioContext();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
+    unlockAudioOnGesture();
 
     soundEnabled = !soundEnabled;
     toggleBtn.classList.toggle('sound-bars-active', soundEnabled);
@@ -112,7 +186,10 @@ function initWebAudio() {
       if (soundEnabled && audioCtx) playChime(1100, 0.015, 'sine', 0.012);
     });
     el.addEventListener('click', () => {
-      if (soundEnabled && audioCtx) playChime(850, 0.035, 'triangle', 0.025);
+      if (soundEnabled) {
+        unlockAudioOnGesture();
+        playChime(850, 0.035, 'triangle', 0.025);
+      }
     });
   });
 }
@@ -120,30 +197,28 @@ function initWebAudio() {
 function playChime(freq, duration, type = 'sine', gainVal = 0.03) {
   if (!soundEnabled) return;
   try {
-    if (!audioCtx) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      audioCtx = new AudioContext();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') {
+      ctx.resume().catch(() => {});
     }
 
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
 
     osc.type = type;
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
 
-    gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+    gain.gain.setValueAtTime(gainVal, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
 
     osc.connect(gain);
-    gain.connect(audioCtx.destination);
+    gain.connect(ctx.destination);
 
     osc.start();
-    osc.stop(audioCtx.currentTime + duration);
+    osc.stop(ctx.currentTime + duration);
   } catch (e) {
-    // Ignore audio errors
+    // Suppress WebAudio permission or buffer errors on mobile
   }
 }
 
@@ -227,7 +302,7 @@ function initInfraNodeFlow() {
         statusToast.innerHTML = nodeDetails[nodeKey];
       }
 
-      // Automatically focus on main.tf in the console
+      // Automatically focus on main.tf if console is active
       const tfTab = document.querySelector('.console-tab-pill[data-pane="pane-tf"]');
       if (tfTab && !tfTab.classList.contains('active')) {
         tfTab.click();
@@ -262,7 +337,7 @@ function initConsoleTabs() {
 }
 
 /* ==========================================================================
-   7. Copy Code Button
+   7. Copy Code Button (Safari Safe)
    ========================================================================== */
 function initCopyCodeButtons() {
   const copyBtn = document.getElementById('copyCodeBtn');
@@ -273,8 +348,8 @@ function initCopyCodeButtons() {
     const activePane = document.querySelector('.console-pane.active');
     if (!activePane) return;
 
-    const textToCopy = activePane.innerText || activePane.textContent;
-    navigator.clipboard.writeText(textToCopy).then(() => {
+    const textToCopy = activePane.innerText || activePane.textContent || '';
+    safeCopyText(textToCopy, () => {
       if (copyLabel) copyLabel.textContent = 'COPIED! ✔';
       copyBtn.style.background = '#4ADE80';
       copyBtn.style.color = '#000000';
@@ -287,17 +362,17 @@ function initCopyCodeButtons() {
         copyBtn.style.background = '';
         copyBtn.style.color = '';
       }, 2000);
-    }).catch(() => {
-      if (copyLabel) copyLabel.textContent = 'COPIED!';
+    }, () => {
+      if (copyLabel) copyLabel.textContent = 'PRESS CMD+C';
       setTimeout(() => {
         if (copyLabel) copyLabel.textContent = 'COPY CODE';
-      }, 1500);
+      }, 2000);
     });
   });
 }
 
 /* ==========================================================================
-   8. Interactive Cloud Terminal CLI (`nimactl`)
+   8. Interactive Terminal: nimactl (Reusable Simulation)
    ========================================================================== */
 function initInteractiveTerminal() {
   const form = document.getElementById('termForm');
@@ -332,97 +407,81 @@ function handleTerminalCommand(cmd, screen) {
         <div>&nbsp;&nbsp;<span class="term-cyan">aws</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· Solutions Architect (SAA-C03) track &amp; services</div>
         <div>&nbsp;&nbsp;<span class="term-cyan">terraform</span>&nbsp;· IaC state locking &amp; zero drift check</div>
         <div>&nbsp;&nbsp;<span class="term-cyan">docker</span>&nbsp;&nbsp;&nbsp;&nbsp;· Container kernel isolation &amp; 28MB distroless builds</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">actions</span>&nbsp;&nbsp;&nbsp;· Keyless GitHub Actions OIDC pipeline status</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">mesh</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· mTLS 1.3 &amp; Anycast edge routing telemetry</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">projects</span>&nbsp;&nbsp;· Active project repositories &amp; lab topologies</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">whoami</span>&nbsp;&nbsp;&nbsp;&nbsp;· Nima Hosseini credentials &amp; focus</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">contact</span>&nbsp;&nbsp;&nbsp;· Direct transmission links (Email, GitHub, LinkedIn)</div>
-        <div>&nbsp;&nbsp;<span class="term-cyan">clear</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· Clear terminal output</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">actions</span>&nbsp;&nbsp;&nbsp;· Keyless OIDC AWS deployment status</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">projects</span>&nbsp;&nbsp;· Systems engineering portfolio catalogue</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">whoami</span>&nbsp;&nbsp;&nbsp;&nbsp;· Nima Hosseini profile &amp; architecture bio</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">contact</span>&nbsp;&nbsp;&nbsp;· Fast SMTP/PGP communication routes</div>
+        <div>&nbsp;&nbsp;<span class="term-cyan">clear</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· Clear the terminal buffer</div>
       `;
       break;
 
     case 'status':
       output = `
-        <div class="term-cmd">$ nimactl status --all</div>
-        <div><span class="term-green">✔</span> AWS CloudFront Edge PoPs: <span class="term-cyan">[HEALTHY]</span> 450+ PoPs online · Latency p99: 14ms</div>
-        <div><span class="term-green">✔</span> AWS S3 Bucket Origin: <span class="term-cyan">[ENCRYPTED]</span> SigV4 OAC Enforced · Public Access: 0%</div>
-        <div><span class="term-green">✔</span> Uptime SLA: <span class="term-cyan">99.992% Nominal</span></div>
+        <div class="term-cmd">$ nimactl status</div>
+        <div>[EDGE] CloudFront Distribution: <span class="term-green">HEALTHY (450+ PoPs Active)</span></div>
+        <div>[ORIGIN] AWS S3 wvrner-prod: <span class="term-green">PROTECTED (OAC Strict SigV4)</span></div>
+        <div>[DNS] Route 53 Anycast Latency: <span class="term-green">NOMINAL (14ms avg TTFB)</span></div>
+        <div>[SECURITY] TLS 1.3 Cipher: <span class="term-yellow">TLS_AES_256_GCM_SHA384</span></div>
       `;
       break;
 
     case 'aws':
-    case 'solutions-architect':
       output = `
         <div class="term-cmd">$ nimactl aws --track</div>
-        <div><span class="term-green">✔</span> Target: AWS Certified Solutions Architect - Associate (SAA-C03)</div>
-        <div><span class="term-green">✔</span> Disciplines: Multi-AZ VPC Design · Route 53 Anycast · CloudFront OAC · IAM Least-Privilege</div>
-        <div class="term-dim">→ Mental model: Designing resilient distributed systems from the network up.</div>
+        <div>Track: AWS Certified Solutions Architect - Associate (SAA-C03)</div>
+        <div>Core Focus: Resilient VPC topologies, Cross-Region Multi-AZ architectures, S3 Lifecycle transitions, and IAM Principle of Least Privilege.</div>
       `;
       break;
 
     case 'terraform':
-    case 'iac':
       output = `
-        <div class="term-cmd">$ nimactl terraform --verify-state</div>
-        <div><span class="term-green">✔</span> Remote State: AWS S3 + DynamoDB Distributed State Locking</div>
-        <div><span class="term-green">✔</span> Configuration Drift: 0 unmanaged resources detected</div>
-        <div><span class="term-green">✔</span> Modules: Networking, Storage, Security Groups, IAM</div>
+        <div class="term-cmd">$ nimactl terraform plan</div>
+        <div>Terraform Core: v1.5.7 on darwin_arm64</div>
+        <div>Backend: S3 Remote State with DynamoDB State Locking (Zero Drift detected)</div>
+        <div>Resources: 18 managed, 0 to add, 0 to change, 0 to destroy.</div>
       `;
       break;
 
     case 'docker':
-    case 'containers':
       output = `
-        <div class="term-cmd">$ nimactl docker stats</div>
-        <div><span class="term-green">✔</span> Isolation Primitives: Linux cgroups &amp; namespaces</div>
-        <div><span class="term-green">✔</span> Optimization: Multi-stage Dockerfile (920MB SDK → 28MB Distroless runtime)</div>
-        <div><span class="term-green">✔</span> Attack Surface: 97% reduction · Non-root user · 0 shells · 0 CVEs</div>
+        <div class="term-cmd">$ nimactl docker images</div>
+        <div>REPOSITORY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TAG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SIZE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SECURITY</div>
+        <div>wvrner/distroless-app&nbsp;&nbsp;v2.4.0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;28.4MB&nbsp;&nbsp;&nbsp;0 vulnerabilities (cgroups v2)</div>
       `;
       break;
 
     case 'actions':
-    case 'ci':
-    case 'cd':
       output = `
         <div class="term-cmd">$ nimactl actions status</div>
-        <div><span class="term-green">✔</span> Authentication: Keyless AWS OIDC Federated Token (Zero static API keys)</div>
-        <div><span class="term-green">✔</span> S3 Sync: Automated static asset synchronization</div>
-        <div><span class="term-green">✔</span> Edge Invalidation: CloudFront CDN flushed in &lt; 4.0s</div>
-      `;
-      break;
-
-    case 'mesh':
-      output = `
-        <div class="term-cmd">$ nimactl mesh inspect</div>
-        <div><span class="term-green">✔</span> TLS Version: TLS 1.3 strictly enforced</div>
-        <div><span class="term-green">✔</span> Cache Hit Ratio: 98.6% (Anycast Edge CDN)</div>
+        <div>Pipeline: .github/workflows/deploy.yml</div>
+        <div>Authentication: Keyless GitHub OIDC Provider &rarr; AWS IAM Role Assume</div>
+        <div>Last Run: #48 - <span class="term-green">Success (CDN Invalidated /*)</span></div>
       `;
       break;
 
     case 'projects':
       output = `
-        <div class="term-cmd">$ nimactl projects list</div>
-        <div>[1] <span class="term-cyan">Cloud Architecture Site</span>: AWS (S3+CloudFront) · Terraform IaC · GitHub Actions CI/CD</div>
-        <div>[2] <span class="term-cyan">Hardened Container Runtime</span>: Multi-stage Golang + Distroless (28MB image)</div>
-        <div>[3] <span class="term-dim">Upcoming Labs</span>: Multi-container Compose topologies &amp; AWS VPC peering</div>
+        <div class="term-cmd">$ nimactl projects --list</div>
+        <div>1. <span class="term-cyan">Static Cloud Engine</span> - Terraform + S3 + CloudFront OAC + GitHub OIDC</div>
+        <div>2. <span class="term-cyan">Multi-AZ VPC Sandbox</span> - Declarative subnets, NAT Gateways &amp; flow logs</div>
+        <div>3. <span class="term-cyan">Container Security Lab</span> - Hardened non-root containers &amp; minimal attack surface</div>
       `;
       break;
 
     case 'whoami':
       output = `
-        <div class="term-cmd">$ whoami</div>
-        <div>Nima Hosseini (@wvrner) · DevOps &amp; Infrastructure Systems</div>
-        <div>Focus: Understanding modern systems from the network up.</div>
-        <div>Location: New York City (40.7128° N, 74.0060° W)</div>
+        <div class="term-cmd">$ nimactl whoami</div>
+        <div>User: Nima Hosseini (@wvrner)</div>
+        <div>Focus: DevOps, Cloud Infrastructure, Systems Architecture</div>
+        <div>Philosophy: "Network up, declarative code, high-density aesthetics."</div>
       `;
       break;
 
     case 'contact':
       output = `
         <div class="term-cmd">$ nimactl contact</div>
-        <div>Email: <a href="mailto:wvrner@outlook.com" style="color:#38BDF8; text-decoration:underline;">wvrner@outlook.com</a></div>
-        <div>GitHub: <a href="https://github.com/wvrner" target="_blank" style="color:#38BDF8; text-decoration:underline;">github.com/wvrner</a></div>
-        <div>LinkedIn: <a href="https://linkedin.com/in/wvrner" target="_blank" style="color:#38BDF8; text-decoration:underline;">linkedin.com/in/wvrner</a></div>
+        <div>Email:&nbsp;&nbsp;&nbsp;<a href="mailto:wvrner@outlook.com" style="color: var(--gum-pink);">wvrner@outlook.com</a></div>
+        <div>GitHub:&nbsp;&nbsp;<a href="https://github.com/wvrner" target="_blank" rel="noopener" style="color: var(--gum-yellow);">github.com/wvrner</a></div>
       `;
       break;
 
@@ -460,7 +519,7 @@ function initTopicPills() {
 }
 
 /* ==========================================================================
-   10. Live Dual World Clocks (NYC EST & UTC)
+   10. Live Dual World Clocks (NYC EST & UTC - Safari Resilient)
    ========================================================================== */
 function initLiveClocks() {
   const localEl = document.getElementById('footerLocalClock');
@@ -470,16 +529,29 @@ function initLiveClocks() {
   function update() {
     const now = new Date();
     if (localEl) {
-      localEl.textContent = now.toLocaleTimeString('en-US', {
-        timeZone: 'America/New_York',
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      }) + ' EST';
+      try {
+        localEl.textContent = now.toLocaleTimeString('en-US', {
+          timeZone: 'America/New_York',
+          hour12: false,
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        }) + ' EST';
+      } catch (e) {
+        // Fallback for older WebKit engines without IANA timezone
+        const utcHours = now.getUTCHours();
+        const estHours = (utcHours - 5 + 24) % 24;
+        const pad = (n) => String(n).padStart(2, '0');
+        localEl.textContent = `${pad(estHours)}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())} EST`;
+      }
     }
     if (utcEl) {
-      utcEl.textContent = now.toISOString().slice(11, 19) + ' UTC';
+      try {
+        utcEl.textContent = now.toISOString().slice(11, 19) + ' UTC';
+      } catch (e) {
+        const pad = (n) => String(n).padStart(2, '0');
+        utcEl.textContent = `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())} UTC`;
+      }
     }
   }
 
@@ -488,7 +560,7 @@ function initLiveClocks() {
 }
 
 /* ==========================================================================
-   11. Copy Email Button with Haptic Toast
+   11. Copy Email Button with Haptic Toast (Safari Safe)
    ========================================================================== */
 function initCopyEmail() {
   document.querySelectorAll('.copy-email-trigger').forEach(btn => {
@@ -496,7 +568,7 @@ function initCopyEmail() {
       e.preventDefault();
       const email = btn.getAttribute('data-email') || 'wvrner@outlook.com';
 
-      navigator.clipboard.writeText(email).then(() => {
+      safeCopyText(email, () => {
         const orig = btn.innerText;
         btn.innerText = 'COPIED TO CLIPBOARD! ✔';
         btn.style.background = '#FFC900';
@@ -510,6 +582,8 @@ function initCopyEmail() {
           btn.style.background = '';
           btn.style.color = '';
         }, 2200);
+      }, () => {
+        window.location.href = `mailto:${email}`;
       });
     });
   });
@@ -522,7 +596,11 @@ function initBackToTop() {
   const btn = document.getElementById('backToTopBtn');
   if (!btn) return;
   btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (e) {
+      window.scrollTo(0, 0);
+    }
     playChime(900, 0.05, 'sine');
   });
 }
@@ -547,3 +625,41 @@ function initNavSearch() {
     });
   });
 }
+
+/* ==========================================================================
+   App Initialization (Safari BFCache & Document Ready Resilient)
+   ========================================================================== */
+function initApp() {
+  initIntroSplash();
+  initThemeToggle();
+  initWebAudio();
+  initChapterTabs();
+  initVisualizerToggles();
+  initInfraNodeFlow();
+  initConsoleTabs();
+  initCopyCodeButtons();
+  initInteractiveTerminal();
+  initTopicPills();
+  initLiveClocks();
+  initCopyEmail();
+  initBackToTop();
+  initNavSearch();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  // If Safari has already parsed DOM or loaded from BFCache
+  initApp();
+}
+
+// Support Safari BFCache (back/forward navigation restore)
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    const splash = document.getElementById('introSplash');
+    if (splash) {
+      splash.style.display = 'none';
+      splash.style.pointerEvents = 'none';
+    }
+  }
+});
