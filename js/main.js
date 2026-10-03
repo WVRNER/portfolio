@@ -91,6 +91,35 @@ function initChapterTabs() {
       }
     });
   });
+
+  // Mobile horizontal swipe gesture between chapters
+  const exhibitionWrap = document.querySelector('.gum-exhibition-wrapper');
+  if (exhibitionWrap) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+    exhibitionWrap.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+    exhibitionWrap.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      const diffX = touchStartX - touchEndX;
+      const diffY = touchStartY - touchEndY;
+      if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+        const tabList = Array.from(tabs);
+        const currentIndex = tabList.findIndex(t => t.classList.contains('active'));
+        if (currentIndex === -1) return;
+        if (diffX > 0 && currentIndex < tabList.length - 1) {
+          tabList[currentIndex + 1].click();
+        } else if (diffX < 0 && currentIndex > 0) {
+          tabList[currentIndex - 1].click();
+        }
+      }
+    }, { passive: true });
+  }
 }
 
 /* ==========================================================================

@@ -1,11 +1,15 @@
 /* ==========================================================================
-   MINIMALIST MOUSE CURSOR (Figma Canvas Arrow & Pointer)
+   MINIMALIST MOUSE CURSOR (Figma Canvas Arrow & Pointer - Fast & Non-Lagging)
    ========================================================================== */
 :root {
-  --cursor-arrow: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M4.5%203L11.5%2020L14.5%2013.5L21%2011L4.5%203Z%22%20fill%3D%22%23000000%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%221.5%22%20stroke-linejoin%3D%22round%22/%3E%3C/svg%3E") 4 3, default;
+  --cursor-arrow: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNNCAzbDcgMTcgMy02LjVMMjAuNSAxMSA0IDN6IiBmaWxsPSIjMDAwMDAwIiBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+") 4 3, auto;
 }
 
-html, body {
+html,
+body,
+*,
+*::before,
+*::after {
   cursor: var(--cursor-arrow);
 }
 
@@ -17,23 +21,26 @@ input[type="submit"],
 input[type="button"],
 label,
 select,
+summary,
 .gum-btn,
-.gum-nav-btn,
-.gum-topic-pill,
+.gum-nav-pill-black,
+.gum-nav-pill-white,
+.gum-nav-cta-rect,
 .node-btn,
 .chapter-tab-btn,
 .vis-toggle-btn,
 .console-tab-pill,
+.console-copy-btn,
 .copy-email-trigger,
 .gum-logo-pill,
-summary {
-  cursor: pointer;
+.gum-topic-pill {
+  cursor: pointer !important;
 }
 
 input[type="text"],
 input[type="email"],
 textarea {
-  cursor: text;
+  cursor: text !important;
 }
 
 
@@ -94,7 +101,7 @@ textarea {
   --font-serif: 'Fraunces', Georgia, serif;
   --font-mono: 'Space Mono', Menlo, Consolas, Monaco, monospace;
 
-  /* Layout */
+  /* Layout (Framed Container Standard) */
   --max-width: 1280px;
 }
 
@@ -207,7 +214,7 @@ button {
   max-width: var(--max-width);
   margin: 0 auto;
   height: 68px;
-  padding: 0 24px;
+  padding: 0 0 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -505,7 +512,7 @@ button {
    ========================================================================== */
 .gum-hero {
   position: relative;
-  padding: 80px 24px 60px;
+  padding: 50px 24px 44px;
   max-width: var(--max-width);
   margin: 0 auto;
   border-bottom: var(--border-md);
@@ -828,12 +835,12 @@ button {
   line-height: 1.6;
 }
 
-/* 4-Grid Container */
+/* 4-Grid Container (Framed Architecture Showcase) */
 .gum-quad-grid {
   display: grid;
   grid-template-columns: 1fr;
   border: var(--border-lg);
-  border-radius: var(--radius-card);
+  border-radius: 14px !important;
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   background: #000000;
@@ -855,6 +862,7 @@ button {
   position: relative;
   transition: transform 0.2s ease;
   color: #000000;
+  border-radius: 12px !important;
 }
 
 .quad-card:hover {
@@ -2334,47 +2342,53 @@ button {
 }
 
 /* ==========================================================================
-   Panoramic Cloud & Infrastructure Illustration Strip
+   Panoramic Cloud & Infrastructure Illustration Strip (Bigger & Crisp)
    ========================================================================== */
 .infra-illustration-strip {
-  max-width: var(--max-width);
-  margin: 60px auto 0;
-  border: var(--border-lg);
-  border-radius: var(--radius-card);
+  max-width: 1360px;
+  margin: 70px auto 0;
+  border: 3px solid #000000;
+  border-radius: 16px !important;
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 8px 8px 0px #000000;
   background: #E8F5EE;
 }
 
 .illustration-header-strip {
   background: #000000;
   color: #FFFFFF;
-  padding: 10px 20px;
+  padding: 12px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 11.5px;
+  font-weight: 800;
   letter-spacing: 0.08em;
 }
 
 .illustration-header-strip .strip-badge {
   background: var(--gum-yellow);
   color: #000000;
-  padding: 3px 8px;
+  padding: 3px 10px;
   border-radius: 4px;
 }
 
 .illustration-svg-wrap {
   width: 100%;
-  overflow: hidden;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #E8F5EE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .illustration-svg-wrap svg {
   display: block;
   width: 100%;
   height: auto;
+  min-height: 440px;
 }
 
 @media (max-width: 768px) {
@@ -2394,14 +2408,12 @@ button {
 }
 
 /* ==========================================================================
-   RECTANGULAR BUTTONS & CONTROLS (Authentic Gumroad Neubrutalism)
+   AUTHENTIC GUMROAD NEUBRUTALISM (Rounded Rectangles across all components)
+   Menu bar retains its design; every other rectangle gets Gumroad rounded corners
    ========================================================================== */
 .gum-btn,
-.gum-nav-btn,
-.nav-contact-btn,
-.hero-cta-group a,
+.gum-btn-wide-rect,
 .stage-dock-btn,
-.stage-tag,
 .node-btn,
 .chapter-tab-btn,
 .vis-toggle-btn,
@@ -2409,24 +2421,46 @@ button {
 .console-copy-btn,
 .copy-email-trigger,
 .gum-topic-pill,
-.gum-logo-pill,
-.logo-w,
-.nav-github-badge,
-.hero-title-badge,
-.hero-identity-tag,
 .node-status-toast,
 .infra-badge,
 .section-pill-tag,
-.cv-avatar-big,
-.cv-profile-col,
-.cv-block,
+.stack-pillar-item {
+  border-radius: 10px !important;
+}
+
+.pillar-icon-box {
+  border-radius: 8px !important;
+}
+
 .gum-cv-card,
 .gum-infra-card,
 .gum-newsletter-strip,
 .infra-illustration-strip,
+.hero-stack-card,
 .hero-stage-card,
 .stack-node-card,
-.metric-chip {
+.cv-avatar-big,
+.cv-profile-col,
+.cv-block,
+.gum-quad-grid,
+.quad-card,
+.gum-exhibition-wrapper,
+.chapter-key-takeaways,
+.chapter-visualizer-column,
+.code-console-window {
+  border-radius: 14px !important;
+}
+
+.hero-title-badge {
+  border-radius: 12px !important;
+}
+
+/* Menu Bar retains crisp edge-to-edge architecture */
+.gum-nav-wrapper,
+.gum-nav-inner {
+  border-radius: 0px !important;
+}
+.gum-nav-cta-rect {
   border-radius: 0px !important;
 }
 
@@ -2508,29 +2542,21 @@ button {
 }
 
 /* ==========================================================================
-   EXCLUSIVE HOVER ANIMATION: ONLY ON CONTACT BUTTON
+   CONTACT BUTTON HOVER (Clean & Static - No Wiggle/Animation)
    ========================================================================== */
-@keyframes contact-wiggle {
-  0% { transform: translate(-2px, -2px) rotate(0deg); }
-  25% { transform: translate(-2px, -2px) rotate(-3.5deg); }
-  50% { transform: translate(-2px, -2px) rotate(3.5deg); }
-  75% { transform: translate(-2px, -2px) rotate(-2deg); }
-  100% { transform: translate(-2px, -2px) rotate(0deg); }
-}
-
 .nav-contact-btn:hover,
 a.nav-contact-btn:hover,
 a[href="mailto:wvrner@outlook.com"]:hover {
-  animation: contact-wiggle 0.35s ease-in-out infinite alternate !important;
+  animation: none !important;
   background-color: var(--gum-yellow) !important;
   color: #000000 !important;
   box-shadow: 4px 4px 0px #000000 !important;
 }
 
-/* Ensure other buttons DO NOT have wiggle or bounce animations */
-.gum-btn:not(.nav-contact-btn):hover,
-.gum-nav-btn:not(.nav-contact-btn):hover,
-.hero-cta-group a:not(.nav-contact-btn):hover {
+/* Ensure buttons DO NOT have wiggle or bounce animations */
+.gum-btn:hover,
+.gum-nav-btn:hover,
+.hero-cta-group a:hover {
   animation: none !important;
 }
 
@@ -2964,25 +2990,16 @@ a[href="mailto:wvrner@outlook.com"]:hover {
   cursor: pointer;
 }
 
-/* Exclusive Contact Hover Animation */
-@keyframes contact-wiggle {
-  0% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-2px) rotate(-3deg); }
-  50% { transform: translateY(-2px) rotate(3deg); }
-  75% { transform: translateY(-2px) rotate(-1.5deg); }
-  100% { transform: translateY(0) rotate(0deg); }
-}
-
 .nav-contact-btn:hover,
 a.nav-contact-btn:hover,
 .gum-nav-cta-rect:hover {
-  animation: contact-wiggle 0.35s ease-in-out infinite alternate !important;
+  animation: none !important;
   background: var(--gum-yellow) !important;
   color: #000000 !important;
 }
 
 /* No animation on other buttons */
-.gum-btn:not(.nav-contact-btn):hover,
+.gum-btn:hover,
 .gum-nav-pill-black:hover,
 .gum-nav-pill-white:hover,
 .gum-btn-wide-rect:hover,
@@ -2997,7 +3014,7 @@ a.nav-contact-btn:hover,
    Bigger sizing for first scroll and responsive mobile layout
    ========================================================================== */
 
-/* Variant A: Wide Rectangular Button (Explore Live Setup - Same color as canvas, inverts to black on hover, NO SHADOWS, BIGGER) */
+/* Variant A: Wide Rectangular Button (Explore Live Setup - Same color as canvas, inverts to black on hover, NO SHADOWS, RECTANGLE) */
 .gum-btn-wide-rect {
   display: inline-flex;
   align-items: center;
@@ -3032,7 +3049,7 @@ a.nav-contact-btn:hover,
   box-shadow: none !important;
 }
 
-/* Variant B: Round Button with Black Background & White Text (Curriculum Vitae - Inverts to White on hover, NO SHADOWS, BIGGER) */
+/* Variant B: Rectangular Button with Black Background & White Text (Curriculum Vitae - Inverts to White on hover, NO SHADOWS, RECTANGLE) */
 .gum-btn-round-black {
   display: inline-flex;
   align-items: center;
@@ -3043,7 +3060,7 @@ a.nav-contact-btn:hover,
   font-size: 17px;
   padding: 16px 34px;
   min-height: 56px;
-  border-radius: 9999px !important;
+  border-radius: 0px !important;
   border: 2.5px solid #000000;
   background-color: #000000;
   color: #FFFFFF;
@@ -3067,7 +3084,7 @@ a.nav-contact-btn:hover,
   box-shadow: none !important;
 }
 
-/* Variant C: Round Button with White Background & Black Text (Currently Learning - Inverts to Black on hover, NO SHADOWS, BIGGER) */
+/* Variant C: Rectangular Button with White Background & Black Text (Currently Learning - Inverts to Black on hover, NO SHADOWS, RECTANGLE) */
 .gum-btn-round-white {
   display: inline-flex;
   align-items: center;
@@ -3078,7 +3095,7 @@ a.nav-contact-btn:hover,
   font-size: 17px;
   padding: 16px 34px;
   min-height: 56px;
-  border-radius: 9999px !important;
+  border-radius: 0px !important;
   border: 2.5px solid #000000;
   background-color: #FFFFFF;
   color: #000000;
@@ -3102,12 +3119,17 @@ a.nav-contact-btn:hover,
   box-shadow: none !important;
 }
 
-/* Explicit No Shadows on Explore Live Setup, Curriculum Vitae, Currently Learning, and CV */
+/* Explicit No Shadows & Sharp Rectangles on Explore Live Setup, Curriculum Vitae, Currently Learning */
 .gum-btn-wide-rect,
 .gum-btn-round-black,
 .gum-btn-round-white,
+.hero-cta-group a {
+  border-radius: 0px !important;
+  box-shadow: none !important;
+}
+
+/* Explicit No Shadows on CV */
 .gum-nav-pill-white,
-.hero-cta-group a,
 a[title*="Curriculum Vitae"],
 a[href*="#cv"].gum-btn {
   box-shadow: none !important;
@@ -3145,7 +3167,7 @@ a[href*="#cv"].gum-btn:active {
   font-weight: 800;
   font-size: 14px;
   padding: 12px 26px;
-  border-radius: 0px;
+  border-radius: 10px;
   border: var(--border-md);
   background-color: var(--bg-canvas);
   color: #000000;
@@ -3191,7 +3213,7 @@ a[href*="#cv"].gum-btn:active {
 }
 
 /* ==========================================================================
-   AUTHENTIC MOBILE EXPERIENCE (Looks Absolutely Amazing on Mobile)
+   AUTHENTIC MOBILE EXPERIENCE (Compact, Refined & Readable in One Roll)
    ========================================================================== */
 @media (max-width: 768px) {
   /* Sticky Navigation Bar */
@@ -3201,75 +3223,110 @@ a[href*="#cv"].gum-btn:active {
     gap: 8px;
   }
   .logo-text {
-    font-size: 24px;
+    font-size: 26px;
+    font-weight: 900;
   }
   .nav-github-badge {
     display: none;
   }
   .gum-nav-right-cluster {
-    gap: 8px;
+    gap: 6px;
   }
   .gum-nav-pill-black {
-    padding: 6px 15px;
+    padding: 6px 14px;
     font-size: 12.5px;
   }
   .gum-nav-pill-white {
-    padding: 6px 15px;
+    padding: 6px 14px;
     font-size: 12.5px;
     box-shadow: none !important;
   }
   .gum-nav-cta-rect {
     height: 60px;
-    padding: 0 20px;
+    padding: 0 18px;
     font-size: 13.5px;
   }
 
-  /* First Scroll (Hero Section) on Mobile */
+  /* First Scroll (Hero Section) on Mobile - Refined & Understandable in One Go */
   .gum-hero {
-    padding: 30px 16px 36px;
+    padding: 22px 16px 20px;
   }
   .gum-hero-grid {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 20px;
   }
   .hero-identity-tag {
-    font-size: 11px;
-    padding: 5px 12px;
+    font-size: 13.5px;
+    padding: 6px 14px;
     gap: 6px;
+    border-radius: 9999px !important;
+    border: 2px solid #000000;
+    line-height: 1.35;
     flex-wrap: wrap;
-    line-height: 1.4;
+  }
+  .hero-identity-tag .tag-name {
+    font-size: 15px;
+    font-weight: 900;
+    color: #000000;
+  }
+  .hero-identity-tag .tag-handle {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: #000000;
+  }
+  .hero-identity-tag .tag-role {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #444444;
   }
   .hero-main-title {
-    font-size: clamp(34px, 8.5vw, 48px);
-    line-height: 1.08;
-    letter-spacing: -0.035em;
+    font-size: clamp(28px, 7.5vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 4px 0 6px;
   }
   .hero-title-badge {
-    padding: 3px 14px;
-    border-radius: 10px;
+    padding: 2px 12px;
+    border-radius: 10px !important;
   }
   .hero-desc-lead {
-    font-size: 15.5px;
-    line-height: 1.55;
+    font-size: 14.5px;
+    line-height: 1.45;
+    margin-bottom: 8px;
   }
 
-  /* First Scroll Buttons on Mobile: Large, Confident, Full-Width Stacked Touch Targets */
+  /* First Scroll Buttons on Mobile: Sharp Rectangles, Compact & Space-Efficient */
   .hero-cta-group {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
     width: 100%;
-    gap: 12px;
-    margin-top: 14px;
   }
-  .hero-cta-group .gum-btn-wide-rect,
+  .hero-cta-group .gum-btn-wide-rect {
+    grid-column: 1 / -1;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 800;
+    padding: 12px 18px;
+    min-height: 48px;
+    border-radius: 0px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: none !important;
+  }
   .hero-cta-group .gum-btn-round-black,
   .hero-cta-group .gum-btn-round-white {
     width: 100%;
-    font-size: 16.5px;
+    font-size: 13.5px;
     font-weight: 800;
-    padding: 16px 20px;
-    min-height: 54px;
+    padding: 10px 12px;
+    min-height: 44px;
+    border-radius: 0px !important;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -3278,45 +3335,311 @@ a[href*="#cv"].gum-btn:active {
     box-shadow: none !important;
   }
 
-  /* Active Cloud Stack Card on Mobile */
+  /* Active Cloud Stack Card on Mobile - Fits in One Roll */
   .hero-inspector-stage {
     width: 100%;
   }
   .hero-stack-card {
     width: 100%;
     max-width: 100%;
+    border-radius: 12px !important;
+    box-shadow: 4px 4px 0px #000000;
+  }
+  .stack-card-header {
+    padding: 8px 12px;
+  }
+  .stack-card-title {
+    font-size: 10px;
   }
   .stack-card-intro {
-    padding: 14px 16px 10px;
+    padding: 10px 12px 6px;
+  }
+  .stack-intro-kicker {
+    font-size: 9.5px;
+  }
+  .stack-intro-desc {
+    font-size: 12px;
+    line-height: 1.35;
   }
   .stack-pillars-list {
-    padding: 12px;
-    gap: 8px;
+    padding: 8px 10px;
+    gap: 6px;
   }
   .stack-pillar-item {
-    padding: 10px 12px;
-    gap: 10px;
+    padding: 8px 10px;
+    gap: 8px;
+    border-radius: 8px !important;
   }
   .pillar-icon-box {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px !important;
+  }
+  .pillar-icon-box svg {
+    width: 17px;
+    height: 17px;
   }
   .pillar-name {
-    font-size: 14px;
+    font-size: 13.5px;
   }
   .pillar-badge {
-    font-size: 9.5px;
+    font-size: 9px;
     padding: 1px 5px;
   }
   .pillar-desc {
-    font-size: 11.5px;
-    line-height: 1.4;
+    font-size: 11px;
+    line-height: 1.35;
   }
   .stack-card-footer {
-    padding: 10px 14px;
+    padding: 8px 12px;
     flex-direction: column;
     align-items: flex-start;
+    gap: 4px;
+    font-size: 10.5px;
+  }
+
+  /* Section 01: Core Principles (Network Up) on Mobile - Framed Cards */
+  .gum-section {
+    padding: 36px 16px;
+  }
+  .section-lead-block {
+    margin-bottom: 22px;
+    padding: 0;
+    gap: 8px;
+  }
+  .section-big-title {
+    font-size: clamp(26px, 6vw, 34px);
+  }
+  .section-subtitle {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .gum-quad-grid {
+    border-radius: 14px !important;
+    border: var(--border-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    grid-template-columns: 1fr !important;
+  }
+  .quad-card {
+    padding: 24px 18px;
+    gap: 14px;
+    border-radius: 12px !important;
+  }
+  .quad-card-title {
+    font-size: 21px;
+    margin-bottom: 6px;
+  }
+  .quad-card-text {
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  /* Section: "This Website is Hosted on AWS" on Mobile - Framed Card */
+  #systems-architecture.gum-section {
+    padding: 36px 16px;
+  }
+  .gum-infra-card {
+    padding: 20px 16px;
+    gap: 14px;
+    border-radius: 14px !important;
+    border: var(--border-lg);
+    box-shadow: var(--shadow-md);
+  }
+  .infra-card-title {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+  .infra-nodes-flow {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+  .node-btn {
+    padding: 8px 10px;
+    border-radius: 8px !important;
+    gap: 2px;
+  }
+  .node-btn-step {
+    font-size: 9px;
+  }
+  .node-btn-title {
+    font-size: 12.5px;
+  }
+  .node-btn-desc {
+    font-size: 9.5px;
+  }
+  .node-status-toast {
+    padding: 10px 12px;
+    font-size: 12px;
+    border-radius: 8px !important;
+  }
+
+  /* Section: "Currently Learning" on Mobile - Framed Wrapper, Readable in 1.5 Scrolls */
+  #learning-exhibition.gum-section {
+    padding: 36px 16px;
+  }
+  #learning-exhibition .section-lead-block {
+    padding: 0;
+    margin-bottom: 14px;
+  }
+  #learning-exhibition .section-big-title {
+    font-size: 24px;
+    margin: 2px 0 4px;
+  }
+  #learning-exhibition .section-subtitle {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .gum-exhibition-wrapper {
+    border-radius: 14px !important;
+    border: var(--border-lg);
+    box-shadow: var(--shadow-md);
+    margin-top: 14px;
+    background: #FFFFFF;
+    overflow: hidden;
+  }
+  .chapter-nav-bar {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    border-bottom: 2px solid #000000;
+    scrollbar-width: none;
+  }
+  .chapter-nav-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .chapter-tab-btn {
+    flex: 1 0 25%;
+    padding: 9px 6px;
+    gap: 2px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-right: 2px solid #000000;
+  }
+  .tab-num {
+    font-size: 8.5px;
+    opacity: 0.8;
+  }
+  .tab-title {
+    font-size: 12.5px;
+    font-weight: 800;
+  }
+  .tab-sub {
+    display: none;
+  }
+  .chapter-content-body {
+    padding: 14px 16px;
+    gap: 10px;
+    background: #FFFFFF;
+  }
+  .chapter-content-body.active {
+    display: flex;
+    flex-direction: column;
+  }
+  .chapter-status-row {
+    margin-bottom: 2px;
+  }
+  .chapter-badge {
+    font-size: 9.5px;
+    padding: 2px 7px;
+  }
+  .chapter-headline h4 {
+    font-size: 18px;
+    line-height: 1.15;
+    margin-bottom: 2px;
+  }
+  .chapter-headline .focus-tag {
+    font-size: 12px;
+  }
+  .chapter-prose {
+    font-size: 12px;
+    line-height: 1.45;
+    gap: 4px;
+  }
+  .chapter-prose p + p {
+    display: none; /* Keep the focused top-level architectural insight */
+  }
+  .chapter-key-takeaways {
+    padding: 8px 10px;
+    gap: 4px;
+    border-radius: 6px !important;
+    background: #F8F8F5;
+    border: 1.5px solid #000000;
+  }
+  .takeaway-item {
+    font-size: 11px;
+    line-height: 1.35;
+    gap: 5px;
+  }
+  .chapter-visualizer-column {
+    padding: 8px 10px;
     gap: 6px;
+    border-radius: 8px !important;
+  }
+  .visualizer-top-bar {
+    padding-bottom: 6px;
+  }
+  .visualizer-label {
+    font-size: 9.5px;
+  }
+  .vis-toggle-btn {
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+  .vis-svg-container {
+    min-height: 115px;
+    max-height: 135px;
+  }
+  .vis-svg-container svg {
+    max-height: 125px;
+  }
+  .vis-code-container {
+    font-size: 10px;
+    max-height: 135px;
+    padding: 8px;
+  }
+
+  /* Panoramic Illustration Strip on Mobile - Framed */
+  .infra-illustration-strip {
+    margin: 36px 16px 0;
+    border-radius: 14px !important;
+    border: var(--border-lg);
+    box-shadow: 6px 6px 0px #000000;
+  }
+  .illustration-header-strip {
+    padding: 9px 12px;
+    font-size: 10px;
+  }
+  .illustration-svg-wrap svg {
+    min-width: 760px;
+    min-height: 250px;
+    height: 260px;
+  }
+
+  /* Newsletter / Direct Comms on Mobile - Framed */
+  .gum-newsletter-strip {
+    padding: 28px 16px;
+    margin: 36px 16px;
+    border-radius: 14px !important;
+    border: var(--border-lg);
+    box-shadow: var(--shadow-md);
+  }
+  .newsletter-title {
+    font-size: clamp(24px, 5.5vw, 32px);
+  }
+  .newsletter-action-box {
+    flex-direction: column;
+    width: 100%;
+  }
+  .newsletter-input-pill,
+  .newsletter-action-box .gum-btn {
+    width: 100%;
+    justify-content: center;
+    border-radius: 8px !important;
   }
 }
 
@@ -3326,22 +3649,29 @@ a[href*="#cv"].gum-btn:active {
     height: 56px;
   }
   .logo-text {
-    font-size: 22px;
+    font-size: 23px;
   }
   .gum-nav-right-cluster {
-    gap: 5px;
+    gap: 4px;
   }
   .gum-nav-pill-black,
   .gum-nav-pill-white {
-    padding: 6px 11px;
-    font-size: 11.5px;
+    padding: 5px 10px;
+    font-size: 11px;
   }
   .gum-nav-cta-rect {
     height: 56px;
-    padding: 0 15px;
-    font-size: 12.5px;
+    padding: 0 14px;
+    font-size: 12px;
   }
   .hero-main-title {
-    font-size: 32px;
+    font-size: 28px;
+  }
+  .hero-identity-tag {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+  .hero-identity-tag .tag-name {
+    font-size: 13.5px;
   }
 }
