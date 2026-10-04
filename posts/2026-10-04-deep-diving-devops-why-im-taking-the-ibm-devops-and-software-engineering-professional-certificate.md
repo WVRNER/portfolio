@@ -14,7 +14,7 @@ display_date: October 2026
 read_time: 5 min read
 post_tags:
   - Devops, Docker, Linux, SystemDesign
-permalink: /posts/first-course
+permalink: blog/posts/first-course
 layout: post.njk
 ---
 When working in infrastructure, it is easy to get caught up in operational silos. You might spend days configuring routing tables, debugging VLAN trunks on MikroTik hardware, provisioning virtualized hypervisor clusters, or auditing Active Directory Group Policies. Those fundamentals are invaluable - understanding how packets actually move across wires, interfaces, and switches provides an intuition for distributed systems that cannot be faked.
