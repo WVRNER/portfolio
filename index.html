@@ -208,6 +208,39 @@
           padding: 12px 16px !important;
         }
       }
+          .gum-nav-link-plain {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        color: var(--text-main, #000000) !important;
+        font-family: var(--font-display, "Plus Jakarta Sans", system-ui, sans-serif) !important;
+        font-size: 14px !important;
+        font-weight: 800 !important;
+        text-decoration: none !important;
+        padding: 8px 14px !important;
+        cursor: pointer !important;
+        white-space: nowrap !important;
+      }
+      .gum-nav-link-plain:hover {
+        opacity: 0.65 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      [data-theme="dark"] .gum-nav-link-plain {
+        color: #FFFFFF !important;
+      }
+      @media (max-width: 768px) {
+        .gum-nav-link-plain {
+          padding: 6px 8px !important;
+          font-size: 12.5px !important;
+        }
+      }
     </style>
 </head>
   <body>
@@ -256,8 +289,9 @@
 
         </div>
 
-        <!-- Navigation Cluster: Round About (black bg), Round CV (white bg), Wide Rect Contact -->
+        <!-- Navigation Cluster: Blog (no fill/outline), Round About (black bg), Round CV (white bg), Wide Rect Contact -->
         <div class="gum-nav-right-cluster">
+          <a href="blog.html" class="gum-nav-link-plain">Blog</a>
           <a href="about.html" class="gum-nav-pill-black">About</a>
           <a href="about.html#cv" class="gum-nav-pill-white">CV</a>
           <a href="mailto:wvrner@outlook.com" class="gum-nav-cta-rect nav-contact-btn">Contact</a>
@@ -1705,7 +1739,40 @@
               .ink-thin { stroke: #000000; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
               .bubble-text { font-family: 'Space Mono', monospace, sans-serif; font-weight: 700; font-size: 13px; fill: #000000; }
               .title-text { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; font-weight: 900; font-size: 14px; fill: #000000; }
-            </style>
+                  .gum-nav-link-plain {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        color: var(--text-main, #000000) !important;
+        font-family: var(--font-display, "Plus Jakarta Sans", system-ui, sans-serif) !important;
+        font-size: 14px !important;
+        font-weight: 800 !important;
+        text-decoration: none !important;
+        padding: 8px 14px !important;
+        cursor: pointer !important;
+        white-space: nowrap !important;
+      }
+      .gum-nav-link-plain:hover {
+        opacity: 0.65 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      [data-theme="dark"] .gum-nav-link-plain {
+        color: #FFFFFF !important;
+      }
+      @media (max-width: 768px) {
+        .gum-nav-link-plain {
+          padding: 6px 8px !important;
+          font-size: 12.5px !important;
+        }
+      }
+    </style>
           </defs>
 
           <!-- 1. Background Grass/Lawn (Teal #2BB596) -->
