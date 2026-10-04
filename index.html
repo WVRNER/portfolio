@@ -110,28 +110,23 @@
 
           <!-- Main Title -->
           <h1 class="hero-main-title">
-            Make the Cut
-            <span class="hero-title-badge">in systems</span>.
+            Make the Cut <span class="hero-title-badge">in systems</span>.
           </h1>
 
-          <!-- Lead Description (Enhanced Typography with Editorial Serif & Neubrutalist Badges) -->
+          <!-- Lead Subhead: Max 2 short sentences, 2 type treatments (regular sans + mono tool chips), WCAG AA compliant -->
           <p class="hero-desc-lead">
-            <span class="lead-role-highlight">DevOps &amp; Infrastructure Engineer</span>. Designing <span class="lead-fancy-serif">declarative AWS infrastructure</span> with <span class="lead-tech-pill">Terraform</span>, <span class="lead-fancy-serif">automated keyless</span> GitHub Actions pipelines, and hardened containers with <span class="lead-pill-badge yellow">zero drift</span>.
+            Aspiring DevOps Engineer documenting real cloud infrastructure. Built static hosting on <a href="infra/terraform/main.tf" class="lead-mono-chip" title="Inspect Terraform AWS hosting configuration" target="_blank" rel="noopener noreferrer">AWS</a> provisioned with <a href="infra/terraform/main.tf" class="lead-mono-chip" title="Inspect Terraform code" target="_blank" rel="noopener noreferrer">Terraform</a> and deployed via <a href=".github/workflows/deploy.yml" class="lead-mono-chip" title="Inspect GitHub Actions OIDC workflow" target="_blank" rel="noopener noreferrer">GitHub Actions</a> using keyless OIDC.
           </p>
 
-          <!-- Quick Action Button Row (Centered) -->
+          <!-- Quick Action Button Row (Centered: Primary Filled Black + Secondary Outlined) -->
           <div class="hero-cta-group">
-            <a href="#systems-architecture" class="gum-btn-wide-rect">
+            <a href="#systems-architecture" class="gum-btn-hero-primary">
               <span>Explore Live Setup</span>
-              <span>&rarr;</span>
+              <span aria-hidden="true">&rarr;</span>
             </a>
-            <a href="about.html#cv" class="gum-btn-round-black">
-              <span>CV</span>
-              <span>&nearr;</span>
-            </a>
-            <a href="#learning-exhibition" class="gum-btn-round-white">
+            <a href="#learning-exhibition" class="gum-btn-hero-secondary">
               <span>Currently Learning</span>
-              <span>&darr;</span>
+              <span aria-hidden="true">&darr;</span>
             </a>
           </div>
         </div>
@@ -145,18 +140,18 @@
           >
           <h2 class="section-big-title">Packets before pixels.</h2>
           <p class="section-subtitle">
-            Core infrastructure foundations from network and kernel primitives up to declarative cloud architecture. Systems designed to eliminate drift and survive real-world failure.
+            Core infrastructure foundations from network and kernel primitives up to declarative cloud architecture. Systems designed to detect drift and tolerate failure.
           </p>
         </div>
 
         <div class="gum-quad-grid">
-          <!-- Card 1: AWS / Cloud -->
+          <!-- Card 1: AWS / Cloud Architecture -->
           <div class="quad-card card-yellow">
             <div>
               <span class="quad-card-num">01 / CLOUD ARCHITECTURE</span>
-              <h3 class="quad-card-title">AWS Solutions Architect</h3>
+              <h3 class="quad-card-title">AWS Architecture</h3>
               <p class="quad-card-text">
-                Multi-AZ VPC topology, private subnet routing, and edge ingress designed to eliminate single points of failure.
+                Multi-AZ VPC topology, private subnet routing, and edge ingress designed to avoid single points of failure.
               </p>
             </div>
             <ul class="quad-card-bullets">
@@ -164,7 +159,7 @@
                 <strong>Network Isolation:</strong> Multi-AZ subnets, NAT gateways &amp; NACLs
               </li>
               <li>
-                <strong>Edge Ingress:</strong> CloudFront Anycast CDN &amp; strict TLS 1.3
+                <strong>Edge Ingress:</strong> CloudFront CDN with TLS 1.2+ (1.3 enabled)
               </li>
               <li>
                 <strong>IAM Security:</strong> Scoped roles with keyless OIDC auth
@@ -178,18 +173,18 @@
               <span class="quad-card-num">02 / PROVISIONING</span>
               <h3 class="quad-card-title">Terraform (IaC)</h3>
               <p class="quad-card-text">
-                Replacing manual console clicks with immutable, version-controlled HCL infrastructure modules.
+                Replacing manual console clicks with version-controlled HCL infrastructure modules.
               </p>
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Declarative State:</strong> Graphing dependencies directly from code
+                <strong>Declarative State:</strong> Dependency graph built directly from code
               </li>
               <li>
-                <strong>Remote Locking:</strong> S3 backend with DynamoDB state locks
+                <strong>Remote State:</strong> S3 backend with state locking
               </li>
               <li>
-                <strong>Zero Drift:</strong> 100% parity between git commits and cloud
+                <strong>Drift Visibility:</strong> terraform plan surfaces manual console changes
               </li>
             </ul>
           </div>
@@ -208,10 +203,10 @@
                 <strong>Multi-Stage Builds:</strong> Compilers isolated from lean runtimes
               </li>
               <li>
-                <strong>Hardened Images:</strong> Non-root users with 0 shell attack surface
+                <strong>Hardened Images:</strong> Non-root users, no shell in the runtime image
               </li>
               <li>
-                <strong>Bridge Networks:</strong> Isolated container mesh and persistent volumes
+                <strong>Bridge Networks:</strong> Isolated container networking and persistent volumes
               </li>
             </ul>
           </div>
@@ -222,18 +217,18 @@
               <span class="quad-card-num">04 / DELIVERY</span>
               <h3 class="quad-card-title">GitHub Actions CI/CD</h3>
               <p class="quad-card-text">
-                Automated zero-downtime delivery pipelines connecting local git pushes to global CloudFront edge rollouts.
+                Automated delivery pipeline connecting git pushes to CloudFront edge rollouts.
               </p>
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Keyless OIDC:</strong> Short-lived federated AWS STS tokens (0 static secrets)
+                <strong>Keyless OIDC:</strong> Short-lived federated AWS STS credentials (no static secrets)
               </li>
               <li>
-                <strong>Automated Gates:</strong> Deterministic linting, syntax &amp; security scans
+                <strong>Automated Gates:</strong> Linting, validation &amp; security scans before deploy
               </li>
               <li>
-                <strong>Global Flush:</strong> Sub-4s edge cache invalidations
+                <strong>Cache Invalidation:</strong> Automated CloudFront invalidation on every deploy
               </li>
             </ul>
           </div>

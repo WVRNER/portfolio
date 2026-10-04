@@ -4668,7 +4668,7 @@ a[href*="#cv"].gum-btn:active {
 
 /* ==========================================================================
    CENTERED HERO SECTION (NO COINS, NO HORIZONTAL SPLITTER LINE)
-   Clean, Bold Neubrutalist Typography & Quick Navigation Pills
+   Clean, Bold Neubrutalist Typography & High-Contrast Visual Elements
    ========================================================================== */
 .gum-hero,
 .gum-hero.gum-hero-centered {
@@ -4702,14 +4702,15 @@ a[href*="#cv"].gum-btn:active {
   margin: 0 auto;
 }
 
-/* Made "Make the Cut in systems" bigger and more impactful */
+/* Headline: Packets to production. (Bigger, Bolder, with Pink Highlight Badge) */
 .gum-hero-centered-inner .hero-main-title {
   text-align: center;
   margin: 0;
-  font-size: clamp(56px, 8.8vw, 114px);
+  font-size: clamp(54px, 8.8vw, 110px);
   line-height: 0.98;
   letter-spacing: -0.045em;
   font-weight: 900;
+  color: var(--text-main);
 }
 
 .gum-hero-centered-inner .hero-title-badge {
@@ -4726,76 +4727,140 @@ a[href*="#cv"].gum-btn:active {
   margin: 0 4px;
 }
 
-/* Hero Description Lead & Fancy In-Between Typography to Stop Skimmers */
+/* Subhead: Max 2 Short Sentences, Regular Sans + Mono Tool Chips, WCAG AA Compliant */
 .gum-hero-centered-inner .hero-desc-lead {
   text-align: center;
-  max-width: 720px;
+  max-width: 700px;
   margin: 0 auto;
-  font-size: clamp(17px, 2.1vw, 21.5px);
-  color: var(--text-muted);
-  line-height: 1.7;
+  font-family: var(--font-display);
+  font-size: clamp(16.5px, 1.9vw, 20px);
+  font-weight: 500;
+  color: #111111; /* Meets WCAG AA contrast against canvas */
+  line-height: 1.65;
 }
 
-.lead-role-highlight {
-  font-weight: 800;
-  color: var(--text-main);
-  border-bottom: 2.5px solid var(--gum-yellow);
-  padding-bottom: 1px;
+[data-theme="dark"] .gum-hero-centered-inner .hero-desc-lead {
+  color: #F4F4F0;
 }
 
-.lead-fancy-serif {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 700;
-  font-size: 1.1em;
-  color: var(--text-main);
-  letter-spacing: -0.01em;
-}
-
-.lead-tech-pill {
+/* Tool Mono Chips (Linked to Verifiable Code) */
+.lead-mono-chip {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-mono);
-  font-size: 0.86em;
+  font-size: 0.88em;
   font-weight: 700;
-  padding: 2px 8px;
-  background: var(--gum-pink);
-  color: #000000;
-  border: 1.5px solid #000000;
-  border-radius: 6px;
-  box-shadow: 2px 2px 0px #000000;
-  white-space: nowrap;
-  vertical-align: baseline;
-  display: inline-block;
-  line-height: 1.3;
-}
-
-.lead-pill-badge.yellow {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.86em;
-  font-weight: 800;
   padding: 2px 9px;
   background: var(--gum-yellow);
   color: #000000;
   border: 1.5px solid #000000;
   border-radius: 6px;
   box-shadow: 2px 2px 0px #000000;
-  letter-spacing: 0.02em;
+  text-decoration: none;
   white-space: nowrap;
   vertical-align: baseline;
   line-height: 1.3;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
+.lead-mono-chip:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0px #000000;
+  background: #000000;
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .lead-mono-chip {
+  background: var(--gum-yellow);
+  color: #000000;
+  border-color: #FFFFFF;
+  box-shadow: 2px 2px 0px #FFFFFF;
+}
+
+[data-theme="dark"] .lead-mono-chip:hover {
+  background: #FFFFFF;
+  color: #000000;
+}
+
+/* Hero CTAs: Primary (Filled Black) + Secondary (Clear Button) */
 .gum-hero-centered-inner .hero-cta-group {
+  display: flex;
+  align-items: center;
   justify-content: center;
-  margin: 12px auto 0;
+  margin: 10px auto 0;
   gap: 16px;
 }
+
+.gum-btn-hero-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #000000;
+  color: #FFFFFF;
+  border: 2.5px solid #000000;
+  border-radius: 9999px;
+  padding: 14px 28px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 4px 4px 0px var(--gum-pink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.gum-btn-hero-primary:hover {
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #000000;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000000;
+}
+
+.gum-btn-hero-primary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000000;
+}
+
+.gum-btn-hero-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #FFFFFF;
+  color: #000000;
+  border: 2.5px solid #000000;
+  border-radius: 9999px;
+  padding: 14px 28px;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 4px 4px 0px #000000;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
+  white-space: nowrap;
+}
+
+.gum-btn-hero-secondary:hover {
+  background: var(--gum-yellow);
+  color: #000000;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000000;
+}
+
+.gum-btn-hero-secondary:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #000000;
+}
+
+
 
 /* Mobile specific styling */
 @media (max-width: 768px) {
   .gum-hero,
   .gum-hero.gum-hero-centered {
-    padding: 80px 16px 100px;
+    padding: 80px 16px 90px;
     min-height: auto;
     border-bottom: none !important;
   }
@@ -4805,7 +4870,7 @@ a[href*="#cv"].gum-btn:active {
   }
 
   .gum-hero-centered-inner .hero-main-title {
-    font-size: clamp(44px, 11.5vw, 70px);
+    font-size: clamp(42px, 11vw, 68px);
     line-height: 1.02;
   }
 
@@ -4818,11 +4883,7 @@ a[href*="#cv"].gum-btn:active {
 
   .gum-hero-centered-inner .hero-desc-lead {
     font-size: 15.5px;
-    line-height: 1.65;
-  }
-
-  .lead-fancy-serif {
-    font-size: 1.05em;
+    line-height: 1.6;
   }
 
   .gum-hero-centered-inner .hero-cta-group {
@@ -4832,14 +4893,20 @@ a[href*="#cv"].gum-btn:active {
     gap: 12px;
   }
 
-  .gum-hero-centered-inner .hero-cta-group .gum-btn-wide-rect,
-  .gum-hero-centered-inner .hero-cta-group .gum-btn-round-black,
-  .gum-hero-centered-inner .hero-cta-group .gum-btn-round-white {
+  .gum-btn-hero-primary,
+  .gum-btn-hero-secondary {
     width: 100%;
     justify-content: center;
-    border-radius: var(--radius-pill);
     min-height: 48px;
+    font-size: 15px;
+    padding: 12px 20px;
   }
+
+  
+}
+
+@media (max-width: 480px) {
+  
 }
 
 #foundations {
