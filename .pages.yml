@@ -1,23 +1,25 @@
 # ==============================================================================
 # Pages CMS Configuration (.pages.yml)
+# Complete schema for Nima Hosseini (@wvrner) - DevOps & Infrastructure Portfolio
 # Official documentation: https://pagescms.org/docs/configuration/
 # ==============================================================================
 
 # 1. Media Upload Directory
 media:
   input: images/posts
-  output: images/posts
+  output: /images/posts
 
 # 2. Content Collections
 content:
+  # Blog Posts Collection (posts/*.html)
   - name: posts
     label: Blog Posts
     type: collection
     path: posts
     description: "Engineering notes, lab logs, and technical explorations"
-    filename: "{year}-{month}-{day}-{fields.slug}.html"
+    filename: "{fields.slug}.html"
     view:
-      fields: [title, date, category, read_time]
+      fields: [title, date, category, tags]
       primary: title
       default:
         sort: date
@@ -27,25 +29,27 @@ content:
         label: Post Title
         type: string
         required: true
-        description: "The main headline of your article"
+        description: "e.g. Deep-Diving DevOps: Why I'm Taking the IBM DevOps and Software Engineering Professional Certificate"
 
       - name: slug
-        label: URL Slug (Filename)
+        label: URL Slug / Filename
         type: string
         required: true
-        description: "Filename without extension (e.g., terraform-s3-state)"
+        description: "e.g. ibm-devops-certificate (creates posts/ibm-devops-certificate.html)"
 
       - name: category
         label: Category Badge
         type: select
-        default: "DEVOPS & INFRASTRUCTURE"
+        default: "CERTIFICATION & LAB LOG"
         options:
-          - "CERTIFICATION & LAB LOG"
-          - "DEVOPS & INFRASTRUCTURE"
-          - "CLOUD ARCHITECTURE"
-          - "NETWORKING & SYSTEMS"
-          - "CI/CD & AUTOMATION"
-          - "LINUX INTERNALS"
+          values:
+            - "CERTIFICATION & LAB LOG"
+            - "DEVOPS & INFRASTRUCTURE"
+            - "CLOUD ARCHITECTURE"
+            - "NETWORKING & SYSTEMS"
+            - "CI/CD & AUTOMATION"
+            - "LINUX INTERNALS"
+            - "SECURITY & DEVSECOPS"
 
       - name: date
         label: Publication Date
@@ -56,25 +60,52 @@ content:
       - name: read_time
         label: Estimated Reading Time
         type: string
-        default: "5 min read"
+        default: "6 min read"
+        description: "e.g. 6 min read"
 
       - name: subtitle
-        label: Subtitle / One-line Summary
+        label: Subtitle / One-Line Hook
         type: string
-        description: "One clear sentence explaining the core takeaway"
+        required: true
+        description: "e.g. Bridging network fundamentals, virtualization, and enterprise systems administration into end-to-end cloud-native engineering..."
 
       - name: excerpt
-        label: Teaser Summary
+        label: Teaser Excerpt (for Blog Feed Card)
         type: text
-        description: "2-3 sentences shown on the blog feed card"
+        description: "Short 2-3 sentence overview displayed on the blog feed teaser card."
 
+      # Defined Tags List matching the IBM Post & Cloud/DevOps Topics
       - name: tags
-        label: Tags (e.g., DevOps, AWS, Docker)
-        type: list
-        field:
-          type: string
+        label: Topic Tags (Neubrutalist Chips)
+        type: select
+        options:
+          multiple: true
+          values:
+            # Tags from IBM DevOps Post:
+            - "#DevOps"
+            - "#IBMCloud"
+            - "#Coursera"
+            - "#Docker"
+            - "#Kubernetes"
+            - "#CICD"
+            - "#PythonFlask"
+            - "#TDD"
+            - "#Networking"
+            # Additional Cloud & Systems Tags:
+            - "#Linux"
+            - "#Terraform"
+            - "#AWS"
+            - "#ZeroDrift"
+            - "#Bash"
+            - "#GitOps"
+            - "#MCSA"
+            - "#CCNA"
+            - "#Virtualization"
+            - "#MikroTik"
+            - "#OpenSource"
+            - "#Neubrutalism"
 
       - name: body
         label: Article Content
         type: rich-text
-        description: "Full post body with headings, code blocks, and diagrams"
+        description: "Full article body with headings, callout boxes, code snippets, and diagrams"
