@@ -1,90 +1,417 @@
+# ==============================================================================
+# Pages CMS Configuration (.pages.yml)
+# Ultra-Rich Configuration for Nima Hosseini (@wvrner) - DevOps & Infrastructure Portfolio
+# Reference Post: posts/ibm-devops-certificate.html
+# Official Documentation: https://pagescms.org/docs/configuration/
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Media Storage & Upload Engine
+# ------------------------------------------------------------------------------
 media:
   input: images
   output: /images
+  categories:
+    - image
+    - document
+    - compressed
+    - code
+  extensions:
+    # High-resolution web images, screenshots & architecture diagrams
+    - png
+    - jpg
+    - jpeg
+    - webp
+    - svg
+    - gif
+    - avif
+    # Downloadable certificates, lab whitepapers, architecture code & archives
+    - pdf
+    - zip
+    - tar.gz
+    - yaml
+    - yml
+    - json
+    - tf
+    - sh
+    - py
+  rename: safe # Automatically slugifies uploaded filenames for valid, clean web URLs
 
+# ------------------------------------------------------------------------------
+# 2. Content Collections
+# ------------------------------------------------------------------------------
 content:
   - name: posts
     label: Blog Posts
     type: collection
     path: posts
+    description: "Deep-dive engineering notes, lab logs, architecture blueprints, and certifications"
+    filename: "{fields.slug}.html"
 
+    # Collection Table View in Pages CMS Dashboard
     view:
       fields:
         - title
-        - display_date
         - category
+        - display_date
+        - read_time
+        - published
+      primary: title
+      default:
+        sort: date
+        order: desc
+      search:
+        - title
+        - subtitle
+        - excerpt
+        - category
+        - post_tags
 
+    # Complete Field Schema
     fields:
+      # ------------------------------------------------------------------------
+      # [A] Core Editorial Identity
+      # ------------------------------------------------------------------------
       - name: title
-        label: Title
+        label: Post Title
         type: string
         required: true
+        description: "Main headline (e.g. Deep-Diving DevOps: Why I'm Taking the IBM DevOps and Software Engineering Professional Certificate)"
+
+      - name: slug
+        label: URL Slug & Filename
+        type: string
+        required: true
+        pattern: "^[a-z0-9-]+$"
+        description: "Clean URL identifier (e.g. ibm-devops-certificate -> creates /posts/ibm-devops-certificate.html)"
 
       - name: subtitle
-        label: Subtitle
+        label: Subtitle / Hook Paragraph
         type: string
         required: true
+        description: "Lead introductory hook displayed beneath the title (e.g. Bridging network fundamentals, virtualization, and enterprise systems administration into end-to-end cloud-native engineering...)"
 
       - name: excerpt
-        label: Excerpt
+        label: Teaser Excerpt (Blog Feed Summary)
         type: text
         required: true
+        options:
+          minlength: 20
+          maxlength: 300
+        description: "Concise 2-3 sentence overview displayed on the main /blog.html feed teaser card."
 
       - name: category
-        label: Category
+        label: Category Badge
         type: select
         required: true
+        default: "CERTIFICATION & LAB LOG"
         options:
           values:
-            - value: DEVOPS & INFRASTRUCTURE
-              label: DevOps & Infrastructure
-
-            - value: CERTIFICATION & LAB LOG
-              label: Certification & Lab Log
-
-            - value: CLOUD & AWS
-              label: Cloud & AWS
-
-            - value: LINUX & SYSTEMS
-              label: Linux & Systems
-
-            - value: NETWORKING
-              label: Networking
-
-            - value: SOFTWARE ENGINEERING
-              label: Software Engineering
+            - value: "CERTIFICATION & LAB LOG"
+              label: "Certification & Lab Log"
+            - value: "DEVOPS & INFRASTRUCTURE"
+              label: "DevOps & Infrastructure"
+            - value: "CLOUD ARCHITECTURE & AWS"
+              label: "Cloud Architecture & AWS"
+            - value: "LINUX & KERNEL SYSTEMS"
+              label: "Linux & Kernel Systems"
+            - value: "ENTERPRISE NETWORKING"
+              label: "Enterprise Networking"
+            - value: "CI/CD & AUTOMATION"
+              label: "CI/CD & Automation"
+            - value: "KUBERNETES & CONTAINERS"
+              label: "Kubernetes & Containers"
+            - value: "DEVSECOPS & OBSERVABILITY"
+              label: "DevSecOps & Observability"
+            - value: "SOFTWARE ENGINEERING"
+              label: "Software Engineering"
 
       - name: display_date
         label: Display Date
         type: string
         required: true
-        description: "Example: October 2026"
+        default: "October 2026"
+        description: "Formatted human date string displayed in post meta header (e.g. October 2026)"
+
+      - name: date
+        label: Publication Date (Calendar Picker)
+        type: date
+        default: now
+        required: true
+        description: "Machine timestamp used for automated chronological sorting"
 
       - name: read_time
-        label: Read Time
+        label: Estimated Reading Time
         type: string
         required: true
-        description: "Example: 6 min read"
-
-      - name: post_tags
-        label: Tags
-        type: string
-        list: true
-        description: "Example: #DevOps, #Docker, #Linux"
+        default: "6 min read"
+        description: "Estimated reading time badge (e.g. 6 min read, 12 min deep dive)"
 
       - name: permalink
-        label: Permalink
+        label: Canonical Permalink
         type: string
         required: true
-        description: "Example: /posts/my-new-post.html"
+        default: "/posts/{fields.slug}.html"
+        description: "Public URL route for this article (e.g. /posts/ibm-devops-certificate.html)"
+
+      # ------------------------------------------------------------------------
+      # [B] Visual Media & Cover Artwork
+      # ------------------------------------------------------------------------
+      - name: cover_image
+        label: Cover / Featured Header Image
+        type: image
+        description: "Primary visual banner for article header, blog feed thumbnail, and social cards"
+        options:
+          path: images/posts
+          extensions: [png, jpg, jpeg, webp, svg]
+          categories: [image]
+          rename: safe
+
+      - name: cover_image_alt
+        label: Cover Image Alt Text
+        type: string
+        description: "Descriptive alt text for screen readers, web accessibility, and search indexing"
+
+      - name: cover_image_caption
+        label: Cover Image Caption / Credit
+        type: string
+        description: "Optional photo caption or diagram credit displayed beneath the banner"
+
+      # ------------------------------------------------------------------------
+      # [C] Topic Tags & Neubrutalist Badges
+      # ------------------------------------------------------------------------
+      - name: post_tags
+        label: Topic Tags (Neubrutalist Chips)
+        type: select
+        required: true
+        description: "Select one or more topic chips displayed at the bottom of the article and on the blog card"
+        options:
+          multiple: true
+          min: 1
+          max: 12
+          values:
+            # From IBM DevOps Certificate Post:
+            - "#DevOps"
+            - "#IBMCloud"
+            - "#Coursera"
+            - "#Docker"
+            - "#Kubernetes"
+            - "#CICD"
+            - "#PythonFlask"
+            - "#TDD"
+            - "#Networking"
+            # Core Systems & Cloud Disciplines:
+            - "#Linux"
+            - "#Terraform"
+            - "#AWS"
+            - "#ZeroDrift"
+            - "#GitOps"
+            - "#Bash"
+            - "#MCSA"
+            - "#CCNA"
+            - "#Virtualization"
+            - "#MikroTik"
+            - "#OpenShift"
+            - "#Prometheus"
+            - "#Grafana"
+            - "#Tekton"
+            - "#OpenSource"
+            - "#Neubrutalism"
+
+      # ------------------------------------------------------------------------
+      # [D] Highlighted Callout / Blueprint Box (from ibm-devops-certificate.html)
+      # ------------------------------------------------------------------------
+      - name: callout_box
+        label: Highlighted Callout / Blueprint Box
+        type: object
+        description: "Structured callout box matching the // Program Blueprint card in the IBM article"
+        fields:
+          - name: enable
+            label: Show Callout Box
+            type: boolean
+            default: true
+
+          - name: tag_label
+            label: Monospace Label
+            type: string
+            default: "// Program Blueprint"
+            description: "Top monospace accent tag (e.g. // Program Blueprint, // Architecture Note, // Warning)"
+
+          - name: title
+            label: Box Title
+            type: string
+            default: "IBM DevOps and Software Engineering Professional Certificate"
+
+          - name: content
+            label: Box Description
+            type: text
+            description: "Detailed summary text explaining the blueprint, credentials, or architectural takeaway"
+
+          - name: link_text
+            label: Action Link Text
+            type: string
+            default: "Explore the full curriculum on Coursera &rarr;"
+
+          - name: link_url
+            label: Action Link URL
+            type: string
+            default: "https://www.coursera.org/professional-certificates/devops-and-software-engineering"
+
+      # ------------------------------------------------------------------------
+      # [E] Full-Featured Article Body (WYSIWYG Rich Text)
+      # ------------------------------------------------------------------------
+      - name: body
+        label: Article Content
+        type: rich-text
+        required: true
+        description: "Rich visual editing with Bold, Italic, Underline, Strikethrough, Headings (H2/H3/H4), Links, Code Blocks, Lists, Blockquotes, Tables, and Photo insertion. Toggle source mode at any time."
+        options:
+          format: html # Generates clean semantic HTML matching post templates
+          switcher: true # Allows instant toggling between visual WYSIWYG editor and raw Source Mode
+          media: images
+          path: posts
+          extensions: [png, jpg, jpeg, webp, svg, gif]
+          categories: [image]
+          rename: safe
+
+      # ------------------------------------------------------------------------
+      # [F] Downloadable Files, Lab Resources & Attachments
+      # ------------------------------------------------------------------------
+      - name: downloads
+        label: Downloadable Files & Lab Assets
+        type: object
+        list: true
+        description: "Attach downloadable files such as PDF certificates, Terraform configs, or lab source code"
+        fields:
+          - name: label
+            label: File Display Name
+            type: string
+            description: "e.g. Course Syllabus PDF, Complete Terraform Topology (.zip), Ingress Config (.yaml)"
+
+          - name: file
+            label: File Upload
+            type: file
+            options:
+              extensions: [pdf, zip, tar.gz, yaml, yml, json, tf, sh, py]
+              categories: [document, compressed, code]
+              rename: safe
+
+          - name: description
+            label: Brief Note
+            type: string
+            description: "e.g. Verified certificate signed by IBM and Coursera, 2.4 MB"
+
+      # ------------------------------------------------------------------------
+      # [G] Architecture Code Snippets & Configurations
+      # ------------------------------------------------------------------------
+      - name: code_snippets
+        label: Architecture Code Snippets
+        type: object
+        list: true
+        description: "Optional standalone syntax-highlighted configuration snippets accompanying the post"
+        fields:
+          - name: file_name
+            label: File / Component Name
+            type: string
+            description: "e.g. main.tf, Dockerfile, ingress.yaml, server.py"
+
+          - name: language
+            label: Syntax Language
+            type: select
+            default: "yaml"
+            options:
+              values:
+                - "bash"
+                - "python"
+                - "yaml"
+                - "dockerfile"
+                - "hcl"
+                - "json"
+                - "sql"
+                - "html"
+                - "css"
+                - "javascript"
+
+          - name: code
+            label: Code / Configuration
+            type: code
+
+      # ------------------------------------------------------------------------
+      # [H] External References & Verified Links
+      # ------------------------------------------------------------------------
+      - name: external_links
+        label: External Links & References
+        type: object
+        list: true
+        description: "Curated list of documentation, GitHub repos, or verified credentials"
+        fields:
+          - name: text
+            label: Link Text
+            type: string
+            description: "e.g. IBM Professional Certificate Portal, Official GitHub Repo"
+
+          - name: url
+            label: Target URL
+            type: string
+
+          - name: open_in_new_tab
+            label: Open in New Tab
+            type: boolean
+            default: true
+
+      # ------------------------------------------------------------------------
+      # [I] Search Engine Optimization (SEO) & Social Cards
+      # ------------------------------------------------------------------------
+      - name: seo
+        label: SEO & Open Graph Meta
+        type: object
+        description: "Fine-tune how this post renders on Google, Twitter, LinkedIn, and Telegram"
+        fields:
+          - name: meta_title
+            label: Custom SEO Title
+            type: string
+            description: "Overrides default page title in browser tabs & search results"
+
+          - name: meta_description
+            label: Custom Meta Description
+            type: text
+            description: "Recommended: 150-160 characters for search engine snippets"
+
+          - name: og_image
+            label: Open Graph Share Card Image (1200x630)
+            type: image
+            options:
+              path: images/posts
+              extensions: [png, jpg, webp]
+              rename: safe
+
+          - name: canonical_url
+            label: Canonical URL
+            type: string
+            description: "Use if this article was cross-posted from another platform (e.g. Medium, Substack)"
+
+          - name: no_index
+            label: Hide from Search Engines (noindex)
+            type: boolean
+            default: false
+
+      # ------------------------------------------------------------------------
+      # [J] Publishing Controls & Template Binding
+      # ------------------------------------------------------------------------
+      - name: published
+        label: Published Status
+        type: boolean
+        default: true
+        description: "Toggle off to keep as a private draft without rendering to the live public feed"
+
+      - name: featured
+        label: Pin to Featured Posts
+        type: boolean
+        default: false
+        description: "Feature this post at the top of the blog landing page"
 
       - name: layout
-        label: Layout
+        label: Layout Template
         type: string
         default: post.njk
         hidden: true
-
-      - name: body
-        label: Article
-        type: rich-text
-        required: true
