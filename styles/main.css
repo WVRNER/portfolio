@@ -4689,12 +4689,12 @@ a[href*="#cv"].gum-btn:active {
 .gum-hero-centered-inner {
   position: relative;
   z-index: 10;
-  max-width: 780px;
+  max-width: 880px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 26px;
   text-align: center;
 }
 
@@ -4702,21 +4702,87 @@ a[href*="#cv"].gum-btn:active {
   margin: 0 auto;
 }
 
+/* Made "Make the Cut in systems" bigger and more impactful */
 .gum-hero-centered-inner .hero-main-title {
   text-align: center;
   margin: 0;
-  font-size: clamp(44px, 7.2vw, 92px);
-  line-height: 1.02;
-  letter-spacing: -0.04em;
+  font-size: clamp(56px, 8.8vw, 114px);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 900;
 }
 
+.gum-hero-centered-inner .hero-title-badge {
+  display: inline-block;
+  background: var(--gum-pink);
+  color: #000000;
+  padding: 4px 22px;
+  border: 3.5px solid #000000;
+  border-radius: 12px;
+  transform: rotate(-1.5deg);
+  box-shadow: 5px 5px 0px #000000;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin: 0 4px;
+}
+
+/* Hero Description Lead & Fancy In-Between Typography to Stop Skimmers */
 .gum-hero-centered-inner .hero-desc-lead {
   text-align: center;
-  max-width: 660px;
+  max-width: 720px;
   margin: 0 auto;
-  font-size: clamp(16.5px, 2vw, 21px);
+  font-size: clamp(17px, 2.1vw, 21.5px);
   color: var(--text-muted);
-  line-height: 1.65;
+  line-height: 1.7;
+}
+
+.lead-role-highlight {
+  font-weight: 800;
+  color: var(--text-main);
+  border-bottom: 2.5px solid var(--gum-yellow);
+  padding-bottom: 1px;
+}
+
+.lead-fancy-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.1em;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+.lead-tech-pill {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  font-weight: 700;
+  padding: 2px 8px;
+  background: var(--gum-pink);
+  color: #000000;
+  border: 1.5px solid #000000;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px #000000;
+  white-space: nowrap;
+  vertical-align: baseline;
+  display: inline-block;
+  line-height: 1.3;
+}
+
+.lead-pill-badge.yellow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  font-weight: 800;
+  padding: 2px 9px;
+  background: var(--gum-yellow);
+  color: #000000;
+  border: 1.5px solid #000000;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px #000000;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  vertical-align: baseline;
+  line-height: 1.3;
 }
 
 .gum-hero-centered-inner .hero-cta-group {
@@ -4734,8 +4800,29 @@ a[href*="#cv"].gum-btn:active {
     border-bottom: none !important;
   }
 
+  .gum-hero-centered-inner {
+    gap: 20px;
+  }
+
   .gum-hero-centered-inner .hero-main-title {
-    font-size: clamp(38px, 9vw, 54px);
+    font-size: clamp(44px, 11.5vw, 70px);
+    line-height: 1.02;
+  }
+
+  .gum-hero-centered-inner .hero-title-badge {
+    padding: 2px 14px;
+    border-width: 2.5px;
+    box-shadow: 3px 3px 0px #000000;
+    border-radius: 9px;
+  }
+
+  .gum-hero-centered-inner .hero-desc-lead {
+    font-size: 15.5px;
+    line-height: 1.65;
+  }
+
+  .lead-fancy-serif {
+    font-size: 1.05em;
   }
 
   .gum-hero-centered-inner .hero-cta-group {
