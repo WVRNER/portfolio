@@ -1,0 +1,404 @@
+---
+permalink: /blog.html
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#FFC900" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <title>
+      Blog · Nima Hosseini (@wvrner) · DevOps &amp; Infrastructure Systems
+    </title>
+
+    <meta
+      name="description"
+      content="Engineering notes, lab logs, and technical explorations by Nima Hosseini (@wvrner). Documenting the journey through cloud-native architecture, CI/CD, and DevOps."
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      sizes="any"
+      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230029ff%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2248%22%20font-family%3D%22system-ui%2C%20-apple-system%2C%20%27Plus%20Jakarta%20Sans%27%2C%20sans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2246%22%20text-anchor%3D%22middle%22%20fill%3D%22%23f6e490%22%3EW%3C/text%3E%3C/svg%3E"
+    />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20261004fix" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon.png?v=20261004fix"
+    />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/styles/main.css?v=20261004g" />
+    <link rel="stylesheet" href="/styles/animations.css" />
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <header class="gum-nav-wrapper">
+      <nav class="gum-nav-inner" aria-label="Main Navigation">
+        <div class="gum-logo-group">
+          <a href="/" class="gum-logo-link" title="Nima Hosseini (@wvrner)">
+            <span class="logo-text">wvrner</span>
+          </a>
+        </div>
+
+        <div class="gum-nav-right-cluster">
+          <a href="/blog.html" class="gum-nav-link-plain active"> Blog </a>
+
+          <a href="/about/" class="gum-nav-pill-black"> About </a>
+
+          <a href="/about/#cv" class="gum-nav-pill-white"> CV </a>
+
+          <a
+            href="mailto:wvrner@outlook.com"
+            class="gum-nav-cta-rect nav-contact-btn"
+          >
+            Contact
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="gum-section" style="padding-top: 48px; padding-bottom: 90px">
+      <!-- Blog Hero -->
+      <div class="blog-hero-block">
+        <div class="section-lead-block" style="margin-bottom: 16px">
+          <span class="section-pill-tag">
+            01 // FIELD NOTES &amp; CONTINUOUS LEARNING
+          </span>
+        </div>
+
+        <h1 class="blog-headline">Engineering Notes</h1>
+
+        <p class="blog-lead-sentence">
+          Lab logs, architectural reflections, and deep dives on DevOps,
+          software engineering, and cloud systems - documented from the network
+          up.
+        </p>
+      </div>
+
+      <!-- =============================== -->
+      <!-- AUTOMATIC BLOG FEED -->
+      <!-- =============================== -->
+
+      <div class="blog-feed-container" id="blogFeed">
+        {% for post in collections.posts | reverse %}
+
+        <article class="blog-post-card">
+          <!-- Post Metadata -->
+          <div class="blog-post-meta">
+            <span class="blog-category-tag"> {{ post.data.category }} </span>
+
+            <span class="blog-time-badge">
+              {{ post.data.display_date }} &bull; {{ post.data.read_time }}
+            </span>
+          </div>
+
+          <!-- Post Title -->
+          <h2 class="blog-post-title">
+            <a href="{{ post.url }}"> {{ post.data.title }} </a>
+          </h2>
+
+          <!-- Subtitle -->
+          <p
+            class="blog-post-subtitle"
+            style="margin-bottom: 20px; border-bottom: none; padding-bottom: 0"
+          >
+            {{ post.data.subtitle }}
+          </p>
+
+          <!-- Excerpt -->
+          <p
+            class="blog-post-excerpt"
+            style="
+              font-size: 16px;
+              line-height: 1.7;
+              color: var(--text-main);
+              margin-bottom: 22px;
+            "
+          >
+            {{ post.data.excerpt }}
+          </p>
+
+          <!-- Bottom Section -->
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              flex-wrap: wrap;
+              gap: 16px;
+            "
+          >
+            <!-- Read Article -->
+            <a href="{{ post.url }}" class="blog-read-more-btn">
+              <span> Read Full Article </span>
+
+              <span aria-hidden="true"> &rarr; </span>
+            </a>
+
+            <!-- Tags -->
+            <div class="about-chips-list" style="margin-top: 0">
+              {% for tag in post.data.post_tags %} {% set colors = [
+              "chip-yellow", "chip-pink", "chip-green", "chip-blue" ] %}
+
+              <span class="about-chip {{ colors[loop.index0 % 4] }}">
+                {{ tag }}
+              </span>
+
+              {% endfor %}
+            </div>
+          </div>
+        </article>
+
+        {% endfor %}
+
+        <!-- Upcoming Posts Placeholder -->
+        <div class="blog-placeholder-card">
+          <span class="blog-placeholder-tag">
+            // UPCOMING WRITE-UPS &amp; EXPERIMENTS
+          </span>
+
+          <h3 class="blog-placeholder-title">
+            More engineering logs coming soon.
+          </h3>
+
+          <p class="blog-placeholder-desc">
+            Currently preparing write-ups on multi-container Linux network
+            namespaces, Terraform S3 remote state locking architectures, and
+            automated keyless OIDC pipeline workflows.
+          </p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <nav
+        class="blog-pagination-nav"
+        id="blogPagination"
+        aria-label="Blog Pages Navigation"
+        style="display: none"
+      ></nav>
+    </main>
+
+    <!-- Footer -->
+    <footer class="gum-footer">
+      <div class="gum-footer-inner">
+        <!-- Telemetry -->
+        <div class="footer-top-telemetry">
+          <div class="telemetry-status-badge">
+            <span class="neo-pulse-dot" aria-hidden="true"></span>
+
+            <span> SYS STATUS: 100% NOMINAL </span>
+          </div>
+
+          <div class="telemetry-clocks">
+            <span>
+              NYC (EDT):
+              <strong id="footerLocalClock"> --:--:-- </strong>
+            </span>
+
+            <span> &middot; </span>
+
+            <span>
+              UTC:
+              <strong id="footerUtcClock"> --:--:-- UTC </strong>
+            </span>
+          </div>
+
+          <div>
+            <span> NYC // 40.7128&deg; N, 74.0060&deg; W </span>
+          </div>
+        </div>
+
+        <!-- Footer Columns -->
+        <div class="footer-cols-grid">
+          <!-- Brand -->
+          <div class="footer-brand-col">
+            <div class="gum-logo-pill" style="width: fit-content">
+              <span class="logo-w"> W </span>
+
+              <span> Nima Hosseini </span>
+            </div>
+
+            <div class="footer-brand-role">
+              wvrner &middot; DevOps &amp; Infrastructure Systems
+            </div>
+
+            <p class="footer-brand-desc">
+              Designing automated pipelines, resilient AWS architectures, and
+              understanding modern systems from first principles.
+            </p>
+          </div>
+
+          <!-- Links -->
+          <div class="footer-links-col">
+            <h5>// VERIFIED PROTOCOLS</h5>
+
+            <ul class="footer-links-list">
+              <!-- Telegram -->
+              <li>
+                <a
+                  href="https://t.me/wvrner"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    class="footer-protocol-icon"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"
+                    />
+                  </svg>
+
+                  <span> Telegram: @wvrner </span>
+                </a>
+              </li>
+
+              <!-- GitHub -->
+              <li>
+                <a
+                  href="https://github.com/wvrner"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    class="footer-protocol-icon"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                    />
+                  </svg>
+
+                  <span> GitHub </span>
+                </a>
+              </li>
+
+              <!-- LinkedIn -->
+              <li>
+                <a
+                  href="https://linkedin.com/in/wvrner"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <svg
+                    class="footer-protocol-icon"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"
+                    />
+                  </svg>
+
+                  <span> LinkedIn </span>
+                </a>
+              </li>
+
+              <!-- Email -->
+              <li>
+                <a href="mailto:wvrner@outlook.com">
+                  <svg
+                    class="footer-protocol-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                  </svg>
+
+                  <span> Email (Direct) </span>
+                </a>
+              </li>
+
+              <!-- CV -->
+              <li>
+                <a href="/about/#cv">
+                  <svg
+                    class="footer-protocol-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    />
+
+                    <polyline points="14 2 14 8 20 8" />
+
+                    <line x1="16" y1="13" x2="8" y2="13" />
+
+                    <line x1="16" y1="17" x2="8" y2="17" />
+
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg>
+
+                  <span> CV </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Giant Wordmark -->
+        <div class="footer-giant-wordmark" aria-hidden="true">WVRNER</div>
+
+        <!-- Bottom -->
+        <div class="footer-bottom-bar">
+          <span> WVRNER // BUILD: The One </span>
+
+          <span> &copy; 2026 Nima Hosseini wvrner. All rights reserved. </span>
+
+          <button id="backToTopBtn" class="gum-btn gum-btn-white" type="button">
+            <span> [ &uarr; BACK TO TOP ] </span>
+          </button>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+  </body>
+</html>

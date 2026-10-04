@@ -1,6 +1,6 @@
 media:
-  input: images/posts
-  output: /images/posts
+  input: images
+  output: /images
 
 content:
   - name: posts
@@ -8,98 +8,83 @@ content:
     type: collection
     path: posts
 
-    description: "Engineering notes, lab logs, and technical explorations"
-
-    filename: "{fields.slug}.html"
-
     view:
-      fields: [title, date, category]
-      primary: title
-      sort: [date, title]
-      default:
-        sort: date
-        order: desc
+      fields:
+        - title
+        - display_date
+        - category
 
     fields:
       - name: title
-        label: Post Title
+        label: Title
         type: string
         required: true
-
-      - name: slug
-        label: URL Slug
-        type: string
-        required: true
-        description: "Example: docker-networking"
-
-      - name: category
-        label: Category Badge
-        type: select
-        required: true
-        default: "CERTIFICATION & LAB LOG"
-        options:
-          values:
-            - "CERTIFICATION & LAB LOG"
-            - "DEVOPS & INFRASTRUCTURE"
-            - "CLOUD ARCHITECTURE"
-            - "NETWORKING & SYSTEMS"
-            - "CI/CD & AUTOMATION"
-            - "LINUX INTERNALS"
-            - "SECURITY & DEVSECOPS"
-
-      - name: date
-        label: Publication Date
-        type: date
-        required: true
-
-      - name: read_time
-        label: Estimated Reading Time
-        type: string
-        default: "6 min read"
-        description: "Example: 6 min read"
 
       - name: subtitle
-        label: Subtitle / One-Line Hook
-        type: text
+        label: Subtitle
+        type: string
         required: true
 
       - name: excerpt
-        label: Blog Feed Excerpt
+        label: Excerpt
         type: text
         required: true
-        description: "Short summary shown on the main blog page."
 
-      - name: tags
-        label: Topic Tags
+      - name: category
+        label: Category
         type: select
-        options:
-          multiple: true
-          values:
-            - "#DevOps"
-            - "#IBMCloud"
-            - "#Coursera"
-            - "#Docker"
-            - "#Kubernetes"
-            - "#CICD"
-            - "#PythonFlask"
-            - "#TDD"
-            - "#Networking"
-            - "#Linux"
-            - "#Terraform"
-            - "#AWS"
-            - "#ZeroDrift"
-            - "#Bash"
-            - "#GitOps"
-            - "#MCSA"
-            - "#CCNA"
-            - "#Virtualization"
-            - "#MikroTik"
-            - "#OpenSource"
-            - "#Neubrutalism"
-
-      - name: body
-        label: Article Content
-        type: rich-text
         required: true
         options:
-          format: html
+          values:
+            - value: DEVOPS & INFRASTRUCTURE
+              label: DevOps & Infrastructure
+
+            - value: CERTIFICATION & LAB LOG
+              label: Certification & Lab Log
+
+            - value: CLOUD & AWS
+              label: Cloud & AWS
+
+            - value: LINUX & SYSTEMS
+              label: Linux & Systems
+
+            - value: NETWORKING
+              label: Networking
+
+            - value: SOFTWARE ENGINEERING
+              label: Software Engineering
+
+      - name: display_date
+        label: Display Date
+        type: string
+        required: true
+        description: "Example: October 2026"
+
+      - name: read_time
+        label: Read Time
+        type: string
+        required: true
+        description: "Example: 6 min read"
+
+      - name: post_tags
+        label: Tags
+        type: string
+        list: true
+        description: "Example: #DevOps, #Docker, #Linux"
+
+      - name: permalink
+        label: Permalink
+        type: string
+        required: true
+        description: "Example: /posts/my-new-post.html"
+
+      - name: layout
+        label: Layout
+        type: string
+        default: post.njk
+        hidden: true
+
+      - name: body
+        label: Article
+        type: rich-text
+        required: true

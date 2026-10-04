@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover"
+    />
+
+    <meta name="theme-color" content="#FFC900" />
+
+    <title>{{ title }} · wvrner</title>
+
+    <meta
+      name="description"
+      content="{{ excerpt }}"
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230029ff%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2248%22%20font-family%3D%22system-ui%2C%20-apple-system%2C%20%27Plus%20Jakarta%20Sans%27%2C%20sans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2246%22%20text-anchor%3D%22middle%22%20fill%3D%22%23f6e490%22%3EW%3C/text%3E%3C/svg%3E"
+    />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20261004fix" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=20261004fix" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/styles/main.css?v=20261004g" />
+    <link rel="stylesheet" href="/styles/animations.css" />
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <header class="gum-nav-wrapper">
+      <nav class="gum-nav-inner" aria-label="Main Navigation">
+
+        <div class="gum-logo-group">
+          <a
+            href="/"
+            class="gum-logo-link"
+            title="Nima Hosseini (@wvrner)"
+          >
+            <span class="logo-text">wvrner</span>
+          </a>
+        </div>
+
+        <div class="gum-nav-right-cluster">
+          <a href="/blog/" class="gum-nav-link-plain active">Blog</a>
+          <a href="/about/" class="gum-nav-pill-black">About</a>
+          <a href="/about/#cv" class="gum-nav-pill-white">CV</a>
+
+          <a
+            href="mailto:wvrner@outlook.com"
+            class="gum-nav-cta-rect nav-contact-btn"
+          >
+            Contact
+          </a>
+        </div>
+
+      </nav>
+    </header>
+
+
+    <!-- Article -->
+    <main
+      class="gum-section"
+      style="
+        padding-top: 48px;
+        padding-bottom: 90px;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0 auto;
+      "
+    >
+
+      <article
+        class="blog-article-container"
+        style="max-width: 860px; margin: 0 auto;"
+      >
+
+        <!-- Back Button -->
+        <div style="margin-bottom: 24px;">
+          <a href="/blog/" class="blog-back-btn">
+            <span aria-hidden="true">&larr;</span>
+            <span>Back to Engineering Notes</span>
+          </a>
+        </div>
+
+
+        <!-- Article Header -->
+        <header
+          class="blog-article-header"
+          style="margin-bottom: 36px;"
+        >
+
+          <div
+            class="blog-post-meta"
+            style="margin-bottom: 14px;"
+          >
+
+            <span class="blog-category-tag">
+              {{ category }}
+            </span>
+
+            <span class="blog-time-badge">
+              {{ display_date }} &bull; {{ read_time }}
+            </span>
+
+          </div>
+
+
+          <h1
+            class="blog-post-title"
+            style="
+              font-size: clamp(32px, 4.5vw, 50px);
+              line-height: 1.15;
+              margin-bottom: 16px;
+            "
+          >
+            {{ title }}
+          </h1>
+
+
+          <p class="blog-post-subtitle">
+            {{ subtitle }}
+          </p>
+
+        </header>
+
+
+        <!-- Article Body -->
+        <div
+          class="blog-article-body"
+          style="
+            font-size: 16.5px;
+            line-height: 1.8;
+            color: var(--text-main);
+          "
+        >
+
+          {{ content | safe }}
+
+        </div>
+
+
+        <!-- Article Footer -->
+        <footer
+          style="
+            margin-top: 48px;
+            padding-top: 28px;
+            border-top: 2px solid #000000;
+          "
+        >
+
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              flex-wrap: wrap;
+              gap: 16px;
+            "
+          >
+
+            <!-- Tags -->
+            <div
+              class="about-chips-list"
+              style="margin-top: 0;"
+            >
+
+              {% for tag in post_tags %}
+
+                {% set colors = [
+                  "chip-yellow",
+                  "chip-pink",
+                  "chip-green",
+                  "chip-blue"
+                ] %}
+
+                <span class="about-chip {{ colors[loop.index0 % 4] }}">
+                  {{ tag }}
+                </span>
+
+              {% endfor %}
+
+            </div>
+
+
+            <a href="/blog/" class="blog-read-more-btn">
+              <span>&larr; All Articles</span>
+            </a>
+
+          </div>
+
+        </footer>
+
+      </article>
+
+    </main>
+
+
+    <!-- Site Footer -->
+    <footer class="gum-footer">
+
+      <div class="gum-footer-inner">
+
+        <!-- Telemetry -->
+        <div class="footer-top-telemetry">
+
+          <div class="telemetry-status-badge">
+            <span class="neo-pulse-dot" aria-hidden="true"></span>
+            <span>SYS STATUS: 100% NOMINAL</span>
+          </div>
+
+          <div class="telemetry-clocks">
+
+            <span>
+              NYC (EDT):
+              <strong id="footerLocalClock">--:--:--</strong>
+            </span>
+
+            <span>&middot;</span>
+
+            <span>
+              UTC:
+              <strong id="footerUtcClock">--:--:-- UTC</strong>
+            </span>
+
+          </div>
+
+          <div>
+            <span>
+              NYC // 40.7128&deg; N, 74.0060&deg; W
+            </span>
+          </div>
+
+        </div>
+
+
+        <!-- Footer Columns -->
+        <div class="footer-cols-grid">
+
+          <div class="footer-brand-col">
+
+            <div
+              class="gum-logo-pill"
+              style="width: fit-content"
+            >
+              <span class="logo-w">W</span>
+              <span>Nima Hosseini</span>
+            </div>
+
+            <div class="footer-brand-role">
+              wvrner &middot; DevOps &amp; Infrastructure Systems
+            </div>
+
+            <p class="footer-brand-desc">
+              Designing automated pipelines, resilient AWS architectures,
+              and understanding modern systems from first principles.
+            </p>
+
+          </div>
+
+
+          <div class="footer-links-col">
+
+            <h5>// VERIFIED PROTOCOLS</h5>
+
+            <ul class="footer-links-list">
+
+              <li>
+                <a
+                  href="https://t.me/wvrner"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>Telegram: @wvrner</span>
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="https://github.com/wvrner"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>GitHub</span>
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="https://linkedin.com/in/wvrner"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>LinkedIn</span>
+                </a>
+              </li>
+
+              <li>
+                <a href="mailto:wvrner@outlook.com">
+                  <span>Email (Direct)</span>
+                </a>
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+
+        <!-- Giant Wordmark -->
+        <div
+          class="footer-giant-wordmark"
+          aria-hidden="true"
+        >
+          WVRNER
+        </div>
+
+
+        <!-- Bottom Bar -->
+        <div class="footer-bottom-bar">
+
+          <span>
+            WVRNER // BUILD: The One
+          </span>
+
+          <span>
+            &copy; 2026 Nima Hosseini wvrner. All rights reserved.
+          </span>
+
+          <button
+            id="backToTopBtn"
+            class="gum-btn gum-btn-white"
+            type="button"
+          >
+            <span>[ &uarr; BACK TO TOP ]</span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+
+  </body>
+</html>
