@@ -5069,6 +5069,81 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: 1px 1px 0px #FFFFFF;
 }
 
+/* ==========================================================================
+   BIG DOWNLOAD CV CTA (Outside of Card Frame, Right Above Footer)
+   ========================================================================== */
+.cv-download-outer-wrap {
+  max-width: 900px;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.cv-download-btn-big {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 520px;
+  padding: 14px 32px;
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2.5px solid #000000 !important;
+  border-radius: 0px !important;
+  font-family: var(--font-display, "Plus Jakarta Sans", system-ui, sans-serif);
+  font-size: 16.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 5px 5px 0px var(--gum-pink, #FF90E8);
+  box-sizing: border-box;
+  white-space: nowrap;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1), background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.cv-download-btn-big:hover {
+  background: var(--gum-pink, #FF90E8) !important;
+  color: #000000 !important;
+  border-color: #000000 !important;
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0px #000000;
+}
+
+.cv-download-btn-big:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px var(--gum-pink, #FF90E8);
+}
+
+.cv-download-icon-big {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  stroke: currentColor;
+}
+
+[data-theme="dark"] .cv-download-btn-big {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+  box-shadow: 5px 5px 0px var(--gum-pink, #FF90E8);
+}
+
+[data-theme="dark"] .cv-download-btn-big:hover {
+  background: var(--gum-pink, #FF90E8) !important;
+  color: #000000 !important;
+  border-color: #FFFFFF !important;
+  box-shadow: 7px 7px 0px #FFFFFF;
+}
+
+[data-theme="dark"] .cv-download-btn-big:active {
+  box-shadow: 2px 2px 0px var(--gum-pink, #FF90E8);
+}
+
 .cv-intro-text {
   font-size: 16.5px;
   line-height: 1.6;
@@ -5314,6 +5389,31 @@ a[href*="#cv"].gum-btn:active {
   .cv-download-btn {
     padding: 6px 14px;
     font-size: 12.5px;
+  }
+  .cv-download-outer-wrap {
+    margin-top: 22px;
+    padding: 0 12px;
+  }
+  .cv-download-btn-big {
+    width: 100%;
+    max-width: 100%;
+    padding: 13px 20px;
+    font-size: 15px;
+    gap: 8px;
+    box-shadow: 4px 4px 0px var(--gum-pink, #FF90E8);
+  }
+  .cv-download-btn-big:hover {
+    box-shadow: 5px 5px 0px #000000;
+  }
+  .cv-download-icon-big {
+    width: 18px;
+    height: 18px;
+  }
+  [data-theme="dark"] .cv-download-btn-big {
+    box-shadow: 4px 4px 0px var(--gum-pink, #FF90E8);
+  }
+  [data-theme="dark"] .cv-download-btn-big:hover {
+    box-shadow: 5px 5px 0px #FFFFFF;
   }
   .cv-role-block {
     padding: 20px 16px 22px;
