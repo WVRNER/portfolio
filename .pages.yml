@@ -1,51 +1,80 @@
-media:
-  input: images/blog
-  output: /images/blog
+# ==============================================================================
+# Pages CMS Configuration (.pages.yml)
+# Official documentation: https://pagescms.org/docs/configuration/
+# ==============================================================================
 
+# 1. Media Upload Directory
+media:
+  input: images/posts
+  output: images/posts
+
+# 2. Content Collections
 content:
   - name: posts
     label: Blog Posts
     type: collection
     path: posts
+    description: "Engineering notes, lab logs, and technical explorations"
+    filename: "{year}-{month}-{day}-{fields.slug}.html"
     view:
-      fields: [title, date, category]
+      fields: [title, date, category, read_time]
+      primary: title
+      default:
+        sort: date
+        order: desc
     fields:
       - name: title
-        label: Title
+        label: Post Title
         type: string
         required: true
+        description: "The main headline of your article"
+
+      - name: slug
+        label: URL Slug (Filename)
+        type: string
+        required: true
+        description: "Filename without extension (e.g., terraform-s3-state)"
 
       - name: category
-        label: Category
-        type: string
-        required: true
+        label: Category Badge
+        type: select
+        default: "DEVOPS & INFRASTRUCTURE"
+        options:
+          - "CERTIFICATION & LAB LOG"
+          - "DEVOPS & INFRASTRUCTURE"
+          - "CLOUD ARCHITECTURE"
+          - "NETWORKING & SYSTEMS"
+          - "CI/CD & AUTOMATION"
+          - "LINUX INTERNALS"
 
       - name: date
-        label: Date
+        label: Publication Date
         type: date
+        default: now
         required: true
 
       - name: read_time
-        label: Read Time
+        label: Estimated Reading Time
         type: string
         default: "5 min read"
 
       - name: subtitle
-        label: Subtitle
-        type: text
-        required: true
+        label: Subtitle / One-line Summary
+        type: string
+        description: "One clear sentence explaining the core takeaway"
 
       - name: excerpt
-        label: Blog Page Excerpt
+        label: Teaser Summary
         type: text
-        required: true
+        description: "2-3 sentences shown on the blog feed card"
 
       - name: tags
-        label: Tags
-        type: string
-        list: true
+        label: Tags (e.g., DevOps, AWS, Docker)
+        type: list
+        field:
+          type: string
 
       - name: body
         label: Article Content
         type: rich-text
-        required: true
+        description: "Full post body with headings, code blocks, and diagrams"
