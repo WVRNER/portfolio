@@ -1,111 +1,238 @@
 # ==============================================================================
-# Pages CMS Configuration (.pages.yml)
-# Complete schema for Nima Hosseini (@wvrner) - DevOps & Infrastructure Portfolio
-# Official documentation: https://pagescms.org/docs/configuration/
+# Pages CMS Configuration
+# WVRNER Portfolio / Blog
 # ==============================================================================
 
-# 1. Media Upload Directory
+# ------------------------------------------------------------------------------
+# MEDIA
+# Uploaded blog images will be stored in images/posts/
+# ------------------------------------------------------------------------------
+
 media:
   input: images/posts
   output: /images/posts
 
-# 2. Content Collections
+
+# ------------------------------------------------------------------------------
+# CONTENT
+# ------------------------------------------------------------------------------
+
 content:
-  # Blog Posts Collection (posts/*.html)
+
+  # ============================================================================
+  # BLOG POSTS
+  # ============================================================================
+
   - name: posts
     label: Blog Posts
     type: collection
     path: posts
+
     description: "Engineering notes, lab logs, and technical explorations"
+
     filename: "{fields.slug}.html"
+
     view:
-      fields: [title, date, category, tags]
+      fields:
+        - title
+        - date
+        - category
       primary: title
       default:
         sort: date
         order: desc
+
     fields:
+
+      # ------------------------------------------------------------------------
+      # TITLE
+      # ------------------------------------------------------------------------
+
       - name: title
         label: Post Title
         type: string
         required: true
-        description: "e.g. Deep-Diving DevOps: Why I'm Taking the IBM DevOps and Software Engineering Professional Certificate"
+        description: "The main title of the article."
+
+
+      # ------------------------------------------------------------------------
+      # SLUG / FILENAME
+      # Example: docker-networking
+      # Creates: posts/docker-networking.html
+      # ------------------------------------------------------------------------
 
       - name: slug
         label: URL Slug / Filename
         type: string
         required: true
-        description: "e.g. ibm-devops-certificate (creates posts/ibm-devops-certificate.html)"
+        description: "Example: docker-networking"
+
+
+      # ------------------------------------------------------------------------
+      # CATEGORY
+      # ------------------------------------------------------------------------
 
       - name: category
         label: Category Badge
         type: select
+        required: true
         default: "CERTIFICATION & LAB LOG"
+
         options:
           values:
-            - "CERTIFICATION & LAB LOG"
-            - "DEVOPS & INFRASTRUCTURE"
-            - "CLOUD ARCHITECTURE"
-            - "NETWORKING & SYSTEMS"
-            - "CI/CD & AUTOMATION"
-            - "LINUX INTERNALS"
-            - "SECURITY & DEVSECOPS"
+
+            - value: "CERTIFICATION & LAB LOG"
+              label: "CERTIFICATION & LAB LOG"
+
+            - value: "DEVOPS & INFRASTRUCTURE"
+              label: "DEVOPS & INFRASTRUCTURE"
+
+            - value: "CLOUD ARCHITECTURE"
+              label: "CLOUD ARCHITECTURE"
+
+            - value: "NETWORKING & SYSTEMS"
+              label: "NETWORKING & SYSTEMS"
+
+            - value: "CI/CD & AUTOMATION"
+              label: "CI/CD & AUTOMATION"
+
+            - value: "LINUX INTERNALS"
+              label: "LINUX INTERNALS"
+
+            - value: "SECURITY & DEVSECOPS"
+              label: "SECURITY & DEVSECOPS"
+
+
+      # ------------------------------------------------------------------------
+      # PUBLICATION DATE
+      # ------------------------------------------------------------------------
 
       - name: date
         label: Publication Date
         type: date
-        default: now
         required: true
+
+
+      # ------------------------------------------------------------------------
+      # READING TIME
+      # ------------------------------------------------------------------------
 
       - name: read_time
         label: Estimated Reading Time
         type: string
         default: "6 min read"
-        description: "e.g. 6 min read"
+        description: "Example: 6 min read"
+
+
+      # ------------------------------------------------------------------------
+      # SUBTITLE
+      # Displayed directly underneath the article title
+      # ------------------------------------------------------------------------
 
       - name: subtitle
         label: Subtitle / One-Line Hook
-        type: string
+        type: text
         required: true
-        description: "e.g. Bridging network fundamentals, virtualization, and enterprise systems administration into end-to-end cloud-native engineering..."
+        description: "Short description displayed directly underneath the article title."
+
+
+      # ------------------------------------------------------------------------
+      # EXCERPT
+      # Used on blog.html for the article preview
+      # ------------------------------------------------------------------------
 
       - name: excerpt
-        label: Teaser Excerpt (for Blog Feed Card)
+        label: Blog Feed Excerpt
         type: text
-        description: "Short 2-3 sentence overview displayed on the blog feed teaser card."
+        required: true
+        description: "A short 2-3 sentence summary displayed on the Engineering Notes page."
 
-      # Defined Tags List matching the IBM Post & Cloud/DevOps Topics
+
+      # ------------------------------------------------------------------------
+      # TAGS
+      # ------------------------------------------------------------------------
+
       - name: tags
-        label: Topic Tags (Neubrutalist Chips)
+        label: Topic Tags
         type: select
+
         options:
           multiple: true
+
           values:
-            # Tags from IBM DevOps Post:
-            - "#DevOps"
-            - "#IBMCloud"
-            - "#Coursera"
-            - "#Docker"
-            - "#Kubernetes"
-            - "#CICD"
-            - "#PythonFlask"
-            - "#TDD"
-            - "#Networking"
-            # Additional Cloud & Systems Tags:
-            - "#Linux"
-            - "#Terraform"
-            - "#AWS"
-            - "#ZeroDrift"
-            - "#Bash"
-            - "#GitOps"
-            - "#MCSA"
-            - "#CCNA"
-            - "#Virtualization"
-            - "#MikroTik"
-            - "#OpenSource"
-            - "#Neubrutalism"
+
+            - value: "#DevOps"
+              label: "#DevOps"
+
+            - value: "#IBMCloud"
+              label: "#IBMCloud"
+
+            - value: "#Coursera"
+              label: "#Coursera"
+
+            - value: "#Docker"
+              label: "#Docker"
+
+            - value: "#Kubernetes"
+              label: "#Kubernetes"
+
+            - value: "#CICD"
+              label: "#CICD"
+
+            - value: "#PythonFlask"
+              label: "#PythonFlask"
+
+            - value: "#TDD"
+              label: "#TDD"
+
+            - value: "#Networking"
+              label: "#Networking"
+
+            - value: "#Linux"
+              label: "#Linux"
+
+            - value: "#Terraform"
+              label: "#Terraform"
+
+            - value: "#AWS"
+              label: "#AWS"
+
+            - value: "#ZeroDrift"
+              label: "#ZeroDrift"
+
+            - value: "#Bash"
+              label: "#Bash"
+
+            - value: "#GitOps"
+              label: "#GitOps"
+
+            - value: "#MCSA"
+              label: "#MCSA"
+
+            - value: "#CCNA"
+              label: "#CCNA"
+
+            - value: "#Virtualization"
+              label: "#Virtualization"
+
+            - value: "#MikroTik"
+              label: "#MikroTik"
+
+            - value: "#OpenSource"
+              label: "#OpenSource"
+
+            - value: "#Neubrutalism"
+              label: "#Neubrutalism"
+
+
+      # ------------------------------------------------------------------------
+      # ARTICLE BODY
+      # Main rich-text editor in Pages CMS
+      # ------------------------------------------------------------------------
 
       - name: body
         label: Article Content
         type: rich-text
-        description: "Full article body with headings, callout boxes, code snippets, and diagrams"
+        required: true
+
+        description: "Write the full article here. Use headings, paragraphs, lists, links, and formatting."
