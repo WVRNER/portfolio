@@ -10,11 +10,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <title>
-      Blog · Nima Hosseini (@wvrner) · DevOps &amp; Infrastructure Systems
+      Deep-Diving DevOps: Why I'm Taking the IBM DevOps and Software Engineering Professional Certificate · wvrner
     </title>
     <meta
       name="description"
-      content="Engineering notes, lab logs, and technical explorations by Nima Hosseini (@wvrner). Documenting the journey through cloud-native architecture, CI/CD, and DevOps."
+      content="Reflections on bridging network fundamentals, virtualization, and systems administration into modern cloud-native software engineering and automated delivery pipelines."
     />
 
         <!-- Favicon & Search Bar Icon: Letter W (#f6e490) on Purple/Blue (#0029ff) Background -->
@@ -39,8 +39,8 @@
       rel="shortcut icon"
       href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230029ff%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2248%22%20font-family%3D%22system-ui%2C%20-apple-system%2C%20%27Plus%20Jakarta%20Sans%27%2C%20sans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2246%22%20text-anchor%3D%22middle%22%20fill%3D%22%23f6e490%22%3EW%3C/text%3E%3C/svg%3E"
     />
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20261004fix" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=20261004fix" />
+    <link rel="icon" type="image/x-icon" href="../favicon.ico?v=20261004fix" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon.png?v=20261004fix" />
 
     <!-- Fonts: Plus Jakarta Sans, Space Grotesk, Space Mono, Fraunces -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,8 +51,8 @@
     />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/main.css?v=20261004g" />
-    <link rel="stylesheet" href="styles/animations.css" />
+    <link rel="stylesheet" href="../styles/main.css?v=20261004d" />
+    <link rel="stylesheet" href="../styles/animations.css" />
   </head>
   <body>
     <!-- Top Sticky Main Navigation Bar -->
@@ -61,7 +61,7 @@
         <!-- Brand Monogram -->
         <div class="gum-logo-group">
           <a
-            href="index.html"
+            href="../index.html"
             class="gum-logo-link"
             title="Nima Hosseini (@wvrner)"
           >
@@ -69,11 +69,11 @@
           </a>
         </div>
 
-        <!-- Navigation Cluster: Blog (active, no outline/fill), Round About, Round CV, Rect Contact -->
+        <!-- Navigation Cluster: Blog (active), About, CV, Contact -->
         <div class="gum-nav-right-cluster">
-          <a href="blog.html" class="gum-nav-link-plain active">Blog</a>
-          <a href="about.html" class="gum-nav-pill-black">About</a>
-          <a href="about.html#cv" class="gum-nav-pill-white">CV</a>
+          <a href="../blog.html" class="gum-nav-link-plain active">Blog</a>
+          <a href="../about.html" class="gum-nav-pill-black">About</a>
+          <a href="../about.html#cv" class="gum-nav-pill-white">CV</a>
           <a href="mailto:wvrner@outlook.com" class="gum-nav-cta-rect nav-contact-btn">Contact</a>
         </div>
       </nav>
@@ -81,79 +81,118 @@
 
     <!-- Main Content Area -->
     <main class="gum-section" style="padding-top: 48px; padding-bottom: 90px;">
-      <!-- Blog Hero Lead Block -->
-      <div class="blog-hero-block">
-        <div class="section-lead-block" style="margin-bottom: 16px;">
-          <span class="section-pill-tag">01 // FIELD NOTES &amp; CONTINUOUS LEARNING</span>
+      <div class="blog-feed-container">
+        
+        <!-- Back Link Button -->
+        <div>
+          <a href="../blog.html" class="blog-back-btn">
+            <span aria-hidden="true">&larr;</span>
+            <span>Back to all posts</span>
+          </a>
         </div>
-        <h1 class="blog-headline">Engineering Notes</h1>
-        <p class="blog-lead-sentence">
-          Lab logs, architectural reflections, and deep dives on DevOps, software engineering, and cloud systems - documented from the network up.
-        </p>
-      </div>
 
-      <!-- Feed Container: Clickable Teaser Cards (Auto-paginated at 5 posts per page) -->
-      <div class="blog-feed-container" id="blogFeed">
-
-                <article class="blog-post-card">
+        <!-- Dedicated Article Container -->
+        <article class="blog-post-card">
           <!-- Meta Header -->
           <div class="blog-post-meta">
             <span class="blog-category-tag">CERTIFICATION &amp; LAB LOG</span>
             <span class="blog-time-badge">October 2026 &bull; 6 min read</span>
           </div>
 
-          <h2 class="blog-post-title">
-            <a href="posts/ibm-devops-certificate.html">
-              Deep-Diving DevOps: Why I'm Taking the IBM DevOps and Software Engineering Professional Certificate
-            </a>
-          </h2>
+          <h1 class="blog-post-title" style="font-size: clamp(32px, 4.5vw, 48px);">
+            Deep-Diving DevOps: Why I'm Taking the IBM DevOps and Software Engineering Professional Certificate
+          </h1>
 
-          <p class="blog-post-subtitle" style="margin-bottom: 20px; border-bottom: none; padding-bottom: 0;">
+          <p class="blog-post-subtitle">
             Bridging network fundamentals, virtualization, and enterprise systems administration into end-to-end cloud-native engineering, automated pipelines, and disciplined software development.
           </p>
 
-          <p class="blog-post-excerpt" style="font-size: 16px; line-height: 1.7; color: var(--text-main); margin-bottom: 22px;">
-            In modern technology, the boundary between infrastructure operations and software engineering has dissolved. Here is why I enrolled in IBM’s 15-course professional certificate on Coursera, what the CAMS/Agile framework teaches about infrastructure, and how mastering Python, Docker, Kubernetes, TDD, and CI/CD connects with hard networking roots.
-          </p>
+          <div class="blog-post-content">
+            <p>
+              When working in infrastructure, it is easy to get caught up in operational silos. You might spend days configuring routing tables, debugging VLAN trunks on MikroTik hardware, provisioning virtualized hypervisor clusters, or auditing Active Directory Group Policies. Those fundamentals are invaluable - understanding how packets actually move across wires, interfaces, and switches provides an intuition for distributed systems that cannot be faked.
+            </p>
 
-          <!-- Read Full Post Action Button -->
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-            <a href="posts/ibm-devops-certificate.html" class="blog-read-more-btn">
-              <span>Read Full Article</span>
-              <span aria-hidden="true">&rarr;</span>
-            </a>
+            <p>
+              However, modern technology does not operate in separate silos anymore. The boundary between software engineering and systems operations has dissolved. To build truly resilient, self-healing platforms, infrastructure engineers must speak the language of developers, write testable code, and master automated delivery pipelines.
+            </p>
+
+            <p>
+              That realization led me to enroll in the <a href="https://www.coursera.org/professional-certificates/devops-and-software-engineering" target="_blank" rel="noopener noreferrer"><strong>IBM DevOps and Software Engineering Professional Certificate on Coursera</strong></a>.
+            </p>
+
+            <!-- Highlight Callout Box -->
+            <div class="blog-callout-box">
+              <span style="font-family: var(--font-mono); font-size: 12px; font-weight: 800; display: block; margin-bottom: 8px; color: var(--text-muted); text-transform: uppercase;">// Program Blueprint</span>
+              <strong style="font-size: 18px; display: block; margin-bottom: 8px;">IBM DevOps and Software Engineering Professional Certificate</strong>
+              <p style="font-size: 15px; margin-bottom: 12px; line-height: 1.6;">
+                A rigorous 15-course specialization designed by industry leaders at IBM (including John Rofrano, Adjunct Professor at NYU and Senior Technical Staff Member at IBM). The curriculum covers the entire modern software delivery lifecycle: from Agile and Python development to container orchestration, TDD/BDD, automated CI/CD, and security observability.
+              </p>
+              <a href="https://www.coursera.org/professional-certificates/devops-and-software-engineering" target="_blank" rel="noopener noreferrer">
+                Explore the full curriculum on Coursera &rarr;
+              </a>
+            </div>
+
+            <h2>1. The Mindset Shift: CAMS, Agile &amp; Scrum</h2>
+            <p>
+              The opening modules emphasize that DevOps is cultural before it is mechanical. It is structured around the <strong>CAMS</strong> model (Culture, Automation, Measurement, Sharing). In traditional IT, deployments were infrequent, massive events wrapped in bureaucratic change-advisory boards. In contrast, modern engineering embraces small, frequent batch releases, rapid feedback loops, and shared accountability.
+            </p>
+            <p>
+              Going through Agile planning, sprint mechanics, user story mapping, and Kanban workflows recontextualized how I approach infrastructure. Infrastructure is not a static monolith; it is an evolving software product that deserves iterative development cycles.
+            </p>
+
+            <h2>2. Scripting to Software Engineering: Bash &amp; Python</h2>
+            <p>
+              While I regularly write Bash scripts for Linux administration, this program pushes into full-fledged software engineering. Writing structured Python applications, building RESTful APIs using <strong>Flask</strong>, and handling application logic directly demystifies what happens inside the containers we host. When you understand how an application creates socket connections, queries databases, and handles HTTP status codes, debugging production ingress issues becomes substantially faster.
+            </p>
+
+            <h2>3. Containers &amp; Orchestration: Docker, Kubernetes &amp; OpenShift</h2>
+            <p>
+              Having worked with hypervisor virtualization (Hyper-V, ESXi, Proxmox), containerization was a natural step forward, but this program dives into enterprise orchestrators:
+            </p>
+            <ul>
+              <li><strong>Docker Internals:</strong> Multi-stage builds, layer caching, non-root users, and union filesystems.</li>
+              <li><strong>Kubernetes Topologies:</strong> Pod lifecycles, ReplicaSets, Services, ConfigMaps, Secrets, and Ingress routing.</li>
+              <li><strong>Red Hat OpenShift:</strong> Enterprise container management, Source-to-Image (S2I) pipelines, and cluster security contexts.</li>
+            </ul>
+
+            <h2>4. Shifting Left: TDD, BDD &amp; Automated CI/CD Gates</h2>
+            <p>
+              One of the most transformative sections of the curriculum is <strong>Test-Driven Development (TDD)</strong> and <strong>Behavior-Driven Development (BDD)</strong> using tools like PyTest and Behave. Writing automated tests *before* writing application logic forces you to think about edge cases and failure modes upfront.
+            </p>
+            <p>
+              Connecting those test suites to automated CI/CD pipelines in <strong>GitHub Actions</strong> and <strong>Tekton</strong> ensures that no broken code or insecure dependency ever reaches an edge CDN or cluster. Deployments become deterministic, automated, and boring - which is exactly what production systems should be.
+            </p>
+
+            <h2>5. Application Security &amp; Observability</h2>
+            <p>
+              The final courses tackle DevSecOps and observability. Security is integrated directly into the CI/CD pipeline using automated scanning tools and OWASP best practices. For monitoring, instrumenting microservices with <strong>Prometheus</strong> for metric collection and <strong>Grafana</strong> for visual dashboards provides real-time visibility into latency, traffic, error rates, and system saturation (the Google SRE Golden Signals).
+            </p>
+
+            <h2>Connecting It Back to My Systems Journey</h2>
+            <p>
+              My goal is to combine hard networking and systems administration roots with declarative, automated cloud delivery. Understanding physical and virtual network routing makes cloud networking (VPCs, CIDRs, NAT gateways, peering) second nature. Coupling that background with the software engineering rigors taught in this IBM program creates a balanced foundation: knowing both how the packets flow on the wire and how the software runs at the application layer.
+            </p>
+
+            <p>
+              I will continue sharing hands-on project write-ups, architecture breakdowns, and code snippets here as I complete upcoming labs and milestones.
+            </p>
 
             <!-- Tags Cluster -->
-            <div class="about-chips-list" style="margin-top: 0;">
+            <div class="blog-tags-cluster">
               <span class="about-chip chip-yellow">#DevOps</span>
               <span class="about-chip chip-pink">#IBMCloud</span>
-              <span class="about-chip chip-green">#DockerK8s</span>
-              <span class="about-chip chip-blue">#CICD</span>
+              <span class="about-chip chip-green">#Coursera</span>
+              <span class="about-chip chip-blue">#Docker</span>
+              <span class="about-chip chip-yellow">#Kubernetes</span>
+              <span class="about-chip chip-pink">#CICD</span>
+              <span class="about-chip chip-green">#PythonFlask</span>
+              <span class="about-chip">#TDD</span>
+              <span class="about-chip chip-blue">#Networking</span>
             </div>
           </div>
         </article>
 
-        <!-- ===================================================================
-             TEMPLATE / PLACEHOLDER FOR FUTURE POSTS
-             To add a new post in the future:
-             1. Duplicate the <article class="blog-post-card"> above.
-             2. Create a new file in posts/ (e.g., posts/my-new-post.html).
-             3. Update the title, summary, date, and link!
-             =================================================================== -->
-        <div class="blog-placeholder-card">
-          <span class="blog-placeholder-tag">// UPCOMING WRITE-UPS &amp; EXPERIMENTS</span>
-          <h3 class="blog-placeholder-title">More engineering logs coming soon.</h3>
-          <p class="blog-placeholder-desc">
-            Currently preparing write-ups on multi-container Linux network namespaces, Terraform S3 remote state locking architectures, and automated keyless OIDC pipeline workflows.
-          </p>
-        </div>
-
       </div>
-
-      <!-- Neubrutalist Pagination Navigation (Automatically shown when > 5 posts exist) -->
-      <nav class="blog-pagination-nav" id="blogPagination" aria-label="Blog Pages Navigation" style="display: none;">
-        <!-- Generated automatically by initBlogPagination() in js/main.js -->
-      </nav>
     </main>
 
     <!-- Site Footer -->
@@ -234,7 +273,7 @@
                 </a>
               </li>
               <li>
-                <a href="about.html#cv">
+                <a href="../about.html#cv">
                   <svg class="footer-protocol-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                     <polyline points="14 2 14 8 20 8"/>
@@ -264,6 +303,6 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="js/main.js"></script>
+    <script src="../js/main.js"></script>
   </body>
 </html>
