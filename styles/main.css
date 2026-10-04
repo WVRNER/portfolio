@@ -4136,6 +4136,18 @@ a[href*="#cv"].gum-btn:active {
   flex-shrink: 0;
   box-shadow: 2px 2px 0px #000000;
   transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s ease;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.accordion-plus-btn svg,
+.accordion-plus-icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  flex-shrink: 0;
+  transform-origin: center;
 }
 
 .gum-accordion-card.is-open .accordion-plus-btn {
@@ -4212,6 +4224,11 @@ a[href*="#cv"].gum-btn:active {
     width: 38px;
     height: 38px;
     font-size: 22px;
+  }
+  .accordion-plus-btn svg,
+  .accordion-plus-icon {
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -4989,6 +5006,69 @@ a[href*="#cv"].gum-btn:active {
   white-space: nowrap;
 }
 
+.cv-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Outlined, Unfilled Rectangular Download CV Button */
+.cv-download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--text-main, #000000) !important;
+  border: 2px solid var(--text-main, #000000) !important;
+  border-radius: 0px !important;
+  padding: 6px 16px;
+  font-family: var(--font-display, "Plus Jakarta Sans", system-ui, sans-serif);
+  font-size: 13.5px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  box-shadow: 2.5px 2.5px 0px var(--text-main, #000000);
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.cv-download-btn:hover {
+  background: transparent !important;
+  transform: translate(-2px, -2px);
+  box-shadow: 4.5px 4.5px 0px var(--text-main, #000000);
+  color: var(--text-main, #000000) !important;
+}
+
+.cv-download-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--text-main, #000000);
+}
+
+.cv-download-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  stroke: currentColor;
+}
+
+[data-theme="dark"] .cv-download-btn {
+  border-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+  box-shadow: 2.5px 2.5px 0px #FFFFFF;
+}
+
+[data-theme="dark"] .cv-download-btn:hover {
+  box-shadow: 4.5px 4.5px 0px #FFFFFF;
+}
+
+[data-theme="dark"] .cv-download-btn:active {
+  box-shadow: 1px 1px 0px #FFFFFF;
+}
+
 .cv-intro-text {
   font-size: 16.5px;
   line-height: 1.6;
@@ -5221,7 +5301,19 @@ a[href*="#cv"].gum-btn:active {
   .cv-card-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 14px;
+  }
+  .cv-header-actions {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .cv-download-btn {
+    padding: 6px 14px;
+    font-size: 12.5px;
   }
   .cv-role-block {
     padding: 20px 16px 22px;
