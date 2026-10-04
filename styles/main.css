@@ -5069,6 +5069,25 @@ a[href*="#cv"].gum-btn:active {
   color: #000000;
 }
 
+
+.cv-workplace-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 9px;
+  background: var(--gum-yellow);
+  color: #000000;
+  border: 1.5px solid #000000;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
+[data-theme="dark"] .cv-workplace-badge {
+  background: var(--gum-yellow);
+  color: #000000;
+  border-color: #FFFFFF;
+}
+
 .cv-role-desc {
   font-size: 15.5px;
   line-height: 1.6;

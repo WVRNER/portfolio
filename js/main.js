@@ -386,36 +386,36 @@ function initTopicPills() {
    8. Live Dual World Clocks (NYC EST & UTC)
    ========================================================================== */
 function initLiveClocks() {
-  const localEl = document.getElementById('footerLocalClock');
-  const utcEl = document.getElementById('footerUtcClock');
-  if (!localEl && !utcEl) return;
+  const localEls = document.querySelectorAll('#footerLocalClock, #footerNycClock');
+  const utcEls = document.querySelectorAll('#footerUtcClock');
+  if (!localEls.length && !utcEls.length) return;
 
   function update() {
     const now = new Date();
-    if (localEl) {
-      try {
-        localEl.textContent = now.toLocaleTimeString('en-US', {
-          timeZone: 'America/New_York',
-          hour12: false,
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit'
-        }) + ' EST';
-      } catch (e) {
-        const utcHours = now.getUTCHours();
-        const estHours = (utcHours - 5 + 24) % 24;
-        const pad = (n) => String(n).padStart(2, '0');
-        localEl.textContent = `${pad(estHours)}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())} EST`;
-      }
+    const pad = (n) => String(n).padStart(2, '0');
+    let timeStr = '';
+    try {
+      timeStr = now.toLocaleTimeString('en-US', {
+        timeZone: 'America/New_York',
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    } catch (e) {
+      const utcHours = now.getUTCHours();
+      const edtHours = (utcHours - 4 + 24) % 24;
+      timeStr = `${pad(edtHours)}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())}`;
     }
-    if (utcEl) {
-      try {
-        utcEl.textContent = now.toISOString().slice(11, 19) + ' UTC';
-      } catch (e) {
-        const pad = (n) => String(n).padStart(2, '0');
-        utcEl.textContent = `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())} UTC`;
-      }
-    }
+
+    localEls.forEach(el => {
+      el.textContent = timeStr;
+    });
+
+    const utcStr = `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())} UTC`;
+    utcEls.forEach(el => {
+      el.textContent = utcStr;
+    });
   }
 
   update();
@@ -644,21 +644,31 @@ function initAccordions() {
    App Initialization
    ========================================================================== */
 function initApp() {
-  initIntroSplash();
-  initHeroDock();
-  initChapterTabs();
-  initVisualizerToggles();
-  initInfraNodeFlow();
-  initConsoleTabs();
-  initCopyCodeButtons();
-  initInteractiveTerminal();
-  initTopicPills();
-  initLiveClocks();
-  initCopyEmail();
-  initBackToTop();
-  initNavSearch();
-  initHashScroll();
-  initAccordions();
+  const tasks = [
+    initLiveClocks,
+    initIntroSplash,
+    initHeroDock,
+    initChapterTabs,
+    initVisualizerToggles,
+    initInfraNodeFlow,
+    initConsoleTabs,
+    initCopyCodeButtons,
+    initInteractiveTerminal,
+    initTopicPills,
+    initCopyEmail,
+    initBackToTop,
+    initNavSearch,
+    initHashScroll,
+    initAccordions
+  ];
+
+  tasks.forEach(fn => {
+    try {
+      if (typeof fn === 'function') fn();
+    } catch (err) {
+      console.warn('Init task error:', err);
+    }
+  });
 }
 
 if (document.readyState === 'loading') {
