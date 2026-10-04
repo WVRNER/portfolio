@@ -1,28 +1,8 @@
-# ==============================================================================
-# Pages CMS Configuration
-# WVRNER Portfolio / Blog
-# ==============================================================================
-
-# ------------------------------------------------------------------------------
-# MEDIA
-# Uploaded blog images will be stored in images/posts/
-# ------------------------------------------------------------------------------
-
 media:
   input: images/posts
   output: /images/posts
 
-
-# ------------------------------------------------------------------------------
-# CONTENT
-# ------------------------------------------------------------------------------
-
 content:
-
-  # ============================================================================
-  # BLOG POSTS
-  # ============================================================================
-
   - name: posts
     label: Blog Posts
     type: collection
@@ -33,89 +13,44 @@ content:
     filename: "{fields.slug}.html"
 
     view:
-      fields:
-        - title
-        - date
-        - category
+      fields: [title, date, category]
       primary: title
+      sort: [date, title]
       default:
         sort: date
         order: desc
 
     fields:
-
-      # ------------------------------------------------------------------------
-      # TITLE
-      # ------------------------------------------------------------------------
-
       - name: title
         label: Post Title
         type: string
         required: true
-        description: "The main title of the article."
-
-
-      # ------------------------------------------------------------------------
-      # SLUG / FILENAME
-      # Example: docker-networking
-      # Creates: posts/docker-networking.html
-      # ------------------------------------------------------------------------
 
       - name: slug
-        label: URL Slug / Filename
+        label: URL Slug
         type: string
         required: true
         description: "Example: docker-networking"
-
-
-      # ------------------------------------------------------------------------
-      # CATEGORY
-      # ------------------------------------------------------------------------
 
       - name: category
         label: Category Badge
         type: select
         required: true
         default: "CERTIFICATION & LAB LOG"
-
         options:
           values:
-
-            - value: "CERTIFICATION & LAB LOG"
-              label: "CERTIFICATION & LAB LOG"
-
-            - value: "DEVOPS & INFRASTRUCTURE"
-              label: "DEVOPS & INFRASTRUCTURE"
-
-            - value: "CLOUD ARCHITECTURE"
-              label: "CLOUD ARCHITECTURE"
-
-            - value: "NETWORKING & SYSTEMS"
-              label: "NETWORKING & SYSTEMS"
-
-            - value: "CI/CD & AUTOMATION"
-              label: "CI/CD & AUTOMATION"
-
-            - value: "LINUX INTERNALS"
-              label: "LINUX INTERNALS"
-
-            - value: "SECURITY & DEVSECOPS"
-              label: "SECURITY & DEVSECOPS"
-
-
-      # ------------------------------------------------------------------------
-      # PUBLICATION DATE
-      # ------------------------------------------------------------------------
+            - "CERTIFICATION & LAB LOG"
+            - "DEVOPS & INFRASTRUCTURE"
+            - "CLOUD ARCHITECTURE"
+            - "NETWORKING & SYSTEMS"
+            - "CI/CD & AUTOMATION"
+            - "LINUX INTERNALS"
+            - "SECURITY & DEVSECOPS"
 
       - name: date
         label: Publication Date
         type: date
         required: true
-
-
-      # ------------------------------------------------------------------------
-      # READING TIME
-      # ------------------------------------------------------------------------
 
       - name: read_time
         label: Estimated Reading Time
@@ -123,116 +58,48 @@ content:
         default: "6 min read"
         description: "Example: 6 min read"
 
-
-      # ------------------------------------------------------------------------
-      # SUBTITLE
-      # Displayed directly underneath the article title
-      # ------------------------------------------------------------------------
-
       - name: subtitle
         label: Subtitle / One-Line Hook
         type: text
         required: true
-        description: "Short description displayed directly underneath the article title."
-
-
-      # ------------------------------------------------------------------------
-      # EXCERPT
-      # Used on blog.html for the article preview
-      # ------------------------------------------------------------------------
 
       - name: excerpt
         label: Blog Feed Excerpt
         type: text
         required: true
-        description: "A short 2-3 sentence summary displayed on the Engineering Notes page."
-
-
-      # ------------------------------------------------------------------------
-      # TAGS
-      # ------------------------------------------------------------------------
+        description: "Short summary shown on the main blog page."
 
       - name: tags
         label: Topic Tags
         type: select
-
         options:
           multiple: true
-
           values:
-
-            - value: "#DevOps"
-              label: "#DevOps"
-
-            - value: "#IBMCloud"
-              label: "#IBMCloud"
-
-            - value: "#Coursera"
-              label: "#Coursera"
-
-            - value: "#Docker"
-              label: "#Docker"
-
-            - value: "#Kubernetes"
-              label: "#Kubernetes"
-
-            - value: "#CICD"
-              label: "#CICD"
-
-            - value: "#PythonFlask"
-              label: "#PythonFlask"
-
-            - value: "#TDD"
-              label: "#TDD"
-
-            - value: "#Networking"
-              label: "#Networking"
-
-            - value: "#Linux"
-              label: "#Linux"
-
-            - value: "#Terraform"
-              label: "#Terraform"
-
-            - value: "#AWS"
-              label: "#AWS"
-
-            - value: "#ZeroDrift"
-              label: "#ZeroDrift"
-
-            - value: "#Bash"
-              label: "#Bash"
-
-            - value: "#GitOps"
-              label: "#GitOps"
-
-            - value: "#MCSA"
-              label: "#MCSA"
-
-            - value: "#CCNA"
-              label: "#CCNA"
-
-            - value: "#Virtualization"
-              label: "#Virtualization"
-
-            - value: "#MikroTik"
-              label: "#MikroTik"
-
-            - value: "#OpenSource"
-              label: "#OpenSource"
-
-            - value: "#Neubrutalism"
-              label: "#Neubrutalism"
-
-
-      # ------------------------------------------------------------------------
-      # ARTICLE BODY
-      # Main rich-text editor in Pages CMS
-      # ------------------------------------------------------------------------
+            - "#DevOps"
+            - "#IBMCloud"
+            - "#Coursera"
+            - "#Docker"
+            - "#Kubernetes"
+            - "#CICD"
+            - "#PythonFlask"
+            - "#TDD"
+            - "#Networking"
+            - "#Linux"
+            - "#Terraform"
+            - "#AWS"
+            - "#ZeroDrift"
+            - "#Bash"
+            - "#GitOps"
+            - "#MCSA"
+            - "#CCNA"
+            - "#Virtualization"
+            - "#MikroTik"
+            - "#OpenSource"
+            - "#Neubrutalism"
 
       - name: body
         label: Article Content
         type: rich-text
         required: true
-
-        description: "Write the full article here. Use headings, paragraphs, lists, links, and formatting."
+        options:
+          format: html
