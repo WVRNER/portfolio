@@ -641,6 +641,113 @@ function initAccordions() {
 }
 
 /* ==========================================================================
+   Automatic 5-Posts-Per-Page Pagination for Blog
+   ========================================================================== */
+function initBlogPagination() {
+  const feed = document.getElementById("blogFeed");
+  const nav = document.getElementById("blogPagination");
+  if (!feed || !nav) return;
+
+  const POSTS_PER_PAGE = 5;
+  const posts = Array.from(feed.querySelectorAll(".blog-post-card"));
+  const placeholder = feed.querySelector(".blog-placeholder-card");
+  const totalPosts = posts.length;
+
+  if (totalPosts <= POSTS_PER_PAGE) {
+    posts.forEach(p => p.style.display = "");
+    if (placeholder) placeholder.style.display = "";
+    nav.style.display = "none";
+    return;
+  }
+
+  const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+
+  function getPageFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const qPage = parseInt(params.get("page"), 10);
+    if (!isNaN(qPage) && qPage >= 1 && qPage <= totalPages) return qPage;
+    const hash = window.location.hash;
+    const m = hash.match(/page[=-](\d+)/i);
+    if (m) {
+      const hPage = parseInt(m[1], 10);
+      if (!isNaN(hPage) && hPage >= 1 && hPage <= totalPages) return hPage;
+    }
+    return 1;
+  }
+
+  function renderPage(pageNum, scrollIntoView = false) {
+    if (pageNum < 1) pageNum = 1;
+    if (pageNum > totalPages) pageNum = totalPages;
+
+    const startIdx = (pageNum - 1) * POSTS_PER_PAGE;
+    const endIdx = startIdx + POSTS_PER_PAGE;
+
+    posts.forEach((post, idx) => {
+      if (idx >= startIdx && idx < endIdx) {
+        post.style.display = "";
+      } else {
+        post.style.display = "none";
+      }
+    });
+
+    if (placeholder) {
+      placeholder.style.display = (pageNum === totalPages) ? "" : "none";
+    }
+
+    nav.innerHTML = "";
+    nav.style.display = "flex";
+
+    // Prev Button
+    const prevBtn = document.createElement("button");
+    prevBtn.className = "blog-page-btn prev-btn" + (pageNum === 1 ? " disabled" : "");
+    prevBtn.type = "button";
+    prevBtn.innerHTML = "&larr; Prev";
+    prevBtn.setAttribute("aria-label", "Previous Page");
+    prevBtn.addEventListener("click", () => goToPage(pageNum - 1));
+    nav.appendChild(prevBtn);
+
+    // Numbered Buttons
+    for (let i = 1; i <= totalPages; i++) {
+      const pageBtn = document.createElement("button");
+      pageBtn.className = "blog-page-btn" + (i === pageNum ? " active" : "");
+      pageBtn.type = "button";
+      pageBtn.textContent = i;
+      pageBtn.setAttribute("aria-label", "Page " + i);
+      if (i !== pageNum) {
+        pageBtn.addEventListener("click", () => goToPage(i));
+      }
+      nav.appendChild(pageBtn);
+    }
+
+    // Next Button
+    const nextBtn = document.createElement("button");
+    nextBtn.className = "blog-page-btn next-btn" + (pageNum === totalPages ? " disabled" : "");
+    nextBtn.type = "button";
+    nextBtn.innerHTML = "Next &rarr;";
+    nextBtn.setAttribute("aria-label", "Next Page");
+    nextBtn.addEventListener("click", () => goToPage(pageNum + 1));
+    nav.appendChild(nextBtn);
+
+    if (scrollIntoView) {
+      feed.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
+  function goToPage(p) {
+    const url = new URL(window.location);
+    url.searchParams.set("page", p);
+    window.history.pushState({ page: p }, "", url);
+    renderPage(p, true);
+  }
+
+  window.addEventListener("popstate", () => {
+    renderPage(getPageFromURL(), false);
+  });
+
+  renderPage(getPageFromURL(), false);
+}
+
+/* ==========================================================================
    App Initialization
    ========================================================================== */
 function initApp() {
@@ -659,7 +766,8 @@ function initApp() {
     initBackToTop,
     initNavSearch,
     initHashScroll,
-    initAccordions
+    initAccordions,
+    initBlogPagination
   ];
 
   tasks.forEach(fn => {

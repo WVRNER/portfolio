@@ -51,7 +51,7 @@
     />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/main.css?v=20261004d" />
+    <link rel="stylesheet" href="styles/main.css?v=20261004g" />
     <link rel="stylesheet" href="styles/animations.css" />
   </head>
   <body>
@@ -92,11 +92,75 @@
         </p>
       </div>
 
-      <!-- Feed Container: Clickable Teaser Cards -->
-      <div class="blog-feed-container">
-        
+      <!-- Feed Container: Clickable Teaser Cards (Auto-paginated at 5 posts per page) -->
+      <div class="blog-feed-container" id="blogFeed">
+
         <!-- ===================================================================
-             POST 01 TEASER: Click to open dedicated article page
+             📌 INSTRUCTIONS FOR ADDING A NEW BLOG POST:
+             ===================================================================
+             1. Copy the commented-out TEMPLATE block below.
+             2. Paste it right here AT THE TOP of the active posts list.
+             3. Delete the opening "<!--" and closing "-->" to activate the post card.
+             4. Fill in:
+                - Category tag (e.g. "CLOUD ARCHITECTURE", "NETWORKING & SYSTEMS", "LAB LOG")
+                - Date & Reading Time (e.g. "November 2026 • 5 min read")
+                - Link: Update href="posts/your-file-name.html" on BOTH the title and the "Read Full Article" button.
+                - Article Title
+                - Subtitle / One-line summary
+                - Excerpt paragraph
+                - Topic tags (#Docker, #AWS, #Terraform, etc.)
+             5. Create your full article file in the "posts/" folder:
+                - Duplicate "posts/post-template.html" and rename it (e.g. "posts/your-file-name.html").
+
+             ✨ 5-POSTS-PER-PAGE PAGINATION IS 100% AUTOMATIC:
+             You never need to edit multiple page files. Up to 5 posts will show on Page 1.
+             When you add your 6th post at the top, it stays on Page 1 and older posts
+             automatically shift to Page 2, Page 3, etc. with interactive page buttons!
+             =================================================================== -->
+
+        <!--
+        ========================================================================
+        NEW POST CARD TEMPLATE (Copy this block, paste at top, and uncomment):
+        ========================================================================
+        <article class="blog-post-card">
+          <div class="blog-post-meta">
+            <span class="blog-category-tag">CATEGORY &amp; TOPIC</span>
+            <span class="blog-time-badge">Month Year &bull; X min read</span>
+          </div>
+
+          <h2 class="blog-post-title">
+            <a href="posts/your-post-filename.html">
+              Your Post Title Goes Here: Engaging, Clear Headline
+            </a>
+          </h2>
+
+          <p class="blog-post-subtitle" style="margin-bottom: 20px; border-bottom: none; padding-bottom: 0;">
+            One-sentence summary highlighting the core engineering concept or architecture.
+          </p>
+
+          <p class="blog-post-excerpt" style="font-size: 16px; line-height: 1.7; color: var(--text-main); margin-bottom: 22px;">
+            Short 2-3 sentence overview paragraph introducing the problem, the lab setup, or the architectural solution. This is what readers see on the main blog feed before clicking in.
+          </p>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+            <a href="posts/your-post-filename.html" class="blog-read-more-btn">
+              <span>Read Full Article</span>
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+
+            <div class="about-chips-list" style="margin-top: 0;">
+              <span class="about-chip chip-yellow">#Topic1</span>
+              <span class="about-chip chip-pink">#Topic2</span>
+              <span class="about-chip chip-green">#Topic3</span>
+              <span class="about-chip chip-blue">#Topic4</span>
+            </div>
+          </div>
+        </article>
+        ========================================================================
+        -->
+
+        <!-- ===================================================================
+             ACTIVE POSTS (Newest on top):
              =================================================================== -->
         <article class="blog-post-card">
           <!-- Meta Header -->
@@ -152,6 +216,11 @@
         </div>
 
       </div>
+
+      <!-- Neubrutalist Pagination Navigation (Automatically shown when > 5 posts exist) -->
+      <nav class="blog-pagination-nav" id="blogPagination" aria-label="Blog Pages Navigation" style="display: none;">
+        <!-- Generated automatically by initBlogPagination() in js/main.js -->
+      </nav>
     </main>
 
     <!-- Site Footer -->
