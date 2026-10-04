@@ -145,10 +145,7 @@
           >
           <h2 class="section-big-title">Built from the network up.</h2>
           <p class="section-subtitle">
-            I’m developing my foundations across Networking, Cloud
-            Infrastructure, Containers, CI/CD, Infrastructure as Code,
-            Automation, and Monitoring. Structured study and hands-on labs with
-            an emphasis on how the pieces connect.
+            Core infrastructure foundations from network and kernel primitives up to declarative cloud architecture. Systems designed to eliminate drift and survive real-world failure.
           </p>
         </div>
 
@@ -159,24 +156,18 @@
               <span class="quad-card-num">01 / CLOUD ARCHITECTURE</span>
               <h3 class="quad-card-title">AWS Solutions Architect</h3>
               <p class="quad-card-text">
-                High availability isn't an accident: it is deliberate topology.
-                Deconstructing how distributed cloud systems survive real-world
-                failure through multi-AZ VPC design, private subnet routing, and
-                edge caching.
+                Multi-AZ VPC topology, private subnet routing, and edge ingress designed to eliminate single points of failure.
               </p>
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Network Isolation:</strong> Public vs. private subnets,
-                NAT gateways, and NACLs.
+                <strong>Network Isolation:</strong> Multi-AZ subnets, NAT gateways &amp; NACLs
               </li>
               <li>
-                <strong>Edge Routing:</strong> CloudFront Anycast edge CDN with
-                strict TLS 1.3 encryption.
+                <strong>Edge Ingress:</strong> CloudFront Anycast CDN &amp; strict TLS 1.3
               </li>
               <li>
-                <strong>Least Privilege:</strong> Scoped IAM roles with
-                federated OIDC authentication.
+                <strong>IAM Security:</strong> Scoped roles with keyless OIDC auth
               </li>
             </ul>
           </div>
@@ -187,24 +178,18 @@
               <span class="quad-card-num">02 / PROVISIONING</span>
               <h3 class="quad-card-title">Terraform (IaC)</h3>
               <p class="quad-card-text">
-                The permanent shift from manual web console clicking to
-                immutable, version-controlled state. Treating all cloud
-                resources as reproducible HCL modules rather than fragile
-                snowflakes.
+                Replacing manual console clicks with immutable, version-controlled HCL infrastructure modules.
               </p>
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Declarative Reality:</strong> Defining desired end
-                state, letting TF graph dependencies.
+                <strong>Declarative State:</strong> Graphing dependencies directly from code
               </li>
               <li>
-                <strong>Distributed Locking:</strong> Preventing concurrent runs
-                with DynamoDB state locks.
+                <strong>Remote Locking:</strong> S3 backend with DynamoDB state locks
               </li>
               <li>
-                <strong>Zero Drift:</strong> Ensuring 100% parity between git
-                commits and cloud infrastructure.
+                <strong>Zero Drift:</strong> 100% parity between git commits and cloud
               </li>
             </ul>
           </div>
@@ -215,24 +200,18 @@
               <span class="quad-card-num">03 / RUNTIME</span>
               <h3 class="quad-card-title">Docker &amp; Containers</h3>
               <p class="quad-card-text">
-                Building containers from kernel primitives up. Understanding how
-                Linux cgroups, namespaces, and union filesystems construct
-                process isolation, shrinking bulky 920MB images down to 28MB
-                distroless builds.
+                Process isolation using Linux cgroups and namespaces, shrinking 900MB+ images down to 28MB distroless builds.
               </p>
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Multi-Stage Builds:</strong> Heavy SDK compilation
-                isolated from lightweight runtime.
+                <strong>Multi-Stage Builds:</strong> Compilers isolated from lean runtimes
               </li>
               <li>
-                <strong>Hardened Security:</strong> Non-root users, 0 shell
-                binaries, and minimal attack surface.
+                <strong>Hardened Images:</strong> Non-root users with 0 shell attack surface
               </li>
               <li>
-                <strong>Compose Topologies:</strong> Bridge networking,
-                persistent volumes, and reverse proxies.
+                <strong>Bridge Networks:</strong> Isolated container mesh and persistent volumes
               </li>
             </ul>
           </div>
@@ -243,24 +222,18 @@
               <span class="quad-card-num">04 / DELIVERY</span>
               <h3 class="quad-card-title">GitHub Actions CI/CD</h3>
               <p class="quad-card-text">
-                Connecting the chain from local git push to global edge rollout.
-                Zero-downtime automated pipelines using keyless AWS OIDC
-                authentication so no long-lived API keys ever exist in
-                repositories.
+                Automated zero-downtime delivery pipelines connecting local git pushes to global CloudFront edge rollouts.
               </p>
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Keyless OIDC:</strong> Short-lived federated credentials
-                directly from GitHub to AWS STS.
+                <strong>Keyless OIDC:</strong> Short-lived federated AWS STS tokens (0 static secrets)
               </li>
               <li>
-                <strong>Deterministic Gates:</strong> Automated linting, syntax
-                checks, and security scans.
+                <strong>Automated Gates:</strong> Deterministic linting, syntax &amp; security scans
               </li>
               <li>
-                <strong>Global Edge Flush:</strong> Instant zero-downtime
-                CloudFront cache invalidations in &lt; 4.0s.
+                <strong>Global Flush:</strong> Sub-4s edge cache invalidations
               </li>
             </ul>
           </div>
