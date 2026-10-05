@@ -71,7 +71,7 @@ content:
         label: Post Title
         type: string
         required: true
-        description: "WHAT THIS DOES: Main headline of the article. EXAMPLE: Building a Zero-Drift AWS VPC with Terraform. READER SEES: This is the large article title and the title shown on the blog card."
+        description: "Main headline of the article. EXAMPLE: Building a Zero-Drift AWS VPC with Terraform. READER SEES: This is the large article title and the title shown on the blog card."
 
 
       - name: slug
@@ -79,14 +79,14 @@ content:
         type: string
         required: true
         pattern: "^[a-z0-9-]+$"
-        description: "WHAT THIS DOES: Controls the Markdown filename and final article URL. EXAMPLE: terraform-zero-drift-vpc becomes /posts/terraform-zero-drift-vpc.html. READER SEES: This appears in the browser URL. Avoid changing it after publishing because old links can break."
+        description: "Controls the Markdown filename and final article URL. EXAMPLE: terraform-zero-drift-vpc becomes /posts/terraform-zero-drift-vpc.html. READER SEES: This appears in the browser URL. Avoid changing it after publishing because old links can break."
 
 
       - name: subtitle
         label: Subtitle / Hook
         type: string
         required: true
-        description: "WHAT THIS DOES: Short sentence directly supporting the title. EXAMPLE: How I replaced click-ops with a reproducible AWS network. READER SEES: Usually shown below the main title on the article."
+        description: "Short sentence directly supporting the title. EXAMPLE: How I replaced click-ops with a reproducible AWS network. READER SEES: Usually shown below the main title on the article."
 
 
       - name: excerpt
@@ -96,21 +96,21 @@ content:
         options:
           minlength: 20
           maxlength: 300
-        description: "WHAT THIS DOES: Short summary used to advertise the article. EXAMPLE: I rebuilt my lab VPC in Terraform and deliberately introduced drift to test detection. READER SEES: This is normally the description on the /blog/ article card."
+        description: "Short summary used to advertise the article. EXAMPLE: I rebuilt my lab VPC in Terraform and deliberately introduced drift to test detection. READER SEES: This is normally the description on the /blog/ article card."
 
 
       - name: author
         label: Author
         type: string
         default: "Nima Hosseini"
-        description: "WHAT THIS DOES: Stores who wrote the article. EXAMPLE: Nima Hosseini. READER SEES: Only appears publicly if the article template displays the author."
+        description: "Stores who wrote the article. EXAMPLE: Nima Hosseini. READER SEES: Only appears publicly if the article template displays the author."
 
 
       - name: category
         label: Category
         type: select
         required: true
-        description: "WHAT THIS DOES: Gives the article one main topic/category. EXAMPLE: Enterprise Networking for a CCNA lab article. READER SEES: Usually displayed as the category badge on the blog card and article."
+        description: "Gives the article one main topic/category. EXAMPLE: Enterprise Networking for a CCNA lab article. READER SEES: Usually displayed as the category badge on the blog card and article."
 
         options:
           values:
@@ -160,27 +160,27 @@ content:
         type: date
         required: true
         default: now
-        description: "WHAT THIS DOES: Controls when the article was published and is used to sort the blog newest-first. EXAMPLE: October 5, 2026. READER SEES: May be displayed as the article date."
+        description: "Controls when the article was published and is used to sort the blog newest-first. EXAMPLE: October 5, 2026. READER SEES: May be displayed as the article date."
 
 
       - name: display_date
         label: Display Date
         type: string
         required: true
-        description: "WHAT THIS DOES: Human-friendly version of the date. EXAMPLE: October 2026. READER SEES: This is the formatted date displayed by your current article design."
+        description: "Human-friendly version of the date. EXAMPLE: October 2026. READER SEES: This is the formatted date displayed by your current article design."
 
 
       - name: updated
         label: Last Updated
         type: date
-        description: "WHAT THIS DOES: Records when an older article was significantly revised. EXAMPLE: Update a Terraform article six months later and set today's date. READER SEES: Nothing unless post.njk is configured to show something such as 'Updated October 2026'."
+        description: "Records when an older article was significantly revised. EXAMPLE: Update a Terraform article six months later and set today's date. READER SEES: Nothing unless post.njk is configured to show something such as 'Updated October 2026'."
 
 
       - name: read_time
         label: Reading Time
         type: string
         required: true
-        description: "WHAT THIS DOES: Tells visitors roughly how long the article takes to read. EXAMPLE: 6 min read or 15 min deep dive. READER SEES: Displayed beside the article metadata if your template renders it."
+        description: "Tells visitors roughly how long the article takes to read. EXAMPLE: 6 min read or 15 min deep dive. READER SEES: Displayed beside the article metadata if your template renders it."
 
 
       # ========================================================================
@@ -190,7 +190,7 @@ content:
       - name: cover_image
         label: Cover Image
         type: image
-        description: "WHAT THIS DOES: Main image representing the article. EXAMPLE: Network topology, terminal screenshot, architecture diagram, certificate, or project screenshot. READER SEES: Can appear at the top of the article and/or on the blog card."
+        description: "Main image representing the article. EXAMPLE: Network topology, terminal screenshot, architecture diagram, certificate, or project screenshot. READER SEES: Can appear at the top of the article and/or on the blog card."
         options:
           path: images/posts
           extensions:
@@ -205,13 +205,13 @@ content:
       - name: cover_image_alt
         label: Cover Image Alt Text
         type: string
-        description: "WHAT THIS DOES: Describes the image for accessibility and screen readers. EXAMPLE: Diagram showing two VLANs connected through a router-on-a-stick topology. READER SEES: Normally invisible unless the image cannot load or they use assistive technology."
+        description: "Describes the image for accessibility and screen readers. EXAMPLE: Diagram showing two VLANs connected through a router-on-a-stick topology. READER SEES: Normally invisible unless the image cannot load or they use assistive technology."
 
 
       - name: cover_image_caption
         label: Cover Image Caption / Credit
         type: string
-        description: "WHAT THIS DOES: Adds context or attribution below the image. EXAMPLE: Network architecture drawn in draw.io. READER SEES: Only appears if the article template renders image captions."
+        description: "Adds context or attribution below the image. EXAMPLE: Network architecture drawn in draw.io. READER SEES: Only appears if the article template renders image captions."
 
 
       # ========================================================================
@@ -222,7 +222,7 @@ content:
         label: Topic Tags
         type: select
         required: true
-        description: "WHAT THIS DOES: Adds multiple specific technologies/topics to the article. EXAMPLE: #Docker, #Linux, #Networking. READER SEES: These can appear as colored topic chips/tags below the article or on its card."
+        description: "Adds multiple specific technologies/topics to the article. EXAMPLE: #Docker, #Linux, #Networking. READER SEES: These can appear as colored topic chips/tags below the article or on its card."
 
         options:
           multiple: true
@@ -272,7 +272,7 @@ content:
       - name: series
         label: Article Series
         type: object
-        description: "WHAT THIS DOES: Groups related articles into a multi-part series. EXAMPLE: Series Name = Building My Home Lab, Part Number = 2. READER SEES: Could show something like 'Building My Home Lab — Part 2'. IMPORTANT: This information is saved now, but nothing appears publicly until post.njk is configured to display series information."
+        description: "Groups related articles into a multi-part series. EXAMPLE: Series Name = Building My Home Lab, Part Number = 2. READER SEES: Could show something like 'Building My Home Lab — Part 2'. IMPORTANT: This information is saved now, but nothing appears publicly until post.njk is configured to display series information."
 
         fields:
           - name: name
@@ -293,7 +293,7 @@ content:
       - name: related_posts
         label: Related Posts
         type: reference
-        description: "WHAT THIS DOES: Lets you manually connect this article to other articles. EXAMPLE: A Docker networking article can link to your Linux namespaces article. READER SEES: Could become a 'Related Articles' section at the bottom. IMPORTANT: post.njk must render this before visitors can see it."
+        description: "Lets you manually connect this article to other articles. EXAMPLE: A Docker networking article can link to your Linux namespaces article. READER SEES: Could become a 'Related Articles' section at the bottom. IMPORTANT: post.njk must render this before visitors can see it."
 
         options:
           collection: posts
@@ -311,7 +311,7 @@ content:
         label: Show Table of Contents
         type: boolean
         default: false
-        description: "WHAT THIS DOES: Marks a long article as needing a contents menu based on headings. EXAMPLE: Introduction → Network Design → VLAN Configuration → Routing → Testing → Conclusion. READER SEES: Ideally a clickable Table of Contents near the top of the article. IMPORTANT: This toggle only saves true/false right now. post.njk must implement the actual table of contents before anything appears."
+        description: "Marks a long article as needing a contents menu based on headings. EXAMPLE: Introduction → Network Design → VLAN Configuration → Routing → Testing → Conclusion. READER SEES: Ideally a clickable Table of Contents near the top of the article. IMPORTANT: This toggle only saves true/false right now. post.njk must implement the actual table of contents before anything appears."
 
 
       # ========================================================================
@@ -321,7 +321,7 @@ content:
       - name: callout_box
         label: Highlighted Callout Box
         type: object
-        description: "WHAT THIS DOES: Creates a visually important box for something worth highlighting. EXAMPLE: certification details, architecture note, warning, key lesson, or project summary. READER SEES: Only appears if enabled and post.njk renders the callout box."
+        description: "Creates a visually important box for something worth highlighting. EXAMPLE: certification details, architecture note, warning, key lesson, or project summary. READER SEES: Only appears if enabled and post.njk renders the callout box."
 
         fields:
           - name: enable
@@ -364,7 +364,7 @@ content:
         label: Article Content
         type: rich-text
         required: true
-        description: "WHAT THIS DOES: This is the actual article. Write paragraphs, headings, lists, images, code blocks, explanations, commands, etc. EXAMPLE: Your full Docker, networking, Linux, AWS, DevOps, or lab write-up. READER SEES: This is the main content of the public article."
+        description: "This is the actual article. Write paragraphs, headings, lists, images, code blocks, explanations, commands, etc. EXAMPLE: Your full Docker, networking, Linux, AWS, DevOps, or lab write-up. READER SEES: This is the main content of the public article."
 
         options:
           format: markdown
@@ -385,7 +385,7 @@ content:
       - name: code_snippets
         label: Config / Code Snippets
         type: object
-        description: "WHAT THIS DOES: Stores complete code or configuration examples separately from the article body. EXAMPLE: main.tf, Dockerfile, deployment.yaml, install.sh. READER SEES: Nothing until _includes/post.njk is configured to render these snippets."
+        description: "Stores complete code or configuration examples separately from the article body. EXAMPLE: main.tf, Dockerfile, deployment.yaml, install.sh. READER SEES: Nothing until _includes/post.njk is configured to render these snippets."
         list: true
 
         fields:
@@ -412,7 +412,7 @@ content:
       - name: downloads
         label: Downloadable Files
         type: object
-        description: "WHAT THIS DOES: Adds files visitors can download. EXAMPLE: lab ZIP, Terraform module, PDF certificate, YAML configuration, Bash script. READER SEES: Could appear as Download buttons/cards at the bottom of the article."
+        description: "Adds files visitors can download. EXAMPLE: lab ZIP, Terraform module, PDF certificate, YAML configuration, Bash script. READER SEES: Could appear as Download buttons/cards at the bottom of the article."
 
         list:
           collapsible:
@@ -456,7 +456,7 @@ content:
       - name: external_links
         label: References & Links
         type: object
-        description: "WHAT THIS DOES: Stores external resources used by or related to the article. EXAMPLE: GitHub repository, Cisco documentation, Terraform docs, AWS docs, Coursera certificate. READER SEES: Could appear in a References / Resources section at the bottom."
+        description: "Stores external resources used by or related to the article. EXAMPLE: GitHub repository, Cisco documentation, Terraform docs, AWS docs, Coursera certificate. READER SEES: Could appear in a References / Resources section at the bottom."
 
         list:
           collapsible:
@@ -488,23 +488,23 @@ content:
       - name: seo
         label: SEO & Social Cards
         type: object
-        description: "WHAT THIS DOES: Controls how search engines and social platforms understand the article. EXAMPLE: Custom Google description or custom image when the article is shared. READER SEES: Usually invisible on the article itself; search engines, browsers and social apps use this metadata."
+        description: "Controls how search engines and social platforms understand the article. EXAMPLE: Custom Google description or custom image when the article is shared. READER SEES: Usually invisible on the article itself; search engines, browsers and social apps use this metadata."
 
         fields:
           - name: meta_title
             label: SEO Title
             type: string
-            description: "WHAT THIS DOES: Optional title specifically for search engines/browser metadata. EXAMPLE: Building an AWS VPC with Terraform | WVRNER. Usually keep it below roughly 60 characters."
+            description: "Optional title specifically for search engines/browser metadata. EXAMPLE: Building an AWS VPC with Terraform | WVRNER. Usually keep it below roughly 60 characters."
 
           - name: meta_description
             label: Meta Description
             type: text
-            description: "WHAT THIS DOES: Search-engine summary. EXAMPLE: Learn how I built a reproducible AWS VPC using Terraform and tested infrastructure drift. Aim for around 150-160 characters."
+            description: "Search-engine summary. EXAMPLE: Learn how I built a reproducible AWS VPC using Terraform and tested infrastructure drift. Aim for around 150-160 characters."
 
           - name: og_image
             label: Social Share Image
             type: image
-            description: "WHAT THIS DOES: Image used when someone shares the article on social platforms/chat apps. Recommended size: 1200x630."
+            description: "Image used when someone shares the article on social platforms/chat apps. Recommended size: 1200x630."
 
             options:
               path: images/posts
@@ -517,13 +517,13 @@ content:
           - name: canonical_url
             label: Canonical URL
             type: string
-            description: "WHAT THIS DOES: Tells search engines the original source if this article was first published somewhere else. EXAMPLE: If originally published on Medium, put that original URL here. Normally leave this blank for articles originally published on wvrner.com."
+            description: "Tells search engines the original source if this article was first published somewhere else. EXAMPLE: If originally published on Medium, put that original URL here. Normally leave this blank for articles originally published on wvrner.com."
 
           - name: no_index
             label: Hide From Search Engines
             type: boolean
             default: false
-            description: "WHAT THIS DOES: Requests that search engines do not index this article. EXAMPLE: Use for a temporary/private-ish public test article. Normally leave OFF."
+            description: "Requests that search engines do not index this article. EXAMPLE: Use for a temporary/private-ish public test article. Normally leave OFF."
 
 
       # ========================================================================
@@ -534,14 +534,14 @@ content:
         label: Published
         type: boolean
         default: true
-        description: "WHAT THIS DOES: Controls whether Eleventy includes the article in your public blog collection. ON = public article. OFF = draft. READER SEES: OFF articles should not appear on the blog because .eleventy.js filters published: false."
+        description: "Controls whether Eleventy includes the article in your public blog collection. ON = public article. OFF = draft. READER SEES: OFF articles should not appear on the blog because .eleventy.js filters published: false."
 
 
       - name: featured
         label: Featured Post
         type: boolean
         default: false
-        description: "WHAT THIS DOES: Marks an article as especially important. EXAMPLE: Your best infrastructure project or certification write-up. READER SEES: Currently nothing unless blog.njk/post.njk is later configured to give featured articles special placement."
+        description: "Marks an article as especially important. EXAMPLE: Your best infrastructure project or certification write-up. READER SEES: Currently nothing unless blog.njk/post.njk is later configured to give featured articles special placement."
 
 
       - name: layout
