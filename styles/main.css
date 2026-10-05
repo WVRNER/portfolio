@@ -6159,291 +6159,319 @@ a[href*="#cv"].gum-btn:active {
   }
 }
 
+
 /* ==========================================================================
-   HOMEPAGE FEATURED / LATEST POST SPOTLIGHT CARD
+   AUTHENTIC GUMROAD-STYLE SPOTLIGHT CARD
    ========================================================================== */
-.spotlight-post-card {
-  background: var(--bg-card, #FFFFFF);
-  border: var(--border-lg, 3px solid #000000);
-  border-radius: var(--radius-card, 16px);
-  box-shadow: 6px 6px 0px #000000;
-  padding: 38px 36px 34px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
+.gum-spotlight-card {
+  background: #FFFFFF !important;
+  border: 3.5px solid #000000 !important;
+  border-radius: 16px !important;
+  box-shadow: 8px 8px 0px #000000 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  width: 100% !important;
 }
 
-[data-theme="dark"] .spotlight-post-card {
-  background: #141416;
-  border-color: #FFFFFF;
-  box-shadow: 6px 6px 0px #FFFFFF;
+[data-theme="dark"] .gum-spotlight-card {
+  background: #141416 !important;
+  border-color: #FFFFFF !important;
+  box-shadow: 8px 8px 0px #FFFFFF !important;
 }
 
-.spotlight-header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding-bottom: 16px;
-  border-bottom: 2px dashed rgba(0, 0, 0, 0.12);
+.gum-spotlight-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 10px 10px 0px #000000 !important;
 }
 
-[data-theme="dark"] .spotlight-header-row {
-  border-bottom-color: rgba(255, 255, 255, 0.15);
+[data-theme="dark"] .gum-spotlight-card:hover {
+  box-shadow: 10px 10px 0px #FFFFFF !important;
 }
 
-.spotlight-tag-cluster {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+/* Edge-to-Edge Gumroad Top Banner */
+.gum-spotlight-topbar {
+  padding: 14px 28px !important;
+  border-bottom: 3px solid #000000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  box-sizing: border-box !important;
 }
 
-.spotlight-featured-pill {
-  font-family: var(--font-mono, monospace);
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 12px;
-  background: #000000;
-  color: var(--gum-yellow, #FFC900);
-  border: 1.5px solid #000000;
-  border-radius: 9999px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  box-shadow: 1.5px 1.5px 0px #000000;
-}
-
-[data-theme="dark"] .spotlight-featured-pill {
-  background: var(--gum-yellow, #FFC900);
-  color: #000000;
-  border-color: #FFFFFF;
-  box-shadow: 1.5px 1.5px 0px #FFFFFF;
-}
-
-.spotlight-latest-pill {
-  font-family: var(--font-mono, monospace);
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 12px;
-  background: var(--gum-green, #27C93F);
-  color: #000000;
-  border: 1.5px solid #000000;
-  border-radius: 9999px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  box-shadow: 1.5px 1.5px 0px #000000;
-}
-
-[data-theme="dark"] .spotlight-latest-pill {
-  border-color: #FFFFFF;
-  box-shadow: 1.5px 1.5px 0px #FFFFFF;
-}
-
-.spotlight-category-tag {
-  font-family: var(--font-mono, monospace);
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 12px;
-  background: var(--gum-yellow, #FFC900);
-  color: #000000;
-  border: 1.5px solid #000000;
-  border-radius: 9999px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.spotlight-time-tag {
-  font-family: var(--font-mono, monospace);
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-muted, #555555);
-}
-
-.spotlight-kicker {
-  font-family: var(--font-mono, monospace);
-  font-size: 11px;
-  font-weight: 800;
-  color: var(--text-muted, #666666);
-  letter-spacing: 0.06em;
-}
-
-.spotlight-content-block {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.spotlight-title {
-  font-family: var(--font-display, sans-serif);
-  font-size: clamp(22px, 3.2vw, 34px);
-  font-weight: 900;
-  letter-spacing: -0.025em;
-  line-height: 1.2;
-  margin: 0;
-}
-
-.spotlight-title a {
-  color: var(--text-main, #000000);
-  text-decoration: none;
-  transition: color 0.15s ease;
-}
-
-.spotlight-title a:hover {
-  text-decoration: underline wavy var(--gum-pink, #FF90E8) 2.5px;
-  text-underline-offset: 6px;
-}
-
-.spotlight-subtitle {
-  font-size: 16.5px;
-  font-weight: 600;
-  line-height: 1.55;
-  color: var(--text-muted, #444444);
-  margin: 0;
-}
-
-.spotlight-excerpt {
-  font-size: 15px;
-  line-height: 1.65;
-  color: var(--text-main, #222222);
-  margin: 4px 0 0;
-}
-
-.spotlight-actions-deck {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding-top: 18px;
-  border-top: 2px dashed rgba(0, 0, 0, 0.12);
-  margin-top: 6px;
-}
-
-[data-theme="dark"] .spotlight-actions-deck {
-  border-top-color: rgba(255, 255, 255, 0.15);
-}
-
-.spotlight-vault-teaser {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.vault-teaser-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.vault-teaser-kicker {
-  font-family: var(--font-mono, monospace);
-  font-size: 11px;
-  font-weight: 800;
-  color: #000000;
-  letter-spacing: 0.05em;
-}
-
-[data-theme="dark"] .vault-teaser-kicker {
-  color: #FFFFFF;
-}
-
-.vault-teaser-desc {
-  font-size: 13px;
-  color: var(--text-muted, #666666);
-}
-
-.gum-btn-yellow {
+.gum-spotlight-topbar.is-featured-topbar {
   background: var(--gum-yellow, #FFC900) !important;
-  color: #000000 !important;
-  border: 2px solid #000000 !important;
-  border-radius: 9999px !important;
-  box-shadow: 3px 3px 0px #000000 !important;
-  font-family: var(--font-display, sans-serif) !important;
-  font-size: 14px !important;
+}
+
+.gum-spotlight-topbar.is-latest-topbar {
+  background: var(--gum-pink, #FF90E8) !important;
+}
+
+[data-theme="dark"] .gum-spotlight-topbar {
+  border-bottom-color: #FFFFFF !important;
+}
+
+.gum-spotlight-status-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+}
+
+.gum-spotlight-pill {
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 11px !important;
   font-weight: 800 !important;
-  text-decoration: none !important;
+  padding: 4px 12px !important;
+  border-radius: 9999px !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 8px !important;
-  padding: 10px 22px !important;
-  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+  gap: 6px !important;
+  box-sizing: border-box !important;
 }
 
-.gum-btn-yellow:hover {
-  transform: translate(-2px, -2px) !important;
-  box-shadow: 5px 5px 0px #000000 !important;
-  background: #FFFFFF !important;
+.gum-pill-black {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #000000 !important;
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2) !important;
 }
 
-[data-theme="dark"] .gum-btn-yellow {
-  border-color: #FFFFFF !important;
-  box-shadow: 3px 3px 0px #FFFFFF !important;
+.gum-star-icon {
+  color: var(--gum-yellow, #FFC900) !important;
+  font-size: 12px !important;
 }
 
-[data-theme="dark"] .gum-btn-yellow:hover {
-  box-shadow: 5px 5px 0px #FFFFFF !important;
-  background: #FFFFFF !important;
+.gum-spotlight-meta-kicker {
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
   color: #000000 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
 }
 
-.vault-badge-count {
-  font-family: var(--font-mono, monospace);
-  font-size: 11.5px;
-  font-weight: 800;
-  opacity: 0.85;
+.gum-spotlight-tag-right {
+  display: flex !important;
+  align-items: center !important;
+}
+
+.gum-mono-tag {
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* Card Body Section */
+.gum-spotlight-body {
+  padding: 34px 32px 28px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  background: #FFFFFF !important;
+  box-sizing: border-box !important;
+}
+
+[data-theme="dark"] .gum-spotlight-body {
+  background: #141416 !important;
+}
+
+.gum-spotlight-title {
+  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+  font-size: clamp(23px, 3.2vw, 34px) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1.2 !important;
+  margin: 0 !important;
+}
+
+.gum-spotlight-title a {
+  color: var(--text-main, #000000) !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease !important;
+}
+
+[data-theme="dark"] .gum-spotlight-title a {
+  color: #FFFFFF !important;
+}
+
+.gum-spotlight-title a:hover {
+  text-decoration: underline wavy var(--gum-pink, #FF90E8) 2.5px !important;
+  text-underline-offset: 6px !important;
+}
+
+.gum-spotlight-subtitle {
+  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+  font-size: 16.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.55 !important;
+  color: var(--text-muted, #444444) !important;
+  margin: 0 !important;
+}
+
+[data-theme="dark"] .gum-spotlight-subtitle {
+  color: #AAAAAA !important;
+}
+
+.gum-spotlight-excerpt {
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: var(--text-main, #222222) !important;
+  margin: 0 !important;
+}
+
+[data-theme="dark"] .gum-spotlight-excerpt {
+  color: #CCCCCC !important;
+}
+
+.gum-spotlight-chips-row {
+  margin-top: 6px !important;
+}
+
+/* Card Bottom Footer / Action Deck */
+.gum-spotlight-footer {
+  padding: 22px 32px !important;
+  border-top: 3px solid #000000 !important;
+  background: var(--bg-canvas, #F4F4F0) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 20px !important;
+  box-sizing: border-box !important;
+}
+
+[data-theme="dark"] .gum-spotlight-footer {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-top-color: #FFFFFF !important;
+}
+
+.gum-spotlight-teaser {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+  max-width: 480px !important;
+}
+
+.gum-teaser-eyebrow {
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  color: var(--text-muted, #555555) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+}
+
+.gum-teaser-heading {
+  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  color: var(--text-main, #000000) !important;
+  line-height: 1.35 !important;
+}
+
+[data-theme="dark"] .gum-teaser-heading {
+  color: #FFFFFF !important;
+}
+
+.gum-teaser-desc {
+  font-size: 13.5px !important;
+  line-height: 1.45 !important;
+  color: var(--text-muted, #555555) !important;
+  margin: 0 !important;
+}
+
+.gum-spotlight-buttons-group {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-wrap: wrap !important;
+}
+
+.gum-spotlight-primary-btn {
+  padding: 12px 22px !important;
+  font-size: 14.5px !important;
+  box-shadow: 4px 4px 0px var(--gum-pink, #FF90E8) !important;
+}
+
+.gum-spotlight-vault-btn {
+  padding: 12px 22px !important;
+  font-size: 14.5px !important;
+  background: var(--gum-yellow, #FFC900) !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+.gum-vault-count-badge {
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  padding: 2px 7px !important;
+  border-radius: 9999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
-  .spotlight-post-card {
-    padding: 24px 20px 22px;
-    gap: 16px;
-    box-shadow: 4px 4px 0px #000000;
+  .gum-spotlight-card {
+    border-radius: 12px !important;
+    border-width: 3px !important;
+    box-shadow: 6px 6px 0px #000000 !important;
   }
 
-  [data-theme="dark"] .spotlight-post-card {
-    box-shadow: 4px 4px 0px #FFFFFF;
+  [data-theme="dark"] .gum-spotlight-card {
+    box-shadow: 6px 6px 0px #FFFFFF !important;
   }
 
-  .spotlight-title {
-    font-size: 20px;
+  .gum-spotlight-topbar {
+    padding: 12px 18px !important;
   }
 
-  .spotlight-subtitle {
-    font-size: 14.5px;
+  .gum-spotlight-body {
+    padding: 22px 18px 20px !important;
+    gap: 10px !important;
   }
 
-  .spotlight-excerpt {
-    font-size: 13.5px;
+  .gum-spotlight-title {
+    font-size: 21px !important;
   }
 
-  .spotlight-actions-deck {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 14px;
+  .gum-spotlight-subtitle {
+    font-size: 14.5px !important;
   }
 
-  .spotlight-vault-teaser {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
+  .gum-spotlight-excerpt {
+    font-size: 13.5px !important;
   }
 
-  .spotlight-read-btn,
-  .spotlight-vault-btn {
-    width: 100%;
-    justify-content: center;
-    box-sizing: border-box;
+  .gum-spotlight-footer {
+    padding: 18px 18px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+
+  .gum-spotlight-buttons-group {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .gum-spotlight-primary-btn,
+  .gum-spotlight-vault-btn {
+    width: 100% !important;
+    justify-content: center !important;
   }
 }

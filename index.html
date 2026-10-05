@@ -54,7 +54,7 @@
     />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/main.css?v=20261004d" />
+    <link rel="stylesheet" href="styles/main.css?v=20261005gumroad" />
     <link rel="stylesheet" href="styles/animations.css" />
     <!-- Critical Hero & Mobile Styles (Guarantees frames, shadows, and tool chips render even if external CSS is cached) -->
     <style id="hero-critical-styles">
@@ -286,6 +286,272 @@
         .gum-nav-link-plain {
           padding: 6px 8px !important;
           font-size: 12.5px !important;
+        }
+      }
+    </style>
+      <!-- Gumroad Spotlight Component Critical Styles -->
+    <style id="gumroad-spotlight-styles">
+      .gum-spotlight-card {
+        background: #FFFFFF !important;
+        border: 3.5px solid #000000 !important;
+        border-radius: 16px !important;
+        box-shadow: 8px 8px 0px #000000 !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+        width: 100% !important;
+      }
+      [data-theme="dark"] .gum-spotlight-card {
+        background: #141416 !important;
+        border-color: #FFFFFF !important;
+        box-shadow: 8px 8px 0px #FFFFFF !important;
+      }
+      .gum-spotlight-card:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 10px 10px 0px #000000 !important;
+      }
+      [data-theme="dark"] .gum-spotlight-card:hover {
+        box-shadow: 10px 10px 0px #FFFFFF !important;
+      }
+      .gum-spotlight-topbar {
+        padding: 14px 28px !important;
+        border-bottom: 3px solid #000000 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        gap: 12px !important;
+        box-sizing: border-box !important;
+      }
+      .gum-spotlight-topbar.is-featured-topbar {
+        background: #FFC900 !important;
+      }
+      .gum-spotlight-topbar.is-latest-topbar {
+        background: #FF90E8 !important;
+      }
+      [data-theme="dark"] .gum-spotlight-topbar {
+        border-bottom-color: #FFFFFF !important;
+      }
+      .gum-spotlight-status-group {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        flex-wrap: wrap !important;
+      }
+      .gum-spotlight-pill {
+        font-family: var(--font-mono, monospace) !important;
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        padding: 4px 12px !important;
+        border-radius: 9999px !important;
+        letter-spacing: 0.05em !important;
+        text-transform: uppercase !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        box-sizing: border-box !important;
+      }
+      .gum-pill-black {
+        background: #000000 !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #000000 !important;
+        box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2) !important;
+      }
+      .gum-star-icon {
+        color: #FFC900 !important;
+        font-size: 12px !important;
+      }
+      .gum-spotlight-meta-kicker {
+        font-family: var(--font-mono, monospace) !important;
+        font-size: 12px !important;
+        font-weight: 800 !important;
+        color: #000000 !important;
+        letter-spacing: 0.02em !important;
+        text-transform: uppercase !important;
+      }
+      .gum-spotlight-tag-right {
+        display: flex !important;
+        align-items: center !important;
+      }
+      .gum-mono-tag {
+        font-family: var(--font-mono, monospace) !important;
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        color: #000000 !important;
+        letter-spacing: 0.05em !important;
+      }
+      .gum-spotlight-body {
+        padding: 34px 32px 28px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        background: #FFFFFF !important;
+        box-sizing: border-box !important;
+      }
+      [data-theme="dark"] .gum-spotlight-body {
+        background: #141416 !important;
+      }
+      .gum-spotlight-title {
+        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+        font-size: clamp(23px, 3.2vw, 34px) !important;
+        font-weight: 900 !important;
+        letter-spacing: -0.03em !important;
+        line-height: 1.2 !important;
+        margin: 0 !important;
+      }
+      .gum-spotlight-title a {
+        color: var(--text-main, #000000) !important;
+        text-decoration: none !important;
+        transition: color 0.15s ease !important;
+      }
+      [data-theme="dark"] .gum-spotlight-title a {
+        color: #FFFFFF !important;
+      }
+      .gum-spotlight-title a:hover {
+        text-decoration: underline wavy #FF90E8 2.5px !important;
+        text-underline-offset: 6px !important;
+      }
+      .gum-spotlight-subtitle {
+        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+        font-size: 16.5px !important;
+        font-weight: 600 !important;
+        line-height: 1.55 !important;
+        color: var(--text-muted, #444444) !important;
+        margin: 0 !important;
+      }
+      [data-theme="dark"] .gum-spotlight-subtitle {
+        color: #AAAAAA !important;
+      }
+      .gum-spotlight-excerpt {
+        font-size: 15px !important;
+        line-height: 1.65 !important;
+        color: var(--text-main, #222222) !important;
+        margin: 0 !important;
+      }
+      [data-theme="dark"] .gum-spotlight-excerpt {
+        color: #CCCCCC !important;
+      }
+      .gum-spotlight-chips-row {
+        margin-top: 6px !important;
+      }
+      .gum-spotlight-footer {
+        padding: 22px 32px !important;
+        border-top: 3px solid #000000 !important;
+        background: var(--bg-canvas, #F4F4F0) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        gap: 20px !important;
+        box-sizing: border-box !important;
+      }
+      [data-theme="dark"] .gum-spotlight-footer {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-top-color: #FFFFFF !important;
+      }
+      .gum-spotlight-teaser {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 3px !important;
+        max-width: 480px !important;
+      }
+      .gum-teaser-eyebrow {
+        font-family: var(--font-mono, monospace) !important;
+        font-size: 11px !important;
+        font-weight: 900 !important;
+        color: var(--text-muted, #555555) !important;
+        letter-spacing: 0.06em !important;
+        text-transform: uppercase !important;
+      }
+      .gum-teaser-heading {
+        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+        font-size: 16px !important;
+        font-weight: 800 !important;
+        color: var(--text-main, #000000) !important;
+        line-height: 1.35 !important;
+      }
+      [data-theme="dark"] .gum-teaser-heading {
+        color: #FFFFFF !important;
+      }
+      .gum-teaser-desc {
+        font-size: 13.5px !important;
+        line-height: 1.45 !important;
+        color: var(--text-muted, #555555) !important;
+        margin: 0 !important;
+      }
+      .gum-spotlight-buttons-group {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        flex-wrap: wrap !important;
+      }
+      .gum-spotlight-primary-btn {
+        padding: 12px 22px !important;
+        font-size: 14.5px !important;
+        box-shadow: 4px 4px 0px #FF90E8 !important;
+      }
+      .gum-spotlight-vault-btn {
+        padding: 12px 22px !important;
+        font-size: 14.5px !important;
+        background: #FFC900 !important;
+        color: #000000 !important;
+        box-shadow: 4px 4px 0px #000000 !important;
+      }
+      .gum-vault-count-badge {
+        font-family: var(--font-mono, monospace) !important;
+        font-size: 11px !important;
+        font-weight: 900 !important;
+        background: #000000 !important;
+        color: #FFFFFF !important;
+        padding: 2px 7px !important;
+        border-radius: 9999px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      @media (max-width: 768px) {
+        .gum-spotlight-card {
+          border-radius: 12px !important;
+          border-width: 3px !important;
+          box-shadow: 6px 6px 0px #000000 !important;
+        }
+        [data-theme="dark"] .gum-spotlight-card {
+          box-shadow: 6px 6px 0px #FFFFFF !important;
+        }
+        .gum-spotlight-topbar {
+          padding: 12px 18px !important;
+        }
+        .gum-spotlight-body {
+          padding: 22px 18px 20px !important;
+          gap: 10px !important;
+        }
+        .gum-spotlight-title {
+          font-size: 21px !important;
+        }
+        .gum-spotlight-subtitle {
+          font-size: 14.5px !important;
+        }
+        .gum-spotlight-excerpt {
+          font-size: 13.5px !important;
+        }
+        .gum-spotlight-footer {
+          padding: 18px 18px !important;
+          flex-direction: column !important;
+          align-items: stretch !important;
+          gap: 16px !important;
+        }
+        .gum-spotlight-buttons-group {
+          flex-direction: column !important;
+          align-items: stretch !important;
+          gap: 10px !important;
+        }
+        .gum-spotlight-primary-btn,
+        .gum-spotlight-vault-btn {
+          width: 100% !important;
+          justify-content: center !important;
         }
       }
     </style>
@@ -1727,75 +1993,82 @@
       </section>
 
       <!-- =========================================================================
-           SECTION 04: FEATURED & LATEST ENGINEERING DISPATCH
+           SECTION 04: GUMROAD-STYLE SPOTLIGHT & ENGINEERING DISPATCH
            Automatically syncs with collections.posts[0] (featured or latest post)
            ========================================================================= -->
       {% if collections.posts and collections.posts.length > 0 %}
       {% set spotlightPost = collections.posts[0] %}
       <section class="gum-section" id="latest-dispatch" style="padding-top: 0">
-        <div class="spotlight-post-card">
-          <!-- Top Telemetry Header -->
-          <div class="spotlight-header-row">
-            <div class="spotlight-tag-cluster">
+        <div class="gum-spotlight-card">
+          <!-- Top Gumroad Header Bar (Edge-to-Edge) -->
+          <div class="gum-spotlight-topbar{% if spotlightPost.data.featured %} is-featured-topbar{% else %} is-latest-topbar{% endif %}">
+            <div class="gum-spotlight-status-group">
               {% if spotlightPost.data.featured %}
-                <span class="spotlight-featured-pill">★ FEATURED DISPATCH</span>
+                <span class="gum-spotlight-pill gum-pill-black">
+                  <span class="gum-star-icon">★</span>
+                  <span>FEATURED DISPATCH</span>
+                </span>
               {% else %}
-                <span class="spotlight-latest-pill">
+                <span class="gum-spotlight-pill gum-pill-black">
                   <span class="stage-dot green pulse-dot" style="width: 8px; height: 8px; display: inline-block;"></span>
-                  LATEST FIELD NOTE
+                  <span>LATEST FIELD NOTE</span>
                 </span>
               {% endif %}
-              <span class="spotlight-category-tag">{{ spotlightPost.data.category }}</span>
-              <span class="spotlight-time-tag">{{ spotlightPost.data.display_date }} &bull; {{ spotlightPost.data.read_time }}</span>
+
+              <span class="gum-spotlight-meta-kicker">
+                {{ spotlightPost.data.category }} &middot; {{ spotlightPost.data.display_date }} &bull; {{ spotlightPost.data.read_time }}
+              </span>
             </div>
 
-            <span class="spotlight-kicker">// ENGINEERING NOTES &middot; DISPATCH #01</span>
+            <div class="gum-spotlight-tag-right">
+              <span class="gum-mono-tag">// LIVE PRODUCTION WRITE-UP</span>
+            </div>
           </div>
 
-          <!-- Main Article Title & Subtitle -->
-          <div class="spotlight-content-block">
-            <h3 class="spotlight-title">
+          <!-- Main Article Body Area -->
+          <div class="gum-spotlight-body">
+            <h3 class="gum-spotlight-title">
               <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title }}</a>
             </h3>
 
-            <p class="spotlight-subtitle">
+            <p class="gum-spotlight-subtitle">
               {{ spotlightPost.data.subtitle }}
             </p>
 
-            <p class="spotlight-excerpt">
+            <p class="gum-spotlight-excerpt">
               {{ spotlightPost.data.excerpt }}
             </p>
-          </div>
 
-          <!-- Tags Strip -->
-          {% if spotlightPost.data.post_tags and spotlightPost.data.post_tags.length > 0 %}
-          <div class="spotlight-tags-row">
-            <div class="about-chips-list" style="margin: 0">
-              {% for tag in spotlightPost.data.post_tags.slice(0, 4) %}
-                {% set colors = ["chip-yellow", "chip-pink", "chip-green", "chip-blue"] %}
-                <span class="about-chip {{ colors[loop.index0 % 4] }}">{{ tag }}</span>
-              {% endfor %}
+            <!-- Topic Tags Strip -->
+            {% if spotlightPost.data.post_tags and spotlightPost.data.post_tags.length > 0 %}
+            <div class="gum-spotlight-chips-row">
+              <div class="about-chips-list" style="margin: 0">
+                {% for tag in spotlightPost.data.post_tags.slice(0, 5) %}
+                  {% set colors = ["chip-yellow", "chip-pink", "chip-green", "chip-blue"] %}
+                  <span class="about-chip {{ colors[loop.index0 % 4] }}">{{ tag }}</span>
+                {% endfor %}
+              </div>
             </div>
+            {% endif %}
           </div>
-          {% endif %}
 
-          <!-- Bottom Action Deck: Read This Article + Catchy "Enter The Lab Vault" Blog CTA -->
-          <div class="spotlight-actions-deck">
-            <div class="spotlight-read-action">
-              <a href="{{ spotlightPost.url }}" class="gum-btn gum-btn-black spotlight-read-btn">
-                <span>Read Full Technical Breakdown</span>
+          <!-- Bottom Action Deck (Gumroad Footer Panel) -->
+          <div class="gum-spotlight-footer">
+            <div class="gum-spotlight-teaser">
+              <span class="gum-teaser-eyebrow">// UNFILTERED ENGINEERING ARCHIVE</span>
+              <strong class="gum-teaser-heading">Hungry for raw packet traces &amp; zero-drift blueprints?</strong>
+              <p class="gum-teaser-desc">Step inside the lab notes. All post-mortems, failure modes, and live configs.</p>
+            </div>
+
+            <div class="gum-spotlight-buttons-group">
+              <a href="{{ spotlightPost.url }}" class="gum-btn-hero-primary gum-spotlight-primary-btn">
+                <span>Read Technical Dossier</span>
                 <span aria-hidden="true">&rarr;</span>
               </a>
-            </div>
 
-            <div class="spotlight-vault-teaser">
-              <div class="vault-teaser-text">
-                <span class="vault-teaser-kicker">HUNGRY FOR MORE UNFILTERED LABS?</span>
-                <span class="vault-teaser-desc">Behind-the-scenes packet captures, zero-drift architectures, and post-mortems.</span>
-              </div>
-              <a href="/blog/" class="gum-btn gum-btn-yellow spotlight-vault-btn">
-                <span>Enter The Lab Vault</span>
-                <span class="vault-badge-count">({{ collections.posts.length }} Articles)</span>
+              <a href="/blog/" class="gum-btn-hero-secondary gum-spotlight-vault-btn">
+                <span>Unlock All Field Notes</span>
+                <span class="gum-vault-count-badge">{{ collections.posts.length }}</span>
                 <span aria-hidden="true">&rarr;</span>
               </a>
             </div>
