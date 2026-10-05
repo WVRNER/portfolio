@@ -46,7 +46,7 @@ content:
     type: collection
     path: posts
     description: "Deep-dive engineering notes, lab logs, architecture blueprints, and certifications"
-    filename: "{fields.slug}.html"
+    filename: "{fields.slug}.md"
 
     # Collection Table View in Pages CMS Dashboard
     view:
