@@ -385,11 +385,8 @@ content:
       - name: code_snippets
         label: Config / Code Snippets
         type: object
-        description: "WHAT THIS DOES: Lets you attach complete code or configuration examples to a post. EXAMPLE: main.tf, Dockerfile, docker-compose.yml, deploy.sh, nginx.conf. READER SEES: Nothing yet unless _includes/post.njk is later configured to render these snippets."
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{file_name}"
+        description: "WHAT THIS DOES: Stores complete code or configuration examples separately from the article body. EXAMPLE: main.tf, Dockerfile, deployment.yaml, install.sh. READER SEES: Nothing until _includes/post.njk is configured to render these snippets."
+        list: true
 
         fields:
           - name: file_name
@@ -398,27 +395,14 @@ content:
             description: "EXAMPLE: main.tf, Dockerfile, deployment.yaml, install.sh."
 
           - name: language
-            label: Language
-            type: select
-            description: "WHAT THIS DOES: Labels what kind of code/configuration this is."
-            options:
-              values:
-                - "Bash / Shell"
-                - "Python"
-                - "YAML"
-                - "Dockerfile"
-                - "Terraform / HCL"
-                - "JSON"
-                - "INI / Config"
-                - "SQL"
-                - "HTML"
-                - "CSS"
-                - "JavaScript"
+            label: Language / Format
+            type: string
+            description: "EXAMPLE: Terraform / HCL, Bash, YAML, Python, Dockerfile."
 
           - name: code
             label: Code
             type: text
-            description: "Paste the complete code or configuration here. EXAMPLE: the entire contents of main.tf or Dockerfile."
+            description: "Paste the complete code or configuration here."
 
 
       # ========================================================================
