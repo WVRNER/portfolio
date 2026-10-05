@@ -526,8 +526,102 @@ content:
             description: "Requests that search engines do not index this article. EXAMPLE: Use for a temporary/private-ish public test article. Normally leave OFF."
 
 
+
       # ========================================================================
-      # N. PUBLISHING CONTROLS
+      # N. TECHNICAL / PROJECT DETAILS
+      # ========================================================================
+
+      - name: difficulty
+        label: Difficulty Level
+        type: select
+        description: "How advanced is this article? EXAMPLE: Beginner for a basic Docker tutorial, Advanced for a production Kubernetes architecture. READER SEES: Nothing yet until post.njk is configured to display it."
+        options:
+          values:
+            - "Beginner"
+            - "Intermediate"
+            - "Advanced"
+
+
+      - name: project_status
+        label: Lab / Project Status
+        type: select
+        description: "Current state of the project or lab. EXAMPLE: Completed after you successfully finish and verify the lab. READER SEES: Nothing yet until post.njk renders it."
+        options:
+          values:
+            - "Planned"
+            - "In Progress"
+            - "Completed"
+            - "Archived"
+
+
+      - name: technologies
+        label: Technologies Used
+        type: select
+        description: "Select the main technologies actually used in this project/article. EXAMPLE: Linux + Docker + Terraform + AWS. READER SEES: Nothing yet until post.njk renders these as technology badges."
+        options:
+          multiple: true
+          values:
+            - "Linux"
+            - "Ubuntu"
+            - "Windows Server"
+            - "Docker"
+            - "Kubernetes"
+            - "OpenShift"
+            - "Terraform"
+            - "Ansible"
+            - "AWS"
+            - "IBM Cloud"
+            - "GitHub Actions"
+            - "Jenkins"
+            - "Git"
+            - "Python"
+            - "Bash"
+            - "Cisco"
+            - "MikroTik"
+            - "VMware"
+            - "UTM"
+            - "Prometheus"
+            - "Grafana"
+
+
+      - name: repository_url
+        label: GitHub Repository
+        type: string
+        description: "Link to the source code or lab repository. EXAMPLE: your GitHub repository for the Terraform project. Leave blank if the article has no repository. READER SEES: Nothing yet until post.njk adds a repository button."
+
+
+      - name: live_demo_url
+        label: Live Demo URL
+        type: string
+        description: "Optional link to a working deployment or demo. EXAMPLE: the live website created in the article. Leave blank for projects that have no live demo."
+
+
+      - name: prerequisites
+        label: Prerequisites
+        type: text
+        description: "What should someone have or know before following this article? EXAMPLE: Ubuntu VM, Docker installed, basic Linux commands, AWS account. READER SEES: Nothing yet until post.njk renders a Prerequisites section."
+
+
+      - name: environment
+        label: Environment / Tested On
+        type: text
+        description: "Record the environment where you actually tested the work. EXAMPLE: Ubuntu Server 24.04 ARM64, Docker 29, UTM on Apple Silicon. This is useful later when software versions change."
+
+
+      - name: key_takeaways
+        label: Key Takeaways
+        type: text
+        description: "Short summary of the most important things learned or demonstrated. EXAMPLE: Containers use namespaces for isolation; bridge networks provide container-to-container communication. READER SEES: Nothing yet until post.njk renders a Key Takeaways section."
+
+
+      - name: credential_url
+        label: Certificate / Credential URL
+        type: string
+        description: "Optional verification link for certification posts. EXAMPLE: your official Coursera, Credly, Cisco, IBM, or other credential verification page. Leave blank for normal articles."
+
+
+      # ========================================================================
+      # O. PUBLISHING CONTROLS
       # ========================================================================
 
       - name: published
