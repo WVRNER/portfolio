@@ -1,23 +1,33 @@
 # ==============================================================================
-# Pages CMS Configuration (.pages.yml)
-# Ultra-Rich Configuration for Nima Hosseini (@wvrner) - DevOps & Infrastructure Portfolio
-# Reference Post: posts/ibm-devops-certificate.html
-# Official Documentation: https://pagescms.org/docs/configuration/
+# .pages.yml  (rename this file to ".pages.yml" in the repo root)
+# Pages CMS config for Nima Hosseini (@wvrner) - DevOps & Infrastructure Portfolio
+# Docs: https://pagescms.org/docs/configuration/
+#
+# QUICK GUIDE: HOW TO EDIT THIS FILE LATER
+#   * Add a dropdown option  -> add a line under that field's `values:` list
+#   * Add a new field        -> copy any block under `fields:` and change `name`
+#                               (the name becomes the frontmatter key your
+#                               template reads, e.g. {{ series.name }})
+#   * Hide a field           -> add `hidden: true`
+#   * Make a field optional  -> remove `required: true`
+#   * Indentation is 2 spaces. Never use tabs. Quote any value that contains
+#     a colon (:), a hash (#), or starts with a special character.
+#   * A field the template doesn't render still saves fine, it just does nothing.
 # ==============================================================================
 
+
 # ------------------------------------------------------------------------------
-# 1. Media Storage & Upload Engine
+# 1. MEDIA (uploads)
 # ------------------------------------------------------------------------------
 media:
-  input: images
-  output: /images
-  categories:
+  input: images          # folder in the repo where files are stored
+  output: /images        # public URL prefix written into posts
+  categories:            # allowed groups of file types
     - image
     - document
     - compressed
     - code
-  extensions:
-    # High-resolution web images, screenshots & architecture diagrams
+  extensions:            # extra individual extensions allowed
     - png
     - jpg
     - jpeg
@@ -25,86 +35,83 @@ media:
     - svg
     - gif
     - avif
-    # Downloadable certificates, lab whitepapers, architecture code & archives
     - pdf
     - zip
-    - tar.gz
     - yaml
     - yml
     - json
     - tf
     - sh
     - py
-  rename: safe # Automatically slugifies uploaded filenames for valid, clean web URLs
+  rename: safe           # slugifies filenames: "My Lab (1).PNG" -> "my-lab-1.png"
+  # WARNING: the repo is public. Never upload files containing keys, tokens,
+  # account IDs, or internal IPs (check .tf, .sh, .py, .json and screenshots).
+
 
 # ------------------------------------------------------------------------------
-# 2. Content Collections
+# 2. CONTENT
 # ------------------------------------------------------------------------------
 content:
   - name: posts
     label: Blog Posts
     type: collection
     path: posts
-    description: "Deep-dive engineering notes, lab logs, architecture blueprints, and certifications"
-    filename: "{fields.slug}.md"
+    filename: "{fields.slug}.md"   # new post "my-lab" -> posts/my-lab.md
+    description: "Engineering notes, lab logs, architecture write-ups, certifications"
 
-    # Collection Table View in Pages CMS Dashboard
+    # Dashboard table
     view:
-      fields:
-        - title
-        - category
-        - display_date
-        - read_time
-        - published
+      fields: [title, category, date, updated, published, featured]
       primary: title
+      sort: [date, title]
       default:
         sort: date
         order: desc
-      search:
-        - title
-        - subtitle
-        - excerpt
-        - category
-        - post_tags
+      search: [title, subtitle, excerpt, category, post_tags]
 
-    # Complete Field Schema
     fields:
+
       # ------------------------------------------------------------------------
-      # [A] Core Editorial Identity
+      # A. IDENTITY
       # ------------------------------------------------------------------------
       - name: title
         label: Post Title
         type: string
         required: true
-        description: "Main headline (e.g. Deep-Diving DevOps: Why I'm Taking the IBM DevOps and Software Engineering Professional Certificate)"
+        description: "Main headline. Example: Building a Zero-Drift VPC with Terraform"
 
       - name: slug
-        label: URL Slug & Filename
+        label: URL Slug (also the filename)
         type: string
         required: true
-        pattern: "^[a-z0-9-]+$"
-        description: "Clean URL identifier (e.g. ibm-devops-certificate -> creates /posts/ibm-devops-certificate.html)"
+        pattern: "^[a-z0-9-]+$"   # lowercase letters, numbers, hyphens only
+        description: "Example: terraform-zero-drift-vpc  ->  posts/terraform-zero-drift-vpc.md. Do not change after publishing (breaks links)."
 
       - name: subtitle
-        label: Subtitle / Hook Paragraph
+        label: Subtitle / Hook
         type: string
         required: true
-        description: "Lead introductory hook displayed beneath the title (e.g. Bridging network fundamentals, virtualization, and enterprise systems administration into end-to-end cloud-native engineering...)"
+        description: "One-line hook under the title. Example: How I replaced click-ops with a reproducible AWS network."
 
       - name: excerpt
-        label: Teaser Excerpt (Blog Feed Summary)
+        label: Blog Feed Teaser
         type: text
         required: true
         options:
           minlength: 20
           maxlength: 300
-        description: "Concise 2-3 sentence overview displayed on the main /blog.html feed teaser card."
+        description: "2-3 sentences shown on the /blog feed card. Example: I rebuilt my lab VPC from scratch in Terraform, then broke it on purpose to test drift detection."
+
+      - name: author
+        label: Author
+        type: string
+        default: "Nima Hosseini"
 
       - name: category
         label: Category Badge
         type: select
         required: true
-        default: "CERTIFICATION & LAB LOG"
+        description: "Pick ONE. To add a category: copy a `- value:` pair below and edit both lines."
         options:
           values:
             - value: "CERTIFICATION & LAB LOG"
@@ -123,200 +130,210 @@ content:
               label: "Kubernetes & Containers"
             - value: "DEVSECOPS & OBSERVABILITY"
               label: "DevSecOps & Observability"
+            - value: "INFRASTRUCTURE AS CODE"
+              label: "Infrastructure as Code"
             - value: "SOFTWARE ENGINEERING"
               label: "Software Engineering"
+            - value: "PROJECT BUILD LOG"
+              label: "Project Build Log"
+            - value: "CAREER & LEARNING"
+              label: "Career & Learning"
+
+      # ------------------------------------------------------------------------
+      # B. DATES & READING TIME
+      # ------------------------------------------------------------------------
+      - name: date
+        label: Publication Date
+        type: date
+        required: true
+        default: now
+        description: "Used for sorting. Set a past date to backdate a post."
 
       - name: display_date
-        label: Display Date
+        label: Display Date (text)
         type: string
         required: true
-        default: "October 2026"
-        description: "Formatted human date string displayed in post meta header (e.g. October 2026)"
+        description: "Human text shown on the post. Example: October 2026. Keep it in sync with the date above."
 
-      - name: date
-        label: Publication Date (Calendar Picker)
+      - name: updated
+        label: Last Updated
         type: date
-        default: now
-        required: true
-        description: "Machine timestamp used for automated chronological sorting"
+        description: "Optional. Fill in when you revise an older post. Template can show 'Updated: ...' if this exists."
 
       - name: read_time
-        label: Estimated Reading Time
+        label: Reading Time
         type: string
         required: true
-        default: "6 min read"
-        description: "Estimated reading time badge (e.g. 6 min read, 12 min deep dive)"
-
-      - name: permalink
-        label: Canonical Permalink
-        type: string
-        required: true
-        default: "/posts/{fields.slug}.html"
-        description: "Public URL route for this article (e.g. /posts/ibm-devops-certificate.html)"
+        description: "Example: 6 min read  |  12 min deep dive. Rule of thumb: words / 200."
 
       # ------------------------------------------------------------------------
-      # [B] Visual Media & Cover Artwork
+      # C. COVER IMAGE
       # ------------------------------------------------------------------------
       - name: cover_image
-        label: Cover / Featured Header Image
+        label: Cover Image
         type: image
-        description: "Primary visual banner for article header, blog feed thumbnail, and social cards"
+        description: "Header banner, feed thumbnail. Recommended 1600x900."
         options:
           path: images/posts
           extensions: [png, jpg, jpeg, webp, svg]
-          categories: [image]
           rename: safe
 
       - name: cover_image_alt
-        label: Cover Image Alt Text
+        label: Cover Alt Text
         type: string
-        description: "Descriptive alt text for screen readers, web accessibility, and search indexing"
+        description: "Describe the image for screen readers. Example: Diagram of a three-tier AWS VPC with public and private subnets."
 
       - name: cover_image_caption
-        label: Cover Image Caption / Credit
+        label: Cover Caption / Credit
         type: string
-        description: "Optional photo caption or diagram credit displayed beneath the banner"
+        description: "Optional. Example: Architecture drawn in draw.io"
 
       # ------------------------------------------------------------------------
-      # [C] Topic Tags & Neubrutalist Badges
+      # D. TAGS
       # ------------------------------------------------------------------------
       - name: post_tags
-        label: Topic Tags (Neubrutalist Chips)
+        label: Topic Tags
         type: select
         required: true
-        description: "Select one or more topic chips displayed at the bottom of the article and on the blog card"
+        description: "Choose 1-12. To add a tag: add a quoted line like - \"#Ansible\" under values."
         options:
           multiple: true
           min: 1
           max: 12
           values:
-            # From IBM DevOps Certificate Post:
             - "#DevOps"
             - "#IBMCloud"
             - "#Coursera"
             - "#Docker"
             - "#Kubernetes"
+            - "#OpenShift"
             - "#CICD"
+            - "#GitHubActions"
+            - "#Jenkins"
+            - "#Tekton"
+            - "#GitOps"
+            - "#Terraform"
+            - "#Ansible"
+            - "#AWS"
+            - "#Cloudflare"
+            - "#GitHubPages"
+            - "#ZeroDrift"
+            - "#Linux"
+            - "#Bash"
+            - "#Python"
             - "#PythonFlask"
             - "#TDD"
             - "#Networking"
-            # Core Systems & Cloud Disciplines:
-            - "#Linux"
-            - "#Terraform"
-            - "#AWS"
-            - "#ZeroDrift"
-            - "#GitOps"
-            - "#Bash"
-            - "#MCSA"
             - "#CCNA"
-            - "#Virtualization"
+            - "#MCSA"
             - "#MikroTik"
-            - "#OpenShift"
+            - "#Virtualization"
+            - "#Security"
             - "#Prometheus"
             - "#Grafana"
-            - "#Tekton"
             - "#OpenSource"
             - "#Neubrutalism"
+            - "#CareerNotes"
 
       # ------------------------------------------------------------------------
-      # [D] Highlighted Callout / Blueprint Box (from ibm-devops-certificate.html)
+      # E. SERIES, RELATED POSTS, TABLE OF CONTENTS
+      # ------------------------------------------------------------------------
+      - name: series
+        label: Series
+        type: object
+        description: "Optional. Group multi-part posts. Example: name = Terraform Lab Series, part = 2"
+        fields:
+          - name: name
+            label: Series Name
+            type: string
+          - name: part
+            label: Part Number
+            type: number
+
+      - name: related_posts
+        label: Related Posts
+        type: reference
+        description: "Optional. Pick other posts to link at the bottom. Stores their slugs."
+        options:
+          collection: posts
+          multiple: true
+          search: title
+          value: "{fields.slug}"
+          label: "{fields.title}"
+
+      - name: toc
+        label: Show Table of Contents
+        type: boolean
+        default: false
+        description: "Turn on for long posts with several H2/H3 sections."
+
+      # ------------------------------------------------------------------------
+      # F. CALLOUT BOX  (OFF by default; empty defaults so nothing leaks into new posts)
       # ------------------------------------------------------------------------
       - name: callout_box
-        label: Highlighted Callout / Blueprint Box
+        label: Highlighted Callout Box
         type: object
-        description: "Structured callout box matching the // Program Blueprint card in the IBM article"
+        description: "Optional highlighted card. Leave 'Show' off to skip it."
         fields:
           - name: enable
             label: Show Callout Box
             type: boolean
-            default: true
+            default: false
 
           - name: tag_label
             label: Monospace Label
             type: string
-            default: "// Program Blueprint"
-            description: "Top monospace accent tag (e.g. // Program Blueprint, // Architecture Note, // Warning)"
+            description: "Examples: // Program Blueprint  |  // Architecture Note  |  // Warning"
 
           - name: title
             label: Box Title
             type: string
-            default: "IBM DevOps and Software Engineering Professional Certificate"
+            description: "Example: IBM DevOps and Software Engineering Professional Certificate"
 
           - name: content
-            label: Box Description
+            label: Box Text
             type: text
-            description: "Detailed summary text explaining the blueprint, credentials, or architectural takeaway"
+            description: "2-4 sentences. Example: Ten-course program covering CI/CD, containers, Kubernetes and TDD."
 
           - name: link_text
-            label: Action Link Text
+            label: Link Text
             type: string
-            default: "Explore the full curriculum on Coursera &rarr;"
+            description: "Example: Explore the full curriculum on Coursera →   (use the → character, not &rarr;)"
 
           - name: link_url
-            label: Action Link URL
+            label: Link URL
             type: string
-            default: "https://www.coursera.org/professional-certificates/devops-and-software-engineering"
+            description: "Full URL starting with https://"
 
       # ------------------------------------------------------------------------
-      # [E] Full-Featured Article Body (WYSIWYG Rich Text)
+      # G. ARTICLE BODY
       # ------------------------------------------------------------------------
       - name: body
         label: Article Content
         type: rich-text
         required: true
-        description: "Rich visual editing with Bold, Italic, Underline, Strikethrough, Headings (H2/H3/H4), Links, Code Blocks, Lists, Blockquotes, Tables, and Photo insertion. Toggle source mode at any time."
+        description: "Write normally. Code: use a code block and name the language so highlighting works. Images: use the picture button; they upload to images/posts."
         options:
-          format: html # Generates clean semantic HTML matching post templates
-          switcher: true # Allows instant toggling between visual WYSIWYG editor and raw Source Mode
-          media: images
-          path: posts
+          format: markdown       # change to `html` ONLY if your build expects raw HTML bodies
+          path: images/posts
           extensions: [png, jpg, jpeg, webp, svg, gif]
-          categories: [image]
           rename: safe
 
       # ------------------------------------------------------------------------
-      # [F] Downloadable Files, Lab Resources & Attachments
-      # ------------------------------------------------------------------------
-      - name: downloads
-        label: Downloadable Files & Lab Assets
-        type: object
-        list: true
-        description: "Attach downloadable files such as PDF certificates, Terraform configs, or lab source code"
-        fields:
-          - name: label
-            label: File Display Name
-            type: string
-            description: "e.g. Course Syllabus PDF, Complete Terraform Topology (.zip), Ingress Config (.yaml)"
-
-          - name: file
-            label: File Upload
-            type: file
-            options:
-              extensions: [pdf, zip, tar.gz, yaml, yml, json, tf, sh, py]
-              categories: [document, compressed, code]
-              rename: safe
-
-          - name: description
-            label: Brief Note
-            type: string
-            description: "e.g. Verified certificate signed by IBM and Coursera, 2.4 MB"
-
-      # ------------------------------------------------------------------------
-      # [G] Architecture Code Snippets & Configurations
+      # H. STANDALONE CODE SNIPPETS (separate from the body)
       # ------------------------------------------------------------------------
       - name: code_snippets
-        label: Architecture Code Snippets
+        label: Config / Code Snippets
         type: object
         list: true
-        description: "Optional standalone syntax-highlighted configuration snippets accompanying the post"
+        description: "Optional. Use for files readers might copy whole (main.tf, Dockerfile). For short inline examples, use a code block in the body instead."
         fields:
           - name: file_name
-            label: File / Component Name
+            label: File Name
             type: string
-            description: "e.g. main.tf, Dockerfile, ingress.yaml, server.py"
-
+            description: "Examples: main.tf, Dockerfile, ingress.yaml, deploy.sh"
           - name: language
-            label: Syntax Language
+            label: Language
             type: select
             default: "yaml"
             options:
@@ -327,91 +344,137 @@ content:
                 - "dockerfile"
                 - "hcl"
                 - "json"
+                - "ini"
                 - "sql"
                 - "html"
                 - "css"
                 - "javascript"
-
           - name: code
-            label: Code / Configuration
+            label: Code
             type: code
 
       # ------------------------------------------------------------------------
-      # [H] External References & Verified Links
+      # I. DOWNLOADS
       # ------------------------------------------------------------------------
-      - name: external_links
-        label: External Links & References
+      - name: downloads
+        label: Downloadable Files
         type: object
         list: true
-        description: "Curated list of documentation, GitHub repos, or verified credentials"
+        description: "Optional. Public repo: only attach files that are safe for anyone to read."
+        fields:
+          - name: label
+            label: Display Name
+            type: string
+            description: "Examples: Course Syllabus PDF, Terraform VPC module (.zip)"
+          - name: file
+            label: File
+            type: file
+            options:
+              path: images/downloads
+              extensions: [pdf, zip, yaml, yml, json, tf, sh, py]
+              rename: safe
+          - name: description
+            label: Short Note
+            type: string
+            description: "Example: Verified certificate, 2.4 MB"
+
+      # ------------------------------------------------------------------------
+      # J. EXTERNAL LINKS
+      # ------------------------------------------------------------------------
+      - name: external_links
+        label: References & Links
+        type: object
+        list: true
+        description: "Optional. Docs, repos, verified credentials."
         fields:
           - name: text
             label: Link Text
             type: string
-            description: "e.g. IBM Professional Certificate Portal, Official GitHub Repo"
-
+            description: "Examples: Terraform AWS provider docs, Source repo on GitHub"
           - name: url
-            label: Target URL
+            label: URL
             type: string
-
           - name: open_in_new_tab
             label: Open in New Tab
             type: boolean
             default: true
 
       # ------------------------------------------------------------------------
-      # [I] Search Engine Optimization (SEO) & Social Cards
+      # K. SEO & SOCIAL CARDS
       # ------------------------------------------------------------------------
       - name: seo
-        label: SEO & Open Graph Meta
+        label: SEO & Social Cards
         type: object
-        description: "Fine-tune how this post renders on Google, Twitter, LinkedIn, and Telegram"
+        description: "Optional. Leave blank to let the template fall back to title/excerpt."
         fields:
           - name: meta_title
-            label: Custom SEO Title
+            label: SEO Title
             type: string
-            description: "Overrides default page title in browser tabs & search results"
-
+            description: "Under 60 characters. Overrides the browser tab title."
           - name: meta_description
-            label: Custom Meta Description
+            label: Meta Description
             type: text
-            description: "Recommended: 150-160 characters for search engine snippets"
-
+            description: "150-160 characters for Google snippets."
           - name: og_image
-            label: Open Graph Share Card Image (1200x630)
+            label: Share Card Image (1200x630)
             type: image
             options:
               path: images/posts
               extensions: [png, jpg, webp]
               rename: safe
-
           - name: canonical_url
             label: Canonical URL
             type: string
-            description: "Use if this article was cross-posted from another platform (e.g. Medium, Substack)"
-
+            description: "Only if this was first published elsewhere (Medium, Substack, dev.to)."
           - name: no_index
-            label: Hide from Search Engines (noindex)
+            label: Hide from Search Engines
             type: boolean
             default: false
 
       # ------------------------------------------------------------------------
-      # [J] Publishing Controls & Template Binding
+      # L. PUBLISHING CONTROLS
       # ------------------------------------------------------------------------
       - name: published
-        label: Published Status
+        label: Published
         type: boolean
         default: true
-        description: "Toggle off to keep as a private draft without rendering to the live public feed"
+        description: "Turn OFF to keep a draft. Your template/build must skip posts where published is false."
 
       - name: featured
-        label: Pin to Featured Posts
+        label: Pin as Featured
         type: boolean
         default: false
-        description: "Feature this post at the top of the blog landing page"
 
       - name: layout
         label: Layout Template
         type: string
         default: post.njk
         hidden: true
+
+
+# ------------------------------------------------------------------------------
+# 3. OPTIONAL: MORE SECTIONS (uncomment when your templates exist)
+#    Copy-paste example for a Projects collection. Only useful once your site
+#    has a template that reads projects/*.md.
+# ------------------------------------------------------------------------------
+#  - name: projects
+#    label: Projects
+#    type: collection
+#    path: projects
+#    filename: "{fields.slug}.md"
+#    view:
+#      fields: [title, status, date]
+#      primary: title
+#    fields:
+#      - { name: title,   label: Project Name, type: string, required: true }
+#      - { name: slug,    label: Slug, type: string, required: true, pattern: "^[a-z0-9-]+$" }
+#      - { name: summary, label: One-line Summary, type: text, required: true }
+#      - name: status
+#        label: Status
+#        type: select
+#        options:
+#          values: [Planned, In Progress, Shipped]
+#      - { name: repo_url, label: GitHub Repo URL, type: string }
+#      - { name: live_url, label: Live Demo URL, type: string }
+#      - { name: date,     label: Date, type: date, default: now }
+#      - { name: body,     label: Details, type: rich-text, options: { format: markdown } }
