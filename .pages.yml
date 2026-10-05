@@ -320,18 +320,21 @@ content:
           rename: safe
 
       # ------------------------------------------------------------------------
-      # H. STANDALONE CODE SNIPPETS (separate from the body)
+      # H. STANDALONE CODE SNIPPETS
       # ------------------------------------------------------------------------
+
       - name: code_snippets
         label: Config / Code Snippets
         type: object
-        list: true
-        description: "Optional. Use for files readers might copy whole (main.tf, Dockerfile). For short inline examples, use a code block in the body instead."
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{file_name}"
         fields:
           - name: file_name
             label: File Name
             type: string
-            description: "Examples: main.tf, Dockerfile, ingress.yaml, deploy.sh"
+
           - name: language
             label: Language
             type: select
@@ -341,63 +344,68 @@ content:
                 - "bash"
                 - "python"
                 - "yaml"
-                - "dockerfile"
-                - "hcl"
+                - "javascript"
                 - "json"
-                - "ini"
-                - "sql"
                 - "html"
                 - "css"
-                - "javascript"
+
           - name: code
             label: Code
             type: code
+            options:
+              format: yaml
+
 
       # ------------------------------------------------------------------------
       # I. DOWNLOADS
       # ------------------------------------------------------------------------
+
       - name: downloads
         label: Downloadable Files
         type: object
-        list: true
-        description: "Optional. Public repo: only attach files that are safe for anyone to read."
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
         fields:
           - name: label
             label: Display Name
             type: string
-            description: "Examples: Course Syllabus PDF, Terraform VPC module (.zip)"
+
           - name: file
             label: File
             type: file
-            options:
-              path: images/downloads
-              extensions: [pdf, zip, yaml, yml, json, tf, sh, py]
-              rename: safe
+
           - name: description
             label: Short Note
             type: string
-            description: "Example: Verified certificate, 2.4 MB"
+
 
       # ------------------------------------------------------------------------
       # J. EXTERNAL LINKS
       # ------------------------------------------------------------------------
+
       - name: external_links
         label: References & Links
         type: object
-        list: true
-        description: "Optional. Docs, repos, verified credentials."
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{text}"
         fields:
           - name: text
             label: Link Text
             type: string
-            description: "Examples: Terraform AWS provider docs, Source repo on GitHub"
+
           - name: url
             label: URL
             type: string
+
           - name: open_in_new_tab
             label: Open in New Tab
             type: boolean
             default: true
+
 
       # ------------------------------------------------------------------------
       # K. SEO & SOCIAL CARDS
