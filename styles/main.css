@@ -6163,149 +6163,88 @@ a[href*="#cv"].gum-btn:active {
 
 
 /* ==========================================================================
-   HOMEPAGE LATEST DISPATCH SECTION (#latest-dispatch)
-   TWO INDEPENDENT VISUAL OBJECTS:
-   1. OBJECT 1: .latest-post-card (Foreground card, breaks top boundary)
-   2. OBJECT 2: .black-browse-panel (Large continuous black backdrop with pink shadow)
+   FEATURED DISPATCH SECTION (#featured-dispatch)
+   Big Black Rectangle with Pink Offset Shadow framing the Latest Post card
+   Right side: Huge BROWSE ALL POSTS -> link
    ========================================================================== */
-#latest-dispatch.gum-section {
+#featured-dispatch.gum-section {
   padding-top: 0 !important;
   padding-bottom: 70px !important;
 }
 
-/* Outer composition stage controlling the physical layering */
-.latest-dispatch-stage {
+/* Big black rectangle with pink shadow framing the composition */
+.dispatch-black-frame {
   position: relative !important;
+  background: #000000 !important;
+  border: 3.5px solid #000000 !important;
+  border-radius: 22px !important;
+  box-shadow: 14px 14px 0px #FF90E8 !important;
   max-width: 1080px !important;
   width: 100% !important;
   margin: 0 auto !important;
+  padding: 36px 40px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr) !important;
+  gap: 36px !important;
+  align-items: center !important;
   box-sizing: border-box !important;
-  padding-top: 165px !important; /* Space for the upper ~40% of the card to sit against page background */
-}
-
-/* OBJECT 2: Large Continuous Black Browse Panel (Back Layer) */
-.black-browse-panel {
-  position: relative !important;
-  z-index: 1 !important;
-  background: #000000 !important;
-  border: 3.5px solid #000000 !important;
-  border-radius: 20px !important;
-  box-shadow: 14px 14px 0px #FF90E8 !important;
-  min-height: 520px !important;
-  display: flex !important;
-  justify-content: flex-end !important;
-  align-items: flex-start !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-  padding: 60px 52px 48px 24px !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-[data-theme="dark"] .black-browse-panel {
+[data-theme="dark"] .dispatch-black-frame {
   border-color: #FFFFFF !important;
   box-shadow: 14px 14px 0px #FF90E8 !important;
 }
 
-.black-browse-panel:hover {
+.dispatch-black-frame:hover {
   transform: translateY(-2px) !important;
   box-shadow: 16px 16px 0px #FF90E8 !important;
 }
 
-/* Right side of black panel: HUGE, bold, visually dominant BROWSE ALL POSTS typography */
-.browse-all-link {
-  width: 44% !important;
-  margin-left: auto !important;
-  display: inline-flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  text-decoration: none !important;
-  color: #FFFFFF !important;
-  cursor: pointer !important;
-  gap: 4px !important;
-  box-sizing: border-box !important;
-}
-
-.browse-all-text {
-  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-  font-size: clamp(38px, 4.4vw, 62px) !important;
-  font-weight: 900 !important;
-  line-height: 0.94 !important;
-  letter-spacing: -0.04em !important;
-  text-transform: uppercase !important;
-  color: #FFFFFF !important;
-  display: block !important;
-  transition: color 0.18s ease !important;
-}
-
-.browse-all-arrow {
-  display: inline-block !important;
-  font-size: 0.95em !important;
-  line-height: 1 !important;
-  color: #FFC900 !important;
-  font-weight: 900 !important;
-  margin-left: 6px !important;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.18s ease !important;
-}
-
-.browse-all-link:hover .browse-all-text {
-  color: #FF90E8 !important;
-}
-
-.browse-all-link:hover .browse-all-arrow {
-  transform: translateX(12px) !important;
-  color: #FF90E8 !important;
-}
-
-/* OBJECT 1: Latest Post Card (Foreground Layer, Positioned on Top) */
-/* Starts at top: 0 of .latest-dispatch-stage, breaking the top boundary of the black panel */
-.latest-post-card {
-  position: absolute !important;
-  z-index: 2 !important;
-  top: 0 !important;
-  left: 40px !important;
-  width: 50% !important;
-  max-width: 520px !important;
+/* OBJECT 1: The Latest Post Card inside the black frame */
+.dispatch-post-card {
+  width: 100% !important;
   background: #FFFFFF !important;
   border: 3.5px solid #000000 !important;
   border-radius: 16px !important;
-  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.45) !important;
-  padding: 24px 26px !important;
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
+  padding: 26px 28px !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 11px !important;
+  gap: 12px !important;
   box-sizing: border-box !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-[data-theme="dark"] .latest-post-card {
+[data-theme="dark"] .dispatch-post-card {
   background: #141416 !important;
   border-color: #FFFFFF !important;
   box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.15) !important;
 }
 
-.latest-post-card:hover {
+.dispatch-post-card:hover {
   transform: translate(-2px, -2px) !important;
   box-shadow: 8px 8px 0px #FF90E8 !important;
 }
 
-/* Card Header: Badges and Meta */
-.latest-card-header {
+/* Card Header: Badges & Meta */
+.dispatch-card-header {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   flex-wrap: wrap !important;
   gap: 8px !important;
-  padding-bottom: 4px !important;
+  padding-bottom: 2px !important;
 }
 
-.latest-card-badges {
+.dispatch-card-badges {
   display: flex !important;
   align-items: center !important;
   gap: 6px !important;
   flex-wrap: wrap !important;
 }
 
-.latest-badge {
+.dispatch-badge {
   font-family: var(--font-mono, monospace) !important;
   font-size: 11px !important;
   font-weight: 800 !important;
@@ -6318,31 +6257,31 @@ a[href*="#cv"].gum-btn:active {
   gap: 5px !important;
 }
 
-.badge-featured {
+.dispatch-badge.badge-featured {
   background: #FFC900 !important;
   color: #000000 !important;
   border: 1.5px solid #000000 !important;
 }
 
-.badge-latest {
+.dispatch-badge.badge-latest {
   background: #000000 !important;
   color: #FFFFFF !important;
   border: 1.5px solid #000000 !important;
 }
 
-.badge-category {
+.dispatch-badge.badge-category {
   background: var(--bg-canvas, #F4F4F0) !important;
   color: #000000 !important;
   border: 1.5px solid #000000 !important;
 }
 
-[data-theme="dark"] .badge-category {
+[data-theme="dark"] .dispatch-badge.badge-category {
   background: #222226 !important;
   color: #FFFFFF !important;
   border-color: #FFFFFF !important;
 }
 
-.latest-card-meta {
+.dispatch-card-meta {
   font-family: var(--font-mono, monospace) !important;
   font-size: 11.5px !important;
   font-weight: 700 !important;
@@ -6353,32 +6292,32 @@ a[href*="#cv"].gum-btn:active {
 }
 
 /* Card Title */
-.latest-card-title {
+.dispatch-card-title {
   font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-  font-size: clamp(20px, 2.3vw, 24px) !important;
+  font-size: clamp(20px, 2.3vw, 25px) !important;
   font-weight: 900 !important;
   letter-spacing: -0.03em !important;
   line-height: 1.22 !important;
   margin: 0 !important;
 }
 
-.latest-card-title a {
+.dispatch-card-title a {
   color: var(--text-main, #000000) !important;
   text-decoration: none !important;
   transition: color 0.15s ease !important;
 }
 
-[data-theme="dark"] .latest-card-title a {
+[data-theme="dark"] .dispatch-card-title a {
   color: #FFFFFF !important;
 }
 
-.latest-card-title a:hover {
+.dispatch-card-title a:hover {
   text-decoration: underline wavy #FF90E8 2.5px !important;
   text-underline-offset: 6px !important;
 }
 
 /* Card Subtitle & Excerpt */
-.latest-card-subtitle {
+.dispatch-card-subtitle {
   font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
   font-size: 14.5px !important;
   font-weight: 600 !important;
@@ -6387,23 +6326,23 @@ a[href*="#cv"].gum-btn:active {
   margin: 0 !important;
 }
 
-[data-theme="dark"] .latest-card-subtitle {
+[data-theme="dark"] .dispatch-card-subtitle {
   color: #AAAAAA !important;
 }
 
-.latest-card-excerpt {
+.dispatch-card-excerpt {
   font-size: 13.5px !important;
   line-height: 1.55 !important;
   color: var(--text-main, #222222) !important;
   margin: 0 !important;
 }
 
-[data-theme="dark"] .latest-card-excerpt {
+[data-theme="dark"] .dispatch-card-excerpt {
   color: #CCCCCC !important;
 }
 
 /* Card Tags */
-.latest-card-tags {
+.dispatch-card-tags {
   display: flex !important;
   flex-wrap: wrap !important;
   gap: 6px !important;
@@ -6411,13 +6350,13 @@ a[href*="#cv"].gum-btn:active {
 }
 
 /* Card Action Button */
-.latest-card-action {
-  margin-top: 6px !important;
+.dispatch-card-action {
+  margin-top: 4px !important;
   display: flex !important;
   align-items: center !important;
 }
 
-.latest-read-btn {
+.dispatch-card-btn {
   display: inline-flex !important;
   align-items: center !important;
   gap: 8px !important;
@@ -6434,70 +6373,99 @@ a[href*="#cv"].gum-btn:active {
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease !important;
 }
 
-[data-theme="dark"] .latest-read-btn {
+[data-theme="dark"] .dispatch-card-btn {
   background: #FFFFFF !important;
   color: #000000 !important;
   border-color: #FFFFFF !important;
 }
 
-.latest-read-btn:hover {
+.dispatch-card-btn:hover {
   background: #FFC900 !important;
   color: #000000 !important;
   transform: translate(-2px, -2px) !important;
   box-shadow: 5px 5px 0px #000000 !important;
 }
 
-[data-theme="dark"] .latest-read-btn:hover {
+[data-theme="dark"] .dispatch-card-btn:hover {
   box-shadow: 5px 5px 0px #FF90E8 !important;
+}
+
+/* Right side of black panel: HUGE, bold BROWSE ALL POSTS typography */
+.dispatch-browse-area {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  box-sizing: border-box !important;
+  padding-left: 10px !important;
+}
+
+.dispatch-browse-cta {
+  display: inline-flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  text-decoration: none !important;
+  color: #FFFFFF !important;
+  cursor: pointer !important;
+  gap: 4px !important;
+}
+
+.dispatch-browse-word {
+  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+  font-size: clamp(38px, 4.4vw, 62px) !important;
+  font-weight: 900 !important;
+  line-height: 0.94 !important;
+  letter-spacing: -0.04em !important;
+  text-transform: uppercase !important;
+  color: #FFFFFF !important;
+  display: block !important;
+  transition: color 0.18s ease !important;
+}
+
+.dispatch-browse-icon {
+  display: inline-block !important;
+  font-size: 0.95em !important;
+  line-height: 1 !important;
+  color: #FFC900 !important;
+  font-weight: 900 !important;
+  margin-left: 6px !important;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.18s ease !important;
+}
+
+.dispatch-browse-cta:hover .dispatch-browse-word {
+  color: #FF90E8 !important;
+}
+
+.dispatch-browse-cta:hover .dispatch-browse-icon {
+  transform: translateX(12px) !important;
+  color: #FF90E8 !important;
 }
 
 /* Mobile Responsiveness (<= 899px) */
 @media (max-width: 899px) {
-  .latest-dispatch-stage {
-    display: flex !important;
-    flex-direction: column !important;
-    padding-top: 0 !important;
-    background: #000000 !important;
-    border: 3.5px solid #000000 !important;
+  .dispatch-black-frame {
+    grid-template-columns: 1fr !important;
+    padding: 20px 16px 28px !important;
+    gap: 24px !important;
     border-radius: 16px !important;
     box-shadow: 8px 8px 0px #FF90E8 !important;
-    padding: 16px 14px 32px !important;
-    min-height: auto !important;
   }
 
-  [data-theme="dark"] .latest-dispatch-stage {
-    border-color: #FFFFFF !important;
-    box-shadow: 8px 8px 0px #FF90E8 !important;
-  }
-
-  .black-browse-panel {
-    display: contents !important;
-  }
-
-  .latest-post-card {
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-bottom: 24px !important;
-    z-index: 2 !important;
+  .dispatch-post-card {
     border-radius: 12px !important;
-    padding: 18px 16px !important;
+    padding: 20px 18px !important;
   }
 
-  .browse-all-link {
-    width: 100% !important;
-    padding: 6px 4px 0 4px !important;
-    gap: 6px !important;
+  .dispatch-browse-area {
+    padding-left: 4px !important;
   }
 
-  .browse-all-text {
+  .dispatch-browse-word {
     font-size: 32px !important;
     line-height: 1 !important;
   }
 
-  .browse-all-arrow {
+  .dispatch-browse-icon {
     font-size: 32px !important;
   }
 }

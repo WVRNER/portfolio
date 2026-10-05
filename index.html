@@ -1725,8 +1725,72 @@
           </div>
         </div>
       </section>
+      <!-- =========================================================================
+           FEATURED BLOG POST & BROWSE IN BLACK RECTANGLE WITH PINK SHADOW
+           Automatically promotes collections.posts[0]
+           ========================================================================= -->
+      {% if collections.posts and collections.posts.length > 0 %}
+      {% set spotlightPost = collections.posts[0] %}
+      <section class="gum-section" id="featured-dispatch">
+        <!-- Big black rectangle with pink shadow framing the post -->
+        <div class="dispatch-black-frame">
+          <!-- Left: The Post Card -->
+          <article class="dispatch-post-card">
+            <div class="dispatch-card-header">
+              <div class="dispatch-card-badges">
+                {% if spotlightPost.data.featured %}
+                  <span class="dispatch-badge badge-featured">★ FEATURED</span>
+                {% else %}
+                  <span class="dispatch-badge badge-latest"><span class="stage-dot green pulse-dot"></span> LATEST</span>
+                {% endif %}
+                <span class="dispatch-badge badge-category">{{ spotlightPost.data.category }}</span>
+              </div>
+              <div class="dispatch-card-meta">
+                <span>{{ spotlightPost.data.display_date }}</span>
+                <span>&bull;</span>
+                <span>{{ spotlightPost.data.read_time }}</span>
+              </div>
+            </div>
 
-      <!-- Section: Direct Comms & Transmission Gallery -->
+            <h3 class="dispatch-card-title">
+              <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title }}</a>
+            </h3>
+
+            {% if spotlightPost.data.subtitle %}
+            <p class="dispatch-card-subtitle">{{ spotlightPost.data.subtitle }}</p>
+            {% endif %}
+
+            <p class="dispatch-card-excerpt">{{ spotlightPost.data.excerpt }}</p>
+
+            {% if spotlightPost.data.post_tags and spotlightPost.data.post_tags.length > 0 %}
+            <div class="dispatch-card-tags">
+              {% for tag in spotlightPost.data.post_tags.slice(0, 4) %}
+                {% set colors = ["chip-yellow", "chip-pink", "chip-green", "chip-blue"] %}
+                <span class="about-chip {{ colors[loop.index0 % 4] }}">{{ tag }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="dispatch-card-action">
+              <a href="{{ spotlightPost.url }}" class="dispatch-card-btn">
+                <span>Read Article</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </article>
+
+          <!-- Right: Huge BROWSE ALL POSTS Typography -->
+          <div class="dispatch-browse-area">
+            <a href="/blog/" class="dispatch-browse-cta" aria-label="Browse all posts">
+              <span class="dispatch-browse-word">BROWSE</span>
+              <span class="dispatch-browse-word">ALL POSTS <span class="dispatch-browse-icon" aria-hidden="true">&rarr;</span></span>
+            </a>
+          </div>
+        </div>
+      </section>
+      {% endif %}
+
+            <!-- Section: Direct Comms & Transmission Gallery -->
       <section
         class="transmission-gallery-section"
         id="contact"
