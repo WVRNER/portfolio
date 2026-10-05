@@ -182,14 +182,69 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
 
         {% endfor %}
       </div>
-
       <!-- Pagination -->
-      <nav
-        class="blog-pagination-nav"
-        id="blogPagination"
-        aria-label="Blog Pages Navigation"
-        style="display: none"
-      ></nav>
+      {% if pagination.pages.length > 1 %}
+      <nav class="blog-pagination-nav" aria-label="Blog Pages Navigation">
+
+        {% if pagination.href.previous %}
+          <a class="blog-page-btn prev-btn" href="{{ pagination.href.previous }}">← Previous</a>
+        {% endif %}
+
+        {% set current = pagination.pageNumber %}
+        {% set total = pagination.pages.length %}
+
+        {% set start = current - 2 %}
+
+        {% if start < 0 %}
+          {% set start = 0 %}
+        {% endif %}
+
+        {% set end = start + 5 %}
+
+        {% if end > total %}
+          {% set end = total %}
+          {% set start = total - 5 %}
+
+          {% if start < 0 %}
+            {% set start = 0 %}
+          {% endif %}
+        {% endif %}
+
+        {% if start > 0 %}
+          <span class="blog-page-ellipsis">…</span>
+        {% endif %}
+
+        {% for pageEntry in pagination.pages %}
+          {% if loop.index0 >= start and loop.index0 < end %}
+
+            {% if loop.index0 == current %}
+              <span class="blog-page-btn active" aria-current="page">
+                {{ loop.index }}
+              </span>
+            {% else %}
+              <a
+                class="blog-page-btn"
+                href="{{ pagination.hrefs[loop.index0] }}"
+              >
+                {{ loop.index }}
+              </a>
+            {% endif %}
+
+          {% endif %}
+        {% endfor %}
+
+        {% if end < total %}
+          <span class="blog-page-ellipsis">…</span>
+        {% endif %}
+
+        {% if pagination.href.next %}
+          <a class="blog-page-btn next-btn" href="{{ pagination.href.next }}">
+            Next →
+          </a>
+        {% endif %}
+
+      </nav>
+      {% endif %}
     </main>
 
     <!-- Footer -->
