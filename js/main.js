@@ -155,29 +155,27 @@ function initVisualizerToggles() {
 function initInfraNodeFlow() {
   const nodeButtons = document.querySelectorAll('.node-btn');
   const statusToast = document.getElementById('nodeStatusToast');
-  if (!nodeButtons.length) return;
+  if (!nodeButtons.length || !statusToast) return;
 
   const nodeDetails = {
-    browser: '💻 <strong>01 / Local Development:</strong> The website is developed locally with Eleventy, HTML, CSS and JavaScript. Content and code changes are tested locally before being committed to Git. Click any node to explore each stage of the website\'s deployment pipeline.',
-    repo: '🐙 <strong>02 / GitHub Repository:</strong> Git tracks every change to the project, while the GitHub repository acts as the central source of truth for the website and its deployment configuration.',
-    cdn: '⚡ <strong>03 / GitHub Actions:</strong> Every push to the main branch automatically triggers the CI/CD workflow. GitHub Actions installs the required dependencies, builds the Eleventy site and prepares the generated files for deployment.',
-    static: '🌐 <strong>04 / GitHub Pages:</strong> After a successful build, the generated static site is automatically deployed to GitHub Pages and served through the custom domain over HTTPS.'
+    browser: '💻 <strong>01 / Local Development:</strong> Pages and templates compile locally with Eleventy, allowing instant testing with zero server overhead before pushing to Git.',
+    repo: '🐙 <strong>02 / GitHub Repository:</strong> Git tracks every change, while the GitHub repository serves as the single source of truth for all code, content, and pipeline configuration.',
+    cdn: '⚡ <strong>03 / GitHub Actions:</strong> Every push to main triggers an automated CI/CD pipeline running deterministic <code>npm ci</code>, building Eleventy, and releasing via OIDC.',
+    static: '🌐 <strong>04 / GitHub Pages:</strong> The static build is distributed globally through GitHub Pages edge servers and Cloudflare Anycast DNS with automated HTTPS.'
   };
 
   nodeButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const nodeKey = btn.getAttribute('data-node');
-      nodeButtons.forEach(b => b.classList.remove('active'));
+      nodeButtons.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
 
-      if (statusToast && nodeDetails[nodeKey]) {
+      if (nodeDetails[nodeKey]) {
         statusToast.innerHTML = nodeDetails[nodeKey];
-      }
-
-      // Automatically focus on main.tf if console is active
-      const tfTab = document.querySelector('.console-tab-pill[data-pane="pane-tf"]');
-      if (tfTab && !tfTab.classList.contains('active')) {
-        tfTab.click();
       }
     });
   });

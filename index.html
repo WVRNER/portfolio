@@ -1631,85 +1631,93 @@
 
       <!-- Section: Real Infrastructure Architecture (This Website) -->
       <section class="gum-section" id="systems-architecture">
-        <div class="gum-infra-card">
-          <div class="infra-header-row">
-            <div class="infra-badges-list">
-              <span class="infra-badge" style="background: var(--gum-green)"
-                >GitHub Pages</span
-              >
-              <span class="infra-badge" style="background: var(--gum-pink)"
-                >GitHub Actions CI/CD</span
-              >
-              <span class="infra-badge" style="background: var(--gum-yellow)"
-                >Eleventy SSG</span
-              >
-              <span class="infra-badge" style="background: var(--gum-blue)"
-                >Cloudflare DNS</span
-              >
+        <div class="gum-infra-card" style="padding: 32px 28px; gap: 18px;">
+          <!-- Top Row: Section Tag + Technology Badges -->
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="stage-dot green pulse-dot" style="width: 8px; height: 8px; display: inline-block;"></span>
+              <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;">
+                03 // PRODUCTION INFRASTRUCTURE
+              </span>
             </div>
-            <h3 class="infra-card-title">
-              This website. Hosted on GitHub Pages, version-controlled with Git,
-              built with Eleventy, and automatically deployed through GitHub
-              Actions on every push.
-            </h3>
+
+            <div class="infra-badges-list" style="margin: 0; gap: 6px;">
+              <span class="infra-badge" style="background: var(--gum-green); font-size: 10.5px; padding: 3px 9px;">GitHub Pages</span>
+              <span class="infra-badge" style="background: var(--gum-pink); font-size: 10.5px; padding: 3px 9px;">GitHub Actions</span>
+              <span class="infra-badge" style="background: var(--gum-yellow); font-size: 10.5px; padding: 3px 9px;">Eleventy SSG</span>
+              <span class="infra-badge" style="background: var(--gum-blue); font-size: 10.5px; padding: 3px 9px;">Cloudflare DNS</span>
+            </div>
           </div>
 
-          <!-- 4-Node Interactive Flow Strip -->
+          <!-- Main Headline -->
+          <h3 class="infra-card-title" style="font-size: clamp(20px, 2.5vw, 29px); margin: 0; line-height: 1.25;">
+            This website. Hosted on GitHub Pages, version-controlled with Git, built with Eleventy, and automatically deployed through GitHub Actions on every push.
+          </h3>
+
+          <!-- 4-Stage Interactive Pipeline Flow Strip (2x2 on mobile, 4-col on desktop) -->
+          <div class="infra-nodes-flow" role="tablist" aria-label="Deployment Pipeline Stages" style="gap: 10px;">
+            <button class="node-btn active" data-node="browser" type="button" role="tab" aria-selected="true" style="padding: 12px 14px; gap: 4px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="node-btn-step" style="font-size: 10px;">STEP 01</span>
+                <span style="font-size: 13px;">💻</span>
+              </div>
+              <span class="node-btn-title" style="font-size: 14px; line-height: 1.2;">Local Dev</span>
+              <span class="node-btn-desc" style="font-size: 11px;">Eleventy &amp; Markdown</span>
+            </button>
+
+            <button class="node-btn" data-node="repo" type="button" role="tab" aria-selected="false" style="padding: 12px 14px; gap: 4px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="node-btn-step" style="font-size: 10px;">STEP 02</span>
+                <span style="font-size: 13px;">🐙</span>
+              </div>
+              <span class="node-btn-title" style="font-size: 14px; line-height: 1.2;">GitHub Repo</span>
+              <span class="node-btn-desc" style="font-size: 11px;">Git Source of Truth</span>
+            </button>
+
+            <button class="node-btn" data-node="cdn" type="button" role="tab" aria-selected="false" style="padding: 12px 14px; gap: 4px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="node-btn-step" style="font-size: 10px;">STEP 03</span>
+                <span style="font-size: 13px;">⚡</span>
+              </div>
+              <span class="node-btn-title" style="font-size: 14px; line-height: 1.2;">GitHub Actions</span>
+              <span class="node-btn-desc" style="font-size: 11px;">npm ci &amp; Build</span>
+            </button>
+
+            <button class="node-btn" data-node="static" type="button" role="tab" aria-selected="false" style="padding: 12px 14px; gap: 4px;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="node-btn-step" style="font-size: 10px;">STEP 04</span>
+                <span style="font-size: 13px;">🌐</span>
+              </div>
+              <span class="node-btn-title" style="font-size: 14px; line-height: 1.2;">GitHub Pages</span>
+              <span class="node-btn-desc" style="font-size: 11px;">Edge HTTPS &amp; DNS</span>
+            </button>
+          </div>
+
+          <!-- Explainer Banner & Integrated CTA Row -->
           <div
-            class="infra-nodes-flow"
-            role="tablist"
-            aria-label="Infrastructure Flow"
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              flex-wrap: wrap;
+              gap: 14px;
+              background: var(--bg-canvas, #F4F4F0);
+              border: 2px solid #000000;
+              border-radius: 10px;
+              padding: 13px 18px;
+              box-shadow: 3px 3px 0px #000000;
+            "
           >
-            <button
-              class="node-btn active"
-              data-node="browser"
-              type="button"
-              role="tab"
-            >
-              <span class="node-btn-step">STEP 01</span>
-              <span class="node-btn-title">💻 Local Development</span>
-              <span class="node-btn-desc">Eleventy, HTML, CSS &amp; JavaScript</span>
-            </button>
+            <!-- Dynamic Step Explanation -->
+            <div id="nodeStatusToast" style="font-size: 13.5px; line-height: 1.5; color: #111111; flex: 1 1 280px; margin: 0;">
+              💻 <strong>01 / Local Development:</strong> Pages and templates compile locally with Eleventy, allowing instant testing with zero server overhead before pushing to Git.
+            </div>
 
-            <button class="node-btn" data-node="repo" type="button" role="tab">
-              <span class="node-btn-step">STEP 02</span>
-              <span class="node-btn-title">🐙 GitHub Repo</span>
-              <span class="node-btn-desc"
-                >Git Version Control &amp; Source of Truth</span
-              >
-            </button>
-
-            <button class="node-btn" data-node="cdn" type="button" role="tab">
-              <span class="node-btn-step">STEP 03</span>
-              <span class="node-btn-title">⚡ GitHub Actions</span>
-              <span class="node-btn-desc"
-                >Automated Build &amp; Deployment Pipeline</span
-              >
-            </button>
-
-            <button
-              class="node-btn"
-              data-node="static"
-              type="button"
-              role="tab"
-            >
-              <span class="node-btn-step">STEP 04</span>
-              <span class="node-btn-title">🌐 GitHub Pages</span>
-              <span class="node-btn-desc">Static Site Hosting &amp; HTTPS</span>
-            </button>
-          </div>
-
-          <!-- Explainer Toast Banner -->
-          <div id="nodeStatusToast" class="node-status-toast">
-            💻 <strong>01 / Local Development:</strong> The website is developed locally with Eleventy, HTML, CSS and JavaScript. Content and code changes are tested locally before being committed to Git. Click any node to explore each stage of the website's deployment pipeline.
-          </div>
-
-          <!-- CTA linking directly to technical case study write-up -->
-          <div class="infra-cta-row" style="margin-top: 28px; display: flex; justify-content: center;">
+            <!-- CTA Button -->
             <a
               href="/posts/how-this-site-is-built-and-deployed.html"
               class="gum-btn gum-btn-black"
-              style="padding: 12px 28px; font-size: 15px; font-weight: 800; text-decoration: none;"
+              style="padding: 10px 22px; font-size: 13.5px; font-weight: 800; text-decoration: none; white-space: nowrap; margin-left: auto;"
             >
               <span>View Technical Write-up</span>
               <span aria-hidden="true">&rarr;</span>
