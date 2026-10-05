@@ -1,7 +1,10 @@
 ---
-permalink: /blog/index.html
+pagination:
+  data: collections.posts
+  size: 5
+  alias: posts
+permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1 }}/{% endif %}index.html"
 ---
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -108,7 +111,7 @@ permalink: /blog/index.html
       <!-- =============================== -->
 
       <div class="blog-feed-container" id="blogFeed">
-        {% for post in collections.posts | reverse %}
+        {% for post in posts | reverse %}
 
         <article class="blog-post-card">
           <!-- Post Metadata -->
