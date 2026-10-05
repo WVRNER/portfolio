@@ -158,8 +158,8 @@ function initInfraNodeFlow() {
   if (!nodeButtons.length) return;
 
   const nodeDetails = {
-    browser: '🌐 <strong>01 / Client Ingress:</strong> Modern browser establishes TLS 1.3 encrypted connection to the Anycast edge. Click any node to inspect the real deployment architecture.',
-    repo: '🐙 <strong>02 / GitHub Source:</strong> Every release is committed and pushed directly to GitHub. Fully auditable git commit log with zero hidden dependencies or config drift.',
+    browser: '💻 <strong>01 / Local Development:</strong> The website is developed locally with Eleventy, HTML, CSS and JavaScript. Content and code changes are tested locally before being committed to Git. Click any node to explore each stage of the website\'s deployment pipeline.',
+    repo: '🐙 <strong>02 / GitHub Repository:</strong> Git tracks every change to the project, while the GitHub repository acts as the central source of truth for the website and its deployment configuration.',
     cdn: '⚡ <strong>03 / GitHub Actions:</strong> Every push to the main branch automatically triggers the CI/CD workflow. GitHub Actions installs the required dependencies, builds the Eleventy site and prepares the generated files for deployment.',
     static: '🌐 <strong>04 / GitHub Pages:</strong> After a successful build, the generated static site is automatically deployed to GitHub Pages and served through the custom domain over HTTPS.'
   };
