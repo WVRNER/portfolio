@@ -1,36 +1,5 @@
 <!doctype html>
 <html lang="en" data-theme="light">
-<!-- =============================================================================
-     WVRNER / NIMA HOSSEINI — PORTFOLIO HOMEPAGE ARCHITECTURAL MAP
-     =============================================================================
-     [ZONE 00] HEAD METADATA & CRITICAL STYLES ............. Lines 1 - ~400
-               - HTML5 Doctype, Charset, Viewport, OpenGraph SEO
-               - Favicons (SVG & PNG 32x32 / 180x180)
-               - Font Preconnect & Google Fonts Imports
-               - External Stylesheet Links (main.css, animations.css)
-               - Inlined Critical Hero Styles (#hero-critical-styles)
-               - Inlined Featured Dispatch Styles (#featured-dispatch-styles)
-     [ZONE 01] INTRO SESSION SPLASH OVERLAY ............... Lines ~400 - ~410
-               - 2-second "Good Morning!" session greeting & dissolution bar
-     [ZONE 02] STICKY MAIN NAVIGATION BAR ................. Lines ~411 - ~435
-               - Brand monogram, Blog, About pill, CV pill, Contact button
-     [ZONE 03] CENTERED NEUBRUTALIST HERO ................. Lines ~436 - ~495
-               - Headline ("Make the Cut in systems"), tool chips, dual CTAs
-     [ZONE 04] SECTION 01: CORE DISCIPLINES (01) .......... Lines ~498 - ~620
-               - "Packets before pixels" 4-Quad grid (AWS, Terraform, Docker, CI/CD)
-     [ZONE 05] SECTION 02: CURRENTLY LEARNING (02) ........ Lines ~622 - ~1720
-               - 4 interactive lab chapters with SVG schematics & configurations
-     [ZONE 06] SECTION 03: PRODUCTION INFRASTRUCTURE (03) . Lines ~1723 - ~1835
-               - Live AWS / Pages architecture card & 4-stage pipeline flow
-     [ZONE 07] SECTION 04: FEATURED BLOG POST (04) ........ Lines ~1839 - ~1900
-               - #featured-dispatch: Black frame with pink shadow, post card & browse link
-     [ZONE 08] SECTION 05: DIRECT COMMS & TRANSMISSION (05) Lines ~1901 - ~2085
-               - #contact: Bento communication tiles & direct messaging channels
-     [ZONE 09] PANORAMIC CLOUD VECTOR ARTWORK ............. Lines ~2095 - ~2955
-               - Full-width vector landscape illustration of cloud operations
-     [ZONE 10] SITE FOOTER & WORLD CLOCKS ................. Lines ~2960 - End
-               - Real-time NYC/UTC clocks, telemetry, wordmark, and main.js script
-     ============================================================================= -->
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -45,370 +14,599 @@
       name="description"
       content="I'm building toward a career in DevOps and infrastructure, with a focus on understanding how modern systems work."
     />
-    <!-- Critical Section Styles: Guarantees frames, shadows, and cards render immediately in Safari -->
+
+    <!-- Favicon & Search Bar Icon: Letter W (#f6e490) on Purple/Blue (#0029ff) Background -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      sizes="any"
+      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230029ff%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2248%22%20font-family%3D%22system-ui%2C%20-apple-system%2C%20%27Plus%20Jakarta%20Sans%27%2C%20sans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2246%22%20text-anchor%3D%22middle%22%20fill%3D%22%23f6e490%22%3EW%3C/text%3E%3C/svg%3E"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAkElEQVR42u3XQRKAIAgAQL/Tb3tkb+hKly6lCAIjWDjDiQn2oKGl4AuMg7E2gCnh2ryJmN28QvwdUCXOY3+EpPi7RrPOfToSIPt4sLk7ANmEQQFUEWnuGwBsg/XyZgBpiABWCOJXnIA+QItgTEMdgJNfH0ANF3FzLcBkdiwD4FxSNIC8FQcAuD/NQjxOnZ7nF1MNDAT59vQ9AAAAAElFTkSuQmCC"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAkElEQVR42u3XQRKAIAgAQL/Tb3tkb+hKly6lCAIjWDjDiQn2oKGl4AuMg7E2gCnh2ryJmN28QvwdUCXOY3+EpPi7RrPOfToSIPt4sLk7ANmEQQFUEWnuGwBsg/XyZgBpiABWCOJXnIA+QItgTEMdgJNfH0ANF3FzLcBkdiwD4FxSNIC8FQcAuD/NQjxOnZ7nF1MNDAT59vQ9AAAAAElFTkSuQmCC"
+    />
+    <link
+      rel="shortcut icon"
+      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230029ff%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2248%22%20font-family%3D%22system-ui%2C%20-apple-system%2C%20%27Plus%20Jakarta%20Sans%27%2C%20sans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2246%22%20text-anchor%3D%22middle%22%20fill%3D%22%23f6e490%22%3EW%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20261004fix" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicon.png?v=20261004fix"
+    />
+
+    <!-- Fonts: Plus Jakarta Sans, Space Grotesk, Space Mono, Fraunces -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;1,9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles/main.css?v=20261005safari" />
+    <link rel="stylesheet" href="styles/animations.css" />
+    <!-- Critical Hero & Mobile Styles (Guarantees frames, shadows, and tool chips render even if external CSS is cached) -->
+    <style id="hero-critical-styles">
+      .hero-desc-lead {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto;
+        font-family: var(
+          --font-display,
+          "Plus Jakarta Sans",
+          system-ui,
+          sans-serif
+        );
+        font-size: clamp(16.5px, 1.9vw, 20px);
+        font-weight: 500;
+        color: #111111;
+        line-height: 1.65;
+      }
+      [data-theme="dark"] .hero-desc-lead {
+        color: #f4f4f0;
+      }
+      .lead-role-text {
+        font-weight: 800;
+        color: var(--text-main, #000000);
+      }
+      [data-theme="dark"] .lead-role-text {
+        color: #ffffff;
+      }
+      .lead-mono-chip {
+        display: inline-flex !important;
+        align-items: center !important;
+        font-family: var(--font-mono, "Space Mono", monospace) !important;
+        font-size: 0.88em !important;
+        font-weight: 700 !important;
+        padding: 2px 9px !important;
+        background: #ffc900 !important;
+        color: #000000 !important;
+        border: 1.5px solid #000000 !important;
+        border-radius: 6px !important;
+        box-shadow: 2px 2px 0px #000000 !important;
+        text-decoration: none !important;
+        white-space: nowrap !important;
+        vertical-align: baseline !important;
+        line-height: 1.3 !important;
+        margin: 0 2px !important;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          background 0.15s ease,
+          color 0.15s ease !important;
+      }
+      .lead-mono-chip:hover {
+        transform: translate(-1px, -1px) !important;
+        box-shadow: 3px 3px 0px #000000 !important;
+        background: #000000 !important;
+        color: #ffffff !important;
+      }
+      [data-theme="dark"] .lead-mono-chip {
+        background: #ffc900 !important;
+        color: #000000 !important;
+        border-color: #ffffff !important;
+        box-shadow: 2px 2px 0px #ffffff !important;
+      }
+      [data-theme="dark"] .lead-mono-chip:hover {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+
+      /* Hero Buttons */
+      .hero-cta-group {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 16px auto 0 !important;
+        gap: 16px !important;
+      }
+      .gum-btn-hero-primary {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        background: #000000 !important;
+        color: #ffffff !important;
+        border: 2.5px solid #000000 !important;
+        border-radius: 9999px !important;
+        padding: 14px 28px !important;
+        font-family: var(
+          --font-display,
+          "Plus Jakarta Sans",
+          system-ui,
+          sans-serif
+        ) !important;
+        font-size: 16px !important;
+        font-weight: 800 !important;
+        text-decoration: none !important;
+        box-shadow: 4px 4px 0px #ff90e8 !important;
+        white-space: nowrap !important;
+        box-sizing: border-box !important;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          background 0.15s ease,
+          color 0.15s ease !important;
+      }
+      .gum-btn-hero-primary:hover {
+        background: #ffffff !important;
+        color: #000000 !important;
+        border-color: #000000 !important;
+        transform: translate(-2px, -2px) !important;
+        box-shadow: 6px 6px 0px #000000 !important;
+      }
+      .gum-btn-hero-secondary {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        border: 2.5px solid #000000 !important;
+        border-radius: 9999px !important;
+        padding: 14px 28px !important;
+        font-family: var(
+          --font-display,
+          "Plus Jakarta Sans",
+          system-ui,
+          sans-serif
+        ) !important;
+        font-size: 16px !important;
+        font-weight: 800 !important;
+        text-decoration: none !important;
+        box-shadow: 4px 4px 0px #000000 !important;
+        white-space: nowrap !important;
+        box-sizing: border-box !important;
+        transition:
+          transform 0.15s ease,
+          box-shadow 0.15s ease,
+          background 0.15s ease,
+          color 0.15s ease !important;
+      }
+      .gum-btn-hero-secondary:hover {
+        background: #ffc900 !important;
+        color: #000000 !important;
+        transform: translate(-2px, -2px) !important;
+        box-shadow: 6px 6px 0px #000000 !important;
+      }
+
+      /* Mobile Hero Responsive */
+      @media (max-width: 768px) {
+        .gum-hero-centered-inner .hero-cta-group,
+        .hero-cta-group {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+          width: 100% !important;
+          max-width: 320px !important;
+          margin: 16px auto 0 !important;
+          gap: 12px !important;
+        }
+        .gum-btn-hero-primary,
+        .gum-btn-hero-secondary {
+          display: inline-flex !important;
+          width: 100% !important;
+          max-width: 320px !important;
+          min-height: 50px !important;
+          font-size: 15.5px !important;
+          font-weight: 800 !important;
+          padding: 13px 20px !important;
+          border-radius: 9999px !important;
+          justify-content: center !important;
+          align-items: center !important;
+          text-align: center !important;
+          box-sizing: border-box !important;
+        }
+        .hero-desc-lead {
+          font-size: 15.5px !important;
+          line-height: 1.6 !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .gum-hero-centered-inner .hero-cta-group,
+        .hero-cta-group {
+          width: 100% !important;
+          max-width: 290px !important;
+          gap: 10px !important;
+        }
+        .gum-btn-hero-primary,
+        .gum-btn-hero-secondary {
+          width: 100% !important;
+          max-width: 290px !important;
+          min-height: 48px !important;
+          font-size: 14.5px !important;
+          padding: 12px 16px !important;
+        }
+      }
+      .gum-nav-link-plain {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        color: var(--text-main, #000000) !important;
+        font-family: var(
+          --font-display,
+          "Plus Jakarta Sans",
+          system-ui,
+          sans-serif
+        ) !important;
+        font-size: 14px !important;
+        font-weight: 800 !important;
+        text-decoration: none !important;
+        padding: 8px 14px !important;
+        cursor: pointer !important;
+        white-space: nowrap !important;
+      }
+      .gum-nav-link-plain:hover {
+        opacity: 0.65 !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      [data-theme="dark"] .gum-nav-link-plain {
+        color: #ffffff !important;
+      }
+      @media (max-width: 768px) {
+        .gum-nav-link-plain {
+          padding: 6px 8px !important;
+          font-size: 12.5px !important;
+        }
+      }
+    </style>
+
+    <!-- Featured Dispatch Critical Styles (Guarantees frames, shadows, and layout render immediately in Safari) -->
     <style id="featured-dispatch-styles">
-/* ==========================================================================
-   SECTION 04: FEATURED DISPATCH COMPOSITION (#featured-dispatch)
-   - Scope: From #featured-dispatch start to #contact section start.
-   - Purpose: Neubrutalist black rectangle with 14px pink offset shadow framing
-     the latest post card on the left, and a massive "BROWSE ALL POSTS ->" link on the right.
-   - Robustness & Edge Cases Handled:
-     * min-width: 0 on grid children prevents long unbroken titles from stretching columns.
-     * word-break: break-word & overflow-wrap: break-word prevent container blowout.
-     * -webkit-line-clamp on title (3 lines), subtitle (2 lines), excerpt (3 lines) prevents
-       heavy CMS text entries from pushing the card out of proportion.
-     * Chip ellipsis: long tag names truncate cleanly without overflowing.
-     * Mobile: fluid vertical stacking with zero horizontal overflow or clipping.
-   ========================================================================== */
-#featured-dispatch.gum-section {
-  padding-top: 0 !important;
-  padding-bottom: 70px !important;
-}
+      #featured-dispatch.gum-section {
+        padding-top: 0 !important;
+        padding-bottom: 70px !important;
+      }
 
-/* Big black rectangle with pink shadow framing the composition */
-.dispatch-black-frame {
-  position: relative !important;
-  background: #000000 !important;
-  border: 3.5px solid #000000 !important;
-  border-radius: 22px !important;
-  box-shadow: 14px 14px 0px #FF90E8 !important;
-  -webkit-box-shadow: 14px 14px 0px #FF90E8 !important;
-  max-width: 1080px !important;
-  width: 100% !important;
-  margin: 0 auto !important;
-  padding: 36px 40px !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr) !important;
-  gap: 36px !important;
-  align-items: center !important;
-  box-sizing: border-box !important;
-  -webkit-box-sizing: border-box !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-}
+      /* Big black rectangle with pink shadow framing the composition */
+      .dispatch-black-frame {
+        position: relative !important;
+        background: #000000 !important;
+        border: 3.5px solid #000000 !important;
+        border-radius: 22px !important;
+        box-shadow: 14px 14px 0px #FF90E8 !important;
+        -webkit-box-shadow: 14px 14px 0px #FF90E8 !important;
+        max-width: 1080px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 36px 40px !important;
+        display: grid !important;
+        grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr) !important;
+        gap: 36px !important;
+        align-items: center !important;
+        box-sizing: border-box !important;
+        -webkit-box-sizing: border-box !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+      }
 
-[data-theme="dark"] .dispatch-black-frame {
-  border-color: #FFFFFF !important;
-  box-shadow: 14px 14px 0px #FF90E8 !important;
-  -webkit-box-shadow: 14px 14px 0px #FF90E8 !important;
-}
+      [data-theme="dark"] .dispatch-black-frame {
+        border-color: #FFFFFF !important;
+        box-shadow: 14px 14px 0px #FF90E8 !important;
+        -webkit-box-shadow: 14px 14px 0px #FF90E8 !important;
+      }
 
-.dispatch-black-frame:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 16px 16px 0px #FF90E8 !important;
-  -webkit-box-shadow: 16px 16px 0px #FF90E8 !important;
-}
+      .dispatch-black-frame:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 16px 16px 0px #FF90E8 !important;
+        -webkit-box-shadow: 16px 16px 0px #FF90E8 !important;
+      }
 
-/* OBJECT 1: The Latest Post Card inside the black frame */
-.dispatch-post-card {
-  min-width: 0 !important;
-  width: 100% !important;
-  background: #FFFFFF !important;
-  border: 3.5px solid #000000 !important;
-  border-radius: 16px !important;
-  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
-  -webkit-box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
-  padding: 26px 28px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 12px !important;
-  box-sizing: border-box !important;
-  -webkit-box-sizing: border-box !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-}
+      /* OBJECT 1: The Latest Post Card inside the black frame */
+      .dispatch-post-card {
+        width: 100% !important;
+        background: #FFFFFF !important;
+        border: 3.5px solid #000000 !important;
+        border-radius: 16px !important;
+        box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
+        -webkit-box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
+        padding: 26px 28px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        box-sizing: border-box !important;
+        -webkit-box-sizing: border-box !important;
+        transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+      }
 
-[data-theme="dark"] .dispatch-post-card {
-  background: #141416 !important;
-  border-color: #FFFFFF !important;
-  box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.15) !important;
-  -webkit-box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.15) !important;
-}
+      [data-theme="dark"] .dispatch-post-card {
+        background: #141416 !important;
+        border-color: #FFFFFF !important;
+        box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.15) !important;
+        -webkit-box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.15) !important;
+      }
 
-.dispatch-post-card:hover {
-  transform: translate(-2px, -2px) !important;
-  box-shadow: 8px 8px 0px #FF90E8 !important;
-  -webkit-box-shadow: 8px 8px 0px #FF90E8 !important;
-}
+      .dispatch-post-card:hover {
+        transform: translate(-2px, -2px) !important;
+        box-shadow: 8px 8px 0px #FF90E8 !important;
+        -webkit-box-shadow: 8px 8px 0px #FF90E8 !important;
+      }
 
-/* Card Header: Badges & Meta */
-.dispatch-card-header {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  flex-wrap: wrap !important;
-  gap: 8px !important;
-  padding-bottom: 2px !important;
-}
+      /* Card Header: Badges & Meta */
+      .dispatch-card-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        padding-bottom: 2px !important;
+      }
 
-.dispatch-card-badges {
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  flex-wrap: wrap !important;
-}
+      .dispatch-card-badges {
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        flex-wrap: wrap !important;
+      }
 
-.dispatch-badge {
-  font-family: var(--font-mono, monospace) !important;
-  font-size: 11px !important;
-  font-weight: 800 !important;
-  padding: 4px 10px !important;
-  border-radius: 9999px !important;
-  letter-spacing: 0.04em !important;
-  text-transform: uppercase !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 5px !important;
-  white-space: nowrap !important;
-}
+      .dispatch-badge {
+        font-family: var(--font-mono, monospace) !important;
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        padding: 4px 10px !important;
+        border-radius: 9999px !important;
+        letter-spacing: 0.04em !important;
+        text-transform: uppercase !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+      }
 
-.dispatch-badge.badge-featured {
-  background: #FFC900 !important;
-  color: #000000 !important;
-  border: 1.5px solid #000000 !important;
-}
+      .dispatch-badge.badge-featured {
+        background: #FFC900 !important;
+        color: #000000 !important;
+        border: 1.5px solid #000000 !important;
+      }
 
-.dispatch-badge.badge-latest {
-  background: #000000 !important;
-  color: #FFFFFF !important;
-  border: 1.5px solid #000000 !important;
-}
+      .dispatch-badge.badge-latest {
+        background: #000000 !important;
+        color: #FFFFFF !important;
+        border: 1.5px solid #000000 !important;
+      }
 
-.dispatch-badge.badge-category {
-  background: var(--bg-canvas, #F4F4F0) !important;
-  color: #000000 !important;
-  border: 1.5px solid #000000 !important;
-}
+      .dispatch-badge.badge-category {
+        background: var(--bg-canvas, #F4F4F0) !important;
+        color: #000000 !important;
+        border: 1.5px solid #000000 !important;
+      }
 
-[data-theme="dark"] .dispatch-badge.badge-category {
-  background: #222226 !important;
-  color: #FFFFFF !important;
-  border-color: #FFFFFF !important;
-}
+      [data-theme="dark"] .dispatch-badge.badge-category {
+        background: #222226 !important;
+        color: #FFFFFF !important;
+        border-color: #FFFFFF !important;
+      }
 
-.dispatch-card-meta {
-  font-family: var(--font-mono, monospace) !important;
-  font-size: 11.5px !important;
-  font-weight: 700 !important;
-  color: var(--text-muted, #555555) !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  white-space: nowrap !important;
-}
+      .dispatch-card-meta {
+        font-family: var(--font-mono, monospace) !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        color: var(--text-muted, #555555) !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+      }
 
-/* Card Title (with multi-line clamp defense) */
-.dispatch-card-title {
-  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-  font-size: clamp(20px, 2.3vw, 25px) !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.03em !important;
-  line-height: 1.22 !important;
-  margin: 0 !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
-  display: -webkit-box !important;
-  -webkit-box-orient: vertical !important;
-  -webkit-line-clamp: 3 !important;
-  overflow: hidden !important;
-}
+      /* Card Title */
+      .dispatch-card-title {
+        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+        font-size: clamp(20px, 2.3vw, 25px) !important;
+        font-weight: 900 !important;
+        letter-spacing: -0.03em !important;
+        line-height: 1.22 !important;
+        margin: 0 !important;
+      }
 
-.dispatch-card-title a {
-  color: var(--text-main, #000000) !important;
-  text-decoration: none !important;
-  transition: color 0.15s ease !important;
-}
+      .dispatch-card-title a {
+        color: var(--text-main, #000000) !important;
+        text-decoration: none !important;
+        transition: color 0.15s ease !important;
+      }
 
-[data-theme="dark"] .dispatch-card-title a {
-  color: #FFFFFF !important;
-}
+      [data-theme="dark"] .dispatch-card-title a {
+        color: #FFFFFF !important;
+      }
 
-.dispatch-card-title a:hover {
-  text-decoration: underline wavy #FF90E8 2.5px !important;
-  text-underline-offset: 6px !important;
-}
+      .dispatch-card-title a:hover {
+        text-decoration: underline wavy #FF90E8 2.5px !important;
+        text-underline-offset: 6px !important;
+      }
 
-/* Card Subtitle & Excerpt (with multi-line clamp defense) */
-.dispatch-card-subtitle {
-  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-  font-size: 14.5px !important;
-  font-weight: 600 !important;
-  line-height: 1.48 !important;
-  color: var(--text-muted, #444444) !important;
-  margin: 0 !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
-  display: -webkit-box !important;
-  -webkit-box-orient: vertical !important;
-  -webkit-line-clamp: 2 !important;
-  overflow: hidden !important;
-}
+      /* Card Subtitle & Excerpt */
+      .dispatch-card-subtitle {
+        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+        font-size: 14.5px !important;
+        font-weight: 600 !important;
+        line-height: 1.48 !important;
+        color: var(--text-muted, #444444) !important;
+        margin: 0 !important;
+      }
 
-[data-theme="dark"] .dispatch-card-subtitle {
-  color: #AAAAAA !important;
-}
+      [data-theme="dark"] .dispatch-card-subtitle {
+        color: #AAAAAA !important;
+      }
 
-.dispatch-card-excerpt {
-  font-size: 13.5px !important;
-  line-height: 1.55 !important;
-  color: var(--text-main, #222222) !important;
-  margin: 0 !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
-  display: -webkit-box !important;
-  -webkit-box-orient: vertical !important;
-  -webkit-line-clamp: 3 !important;
-  overflow: hidden !important;
-}
+      .dispatch-card-excerpt {
+        font-size: 13.5px !important;
+        line-height: 1.55 !important;
+        color: var(--text-main, #222222) !important;
+        margin: 0 !important;
+      }
 
-[data-theme="dark"] .dispatch-card-excerpt {
-  color: #CCCCCC !important;
-}
+      [data-theme="dark"] .dispatch-card-excerpt {
+        color: #CCCCCC !important;
+      }
 
-/* Card Tags (with tag length defense) */
-.dispatch-card-tags {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 6px !important;
-  margin-top: 2px !important;
-}
+      /* Card Tags */
+      .dispatch-card-tags {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        margin-top: 2px !important;
+      }
 
-.dispatch-card-tags .about-chip {
-  max-width: 170px !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-}
+      /* Card Action Button */
+      .dispatch-card-action {
+        margin-top: 4px !important;
+        display: flex !important;
+        align-items: center !important;
+      }
 
-/* Card Action Button */
-.dispatch-card-action {
-  margin-top: 4px !important;
-  display: flex !important;
-  align-items: center !important;
-}
+      .dispatch-card-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        background: #000000 !important;
+        color: #FFFFFF !important;
+        border: 2px solid #000000 !important;
+        border-radius: 9999px !important;
+        padding: 10px 22px !important;
+        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+        font-size: 13.5px !important;
+        font-weight: 800 !important;
+        text-decoration: none !important;
+        box-shadow: 3.5px 3.5px 0px #FF90E8 !important;
+        -webkit-box-shadow: 3.5px 3.5px 0px #FF90E8 !important;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease !important;
+      }
 
-.dispatch-card-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  background: #000000 !important;
-  color: #FFFFFF !important;
-  border: 2px solid #000000 !important;
-  border-radius: 9999px !important;
-  padding: 10px 22px !important;
-  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-  font-size: 13.5px !important;
-  font-weight: 800 !important;
-  text-decoration: none !important;
-  box-shadow: 3.5px 3.5px 0px #FF90E8 !important;
-  -webkit-box-shadow: 3.5px 3.5px 0px #FF90E8 !important;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease !important;
-  white-space: nowrap !important;
-}
+      [data-theme="dark"] .dispatch-card-btn {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        border-color: #FFFFFF !important;
+      }
 
-[data-theme="dark"] .dispatch-card-btn {
-  background: #FFFFFF !important;
-  color: #000000 !important;
-  border-color: #FFFFFF !important;
-}
+      .dispatch-card-btn:hover {
+        background: #FFC900 !important;
+        color: #000000 !important;
+        transform: translate(-2px, -2px) !important;
+        box-shadow: 5px 5px 0px #000000 !important;
+        -webkit-box-shadow: 5px 5px 0px #000000 !important;
+      }
 
-.dispatch-card-btn:hover {
-  background: #FFC900 !important;
-  color: #000000 !important;
-  transform: translate(-2px, -2px) !important;
-  box-shadow: 5px 5px 0px #000000 !important;
-  -webkit-box-shadow: 5px 5px 0px #000000 !important;
-}
+      [data-theme="dark"] .dispatch-card-btn:hover {
+        box-shadow: 5px 5px 0px #FF90E8 !important;
+        -webkit-box-shadow: 5px 5px 0px #FF90E8 !important;
+      }
 
-[data-theme="dark"] .dispatch-card-btn:hover {
-  box-shadow: 5px 5px 0px #FF90E8 !important;
-  -webkit-box-shadow: 5px 5px 0px #FF90E8 !important;
-}
+      /* Right side of black panel: HUGE, bold BROWSE ALL POSTS typography */
+      .dispatch-browse-area {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        box-sizing: border-box !important;
+        -webkit-box-sizing: border-box !important;
+        padding-left: 10px !important;
+      }
 
-/* Right side of black panel: HUGE, bold BROWSE ALL POSTS typography */
-.dispatch-browse-area {
-  min-width: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: flex-start !important;
-  box-sizing: border-box !important;
-  -webkit-box-sizing: border-box !important;
-  padding-left: 10px !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
-}
+      .dispatch-browse-cta {
+        display: inline-flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-decoration: none !important;
+        color: #FFFFFF !important;
+        cursor: pointer !important;
+        gap: 4px !important;
+      }
 
-.dispatch-browse-cta {
-  display: inline-flex !important;
-  flex-direction: column !important;
-  align-items: flex-start !important;
-  text-decoration: none !important;
-  color: #FFFFFF !important;
-  cursor: pointer !important;
-  gap: 4px !important;
-}
+      .dispatch-browse-word {
+        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+        font-size: clamp(38px, 4.4vw, 62px) !important;
+        font-weight: 900 !important;
+        line-height: 0.94 !important;
+        letter-spacing: -0.04em !important;
+        text-transform: uppercase !important;
+        color: #FFFFFF !important;
+        display: block !important;
+        transition: color 0.18s ease !important;
+      }
 
-.dispatch-browse-word {
-  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-  font-size: clamp(38px, 4.4vw, 62px) !important;
-  font-weight: 900 !important;
-  line-height: 0.94 !important;
-  letter-spacing: -0.04em !important;
-  text-transform: uppercase !important;
-  color: #FFFFFF !important;
-  display: block !important;
-  transition: color 0.18s ease !important;
-}
+      .dispatch-browse-icon {
+        display: inline-block !important;
+        font-size: 0.95em !important;
+        line-height: 1 !important;
+        color: #FFC900 !important;
+        font-weight: 900 !important;
+        margin-left: 6px !important;
+        transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.18s ease !important;
+      }
 
-.dispatch-browse-icon {
-  display: inline-block !important;
-  font-size: 0.95em !important;
-  line-height: 1 !important;
-  color: #FFC900 !important;
-  font-weight: 900 !important;
-  margin-left: 6px !important;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.18s ease !important;
-}
+      .dispatch-browse-cta:hover .dispatch-browse-word {
+        color: #FF90E8 !important;
+      }
 
-.dispatch-browse-cta:hover .dispatch-browse-word {
-  color: #FF90E8 !important;
-}
+      .dispatch-browse-cta:hover .dispatch-browse-icon {
+        transform: translateX(12px) !important;
+        color: #FF90E8 !important;
+      }
 
-.dispatch-browse-cta:hover .dispatch-browse-icon {
-  transform: translateX(12px) !important;
-  color: #FF90E8 !important;
-}
+      /* Mobile Responsiveness (<= 899px) */
+      @media (max-width: 899px) {
+        .dispatch-black-frame {
+          grid-template-columns: 1fr !important;
+          padding: 20px 16px 28px !important;
+          gap: 24px !important;
+          border-radius: 16px !important;
+          box-shadow: 8px 8px 0px #FF90E8 !important;
+          -webkit-box-shadow: 8px 8px 0px #FF90E8 !important;
+        }
 
-/* Mobile Responsiveness (<= 899px) */
-@media (max-width: 899px) {
-  .dispatch-black-frame {
-    grid-template-columns: 1fr !important;
-    padding: 20px 16px 28px !important;
-    gap: 24px !important;
-    border-radius: 16px !important;
-    box-shadow: 8px 8px 0px #FF90E8 !important;
-    -webkit-box-shadow: 8px 8px 0px #FF90E8 !important;
-  }
+        .dispatch-post-card {
+          border-radius: 12px !important;
+          padding: 20px 18px !important;
+        }
 
-  .dispatch-post-card {
-    border-radius: 12px !important;
-    padding: 20px 18px !important;
-  }
+        .dispatch-browse-area {
+          padding-left: 4px !important;
+        }
 
-  .dispatch-browse-area {
-    padding-left: 4px !important;
-  }
+        .dispatch-browse-word {
+          font-size: 32px !important;
+          line-height: 1 !important;
+        }
 
-  .dispatch-browse-word {
-    font-size: 32px !important;
-    line-height: 1 !important;
-  }
-
-  .dispatch-browse-icon {
-    font-size: 32px !important;
-  }
-}
+        .dispatch-browse-icon {
+          font-size: 32px !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -431,11 +629,6 @@
          INTRO SPLASH SCREEN
          Displays "Good Morning!" for about 2 seconds, then smoothly dissolves.
          ========================================================================= -->
-        <!-- =========================================================================
-         [ZONE 01 // INTRO SESSION SPLASH OVERLAY]
-         - Element: #introSplash
-         - Purpose: Greets returning / new visitors with "Good Morning!", dissolves after 2s.
-         ========================================================================= -->
     <div id="introSplash" class="gum-intro-splash" aria-hidden="true">
       <div class="gum-intro-inner">
         <h1 class="gum-intro-title">Good Morning!</h1>
@@ -444,12 +637,6 @@
     </div>
 
     <!-- Top Sticky Main Navigation Bar -->
-        <!-- =========================================================================
-         [ZONE 02 // STICKY MAIN NAVIGATION BAR]
-         - Element: <header class="gum-nav-wrapper">
-         - Purpose: Sticky desktop/mobile navigation bar containing wvrner brand mark,
-           Blog link, About pill (black bg), CV pill (white bg), and Contact CTA button.
-         ========================================================================= -->
     <header class="gum-nav-wrapper">
       <nav class="gum-nav-inner" aria-label="Main Navigation">
         <!-- Brand Monogram & GitHub Badge (Matches Gumroad Screenshot) -->
@@ -476,13 +663,6 @@
     <!-- Main Content Area -->
     <main>
       <!-- Hero Section: Centered Neubrutalist Architecture -->
-            <!-- =========================================================================
-           [ZONE 03 // CENTERED NEUBRUTALIST HERO ARCHITECTURE]
-           - Element: <section id="hero">
-           - Purpose: Main value proposition ("Make the Cut in systems"), live pulse dot,
-             lead subhead with interactive mono tool chips (AWS, Terraform, GitHub Actions),
-             and primary CTA action buttons ("Explore Live Setup", "Currently Learning").
-           ========================================================================= -->
       <section class="gum-hero gum-hero-centered" id="hero">
         <div class="gum-hero-centered-inner">
           <!-- Tag Badge -->
@@ -544,13 +724,6 @@
       </section>
 
       <!-- Section: 4 Core Architectural Principles (Reliability, Cloud Ingress, Kernel Security, Automation) -->
-            <!-- =========================================================================
-           [ZONE 04 // SECTION 01: CORE DISCIPLINES & FOUNDATIONS (4-QUAD GRID)]
-           - Element: <section id="foundations">
-           - Purpose: "Packets before pixels" lead block and 4 neubrutalist discipline cards:
-             01 Cloud Architecture (AWS), 02 Provisioning (Terraform),
-             03 Runtime (Docker), 04 Delivery (GitHub Actions CI/CD).
-           ========================================================================= -->
       <section class="gum-section" id="foundations">
         <div class="section-lead-block">
           <span class="section-pill-tag"
@@ -675,14 +848,6 @@
            Interactive Deep-Dive Labs with Schematics and Code Configurations
            ========================================================================= -->
       <!-- Section: Currently Learning Exhibition (4 Chapters with SVG Schematics & Code) -->
-            <!-- =========================================================================
-           [ZONE 05 // SECTION 02: CURRENTLY LEARNING EXHIBITION (INTERACTIVE LABS)]
-           - Element: <section id="learning-exhibition">
-           - Purpose: Interactive 4-chapter engineering laboratory exhibition featuring real
-             SVG schematics and verified code configurations across:
-             Chapter 01: Enterprise Networking, Chapter 02: Linux & Kernel Systems,
-             Chapter 03: DevSecOps & Observability, Chapter 04: Cloud-Native & Kubernetes.
-           ========================================================================= -->
       <section class="gum-section" id="learning-exhibition">
         <div class="section-lead-block">
           <span class="section-pill-tag"
@@ -1784,13 +1949,6 @@
       </section>
 
       <!-- Section: Real Infrastructure Architecture (This Website) -->
-            <!-- =========================================================================
-           [ZONE 06 // SECTION 03: PRODUCTION INFRASTRUCTURE SHOWCASE]
-           - Element: <section id="systems-architecture">
-           - Purpose: Real cloud infrastructure topology card detailing how this personal
-             portfolio is hosted on AWS / GitHub Pages, built with Eleventy, version-controlled
-             with Git, resolved via Cloudflare DNS, and deployed via GitHub Actions OIDC.
-           ========================================================================= -->
       <section class="gum-section" id="systems-architecture">
         <div class="gum-infra-card" style="padding: 32px 28px; gap: 18px;">
           <!-- Top Row: Section Tag + Technology Badges -->
@@ -1887,23 +2045,8 @@
         </div>
       </section>
       <!-- =========================================================================
-           [SECTION 04 // FEATURED DISPATCH COMPOSITION]
-           - ID: #featured-dispatch
-           - Scope: Line ~2050 to Line ~2140
-           - Covers:
-             * Outer Black Frame (.dispatch-black-frame): Bold 3.5px border, 14px pink
-               offset shadow framing the latest post card and browse typography.
-             * Object 1 (.dispatch-post-card): Foreground post card pulling dynamically
-               from collections.posts[0] with safe fallbacks for all Pages CMS fields:
-               - Featured / Latest badge with pulse dot indicator
-               - Category badge with fallback to "ARTICLE"
-               - Display date and estimated reading time
-               - Title (line-clamped to 3 lines, break-word)
-               - Subtitle and Excerpt (line-clamped, break-word)
-               - Topic tags (sliced to max 4, ellipsized for safety)
-               - "Read Article ->" primary action button
-             * Object 2 (.dispatch-browse-area): Giant BROWSE ALL POSTS -> typography
-               directly on the black canvas linking to /blog/.
+           FEATURED BLOG POST & BROWSE IN BLACK RECTANGLE WITH PINK SHADOW
+           Automatically promotes collections.posts[0]
            ========================================================================= -->
       {% if collections.posts and collections.posts.length > 0 %}
       {% set spotlightPost = collections.posts[0] %}
@@ -1919,26 +2062,24 @@
                 {% else %}
                   <span class="dispatch-badge badge-latest"><span class="stage-dot green pulse-dot"></span> LATEST</span>
                 {% endif %}
-                <span class="dispatch-badge badge-category">{{ spotlightPost.data.category | default("ARTICLE") }}</span>
+                <span class="dispatch-badge badge-category">{{ spotlightPost.data.category }}</span>
               </div>
               <div class="dispatch-card-meta">
-                <span>{{ spotlightPost.data.display_date or (spotlightPost.date | default("Recent")) }}</span>
+                <span>{{ spotlightPost.data.display_date }}</span>
                 <span>&bull;</span>
-                <span>{{ spotlightPost.data.read_time | default("5 min read") }}</span>
+                <span>{{ spotlightPost.data.read_time }}</span>
               </div>
             </div>
 
             <h3 class="dispatch-card-title">
-              <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title | default("Untitled Article") }}</a>
+              <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title }}</a>
             </h3>
 
             {% if spotlightPost.data.subtitle %}
             <p class="dispatch-card-subtitle">{{ spotlightPost.data.subtitle }}</p>
             {% endif %}
 
-            {% if spotlightPost.data.excerpt %}
             <p class="dispatch-card-excerpt">{{ spotlightPost.data.excerpt }}</p>
-            {% endif %}
 
             {% if spotlightPost.data.post_tags and spotlightPost.data.post_tags.length > 0 %}
             <div class="dispatch-card-tags">
@@ -1969,13 +2110,6 @@
       {% endif %}
 
             <!-- Section: Direct Comms & Transmission Gallery -->
-            <!-- =========================================================================
-           [ZONE 08 // SECTION 05: DIRECT COMMS & TRANSMISSION GALLERY]
-           - Element: <section id="contact">
-           - Purpose: Neubrutalist bento communication gallery featuring status badge,
-             collaboration focus areas, vector relay station drawing, and direct contact
-             channels (Email, GitHub, LinkedIn, copy-email trigger).
-           ========================================================================= -->
       <section
         class="transmission-gallery-section"
         id="contact"
@@ -2169,12 +2303,6 @@
          Hand-drawn vector illustration inspired by Gumroad landscape scene.
          Depicts Nima on a OneWheel receiving "0 DRIFT! 🚀" notifications, an SRE peer
          observing "100% SLA" on a park bench, and a walking engineer with "PASS ✔" alerts.
-         ========================================================================= -->
-        <!-- =========================================================================
-         [ZONE 09 // PANORAMIC CLOUD & INFRASTRUCTURE VECTOR ARTWORK]
-         - Element: <section class="infra-illustration-strip">
-         - Purpose: Full-width vector landscape illustration inspired by neubrutalist SRE
-           operations depicting engineers, OneWheel commuter, server racks, antenna towers.
          ========================================================================= -->
     <section
       class="infra-illustration-strip"
@@ -3041,12 +3169,6 @@
     </section>
 
     <!-- Site Footer -->
-        <!-- =========================================================================
-         [ZONE 10 // SITE FOOTER, LIVE WORLD CLOCKS, TELEMETRY & SCRIPTS]
-         - Element: <footer class="gum-footer">
-         - Purpose: Real-time NYC Local & UTC world clocks, telemetry indicators, footer
-           navigation, giant WVRNER wordmark, back-to-top button, and main.js script loader.
-         ========================================================================= -->
     <footer class="gum-footer">
       <div class="gum-footer-inner">
         <!-- Top Telemetry & Clocks Bar -->

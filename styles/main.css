@@ -1,31 +1,3 @@
-/* =============================================================================
-   WVRNER / NIMA HOSSEINI — MAIN STYLESHEET ARCHITECTURAL MAP
-   =============================================================================
-   PART 01: UNIFIED CURSOR & SYSTEM TOKENS ............. Lines 1 - ~100
-            - Custom SVG arrow cursor, color variables, theme tokens
-   PART 02: BASE RESET & DISPLAY TYPOGRAPHY ............ Lines ~100 - ~350
-            - Box-sizing, font-family definitions, responsive body defaults
-   PART 03: TOP STICKY NAVIGATION BAR .................. Lines ~350 - ~600
-            - .gum-nav-wrapper, pills (.gum-nav-pill-black, white, cta)
-   PART 04: HERO SECTION ARCHITECTURE .................. Lines ~600 - ~800
-            - Centered hero layout, role text, mono tool chips, hero buttons
-   PART 05: CORE DISCIPLINES (4-QUAD GRID) ............. Lines ~800 - ~1100
-            - 4-panel architecture showcase, candy backgrounds, bullet layouts
-   PART 06: CURRENTLY LEARNING EXHIBITION LABS ......... Lines ~1100 - ~2100
-            - Interactive tabs, SVG schematic viewers, terminal configs
-   PART 07: PRODUCTION INFRASTRUCTURE SHOWCASE ......... Lines ~2100 - ~2650
-            - .gum-infra-card, 4-stage pipeline buttons, node flow badges
-   PART 08: GUMROAD NEUBRUTALIST RECTANGLES ............ Lines ~2650 - ~3100
-            - Standardized rounded corners and neubrutalist card geometries
-   PART 09: BENTO TRANSMISSION GALLERY (#contact) ...... Lines ~3100 - ~3800
-            - .transmission-gallery-grid, tile cards, specs chips, contact CTAs
-   PART 10: MOBILE RESPONSIVE ADAPTATIONS .............. Lines ~3800 - ~6160
-            - Media queries for 768px, 480px, and responsive component resets
-   PART 11: FEATURED DISPATCH COMPOSITION .............. Lines ~6165 - End
-            - #featured-dispatch: Big black rectangle with 14px pink offset shadow,
-              .dispatch-post-card with multi-line clamp defense, .dispatch-browse-area
-   ============================================================================= */
-
 /* ==========================================================================
    UNIFIED VECTOR CURSOR (Single Crisp Arrow Across Entire Site)
    Consistent custom pointer everywhere; eliminates default browser hand icon.
@@ -6191,17 +6163,9 @@ a[href*="#cv"].gum-btn:active {
 
 
 /* ==========================================================================
-   SECTION 04: FEATURED DISPATCH COMPOSITION (#featured-dispatch)
-   - Scope: From #featured-dispatch start to #contact section start.
-   - Purpose: Neubrutalist black rectangle with 14px pink offset shadow framing
-     the latest post card on the left, and a massive "BROWSE ALL POSTS ->" link on the right.
-   - Robustness & Edge Cases Handled:
-     * min-width: 0 on grid children prevents long unbroken titles from stretching columns.
-     * word-break: break-word & overflow-wrap: break-word prevent container blowout.
-     * -webkit-line-clamp on title (3 lines), subtitle (2 lines), excerpt (3 lines) prevents
-       heavy CMS text entries from pushing the card out of proportion.
-     * Chip ellipsis: long tag names truncate cleanly without overflowing.
-     * Mobile: fluid vertical stacking with zero horizontal overflow or clipping.
+   FEATURED DISPATCH SECTION (#featured-dispatch)
+   Big Black Rectangle with Pink Offset Shadow framing the Latest Post card
+   Right side: Huge BROWSE ALL POSTS -> link
    ========================================================================== */
 #featured-dispatch.gum-section {
   padding-top: 0 !important;
@@ -6215,7 +6179,6 @@ a[href*="#cv"].gum-btn:active {
   border: 3.5px solid #000000 !important;
   border-radius: 22px !important;
   box-shadow: 14px 14px 0px #FF90E8 !important;
-  -webkit-box-shadow: 14px 14px 0px #FF90E8 !important;
   max-width: 1080px !important;
   width: 100% !important;
   margin: 0 auto !important;
@@ -6225,39 +6188,31 @@ a[href*="#cv"].gum-btn:active {
   gap: 36px !important;
   align-items: center !important;
   box-sizing: border-box !important;
-  -webkit-box-sizing: border-box !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 [data-theme="dark"] .dispatch-black-frame {
   border-color: #FFFFFF !important;
   box-shadow: 14px 14px 0px #FF90E8 !important;
-  -webkit-box-shadow: 14px 14px 0px #FF90E8 !important;
 }
 
 .dispatch-black-frame:hover {
   transform: translateY(-2px) !important;
   box-shadow: 16px 16px 0px #FF90E8 !important;
-  -webkit-box-shadow: 16px 16px 0px #FF90E8 !important;
 }
 
 /* OBJECT 1: The Latest Post Card inside the black frame */
 .dispatch-post-card {
-  min-width: 0 !important;
   width: 100% !important;
   background: #FFFFFF !important;
   border: 3.5px solid #000000 !important;
   border-radius: 16px !important;
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
-  -webkit-box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
   padding: 26px 28px !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 12px !important;
   box-sizing: border-box !important;
-  -webkit-box-sizing: border-box !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
@@ -6265,13 +6220,11 @@ a[href*="#cv"].gum-btn:active {
   background: #141416 !important;
   border-color: #FFFFFF !important;
   box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.15) !important;
-  -webkit-box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.15) !important;
 }
 
 .dispatch-post-card:hover {
   transform: translate(-2px, -2px) !important;
   box-shadow: 8px 8px 0px #FF90E8 !important;
-  -webkit-box-shadow: 8px 8px 0px #FF90E8 !important;
 }
 
 /* Card Header: Badges & Meta */
@@ -6302,7 +6255,6 @@ a[href*="#cv"].gum-btn:active {
   display: inline-flex !important;
   align-items: center !important;
   gap: 5px !important;
-  white-space: nowrap !important;
 }
 
 .dispatch-badge.badge-featured {
@@ -6337,10 +6289,9 @@ a[href*="#cv"].gum-btn:active {
   display: flex !important;
   align-items: center !important;
   gap: 6px !important;
-  white-space: nowrap !important;
 }
 
-/* Card Title (with multi-line clamp defense) */
+/* Card Title */
 .dispatch-card-title {
   font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
   font-size: clamp(20px, 2.3vw, 25px) !important;
@@ -6348,12 +6299,6 @@ a[href*="#cv"].gum-btn:active {
   letter-spacing: -0.03em !important;
   line-height: 1.22 !important;
   margin: 0 !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
-  display: -webkit-box !important;
-  -webkit-box-orient: vertical !important;
-  -webkit-line-clamp: 3 !important;
-  overflow: hidden !important;
 }
 
 .dispatch-card-title a {
@@ -6371,7 +6316,7 @@ a[href*="#cv"].gum-btn:active {
   text-underline-offset: 6px !important;
 }
 
-/* Card Subtitle & Excerpt (with multi-line clamp defense) */
+/* Card Subtitle & Excerpt */
 .dispatch-card-subtitle {
   font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
   font-size: 14.5px !important;
@@ -6379,12 +6324,6 @@ a[href*="#cv"].gum-btn:active {
   line-height: 1.48 !important;
   color: var(--text-muted, #444444) !important;
   margin: 0 !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
-  display: -webkit-box !important;
-  -webkit-box-orient: vertical !important;
-  -webkit-line-clamp: 2 !important;
-  overflow: hidden !important;
 }
 
 [data-theme="dark"] .dispatch-card-subtitle {
@@ -6396,31 +6335,18 @@ a[href*="#cv"].gum-btn:active {
   line-height: 1.55 !important;
   color: var(--text-main, #222222) !important;
   margin: 0 !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
-  display: -webkit-box !important;
-  -webkit-box-orient: vertical !important;
-  -webkit-line-clamp: 3 !important;
-  overflow: hidden !important;
 }
 
 [data-theme="dark"] .dispatch-card-excerpt {
   color: #CCCCCC !important;
 }
 
-/* Card Tags (with tag length defense) */
+/* Card Tags */
 .dispatch-card-tags {
   display: flex !important;
   flex-wrap: wrap !important;
   gap: 6px !important;
   margin-top: 2px !important;
-}
-
-.dispatch-card-tags .about-chip {
-  max-width: 170px !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
 }
 
 /* Card Action Button */
@@ -6444,9 +6370,7 @@ a[href*="#cv"].gum-btn:active {
   font-weight: 800 !important;
   text-decoration: none !important;
   box-shadow: 3.5px 3.5px 0px #FF90E8 !important;
-  -webkit-box-shadow: 3.5px 3.5px 0px #FF90E8 !important;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease !important;
-  white-space: nowrap !important;
 }
 
 [data-theme="dark"] .dispatch-card-btn {
@@ -6460,26 +6384,20 @@ a[href*="#cv"].gum-btn:active {
   color: #000000 !important;
   transform: translate(-2px, -2px) !important;
   box-shadow: 5px 5px 0px #000000 !important;
-  -webkit-box-shadow: 5px 5px 0px #000000 !important;
 }
 
 [data-theme="dark"] .dispatch-card-btn:hover {
   box-shadow: 5px 5px 0px #FF90E8 !important;
-  -webkit-box-shadow: 5px 5px 0px #FF90E8 !important;
 }
 
 /* Right side of black panel: HUGE, bold BROWSE ALL POSTS typography */
 .dispatch-browse-area {
-  min-width: 0 !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
   align-items: flex-start !important;
   box-sizing: border-box !important;
-  -webkit-box-sizing: border-box !important;
   padding-left: 10px !important;
-  overflow-wrap: break-word !important;
-  word-break: break-word !important;
 }
 
 .dispatch-browse-cta {
@@ -6531,7 +6449,6 @@ a[href*="#cv"].gum-btn:active {
     gap: 24px !important;
     border-radius: 16px !important;
     box-shadow: 8px 8px 0px #FF90E8 !important;
-    -webkit-box-shadow: 8px 8px 0px #FF90E8 !important;
   }
 
   .dispatch-post-card {
