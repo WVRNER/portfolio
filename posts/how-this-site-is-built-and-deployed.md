@@ -28,7 +28,7 @@ callout_box:
 seo:
   no_index: false
 published: true
-featured: true
+featured: false
 layout: post.njk
 ---
 Building a personal portfolio website is a standard rite of passage for software and systems engineers. However, instead of treating this site merely as an online resume or relying on an off-the-shelf dynamic CMS, I approached the portfolio itself as a real infrastructure, automation, and deployment engineering project.
