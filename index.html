@@ -1635,13 +1635,16 @@
           <div class="infra-header-row">
             <div class="infra-badges-list">
               <span class="infra-badge" style="background: var(--gum-green)"
-                >GitHub Actions</span
+                >GitHub Pages</span
               >
               <span class="infra-badge" style="background: var(--gum-pink)"
-                >Git Version Control</span
+                >GitHub Actions CI/CD</span
+              >
+              <span class="infra-badge" style="background: var(--gum-yellow)"
+                >Eleventy SSG</span
               >
               <span class="infra-badge" style="background: var(--gum-blue)"
-                >Zero Dependencies</span
+                >Cloudflare DNS</span
               >
             </div>
             <h3 class="infra-card-title">
@@ -1672,7 +1675,7 @@
               <span class="node-btn-step">STEP 02</span>
               <span class="node-btn-title">🐙 GitHub Repo</span>
               <span class="node-btn-desc"
-                >Git Version Control & Source of Truth</span
+                >Git Version Control &amp; Source of Truth</span
               >
             </button>
 
@@ -1697,7 +1700,20 @@
           </div>
 
           <!-- Explainer Toast Banner -->
-          <div id="nodeStatusToast" class="node-status-toast">💻 <strong>01 / Local Development:</strong> The website is developed locally with Eleventy, HTML, CSS and JavaScript. Content and code changes are tested locally before being committed to Git. Click any node to explore each stage of the website's deployment pipeline.</strong> The website is developed locally with Eleventy, HTML, CSS and JavaScript. Content and code changes are tested locally before being committed to Git.
+          <div id="nodeStatusToast" class="node-status-toast">
+            💻 <strong>01 / Local Development:</strong> The website is developed locally with Eleventy, HTML, CSS and JavaScript. Content and code changes are tested locally before being committed to Git. Click any node to explore each stage of the website's deployment pipeline.
+          </div>
+
+          <!-- CTA linking directly to technical case study write-up -->
+          <div class="infra-cta-row" style="margin-top: 28px; display: flex; justify-content: center;">
+            <a
+              href="/posts/how-this-site-is-built-and-deployed.html"
+              class="gum-btn gum-btn-black"
+              style="padding: 12px 28px; font-size: 15px; font-weight: 800; text-decoration: none;"
+            >
+              <span>View Technical Write-up</span>
+              <span aria-hidden="true">&rarr;</span>
+            </a>
           </div>
         </div>
       </section>
