@@ -635,7 +635,7 @@ content:
         label: Featured Post
         type: boolean
         default: false
-        description: "Marks an article as especially important. EXAMPLE: Your best infrastructure project or certification write-up. READER SEES: Currently nothing unless blog.njk/post.njk is later configured to give featured articles special placement."
+        description: "Marks an article as especially important. EXAMPLE: Your best infrastructure project or certification write-up. READER SEES: Featured articles appear at the top of the blog feed with a bold ★ FEATURED badge and receive a ★ FEATURED TECHNICAL WRITE-UP banner in the article header."
 
 
       - name: layout

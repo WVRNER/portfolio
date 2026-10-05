@@ -111,7 +111,7 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
       <!-- =============================== -->
 
       <div class="blog-feed-container" id="blogFeed">
-        {% for post in posts | reverse %}
+        {% for post in posts %}
 
         <article class="blog-post-card{% if post.data.featured %} is-featured{% endif %}">
           <!-- Post Metadata -->
