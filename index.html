@@ -1726,66 +1726,6 @@
         </div>
       </section>
 
-      {% if collections.posts and collections.posts.length > 0 %}
-      {% set spotlightPost = collections.posts[0] %}
-      <section class="gum-section" id="latest-dispatch">
-        <div class="latest-dispatch-stage">
-          <!-- OBJECT 2: Large Black Browse Panel (Back Layer) -->
-          <div class="black-browse-panel">
-            <a href="/blog/" class="browse-all-link" aria-label="Browse all posts">
-              <span class="browse-all-text">BROWSE<br>ALL POSTS</span>
-              <span class="browse-all-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-
-          <!-- OBJECT 1: Latest Post Card (Front Layer, Overlapping Top Boundary) -->
-          <article class="latest-post-card">
-            <div class="latest-card-header">
-              <div class="latest-card-badges">
-                {% if spotlightPost.data.featured %}
-                  <span class="latest-badge badge-featured">★ FEATURED</span>
-                {% else %}
-                  <span class="latest-badge badge-latest"><span class="stage-dot green pulse-dot"></span> LATEST</span>
-                {% endif %}
-                <span class="latest-badge badge-category">{{ spotlightPost.data.category }}</span>
-              </div>
-              <div class="latest-card-meta">
-                <span>{{ spotlightPost.data.display_date }}</span>
-                <span>&bull;</span>
-                <span>{{ spotlightPost.data.read_time }}</span>
-              </div>
-            </div>
-
-            <h3 class="latest-card-title">
-              <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title }}</a>
-            </h3>
-
-            {% if spotlightPost.data.subtitle %}
-            <p class="latest-card-subtitle">{{ spotlightPost.data.subtitle }}</p>
-            {% endif %}
-
-            <p class="latest-card-excerpt">{{ spotlightPost.data.excerpt }}</p>
-
-            {% if spotlightPost.data.post_tags and spotlightPost.data.post_tags.length > 0 %}
-            <div class="latest-card-tags">
-              {% for tag in spotlightPost.data.post_tags.slice(0, 4) %}
-                {% set colors = ["chip-yellow", "chip-pink", "chip-green", "chip-blue"] %}
-                <span class="about-chip {{ colors[loop.index0 % 4] }}">{{ tag }}</span>
-              {% endfor %}
-            </div>
-            {% endif %}
-
-            <div class="latest-card-action">
-              <a href="{{ spotlightPost.url }}" class="latest-read-btn">
-                <span>Read Article</span>
-                <span aria-hidden="true">&rarr;</span>
-              </a>
-            </div>
-          </article>
-        </div>
-      </section>
-      {% endif %}
-
       <!-- Section: Direct Comms & Transmission Gallery -->
       <section
         class="transmission-gallery-section"
