@@ -378,7 +378,6 @@ content:
             - gif
           rename: safe
 
-
       # ========================================================================
       # J. CONFIG / CODE SNIPPETS
       # ========================================================================
@@ -386,8 +385,7 @@ content:
       - name: code_snippets
         label: Config / Code Snippets
         type: object
-        description: "WHAT THIS DOES: Stores complete standalone config/code examples separately from your article body. EXAMPLE: main.tf, Dockerfile, docker-compose.yml, deploy.sh, nginx.conf. READER SEES: Could appear as dedicated copyable code panels. IMPORTANT: post.njk must render code_snippets before they appear publicly."
-
+        description: "WHAT THIS DOES: Lets you attach complete code or configuration examples to a post. EXAMPLE: main.tf, Dockerfile, docker-compose.yml, deploy.sh, nginx.conf. READER SEES: Nothing yet unless _includes/post.njk is later configured to render these snippets."
         list:
           collapsible:
             collapsed: true
@@ -402,47 +400,25 @@ content:
           - name: language
             label: Language
             type: select
-            description: "WHAT THIS DOES: Describes what language/config format the snippet uses."
-
+            description: "WHAT THIS DOES: Labels what kind of code/configuration this is."
             options:
               values:
-                - value: "bash"
-                  label: "Bash / Shell"
-
-                - value: "python"
-                  label: "Python"
-
-                - value: "yaml"
-                  label: "YAML"
-
-                - value: "dockerfile"
-                  label: "Dockerfile"
-
-                - value: "hcl"
-                  label: "Terraform / HCL"
-
-                - value: "json"
-                  label: "JSON"
-
-                - value: "ini"
-                  label: "INI / Config"
-
-                - value: "sql"
-                  label: "SQL"
-
-                - value: "html"
-                  label: "HTML"
-
-                - value: "css"
-                  label: "CSS"
-
-                - value: "javascript"
-                  label: "JavaScript"
+                - "Bash / Shell"
+                - "Python"
+                - "YAML"
+                - "Dockerfile"
+                - "Terraform / HCL"
+                - "JSON"
+                - "INI / Config"
+                - "SQL"
+                - "HTML"
+                - "CSS"
+                - "JavaScript"
 
           - name: code
             label: Code
             type: text
-            description: "WHAT THIS DOES: Paste the complete code/config contents here. EXAMPLE: Your entire main.tf file. READER SEES: Nothing until post.njk renders code snippets."
+            description: "Paste the complete code or configuration here. EXAMPLE: the entire contents of main.tf or Dockerfile."
 
 
       # ========================================================================
