@@ -6160,9 +6160,17 @@ a[href*="#cv"].gum-btn:active {
 }
 
 
+
 /* ==========================================================================
    AUTHENTIC GUMROAD-STYLE SPOTLIGHT CARD
    ========================================================================== */
+.gum-spotlight-wrapper {
+  max-width: 660px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
 .gum-spotlight-card {
   background: #FFFFFF !important;
   border: 3.5px solid #000000 !important;
@@ -6194,13 +6202,13 @@ a[href*="#cv"].gum-btn:active {
 
 /* Edge-to-Edge Gumroad Top Banner */
 .gum-spotlight-topbar {
-  padding: 14px 28px !important;
+  padding: 12px 24px !important;
   border-bottom: 3px solid #000000 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   flex-wrap: wrap !important;
-  gap: 12px !important;
+  gap: 10px !important;
   box-sizing: border-box !important;
 }
 
@@ -6219,7 +6227,7 @@ a[href*="#cv"].gum-btn:active {
 .gum-spotlight-status-group {
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: 8px !important;
   flex-wrap: wrap !important;
 }
 
@@ -6227,13 +6235,13 @@ a[href*="#cv"].gum-btn:active {
   font-family: var(--font-mono, monospace) !important;
   font-size: 11px !important;
   font-weight: 800 !important;
-  padding: 4px 12px !important;
+  padding: 4px 10px !important;
   border-radius: 9999px !important;
-  letter-spacing: 0.05em !important;
+  letter-spacing: 0.04em !important;
   text-transform: uppercase !important;
   display: inline-flex !important;
   align-items: center !important;
-  gap: 6px !important;
+  gap: 5px !important;
   box-sizing: border-box !important;
 }
 
@@ -6241,21 +6249,24 @@ a[href*="#cv"].gum-btn:active {
   background: #000000 !important;
   color: #FFFFFF !important;
   border: 1.5px solid #000000 !important;
-  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 1.5px 1.5px 0px rgba(0, 0, 0, 0.2) !important;
+}
+
+.gum-pill-white {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border: 1.5px solid #000000 !important;
+}
+
+.gum-pill-free {
+  background: #000000 !important;
+  color: #90E8D0 !important;
+  border: 1.5px solid #000000 !important;
 }
 
 .gum-star-icon {
   color: var(--gum-yellow, #FFC900) !important;
-  font-size: 12px !important;
-}
-
-.gum-spotlight-meta-kicker {
-  font-family: var(--font-mono, monospace) !important;
-  font-size: 12px !important;
-  font-weight: 800 !important;
-  color: #000000 !important;
-  letter-spacing: 0.02em !important;
-  text-transform: uppercase !important;
+  font-size: 11.5px !important;
 }
 
 .gum-spotlight-tag-right {
@@ -6263,20 +6274,12 @@ a[href*="#cv"].gum-btn:active {
   align-items: center !important;
 }
 
-.gum-mono-tag {
-  font-family: var(--font-mono, monospace) !important;
-  font-size: 11px !important;
-  font-weight: 800 !important;
-  color: #000000 !important;
-  letter-spacing: 0.05em !important;
-}
-
 /* Card Body Section */
 .gum-spotlight-body {
-  padding: 34px 32px 28px !important;
+  padding: 28px 28px 24px !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 12px !important;
+  gap: 10px !important;
   background: #FFFFFF !important;
   box-sizing: border-box !important;
 }
@@ -6285,12 +6288,22 @@ a[href*="#cv"].gum-btn:active {
   background: #141416 !important;
 }
 
+.gum-spotlight-meta-sub {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-family: var(--font-mono, monospace) !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: var(--text-muted, #555555) !important;
+}
+
 .gum-spotlight-title {
   font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-  font-size: clamp(23px, 3.2vw, 34px) !important;
+  font-size: clamp(21px, 2.7vw, 28px) !important;
   font-weight: 900 !important;
   letter-spacing: -0.03em !important;
-  line-height: 1.2 !important;
+  line-height: 1.22 !important;
   margin: 0 !important;
 }
 
@@ -6311,9 +6324,9 @@ a[href*="#cv"].gum-btn:active {
 
 .gum-spotlight-subtitle {
   font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-  font-size: 16.5px !important;
+  font-size: 15.5px !important;
   font-weight: 600 !important;
-  line-height: 1.55 !important;
+  line-height: 1.5 !important;
   color: var(--text-muted, #444444) !important;
   margin: 0 !important;
 }
@@ -6323,8 +6336,8 @@ a[href*="#cv"].gum-btn:active {
 }
 
 .gum-spotlight-excerpt {
-  font-size: 15px !important;
-  line-height: 1.65 !important;
+  font-size: 14.5px !important;
+  line-height: 1.6 !important;
   color: var(--text-main, #222222) !important;
   margin: 0 !important;
 }
@@ -6334,19 +6347,19 @@ a[href*="#cv"].gum-btn:active {
 }
 
 .gum-spotlight-chips-row {
-  margin-top: 6px !important;
+  margin-top: 4px !important;
 }
 
 /* Card Bottom Footer / Action Deck */
 .gum-spotlight-footer {
-  padding: 22px 32px !important;
+  padding: 18px 28px !important;
   border-top: 3px solid #000000 !important;
   background: var(--bg-canvas, #F4F4F0) !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   flex-wrap: wrap !important;
-  gap: 20px !important;
+  gap: 16px !important;
   box-sizing: border-box !important;
 }
 
@@ -6358,56 +6371,48 @@ a[href*="#cv"].gum-btn:active {
 .gum-spotlight-teaser {
   display: flex !important;
   flex-direction: column !important;
-  gap: 3px !important;
-  max-width: 480px !important;
+  gap: 2px !important;
+  max-width: 340px !important;
 }
 
 .gum-teaser-eyebrow {
   font-family: var(--font-mono, monospace) !important;
-  font-size: 11px !important;
+  font-size: 10.5px !important;
   font-weight: 900 !important;
   color: var(--text-muted, #555555) !important;
-  letter-spacing: 0.06em !important;
+  letter-spacing: 0.05em !important;
   text-transform: uppercase !important;
 }
 
-.gum-teaser-heading {
-  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-  font-size: 16px !important;
-  font-weight: 800 !important;
-  color: var(--text-main, #000000) !important;
-  line-height: 1.35 !important;
-}
-
-[data-theme="dark"] .gum-teaser-heading {
-  color: #FFFFFF !important;
-}
-
 .gum-teaser-desc {
-  font-size: 13.5px !important;
-  line-height: 1.45 !important;
-  color: var(--text-muted, #555555) !important;
-  margin: 0 !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  color: var(--text-main, #000000) !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="dark"] .gum-teaser-desc {
+  color: #E6EDF3 !important;
 }
 
 .gum-spotlight-buttons-group {
   display: flex !important;
   align-items: center !important;
-  gap: 12px !important;
+  gap: 10px !important;
   flex-wrap: wrap !important;
 }
 
 .gum-spotlight-primary-btn {
-  padding: 12px 22px !important;
-  font-size: 14.5px !important;
-  box-shadow: 4px 4px 0px var(--gum-pink, #FF90E8) !important;
+  padding: 11px 20px !important;
+  font-size: 14px !important;
+  box-shadow: 3.5px 3.5px 0px var(--gum-pink, #FF90E8) !important;
 }
 
 .gum-spotlight-vault-btn {
-  padding: 12px 22px !important;
-  font-size: 14.5px !important;
+  padding: 11px 20px !important;
+  font-size: 14px !important;
   background: var(--gum-yellow, #FFC900) !important;
-  box-shadow: 4px 4px 0px #000000 !important;
+  box-shadow: 3.5px 3.5px 0px #000000 !important;
 }
 
 .gum-vault-count-badge {
@@ -6425,6 +6430,10 @@ a[href*="#cv"].gum-btn:active {
 
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
+  .gum-spotlight-wrapper {
+    max-width: 100% !important;
+  }
+
   .gum-spotlight-card {
     border-radius: 12px !important;
     border-width: 3px !important;
@@ -6436,20 +6445,20 @@ a[href*="#cv"].gum-btn:active {
   }
 
   .gum-spotlight-topbar {
-    padding: 12px 18px !important;
+    padding: 10px 16px !important;
   }
 
   .gum-spotlight-body {
-    padding: 22px 18px 20px !important;
-    gap: 10px !important;
+    padding: 20px 16px 18px !important;
+    gap: 8px !important;
   }
 
   .gum-spotlight-title {
-    font-size: 21px !important;
+    font-size: 20px !important;
   }
 
   .gum-spotlight-subtitle {
-    font-size: 14.5px !important;
+    font-size: 14px !important;
   }
 
   .gum-spotlight-excerpt {
@@ -6457,10 +6466,14 @@ a[href*="#cv"].gum-btn:active {
   }
 
   .gum-spotlight-footer {
-    padding: 18px 18px !important;
+    padding: 16px 16px !important;
     flex-direction: column !important;
     align-items: stretch !important;
-    gap: 16px !important;
+    gap: 14px !important;
+  }
+
+  .gum-spotlight-teaser {
+    max-width: 100% !important;
   }
 
   .gum-spotlight-buttons-group {
