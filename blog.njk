@@ -113,9 +113,12 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
       <div class="blog-feed-container" id="blogFeed">
         {% for post in posts | reverse %}
 
-        <article class="blog-post-card">
+        <article class="blog-post-card{% if post.data.featured %} is-featured{% endif %}">
           <!-- Post Metadata -->
           <div class="blog-post-meta">
+            {% if post.data.featured %}
+              <span class="blog-featured-badge">★ FEATURED</span>
+            {% endif %}
             <span class="blog-category-tag"> {{ post.data.category }} </span>
 
             <span class="blog-time-badge">
@@ -124,7 +127,7 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
           </div>
 
           <!-- Post Title -->
-          <h2 class="blog-post-title">
+          <h2 class="blog-post-title{% if post.data.featured %} is-featured-title{% endif %}">
             <a href="{{ post.url }}"> {{ post.data.title }} </a>
           </h2>
 

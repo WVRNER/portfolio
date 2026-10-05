@@ -85,132 +85,75 @@
         margin: 0 auto;
       "
     >
+      <!-- Back Button -->
+      <div style="max-width: 920px; margin: 0 auto 24px;">
+        <a href="/blog/" class="blog-back-btn" style="margin-bottom: 0;">
+          <span aria-hidden="true">&larr;</span>
+          <span>Back to Engineering Notes</span>
+        </a>
+      </div>
 
-      <article
-        class="blog-article-container"
-        style="max-width: 860px; margin: 0 auto;"
-      >
-
-        <!-- Back Button -->
-        <div style="margin-bottom: 24px;">
-          <a href="/blog/" class="blog-back-btn">
-            <span aria-hidden="true">&larr;</span>
-            <span>Back to Engineering Notes</span>
-          </a>
-        </div>
-
-
-        <!-- Article Header -->
-        <header
-          class="blog-article-header"
-          style="margin-bottom: 36px;"
-        >
-
-          <div
-            class="blog-post-meta"
-            style="margin-bottom: 14px;"
-          >
-
+      <article class="blog-article-frame">
+        <!-- Article Header Section -->
+        <header class="post-header-section">
+          <div class="blog-post-meta" style="margin-bottom: 16px; gap: 10px;">
+            {% if featured %}
+              <span class="post-featured-badge">★ FEATURED TECHNICAL WRITE-UP</span>
+            {% endif %}
             <span class="blog-category-tag">
               {{ category }}
             </span>
-
             <span class="blog-time-badge">
               {{ display_date }} &bull; {{ read_time }}
             </span>
-
           </div>
-
 
           <h1
             class="blog-post-title"
             style="
-              font-size: clamp(32px, 4.5vw, 50px);
-              line-height: 1.15;
+              font-size: clamp(28px, 4.2vw, 44px);
+              line-height: 1.18;
               margin-bottom: 16px;
             "
           >
             {{ title }}
           </h1>
 
-
-          <p class="blog-post-subtitle">
+          <p
+            class="blog-post-subtitle"
+            style="margin: 0; padding: 0; border: none;"
+          >
             {{ subtitle }}
           </p>
-
         </header>
 
-
-        <!-- Article Body -->
-        <div
-          class="blog-article-body"
-          style="
-            font-size: 16.5px;
-            line-height: 1.8;
-            color: var(--text-main);
-          "
-        >
-
+        <!-- Article Body Section -->
+        <div class="post-body-section blog-article-body">
           {{ content | safe }}
-
         </div>
 
-
-        <!-- Article Footer -->
-        <footer
-          style="
-            margin-top: 48px;
-            padding-top: 28px;
-            border-top: 2px solid #000000;
-          "
-        >
-
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              flex-wrap: wrap;
-              gap: 16px;
-            "
-          >
-
-            <!-- Tags -->
-            <div
-              class="about-chips-list"
-              style="margin-top: 0;"
-            >
-
-              {% for tag in post_tags %}
-
-                {% set colors = [
-                  "chip-yellow",
-                  "chip-pink",
-                  "chip-green",
-                  "chip-blue"
-                ] %}
-
-                <span class="about-chip {{ colors[loop.index0 % 4] }}">
-                  {{ tag }}
-                </span>
-
-              {% endfor %}
-
-            </div>
-
-
-            <a href="/blog/" class="blog-read-more-btn">
-              <span>&larr; All Articles</span>
-            </a>
-
+        <!-- Article Footer Section -->
+        <footer class="post-footer-section">
+          <div class="about-chips-list" style="margin-top: 0;">
+            {% for tag in post_tags %}
+              {% set colors = [
+                "chip-yellow",
+                "chip-pink",
+                "chip-green",
+                "chip-blue"
+              ] %}
+              <span class="about-chip {{ colors[loop.index0 % 4] }}">
+                {{ tag }}
+              </span>
+            {% endfor %}
           </div>
 
+          <a href="/blog/" class="blog-read-more-btn">
+            <span>&larr; All Articles</span>
+          </a>
         </footer>
-
       </article>
-
     </main>
-
 
     <!-- Site Footer -->
     <footer class="gum-footer">

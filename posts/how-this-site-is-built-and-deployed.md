@@ -29,7 +29,6 @@ seo:
   no_index: false
 published: true
 featured: true
-layout: post.njk
 ---
 Building a personal portfolio website is a standard rite of passage for software and systems engineers. However, instead of treating this site merely as an online resume or relying on an off-the-shelf dynamic CMS, I approached the portfolio itself as a real infrastructure, automation, and deployment engineering project.
 
@@ -227,14 +226,14 @@ Eleventy serves as the build engine. It transforms raw Markdown files and Nunjuc
                                            | npx @11ty/eleventy
                                            v
 +-------------------------------------------------------------------------------------+
-| ELEVENTY BUILD ENGINE (v3) |
-|  |
-| 1. Read .eleventy.js configuration |
-| 2. Execute passthrough copies (CSS, JS, images, CNAME) |
-| 3. Parse posts directory and create 'posts' collection (sorted newest first) |
-| 4. Generate paginated feed pages (/blog/, /blog/2/, /blog/3/) |
-| 5. Transform Markdown to HTML and inject into {{ content | safe }} |
-| 6. Evaluate permalinks (/posts/{{ page.fileSlug }}.html) |
+|                              ELEVENTY BUILD ENGINE (v3)                             |
+|                                                                                     |
+|   1. Read .eleventy.js configuration                                                |
+|   2. Execute passthrough copies (CSS, JS, images, CNAME)                            |
+|   3. Parse posts directory and create 'posts' collection (sorted newest first)      |
+|   4. Generate paginated feed pages (/blog/, /blog/2/, /blog/3/)                     |
+|   5. Transform Markdown to HTML and inject into {% raw %}{{ content | safe }}{% endraw %}                |
+|   6. Evaluate permalinks (/posts/{% raw %}{{ page.fileSlug }}{% endraw %}.html)                          |
 +------------------------------------------+------------------------------------------+
                                            |
                                            | Emits static artifacts (0.12s build time)
@@ -304,9 +303,9 @@ To avoid repeating configuration across every article, Eleventy reads `posts/pos
 {
   "layout": "post.njk",
   "tags": ["posts"],
-  "permalink": "/posts/{{ page.fileSlug }}.html"
-}
-```
+  "permalink": "/posts/{% raw %}{{ page.fileSlug }}{% endraw %}.html"
+}</code></pre>
+</div>
 
 ---
 
@@ -403,9 +402,9 @@ pagination:
   data: collections.posts
   size: 5
   alias: posts
-permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1 }}/{% endif %}index.html"
----
-```
+permalink: "/blog/{% raw %}{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1 }}/{% endif %}{% endraw %}index.html"
+---</code></pre>
+</div>
 
 ### Generated Route Topology
 
@@ -621,17 +620,17 @@ Infrastructure engineering is defined not by how systems behave when everything 
 **Root Cause:** `_includes/post.njk` used relative stylesheet links: `<link rel="stylesheet" href="styles/main.css">`. On nested URL paths, the browser resolved this relative to the current directory (`/posts/styles/main.css`), returning a 404.  
 **Fix:** Converted all asset links to root-relative paths: `href="/styles/main.css"` and `src="/js/main.js"`.
 
-**INCIDENT 02** **Git Divergence between Web CMS & Local Machine**
-
-**Symptom:** Local `git push origin main` was rejected with `[rejected - non-fast-forward]`.  
-**Root Cause:** Pages CMS authors commits directly on the remote GitHub repository via the GitHub REST API. Meanwhile, local file edits occurred offline without pulling the remote changes first.  
-**Fix:** Executed `git pull --rebase origin main` to replay local commits on top of the remote CMS commits, maintaining a linear Git history without messy merge commits.
-
-**INCIDENT 03** **Template Parsing Crashes on Code Snippets**
-
-**Symptom:** Eleventy crashed during compilation with `AssertionError: undefined filter: safe`.  
-**Root Cause:** Eleventy pre-processes Markdown files with Liquid by default. When the article contained example Nunjucks code snippets like `{{ content | safe }}`, Liquid attempted to evaluate them as active directives.  
-**Fix:** Added `templateEngineOverride: md` to the article's front matter, instructing Eleventy to treat the file body strictly as pure Markdown without template evaluation.
+<div class="blog-callout-box" style="border: 2.5px solid #000000; box-shadow: 5px 5px 0px #000000; border-radius: 12px; margin: 26px 0; padding: 22px 24px; background: #FFFDF5;">
+  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+    <span class="blog-category-tag" style="background: var(--gum-green, #27C93F); font-size: 11px; font-weight: 800; padding: 3px 10px;">INCIDENT 03</span>
+    <strong style="font-size: 16.5px; font-family: var(--font-display, sans-serif);">Template Parsing Crashes on Code Snippets</strong>
+  </div>
+  <p style="margin: 0 0 10px; font-size: 14.5px; line-height: 1.6; color: #444444;">
+    <strong>Symptom:</strong> Eleventy crashed during compilation with <code>AssertionError: undefined filter: safe</code>.<br>
+    <strong>Root Cause:</strong> Eleventy pre-processes Markdown files with Liquid by default. When the article contained example Nunjucks code snippets like <code>{% raw %}{{ content | safe }}{% endraw %}</code>, Liquid attempted to evaluate them as active directives.<br>
+    <strong>Fix:</strong> Added <code>templateEngineOverride: md</code> to the article's front matter, instructing Eleventy to treat the file body strictly as pure Markdown without template evaluation.
+  </p>
+</div>
 
 ---
 
