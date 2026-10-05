@@ -1727,51 +1727,82 @@
       </section>
 
       <!-- =========================================================================
-           SECTION 04: UPCOMING PIPELINE & LAB EXPERIMENTS
+           SECTION 04: FEATURED & LATEST ENGINEERING DISPATCH
+           Automatically syncs with collections.posts[0] (featured or latest post)
            ========================================================================= -->
-      <!-- Pipeline & Labs Upcoming Card (Outlined Frame, No Background Color) -->
-      <section class="gum-section" style="padding-top: 0">
-        <div
-          class="quad-card card-outlined-frame"
-          style="
-            background: transparent !important;
-            border: 3px solid #000000 !important;
-            border-radius: var(--radius-card);
-            box-shadow: none !important;
-          "
-        >
-          <span
-            class="quad-card-num"
-            style="background: #000000; color: #ffffff"
-            >// PIPELINE &amp; LABS ROADMAP</span
-          >
-          <h3 class="quad-card-title">More projects coming soon.</h3>
-          <p class="quad-card-text" style="font-size: 16px; max-width: 800px">
-            Currently learning, building, and turning theory into practical
-            infrastructure projects. Next up: Multi-container Docker compose
-            topologies, custom Linux network bridges, and AWS VPC peering
-            experiments.
-          </p>
-          <div
-            style="
-              display: flex;
-              gap: 12px;
-              flex-wrap: wrap;
-              align-items: center;
-            "
-          >
-            <span
-              style="
-                font-family: var(--font-mono);
-                font-weight: 700;
-                font-size: 13px;
-              "
-              >Next up: Multi-container Docker compose environments &amp; AWS
-              VPC peering experiments.</span
-            >
+      {% if collections.posts and collections.posts.length > 0 %}
+      {% set spotlightPost = collections.posts[0] %}
+      <section class="gum-section" id="latest-dispatch" style="padding-top: 0">
+        <div class="spotlight-post-card">
+          <!-- Top Telemetry Header -->
+          <div class="spotlight-header-row">
+            <div class="spotlight-tag-cluster">
+              {% if spotlightPost.data.featured %}
+                <span class="spotlight-featured-pill">★ FEATURED DISPATCH</span>
+              {% else %}
+                <span class="spotlight-latest-pill">
+                  <span class="stage-dot green pulse-dot" style="width: 8px; height: 8px; display: inline-block;"></span>
+                  LATEST FIELD NOTE
+                </span>
+              {% endif %}
+              <span class="spotlight-category-tag">{{ spotlightPost.data.category }}</span>
+              <span class="spotlight-time-tag">{{ spotlightPost.data.display_date }} &bull; {{ spotlightPost.data.read_time }}</span>
+            </div>
+
+            <span class="spotlight-kicker">// ENGINEERING NOTES &middot; DISPATCH #01</span>
+          </div>
+
+          <!-- Main Article Title & Subtitle -->
+          <div class="spotlight-content-block">
+            <h3 class="spotlight-title">
+              <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title }}</a>
+            </h3>
+
+            <p class="spotlight-subtitle">
+              {{ spotlightPost.data.subtitle }}
+            </p>
+
+            <p class="spotlight-excerpt">
+              {{ spotlightPost.data.excerpt }}
+            </p>
+          </div>
+
+          <!-- Tags Strip -->
+          {% if spotlightPost.data.post_tags and spotlightPost.data.post_tags.length > 0 %}
+          <div class="spotlight-tags-row">
+            <div class="about-chips-list" style="margin: 0">
+              {% for tag in spotlightPost.data.post_tags.slice(0, 4) %}
+                {% set colors = ["chip-yellow", "chip-pink", "chip-green", "chip-blue"] %}
+                <span class="about-chip {{ colors[loop.index0 % 4] }}">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- Bottom Action Deck: Read This Article + Catchy "Enter The Lab Vault" Blog CTA -->
+          <div class="spotlight-actions-deck">
+            <div class="spotlight-read-action">
+              <a href="{{ spotlightPost.url }}" class="gum-btn gum-btn-black spotlight-read-btn">
+                <span>Read Full Technical Breakdown</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+
+            <div class="spotlight-vault-teaser">
+              <div class="vault-teaser-text">
+                <span class="vault-teaser-kicker">HUNGRY FOR MORE UNFILTERED LABS?</span>
+                <span class="vault-teaser-desc">Behind-the-scenes packet captures, zero-drift architectures, and post-mortems.</span>
+              </div>
+              <a href="/blog/" class="gum-btn gum-btn-yellow spotlight-vault-btn">
+                <span>Enter The Lab Vault</span>
+                <span class="vault-badge-count">({{ collections.posts.length }} Articles)</span>
+                <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>
+      {% endif %}
 
       <!-- Section: Direct Comms & Transmission Gallery -->
       <section
