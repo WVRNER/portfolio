@@ -160,8 +160,8 @@ function initInfraNodeFlow() {
   const nodeDetails = {
     browser: '🌐 <strong>01 / Client Ingress:</strong> Modern browser establishes TLS 1.3 encrypted connection to the Anycast edge. Click any node to inspect the real deployment architecture.',
     repo: '🐙 <strong>02 / GitHub Source:</strong> Every release is committed and pushed directly to GitHub. Fully auditable git commit log with zero hidden dependencies or config drift.',
-    cdn: '⚡ <strong>03 / GitHub Pages CDN:</strong> Fast Anycast edge caching delivers assets across global PoPs with low latency, Brotli compression, and automatic HTTPS certificates.',
-    static: '📄 <strong>04 / Pure Semantic Web:</strong> Direct static file serving. Zero heavy frameworks, zero runtime hydration delays, and sub-100ms load times worldwide.'
+    cdn: '⚡ <strong>03 / GitHub Actions:</strong> Every push to the main branch automatically triggers the CI/CD workflow. GitHub Actions installs the required dependencies, builds the Eleventy site and prepares the generated files for deployment.',
+    static: '🌐 <strong>04 / GitHub Pages:</strong> After a successful build, the generated static site is automatically deployed to GitHub Pages and served through the custom domain over HTTPS.'
   };
 
   nodeButtons.forEach(btn => {
