@@ -289,348 +289,7 @@
         }
       }
     </style>
-      <!-- Gumroad Spotlight Component Critical Styles -->
-    <style id="gumroad-spotlight-styles">
-      .gum-spotlight-wrapper {
-        position: relative;
-        max-width: 640px;
-        width: 100%;
-        margin: 0 auto;
-        box-sizing: border-box;
-      }
-      .gum-spotlight-card {
-        position: relative;
-        z-index: 2;
-        background: #FFFFFF !important;
-        border: 3.5px solid #000000 !important;
-        border-radius: 16px !important;
-        box-shadow: 8px 8px 0px #000000 !important;
-        overflow: hidden !important;
-        display: flex !important;
-        flex-direction: column !important;
-        margin: 0 auto !important;
-        box-sizing: border-box !important;
-        transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-        width: 100% !important;
-      }
-      [data-theme="dark"] .gum-spotlight-card {
-        background: #141416 !important;
-        border-color: #FFFFFF !important;
-        box-shadow: 8px 8px 0px #FFFFFF !important;
-      }
-      .gum-spotlight-card:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 10px 10px 0px #000000 !important;
-      }
-      [data-theme="dark"] .gum-spotlight-card:hover {
-        box-shadow: 10px 10px 0px #FFFFFF !important;
-      }
-      .gum-spotlight-topbar {
-        padding: 12px 24px !important;
-        border-bottom: 3px solid #000000 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        flex-wrap: wrap !important;
-        gap: 10px !important;
-        box-sizing: border-box !important;
-      }
-      .gum-spotlight-topbar.is-featured-topbar {
-        background: #FFC900 !important;
-      }
-      .gum-spotlight-topbar.is-latest-topbar {
-        background: #FF90E8 !important;
-      }
-      [data-theme="dark"] .gum-spotlight-topbar {
-        border-bottom-color: #FFFFFF !important;
-      }
-      .gum-spotlight-status-group {
-        display: flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-        flex-wrap: wrap !important;
-      }
-      .gum-spotlight-pill {
-        font-family: var(--font-mono, monospace) !important;
-        font-size: 11px !important;
-        font-weight: 800 !important;
-        padding: 4px 10px !important;
-        border-radius: 9999px !important;
-        letter-spacing: 0.04em !important;
-        text-transform: uppercase !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 5px !important;
-        box-sizing: border-box !important;
-      }
-      .gum-pill-black {
-        background: #000000 !important;
-        color: #FFFFFF !important;
-        border: 1.5px solid #000000 !important;
-        box-shadow: 1.5px 1.5px 0px rgba(0, 0, 0, 0.2) !important;
-      }
-      .gum-pill-white {
-        background: #FFFFFF !important;
-        color: #000000 !important;
-        border: 1.5px solid #000000 !important;
-      }
-      .gum-pill-free {
-        background: #000000 !important;
-        color: #90E8D0 !important;
-        border: 1.5px solid #000000 !important;
-      }
-      .gum-star-icon {
-        color: #FFC900 !important;
-        font-size: 11.5px !important;
-      }
-      .gum-spotlight-tag-right {
-        display: flex !important;
-        align-items: center !important;
-      }
-      .gum-spotlight-body {
-        padding: 26px 26px 22px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 10px !important;
-        background: #FFFFFF !important;
-        box-sizing: border-box !important;
-      }
-      [data-theme="dark"] .gum-spotlight-body {
-        background: #141416 !important;
-      }
-      .gum-spotlight-meta-sub {
-        display: flex !important;
-        align-items: center !important;
-        gap: 8px !important;
-        font-family: var(--font-mono, monospace) !important;
-        font-size: 12px !important;
-        font-weight: 700 !important;
-        color: var(--text-muted, #555555) !important;
-      }
-      .gum-spotlight-title {
-        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-        font-size: clamp(21px, 2.7vw, 27px) !important;
-        font-weight: 900 !important;
-        letter-spacing: -0.03em !important;
-        line-height: 1.22 !important;
-        margin: 0 !important;
-      }
-      .gum-spotlight-title a {
-        color: var(--text-main, #000000) !important;
-        text-decoration: none !important;
-        transition: color 0.15s ease !important;
-      }
-      [data-theme="dark"] .gum-spotlight-title a {
-        color: #FFFFFF !important;
-      }
-      .gum-spotlight-title a:hover {
-        text-decoration: underline wavy #FF90E8 2.5px !important;
-        text-underline-offset: 6px !important;
-      }
-      .gum-spotlight-subtitle {
-        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-        font-size: 15px !important;
-        font-weight: 600 !important;
-        line-height: 1.5 !important;
-        color: var(--text-muted, #444444) !important;
-        margin: 0 !important;
-      }
-      [data-theme="dark"] .gum-spotlight-subtitle {
-        color: #AAAAAA !important;
-      }
-      .gum-spotlight-excerpt {
-        font-size: 14px !important;
-        line-height: 1.6 !important;
-        color: var(--text-main, #222222) !important;
-        margin: 0 !important;
-      }
-      [data-theme="dark"] .gum-spotlight-excerpt {
-        color: #CCCCCC !important;
-      }
-      .gum-spotlight-chips-row {
-        margin-top: 4px !important;
-      }
-      .gum-spotlight-footer {
-        padding: 16px 26px !important;
-        border-top: 3px solid #000000 !important;
-        background: var(--bg-canvas, #F4F4F0) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        flex-wrap: wrap !important;
-        gap: 14px !important;
-        box-sizing: border-box !important;
-      }
-      [data-theme="dark"] .gum-spotlight-footer {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border-top-color: #FFFFFF !important;
-      }
-      .gum-spotlight-teaser {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 2px !important;
-      }
-      .gum-teaser-eyebrow {
-        font-family: var(--font-mono, monospace) !important;
-        font-size: 10.5px !important;
-        font-weight: 900 !important;
-        color: var(--text-muted, #555555) !important;
-        letter-spacing: 0.05em !important;
-        text-transform: uppercase !important;
-      }
-      .gum-teaser-desc {
-        font-size: 13px !important;
-        line-height: 1.4 !important;
-        color: var(--text-main, #000000) !important;
-        font-weight: 600 !important;
-      }
-      [data-theme="dark"] .gum-teaser-desc {
-        color: #E6EDF3 !important;
-      }
-      .gum-spotlight-primary-btn {
-        padding: 11px 22px !important;
-        font-size: 14px !important;
-        box-shadow: 4px 4px 0px #FF90E8 !important;
-      }
-
-      /* Extraordinary Odd: Black Box with Pink Shadow Tucked Half Under the Article */
-      .browse-underlay-box {
-        position: absolute;
-        right: -105px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 210px;
-        height: 190px;
-        background: #000000 !important;
-        border: 3.5px solid #000000 !important;
-        border-radius: 14px !important;
-        box-shadow: 8px 8px 0px #FF90E8 !important;
-        z-index: 1;
-        text-decoration: none !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: flex-end !important;
-        box-sizing: border-box !important;
-        transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease !important;
-        cursor: pointer !important;
-      }
-      [data-theme="dark"] .browse-underlay-box {
-        border-color: #FFFFFF !important;
-        box-shadow: 8px 8px 0px #FF90E8 !important;
-      }
-      .browse-underlay-box:hover {
-        transform: translateY(-50%) translateX(6px) !important;
-        box-shadow: 12px 12px 0px #FF90E8 !important;
-      }
-      .underlay-box-inner {
-        width: 100px;
-        padding-right: 14px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-        text-align: left;
-        box-sizing: border-box;
-      }
-      .underlay-box-kicker {
-        font-family: var(--font-mono, monospace) !important;
-        font-size: 9.5px !important;
-        font-weight: 800 !important;
-        color: #FF90E8 !important;
-        letter-spacing: 0.08em !important;
-        text-transform: uppercase !important;
-      }
-      .underlay-box-title {
-        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
-        font-size: 16px !important;
-        font-weight: 900 !important;
-        color: #FFFFFF !important;
-        line-height: 1.15 !important;
-        letter-spacing: -0.02em !important;
-      }
-      .underlay-box-arrow {
-        font-size: 18px !important;
-        color: #FFC900 !important;
-        font-weight: 900 !important;
-        line-height: 1 !important;
-        transition: transform 0.2s ease !important;
-      }
-      .browse-underlay-box:hover .underlay-box-arrow {
-        transform: translateX(4px) !important;
-      }
-
-      @media (max-width: 899px) {
-        .gum-spotlight-wrapper {
-          max-width: 100% !important;
-        }
-        .gum-spotlight-card {
-          border-radius: 12px !important;
-          border-width: 3px !important;
-          box-shadow: 6px 6px 0px #000000 !important;
-        }
-        [data-theme="dark"] .gum-spotlight-card {
-          box-shadow: 6px 6px 0px #FFFFFF !important;
-        }
-        .browse-underlay-box {
-          position: relative !important;
-          right: auto !important;
-          top: auto !important;
-          transform: none !important;
-          width: calc(100% - 24px) !important;
-          height: auto !important;
-          min-height: 64px !important;
-          margin: -24px auto 0 !important;
-          padding: 30px 18px 14px !important;
-          justify-content: space-between !important;
-          border-radius: 0 0 14px 14px !important;
-          box-shadow: 6px 6px 0px #FF90E8 !important;
-        }
-        .browse-underlay-box:hover {
-          transform: translateY(2px) !important;
-          box-shadow: 6px 8px 0px #FF90E8 !important;
-        }
-        .underlay-box-inner {
-          width: 100% !important;
-          flex-direction: row !important;
-          align-items: center !important;
-          justify-content: space-between !important;
-          padding-right: 0 !important;
-        }
-        .underlay-box-title {
-          font-size: 15px !important;
-        }
-        .gum-spotlight-topbar {
-          padding: 10px 16px !important;
-        }
-        .gum-spotlight-body {
-          padding: 18px 16px 16px !important;
-          gap: 8px !important;
-        }
-        .gum-spotlight-title {
-          font-size: 19px !important;
-        }
-        .gum-spotlight-subtitle {
-          font-size: 14px !important;
-        }
-        .gum-spotlight-excerpt {
-          font-size: 13px !important;
-        }
-        .gum-spotlight-footer {
-          padding: 14px 16px !important;
-          flex-direction: column !important;
-          align-items: stretch !important;
-          gap: 12px !important;
-        }
-        .gum-spotlight-teaser {
-          max-width: 100% !important;
-        }
-        .gum-spotlight-primary-btn {
-          width: 100% !important;
-          justify-content: center !important;
-        }
-      }
-    </style>
-  </head>
+</head>
   <body>
     <!-- =========================================================================
          PAGE ARCHITECTURE DIAGRAM
@@ -2067,95 +1726,62 @@
         </div>
       </section>
 
-      <!-- =========================================================================
-           SECTION 04: GUMROAD-STYLE SPOTLIGHT & ENGINEERING DISPATCH
-           Automatically syncs with collections.posts[0] (featured or latest post)
-           ========================================================================= -->
       {% if collections.posts and collections.posts.length > 0 %}
       {% set spotlightPost = collections.posts[0] %}
-      <section class="gum-section" id="latest-dispatch" style="padding-top: 0">
-        <div class="gum-spotlight-wrapper">
-          <div class="gum-spotlight-card">
-            <!-- Top Gumroad Header Bar (Edge-to-Edge) -->
-            <div class="gum-spotlight-topbar{% if spotlightPost.data.featured %} is-featured-topbar{% else %} is-latest-topbar{% endif %}">
-              <div class="gum-spotlight-status-group">
+      <section class="gum-section" id="latest-dispatch">
+        <div class="latest-dispatch-stage">
+          <!-- OBJECT 2: Large Black Browse Panel (Back Layer) -->
+          <div class="black-browse-panel">
+            <a href="/blog/" class="browse-all-link" aria-label="Browse all posts">
+              <span class="browse-all-text">BROWSE<br>ALL POSTS</span>
+              <span class="browse-all-arrow" aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+
+          <!-- OBJECT 1: Latest Post Card (Front Layer, Overlapping Top Boundary) -->
+          <article class="latest-post-card">
+            <div class="latest-card-header">
+              <div class="latest-card-badges">
                 {% if spotlightPost.data.featured %}
-                  <span class="gum-spotlight-pill gum-pill-black">
-                    <span class="gum-star-icon">★</span>
-                    <span>FEATURED WRITE-UP</span>
-                  </span>
+                  <span class="latest-badge badge-featured">★ FEATURED</span>
                 {% else %}
-                  <span class="gum-spotlight-pill gum-pill-black">
-                    <span class="stage-dot green pulse-dot" style="width: 8px; height: 8px; display: inline-block;"></span>
-                    <span>LATEST POST</span>
-                  </span>
+                  <span class="latest-badge badge-latest"><span class="stage-dot green pulse-dot"></span> LATEST</span>
                 {% endif %}
-
-                <span class="gum-spotlight-pill gum-pill-white">
-                  {{ spotlightPost.data.category }}
-                </span>
+                <span class="latest-badge badge-category">{{ spotlightPost.data.category }}</span>
               </div>
-
-              <div class="gum-spotlight-tag-right">
-                <span class="gum-spotlight-pill gum-pill-free">OPEN ACCESS</span>
-              </div>
-            </div>
-
-            <!-- Main Article Body Area -->
-            <div class="gum-spotlight-body">
-              <div class="gum-spotlight-meta-sub">
+              <div class="latest-card-meta">
                 <span>{{ spotlightPost.data.display_date }}</span>
                 <span>&bull;</span>
                 <span>{{ spotlightPost.data.read_time }}</span>
               </div>
-
-              <h3 class="gum-spotlight-title">
-                <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title }}</a>
-              </h3>
-
-              <p class="gum-spotlight-subtitle">
-                {{ spotlightPost.data.subtitle }}
-              </p>
-
-              <p class="gum-spotlight-excerpt">
-                {{ spotlightPost.data.excerpt }}
-              </p>
-
-              <!-- Topic Tags Strip -->
-              {% if spotlightPost.data.post_tags and spotlightPost.data.post_tags.length > 0 %}
-              <div class="gum-spotlight-chips-row">
-                <div class="about-chips-list" style="margin: 0">
-                  {% for tag in spotlightPost.data.post_tags.slice(0, 4) %}
-                    {% set colors = ["chip-yellow", "chip-pink", "chip-green", "chip-blue"] %}
-                    <span class="about-chip {{ colors[loop.index0 % 4] }}">{{ tag }}</span>
-                  {% endfor %}
-                </div>
-              </div>
-              {% endif %}
             </div>
 
-            <!-- Bottom Action Deck (Gumroad Footer Panel) -->
-            <div class="gum-spotlight-footer">
-              <div class="gum-spotlight-teaser">
-                <span class="gum-teaser-eyebrow">// FROM THE ENGINEERING BLOG</span>
-                <span class="gum-teaser-desc">Lab logs, RFCs, and infrastructure experiments.</span>
-              </div>
+            <h3 class="latest-card-title">
+              <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title }}</a>
+            </h3>
 
-              <a href="{{ spotlightPost.url }}" class="gum-btn-hero-primary gum-spotlight-primary-btn">
+            {% if spotlightPost.data.subtitle %}
+            <p class="latest-card-subtitle">{{ spotlightPost.data.subtitle }}</p>
+            {% endif %}
+
+            <p class="latest-card-excerpt">{{ spotlightPost.data.excerpt }}</p>
+
+            {% if spotlightPost.data.post_tags and spotlightPost.data.post_tags.length > 0 %}
+            <div class="latest-card-tags">
+              {% for tag in spotlightPost.data.post_tags.slice(0, 4) %}
+                {% set colors = ["chip-yellow", "chip-pink", "chip-green", "chip-blue"] %}
+                <span class="about-chip {{ colors[loop.index0 % 4] }}">{{ tag }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="latest-card-action">
+              <a href="{{ spotlightPost.url }}" class="latest-read-btn">
                 <span>Read Article</span>
                 <span aria-hidden="true">&rarr;</span>
               </a>
             </div>
-          </div>
-
-          <!-- Extraordinary Odd: Black box with pink shadow tucked ~halfway underneath -->
-          <a href="/blog/" class="browse-underlay-box" aria-label="Browse all posts">
-            <div class="underlay-box-inner">
-              <span class="underlay-box-kicker">DISPATCHES</span>
-              <span class="underlay-box-title">Browse all posts</span>
-              <span class="underlay-box-arrow" aria-hidden="true">&rarr;</span>
-            </div>
-          </a>
+          </article>
         </div>
       </section>
       {% endif %}
