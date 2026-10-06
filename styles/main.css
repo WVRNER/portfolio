@@ -70,10 +70,10 @@ summary,
   --royal-indigo: #27187E;
 
   /* Borders & Shadows */
-  --border-sm: 1.5px solid #000000;
-  --border-md: 2px solid #000000;
-  --border-lg: 3px solid #000000;
-  --border-xl: 4px solid #000000;
+  --border-sm: 1.25px solid #000000;
+  --border-md: 1.5px solid #000000;
+  --border-lg: 2px solid #000000;
+  --border-xl: 2.5px solid #000000;
 
   --shadow-sm: 2px 2px 0px #000000;
   --shadow-md: 3.5px 3.5px 0px #000000;
@@ -594,7 +594,7 @@ button {
   );
   color: #12141A;
   padding: 5px 22px;
-  border: 3.5px solid #000000;
+  border: 2.5px solid #000000;
   border-radius: 8px;
   box-shadow:
     inset 0 0 0 2px rgba(255, 255, 255, 0.85),
@@ -965,7 +965,7 @@ button {
 .quad-card.card-actions {
   background: #F4F4F0 !important;
   color: #000000 !important;
-  border: 2px solid #000000 !important;
+  border: 1.5px solid #000000 !important;
   box-shadow: none !important;
 }
 
@@ -1560,7 +1560,7 @@ button {
 .foundations-tools-strip {
   background: #000000 !important;
   color: #FFFFFF !important;
-  border: 2.5px solid #000000 !important;
+  border: 1.75px solid #000000 !important;
   border-radius: 10px !important;
   padding: 14px 20px !important;
   margin-top: 16px !important;
@@ -1601,7 +1601,7 @@ button {
   font-weight: 700 !important;
   color: #FFFFFF !important;
   background: #18191E !important;
-  border: 1.5px solid #333338 !important;
+  border: 1.25px solid #333338 !important;
   border-radius: 6px !important;
   padding: 4px 11px !important;
   white-space: nowrap !important;
@@ -4992,7 +4992,7 @@ a[href*="#cv"].gum-btn:active {
   );
   color: #12141A;
   padding: 5px 22px;
-  border: 3.5px solid #000000;
+  border: 2.5px solid #000000;
   border-radius: 8px;
   transform: rotate(-1.5deg);
   box-shadow:
@@ -6828,9 +6828,9 @@ a[href*="#cv"].gum-btn:active {
 .rich-table-card {
   margin: 36px 0 40px;
   background: #FFFFFF;
-  border: 3px solid #000000;
+  border: 2px solid #000000;
   border-radius: 12px;
-  box-shadow: 6px 6px 0px #000000;
+  box-shadow: 4px 4px 0px #000000;
   overflow: hidden;
   box-sizing: border-box;
   transition: box-shadow 0.2s ease;
@@ -7159,8 +7159,8 @@ a[href*="#cv"].gum-btn:active {
 .arch-visual-window {
   margin: 36px 0 44px;
   background: #FFFFFF;
-  border: 3px solid #000000;
-  border-radius: 14px;
+  border: 2px solid #000000;
+  border-radius: 12px;
   box-shadow: 6px 6px 0px #000000;
   overflow: hidden;
   box-sizing: border-box;
@@ -7278,7 +7278,7 @@ a[href*="#cv"].gum-btn:active {
 
 .arch-tier-card {
   background: #FDFDFB;
-  border: 2px solid #000000;
+  border: 1.5px solid #000000;
   border-radius: 10px;
   padding: 18px 18px 16px;
   display: flex;
@@ -7920,7 +7920,7 @@ a[href*="#cv"].gum-btn:active {
 #systems-architecture .gum-infra-card .gum-btn-black {
   background: #FFFFFF !important;
   color: #000000 !important;
-  border: 2px solid #000000 !important;
+  border: 1.5px solid #000000 !important;
   box-shadow: none !important;
 }
 
@@ -8020,7 +8020,7 @@ a[href*="#cv"].gum-btn:active {
 .quad-card.card-actions {
   background: #F4F4F0 !important;
   color: #000000 !important;
-  border: 2px solid #000000 !important;
+  border: 1.5px solid #000000 !important;
   box-shadow: none !important;
 }
 
@@ -8105,7 +8105,7 @@ a[href*="#cv"].gum-btn:active {
 .clean-code-accordion {
   margin: 22px 0 28px;
   background: #FFFFFF;
-  border: 2px solid #000000;
+  border: 1.5px solid #000000;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 3px 3px 0px #000000;
