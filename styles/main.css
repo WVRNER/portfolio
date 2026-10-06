@@ -1140,18 +1140,18 @@ button {
 /* Chapter Tab Switcher Bar */
 .chapter-nav-bar {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   border-bottom: var(--border-md);
   background: var(--bg-canvas);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 960px) {
   .chapter-nav-bar {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .chapter-nav-bar {
     grid-template-columns: 1fr;
   }
@@ -1186,6 +1186,7 @@ button {
 .chapter-tab-btn.active:nth-child(2) { background: var(--gum-pink); }
 .chapter-tab-btn.active:nth-child(3) { background: var(--gum-green); }
 .chapter-tab-btn.active:nth-child(4) { background: var(--gum-blue); }
+.chapter-tab-btn.active:nth-child(5) { background: var(--gum-yellow); }
 
 .tab-num {
   font-family: var(--font-mono);
@@ -3777,8 +3778,9 @@ a[href*="#cv"].gum-btn:active {
     display: none;
   }
   .chapter-tab-btn {
-    flex: 1 0 25%;
-    padding: 9px 6px;
+    flex: 0 0 auto;
+    min-width: 110px;
+    padding: 9px 8px;
     gap: 2px;
     text-align: center;
     align-items: center;
