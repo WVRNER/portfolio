@@ -7979,3 +7979,89 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: 4px 4px 0px #FFFFFF !important;
   border-color: #FFFFFF !important;
 }
+
+
+/* Glyph in to whom it may concern */
+.hero-sub-glyph {
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1;
+  display: inline-block;
+  color: #000000;
+}
+
+/* System Card Logos */
+.system-logo-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.system-logo-wrap svg {
+  display: block;
+}
+
+/* All 5 System Cards in Packets before pixels: Same background as whole page (#F4F4F0) */
+#foundations .quad-card,
+.quad-card,
+.quad-card.card-yellow,
+.quad-card.card-pink,
+.quad-card.card-green,
+.quad-card.card-blue,
+.quad-card.card-coral,
+.quad-card.card-actions {
+  background: #F4F4F0 !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: none !important;
+}
+
+#foundations .quad-card *,
+.quad-card * {
+  color: #000000 !important;
+}
+
+#foundations .quad-card .quad-card-num,
+.quad-card .quad-card-num {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+#foundations .quad-card .quad-card-bullets,
+.quad-card .quad-card-bullets {
+  border-color: rgba(0, 0, 0, 0.18) !important;
+}
+
+[data-theme="dark"] #foundations .quad-card,
+[data-theme="dark"] .quad-card {
+  background: #141416 !important;
+  border-color: #333338 !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] #foundations .quad-card *,
+[data-theme="dark"] .quad-card * {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] #foundations .quad-card .quad-card-num,
+[data-theme="dark"] .quad-card .quad-card-num {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+}
+
+/* Have a project or want to connect (.tile-big): Remove pink, use background #F4F4F0, 1.5px outline, shadow on hover */
+.gallery-tile.tile-big,
+.tile-big {
+  background: var(--bg-canvas, #F4F4F0) !important;
+  border: 1.5px solid #000000 !important;
+  box-shadow: none !important;
+}
+
+.gallery-tile.tile-big:hover,
+.tile-big:hover {
+  box-shadow: 4px 4px 0px #000000 !important;
+  transform: translate(-2px, -2px) !important;
+}
