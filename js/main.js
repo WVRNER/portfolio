@@ -386,7 +386,8 @@ function initTopicPills() {
 function initLiveClocks() {
   const localEls = document.querySelectorAll('#footerLocalClock, #footerNycClock');
   const utcEls = document.querySelectorAll('#footerUtcClock');
-  if (!localEls.length && !utcEls.length) return;
+  const tehranEls = document.querySelectorAll('#footerTehranClock');
+  if (!localEls.length && !utcEls.length && !tehranEls.length) return;
 
   function update() {
     const now = new Date();
@@ -408,6 +409,26 @@ function initLiveClocks() {
 
     localEls.forEach(el => {
       el.textContent = timeStr;
+    });
+
+    let tehranTimeStr = '';
+    try {
+      tehranTimeStr = now.toLocaleTimeString('en-US', {
+        timeZone: 'Asia/Tehran',
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    } catch (e) {
+      const utcMinutesTotal = now.getUTCHours() * 60 + now.getUTCMinutes();
+      const tehranMinutesTotal = (utcMinutesTotal + 210) % 1440;
+      const thH = Math.floor(tehranMinutesTotal / 60);
+      const thM = tehranMinutesTotal % 60;
+      tehranTimeStr = `${pad(thH)}:${pad(thM)}:${pad(now.getUTCSeconds())}`;
+    }
+    tehranEls.forEach(el => {
+      el.textContent = tehranTimeStr;
     });
 
     const utcStr = `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())} UTC`;

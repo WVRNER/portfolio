@@ -75,13 +75,13 @@ summary,
   --border-lg: 3px solid #000000;
   --border-xl: 4px solid #000000;
 
-  --shadow-sm: 3px 3px 0px #000000;
-  --shadow-md: 5px 5px 0px #000000;
-  --shadow-lg: 8px 8px 0px #000000;
-  --shadow-xl: 12px 12px 0px #000000;
+  --shadow-sm: 2px 2px 0px #000000;
+  --shadow-md: 3.5px 3.5px 0px #000000;
+  --shadow-lg: 5px 5px 0px #000000;
+  --shadow-xl: 7px 7px 0px #000000;
 
-  --shadow-hover-sm: 5px 5px 0px #000000;
-  --shadow-hover-md: 8px 8px 0px #000000;
+  --shadow-hover-sm: 3.5px 3.5px 0px #000000;
+  --shadow-hover-md: 5px 5px 0px #000000;
   --shadow-active: 1px 1px 0px #000000;
 
   /* Radii */
@@ -7873,4 +7873,109 @@ a[href*="#cv"].gum-btn:active {
 
 [data-theme="dark"] .seq-content span {
   color: #AAAAAA;
+}
+
+
+/* ==========================================================================
+   USER-REQUESTED PRECISION ADJUSTMENTS
+   - Remove shadows on #systems-architecture (.gum-infra-card) and inside
+   - Switch fonts from white to black in #systems-architecture
+   - Remove all shadows & hover shadows in #foundations (Packets before pixels)
+   - Remove shadows in .foundations-tools-strip & .tools-strip-item
+   - Remove shadows on gallery tiles (Have a project / Let's discuss),
+     reduce outline to 1.5px, set inside background to match page background,
+     and show shadows only on hover.
+   ========================================================================== */
+
+/* 1. This website hosted on GitHub section: No shadows, black typography */
+#systems-architecture .gum-infra-card,
+.gum-infra-card {
+  box-shadow: none !important;
+}
+
+#systems-architecture .gum-infra-card *,
+.gum-infra-card * {
+  box-shadow: none !important;
+}
+
+#systems-architecture .gum-infra-card,
+#systems-architecture .gum-infra-card .infra-card-title,
+#systems-architecture .gum-infra-card .node-btn,
+#systems-architecture .gum-infra-card .node-btn.active,
+#systems-architecture .gum-infra-card .node-btn-title,
+#systems-architecture .gum-infra-card .node-btn-step,
+#systems-architecture .gum-infra-card .node-btn-desc,
+#systems-architecture .gum-infra-card .infra-badge,
+#systems-architecture .gum-infra-card #nodeStatusToast,
+#systems-architecture .gum-infra-card #nodeStatusToast * {
+  color: #000000 !important;
+}
+
+#systems-architecture .gum-infra-card .gum-btn-black {
+  background: #FFFFFF !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: none !important;
+}
+
+#systems-architecture .gum-infra-card .gum-btn-black:hover {
+  background: var(--gum-yellow, #FFC900) !important;
+  color: #000000 !important;
+}
+
+/* 2. Packets before pixels: Remove all shadows and hover shadows */
+#foundations,
+#foundations .gum-quad-grid,
+#foundations .gum-quad-grid:hover,
+#foundations .quad-card,
+#foundations .quad-card:hover,
+#foundations * {
+  box-shadow: none !important;
+}
+
+/* 3. Extended Tooling: Remove shadows */
+.foundations-tools-strip,
+.foundations-tools-strip:hover,
+.tools-strip-item,
+.tools-strip-item:hover {
+  box-shadow: none !important;
+}
+
+/* 4. Transmission Gallery Tiles:
+   "Have a project or want to connect?" (.tile-main)
+   "Let's discuss infrastructure design..." (.tile-subhead)
+   Inside color same as background, 1.5px outline, shadow ONLY on hover */
+.transmission-gallery-grid .gallery-tile.tile-main,
+.transmission-gallery-grid .gallery-tile.tile-subhead,
+.gallery-tile.tile-main,
+.gallery-tile.tile-subhead {
+  background: var(--bg-canvas, #F4F4F0) !important;
+  border: 1.5px solid #000000 !important;
+  box-shadow: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.transmission-gallery-grid .gallery-tile.tile-main:hover,
+.transmission-gallery-grid .gallery-tile.tile-subhead:hover,
+.gallery-tile.tile-main:hover,
+.gallery-tile.tile-subhead:hover {
+  box-shadow: 4px 4px 0px #000000 !important;
+  transform: translate(-2px, -2px) !important;
+}
+
+[data-theme="dark"] .transmission-gallery-grid .gallery-tile.tile-main,
+[data-theme="dark"] .transmission-gallery-grid .gallery-tile.tile-subhead,
+[data-theme="dark"] .gallery-tile.tile-main,
+[data-theme="dark"] .gallery-tile.tile-subhead {
+  background: var(--bg-canvas, #141416) !important;
+  border-color: #333338 !important;
+  box-shadow: none !important;
+}
+
+[data-theme="dark"] .transmission-gallery-grid .gallery-tile.tile-main:hover,
+[data-theme="dark"] .transmission-gallery-grid .gallery-tile.tile-subhead:hover,
+[data-theme="dark"] .gallery-tile.tile-main:hover,
+[data-theme="dark"] .gallery-tile.tile-subhead:hover {
+  box-shadow: 4px 4px 0px #FFFFFF !important;
+  border-color: #FFFFFF !important;
 }
