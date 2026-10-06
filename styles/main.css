@@ -6087,18 +6087,27 @@ a[href*="#cv"].gum-btn:active {
   border-top-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Table and Component Responsive Safeguards */
+/* Table and Component Responsive Safeguards — Pure CSS Responsive Table */
 .post-body-section table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 32px 0;
   display: block;
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  margin: 32px 0;
+  border-collapse: collapse;
   border: 2.5px solid #000000;
   box-shadow: 4px 4px 0px #000000;
   background: #FFFFFF;
   border-radius: 8px;
+}
+
+.post-body-section thead,
+.post-body-section tbody {
+  display: table;
+  width: 100%;
+  min-width: 540px;
+  border-collapse: collapse;
 }
 
 .post-body-section th,
@@ -6109,6 +6118,7 @@ a[href*="#cv"].gum-btn:active {
   vertical-align: top;
   line-height: 1.5;
   font-size: 14.5px;
+  color: var(--text-main, #000000);
 }
 
 .post-body-section th {
@@ -6136,9 +6146,15 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: 4px 4px 0px #FF90E8;
 }
 
+[data-theme="dark"] .post-body-section thead,
+[data-theme="dark"] .post-body-section tbody {
+  border-color: #333338;
+}
+
 [data-theme="dark"] .post-body-section th,
 [data-theme="dark"] .post-body-section td {
   border-color: #333338;
+  color: #F4F4F0;
 }
 
 [data-theme="dark"] .post-body-section th {

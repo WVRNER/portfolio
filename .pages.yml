@@ -1,5 +1,6 @@
 # ==============================================================================
 # WVRNER / NIMA — Pages CMS Configuration
+# Clean, Writing-First Authoring Experience (Apple Notes / Notion / Medium style)
 # ==============================================================================
 
 media:
@@ -28,7 +29,6 @@ media:
     - py
   rename: safe
 
-
 content:
   - name: posts
     label: Blog Posts
@@ -36,7 +36,7 @@ content:
     path: posts
     filename: "{fields.slug}.md"
 
-    description: "Create and manage articles for the WVRNER blog. Pages CMS saves each article as Markdown inside posts/. Eleventy then turns it into the final public article."
+    description: "Writing-first article editor for the WVRNER engineering blog. The top area is dedicated entirely to your content (Title, Subtitle, Cover Image, and the rich Article Content editor with visual tables). All secondary publishing settings, tags, and technical metadata are located below."
 
     view:
       fields:
@@ -60,65 +60,83 @@ content:
         - category
         - post_tags
 
-
     fields:
 
       # ========================================================================
-      # A. POST IDENTITY
+      # 1. PRIMARY WRITING WORKSPACE (Focus on Content)
       # ========================================================================
 
       - name: title
-        label: Post Title
+        label: Title
         type: string
         required: true
-        description: "Main headline of the article. EXAMPLE: Building a Zero-Drift AWS VPC with Terraform. READER SEES: This is the large article title and the title shown on the blog card."
-
-
-      - name: slug
-        label: URL Slug
-        type: string
-        required: true
-        pattern: "^[a-z0-9-]+$"
-        description: "Controls the Markdown filename and final article URL. EXAMPLE: terraform-zero-drift-vpc becomes /posts/terraform-zero-drift-vpc.html. READER SEES: This appears in the browser URL. Avoid changing it after publishing because old links can break."
-
+        description: "The main headline of your article. Keep it bold, clear, and descriptive."
 
       - name: subtitle
         label: Subtitle / Hook
         type: string
         required: true
-        description: "Short sentence directly supporting the title. EXAMPLE: How I replaced click-ops with a reproducible AWS network. READER SEES: Usually shown below the main title on the article."
+        description: "A short, engaging thesis statement or subtitle directly supporting the headline."
 
+      - name: cover_image
+        label: Cover Image
+        type: image
+        description: "Primary visual for the article (architecture schematic, screenshot, or banner)."
+        options:
+          path: images/posts
+          extensions:
+            - png
+            - jpg
+            - jpeg
+            - webp
+            - svg
+          rename: safe
+
+      - name: body
+        label: Article Content
+        type: rich-text
+        required: true
+        description: "Your main writing space. Type '/' for Notion-style slash commands (insert interactive tables, headings, code blocks, callouts, lists, and images). Use the Editor / Source toggle in the top-right corner to switch between visual WYSIWYG and raw Markdown."
+        options:
+          format: markdown
+          switcher: true
+          path: images/posts
+          extensions:
+            - png
+            - jpg
+            - jpeg
+            - webp
+            - svg
+            - gif
+          rename: safe
+
+
+      # ========================================================================
+      # 2. ADVANCED SETTINGS — PUBLISHING & TAXONOMY
+      # ========================================================================
 
       - name: excerpt
-        label: Blog Feed Teaser
+        label: "⚙️ Publishing — Feed Teaser (Excerpt)"
         type: text
         required: true
         options:
           minlength: 20
           maxlength: 300
-        description: "Short summary used to advertise the article. EXAMPLE: I rebuilt my lab VPC in Terraform and deliberately introduced drift to test detection. READER SEES: This is normally the description on the /blog/ article card."
-
-
-      - name: author
-        label: Author
-        type: string
-        default: "Nima Hosseini"
-        description: "Stores who wrote the article. EXAMPLE: Nima Hosseini. READER SEES: Only appears publicly if the article template displays the author."
-
+        description: "Short 1-2 sentence preview displayed on the /blog/ index card."
 
       - name: category
-        label: Category
+        label: "⚙️ Publishing — Primary Category"
         type: select
         required: true
-        description: "Gives the article one main topic/category. EXAMPLE: Enterprise Networking for a CCNA lab article. READER SEES: Usually displayed as the category badge on the blog card and article."
-
+        default: "DEVOPS & INFRASTRUCTURE"
+        description: "The primary technical category badge for this post."
         options:
           values:
-            - value: "CERTIFICATION & LAB LOG"
-              label: "Certification & Lab Log"
-
             - value: "DEVOPS & INFRASTRUCTURE"
               label: "DevOps & Infrastructure"
+
+            - value: "CERTIFICATION & LAB LOG"
+              label: "Certification & Lab Log"
 
             - value: "CLOUD ARCHITECTURE & AWS"
               label: "Cloud Architecture & AWS"
@@ -150,85 +168,15 @@ content:
             - value: "CAREER & LEARNING"
               label: "Career & Learning"
 
-
-      # ========================================================================
-      # B. DATE & READING INFORMATION
-      # ========================================================================
-
-      - name: date
-        label: Publication Date
-        type: date
-        required: true
-        default: now
-        description: "Controls when the article was published and is used to sort the blog newest-first. EXAMPLE: October 5, 2026. READER SEES: May be displayed as the article date."
-
-
-      - name: display_date
-        label: Display Date
-        type: string
-        required: true
-        description: "Human-friendly version of the date. EXAMPLE: October 2026. READER SEES: This is the formatted date displayed by your current article design."
-
-
-      - name: updated
-        label: Last Updated
-        type: date
-        description: "Records when an older article was significantly revised. EXAMPLE: Update a Terraform article six months later and set today's date. READER SEES: Nothing unless post.njk is configured to show something such as 'Updated October 2026'."
-
-
-      - name: read_time
-        label: Reading Time
-        type: string
-        required: true
-        description: "Tells visitors roughly how long the article takes to read. EXAMPLE: 6 min read or 15 min deep dive. READER SEES: Displayed beside the article metadata if your template renders it."
-
-
-      # ========================================================================
-      # C. COVER IMAGE
-      # ========================================================================
-
-      - name: cover_image
-        label: Cover Image
-        type: image
-        description: "Main image representing the article. EXAMPLE: Network topology, terminal screenshot, architecture diagram, certificate, or project screenshot. READER SEES: Can appear at the top of the article and/or on the blog card."
-        options:
-          path: images/posts
-          extensions:
-            - png
-            - jpg
-            - jpeg
-            - webp
-            - svg
-          rename: safe
-
-
-      - name: cover_image_alt
-        label: Cover Image Alt Text
-        type: string
-        description: "Describes the image for accessibility and screen readers. EXAMPLE: Diagram showing two VLANs connected through a router-on-a-stick topology. READER SEES: Normally invisible unless the image cannot load or they use assistive technology."
-
-
-      - name: cover_image_caption
-        label: Cover Image Caption / Credit
-        type: string
-        description: "Adds context or attribution below the image. EXAMPLE: Network architecture drawn in draw.io. READER SEES: Only appears if the article template renders image captions."
-
-
-      # ========================================================================
-      # D. TOPIC TAGS
-      # ========================================================================
-
       - name: post_tags
-        label: Topic Tags
+        label: "⚙️ Publishing — Topic Tags"
         type: select
         required: true
-        description: "Adds multiple specific technologies/topics to the article. EXAMPLE: #Docker, #Linux, #Networking. READER SEES: These can appear as colored topic chips/tags below the article or on its card."
-
+        description: "Select 1 to 12 technology tags rendered as colored chips."
         options:
           multiple: true
           min: 1
           max: 12
-
           values:
             - "#DevOps"
             - "#IBMCloud"
@@ -264,86 +212,105 @@ content:
             - "#Neubrutalism"
             - "#CareerNotes"
 
+      - name: published
+        label: "⚙️ Publishing — Published Status"
+        type: boolean
+        default: false
+        description: "Toggle ON when ready to publish publicly. Defaults to OFF (draft) for new articles."
 
-      # ========================================================================
-      # E. SERIES
-      # ========================================================================
+      - name: featured
+        label: "⚙️ Publishing — Featured Article"
+        type: boolean
+        default: false
+        description: "Highlight this article at the top of the blog feed and on the homepage showcase."
 
-      - name: series
-        label: Article Series
-        type: object
-        description: "Groups related articles into a multi-part series. EXAMPLE: Series Name = Building My Home Lab, Part Number = 2. READER SEES: Could show something like 'Building My Home Lab — Part 2'. IMPORTANT: This information is saved now, but nothing appears publicly until post.njk is configured to display series information."
+      - name: date
+        label: "⚙️ Publishing — Publication Date"
+        type: date
+        required: true
+        default: now
+        description: "Chronological sort date (automatically defaults to current timestamp)."
 
-        fields:
-          - name: name
-            label: Series Name
-            type: string
-            description: "EXAMPLE: Building My Home Lab, Kubernetes From Scratch, CCNA Lab Series."
+      - name: display_date
+        label: "⚙️ Publishing — Display Date"
+        type: string
+        required: true
+        description: "Human-friendly date string displayed to readers (e.g., October 2026). Enter the date when publishing."
 
-          - name: part
-            label: Part Number
-            type: number
-            description: "EXAMPLE: Set this to 1 for the first article, 2 for the second, etc."
+      - name: read_time
+        label: "⚙️ Publishing — Read Time"
+        type: string
+        required: true
+        description: "Estimated reading time (e.g., 6 min read or 12 min deep dive). Enter your estimate when publishing."
 
-
-      # ========================================================================
-      # F. RELATED POSTS
-      # ========================================================================
-
-      - name: related_posts
-        label: Related Posts
-        type: reference
-        description: "Lets you manually connect this article to other articles. EXAMPLE: A Docker networking article can link to your Linux namespaces article. READER SEES: Could become a 'Related Articles' section at the bottom. IMPORTANT: post.njk must render this before visitors can see it."
-
-        options:
-          collection: posts
-          multiple: true
-          search: title
-          value: "{fields.slug}"
-          label: "{fields.title}"
+      - name: updated
+        label: "⚙️ Publishing — Last Revised Date"
+        type: date
+        description: "Optional revision date when updating an older technical article."
 
 
       # ========================================================================
-      # G. TABLE OF CONTENTS
+      # 3. ADVANCED SETTINGS — URL & IDENTITY
+      # ========================================================================
+
+      - name: slug
+        label: "⚙️ URL & Identity — Filename Slug"
+        type: string
+        required: true
+        pattern: "^[a-z0-9-]+$"
+        description: "URL slug that names the markdown file and sets the /posts/<slug>.html path."
+
+
+      # ========================================================================
+      # 4. ADVANCED SETTINGS — COVER IMAGE METADATA
+      # ========================================================================
+
+      - name: cover_image_alt
+        label: "⚙️ Cover Image — Alt Text"
+        type: string
+        description: "Accessibility text describing the cover image for screen readers."
+
+      - name: cover_image_caption
+        label: "⚙️ Cover Image — Caption / Credit"
+        type: string
+        description: "Optional caption, diagram title, or photographer credit below the cover image."
+
+
+      # ========================================================================
+      # 5. ADVANCED SETTINGS — ARTICLE FEATURES
       # ========================================================================
 
       - name: toc
-        label: Show Table of Contents
+        label: "⚙️ Features — Table of Contents"
         type: boolean
         default: false
-        description: "Marks a long article as needing a contents menu based on headings. EXAMPLE: Introduction → Network Design → VLAN Configuration → Routing → Testing → Conclusion. READER SEES: Ideally a clickable Table of Contents near the top of the article. IMPORTANT: This toggle only saves true/false right now. post.njk must implement the actual table of contents before anything appears."
-
-
-      # ========================================================================
-      # H. HIGHLIGHTED CALLOUT BOX
-      # ========================================================================
+        description: "Enable automated table of contents navigation based on article headings."
 
       - name: callout_box
-        label: Highlighted Callout Box
+        label: "⚙️ Features — Highlighted Callout Box"
         type: object
-        description: "Creates a visually important box for something worth highlighting. EXAMPLE: certification details, architecture note, warning, key lesson, or project summary. READER SEES: Only appears if enabled and post.njk renders the callout box."
-
+        description: "Visually distinct highlighted box for important notes, warnings, or certification summaries."
         fields:
           - name: enable
             label: Show Callout Box
             type: boolean
             default: false
-            description: "Turn this ON when you want the box included in the article."
+            description: "Turn ON to display the callout box."
 
           - name: tag_label
-            label: Small Label
+            label: Small Tag Label
             type: string
-            description: "EXAMPLE: // Architecture Note, // Certification, // Warning, // Key Lesson."
+            description: "EXAMPLE: // Architecture Note, // Certification, // Warning."
 
           - name: title
             label: Box Title
             type: string
-            description: "EXAMPLE: IBM DevOps and Software Engineering Professional Certificate."
+            description: "Headline for the callout box."
 
           - name: content
-            label: Box Text
+            label: Box Content
             type: text
-            description: "EXAMPLE: Explain the important point, program, warning, or architecture decision in 2-4 sentences."
+            description: "Callout explanation in 2-4 sentences."
 
           - name: link_text
             label: Link Text
@@ -353,83 +320,73 @@ content:
           - name: link_url
             label: Link URL
             type: string
-            description: "EXAMPLE: Full external destination starting with https://"
+            description: "Destination URL starting with https://"
 
+      - name: series
+        label: "⚙️ Features — Multi-Part Series"
+        type: object
+        description: "Connect this article into a multi-part editorial series."
+        fields:
+          - name: name
+            label: Series Name
+            type: string
+            description: "EXAMPLE: Building My Home Lab, Kubernetes From Scratch."
 
-      # ========================================================================
-      # I. ARTICLE CONTENT
-      # ========================================================================
+          - name: part
+            label: Part Number
+            type: number
+            description: "EXAMPLE: 1 for Part 1, 2 for Part 2."
 
-      - name: body
-        label: Article Content
-        type: rich-text
-        required: true
-        description: "This is the actual article. Write paragraphs, headings, lists, images, code blocks, explanations, commands, etc. EXAMPLE: Your full Docker, networking, Linux, AWS, DevOps, or lab write-up. READER SEES: This is the main content of the public article."
-
+      - name: related_posts
+        label: "⚙️ Features — Related Posts"
+        type: reference
+        description: "Manually cross-link other technical posts from the blog."
         options:
-          format: markdown
-          path: images/posts
-          extensions:
-            - png
-            - jpg
-            - jpeg
-            - webp
-            - svg
-            - gif
-          rename: safe
-
-      # ========================================================================
-      # J. CONFIG / CODE SNIPPETS
-      # ========================================================================
+          collection: posts
+          multiple: true
+          search: title
+          value: "{fields.slug}"
+          label: "{fields.title}"
 
       - name: code_snippets
-        label: Config / Code Snippets
+        label: "⚙️ Features — Config / Code Snippets"
         type: object
-        description: "Stores complete code or configuration examples separately from the article body. EXAMPLE: main.tf, Dockerfile, deployment.yaml, install.sh. READER SEES: Nothing until _includes/post.njk is configured to render these snippets."
         list: true
-
+        description: "Complete configuration files (main.tf, Dockerfile, etc.) stored alongside the post."
         fields:
           - name: file_name
             label: File Name
             type: string
-            description: "EXAMPLE: main.tf, Dockerfile, deployment.yaml, install.sh."
+            description: "EXAMPLE: main.tf, Dockerfile, deploy.yml."
 
           - name: language
             label: Language / Format
             type: string
-            description: "EXAMPLE: Terraform / HCL, Bash, YAML, Python, Dockerfile."
+            description: "EXAMPLE: Terraform, Dockerfile, YAML, Bash, Python."
 
           - name: code
             label: Code
             type: text
-            description: "Paste the complete code or configuration here."
-
-
-      # ========================================================================
-      # K. DOWNLOADABLE FILES
-      # ========================================================================
+            description: "Paste complete configuration or code here."
 
       - name: downloads
-        label: Downloadable Files
+        label: "⚙️ Features — Downloadable Files"
         type: object
-        description: "Adds files visitors can download. EXAMPLE: lab ZIP, Terraform module, PDF certificate, YAML configuration, Bash script. READER SEES: Could appear as Download buttons/cards at the bottom of the article."
-
+        description: "Downloadable attachments (lab ZIPs, scripts, certificates)."
         list:
           collapsible:
             collapsed: true
             summary: "{label}"
-
         fields:
           - name: label
             label: Display Name
             type: string
-            description: "EXAMPLE: Download Terraform VPC Lab."
+            description: "EXAMPLE: Download Terraform Lab ZIP."
 
           - name: file
             label: File
             type: file
-            description: "Select or upload the actual file visitors should receive."
-
+            description: "Upload or select file for download."
             options:
               path: images/downloads
               extensions:
@@ -446,106 +403,51 @@ content:
           - name: description
             label: Short Description
             type: string
-            description: "EXAMPLE: Full Terraform configuration used in this lab."
-
-
-      # ========================================================================
-      # L. REFERENCES & LINKS
-      # ========================================================================
+            description: "Brief note describing the download."
 
       - name: external_links
-        label: References & Links
+        label: "⚙️ Features — References & External Links"
         type: object
-        description: "Stores external resources used by or related to the article. EXAMPLE: GitHub repository, Cisco documentation, Terraform docs, AWS docs, Coursera certificate. READER SEES: Could appear in a References / Resources section at the bottom."
-
+        description: "External reference documentation and source links."
         list:
           collapsible:
             collapsed: true
             summary: "{text}"
-
         fields:
           - name: text
             label: Link Text
             type: string
-            description: "EXAMPLE: Terraform AWS Provider Documentation."
+            description: "EXAMPLE: Terraform AWS Provider Docs."
 
           - name: url
             label: URL
             type: string
-            description: "Paste the full destination URL."
+            description: "Full destination URL."
 
           - name: open_in_new_tab
             label: Open in New Tab
             type: boolean
             default: true
-            description: "ON means visitors stay on your site while the external resource opens in another browser tab."
 
 
       # ========================================================================
-      # M. SEO & SOCIAL SHARING
-      # ========================================================================
-
-      - name: seo
-        label: SEO & Social Cards
-        type: object
-        description: "Controls how search engines and social platforms understand the article. EXAMPLE: Custom Google description or custom image when the article is shared. READER SEES: Usually invisible on the article itself; search engines, browsers and social apps use this metadata."
-
-        fields:
-          - name: meta_title
-            label: SEO Title
-            type: string
-            description: "Optional title specifically for search engines/browser metadata. EXAMPLE: Building an AWS VPC with Terraform | WVRNER. Usually keep it below roughly 60 characters."
-
-          - name: meta_description
-            label: Meta Description
-            type: text
-            description: "Search-engine summary. EXAMPLE: Learn how I built a reproducible AWS VPC using Terraform and tested infrastructure drift. Aim for around 150-160 characters."
-
-          - name: og_image
-            label: Social Share Image
-            type: image
-            description: "Image used when someone shares the article on social platforms/chat apps. Recommended size: 1200x630."
-
-            options:
-              path: images/posts
-              extensions:
-                - png
-                - jpg
-                - webp
-              rename: safe
-
-          - name: canonical_url
-            label: Canonical URL
-            type: string
-            description: "Tells search engines the original source if this article was first published somewhere else. EXAMPLE: If originally published on Medium, put that original URL here. Normally leave this blank for articles originally published on wvrner.com."
-
-          - name: no_index
-            label: Hide From Search Engines
-            type: boolean
-            default: false
-            description: "Requests that search engines do not index this article. EXAMPLE: Use for a temporary/private-ish public test article. Normally leave OFF."
-
-
-
-      # ========================================================================
-      # N. TECHNICAL / PROJECT DETAILS
+      # 6. ADVANCED SETTINGS — TECHNICAL & LAB DETAILS
       # ========================================================================
 
       - name: difficulty
-        label: Difficulty Level
+        label: "⚙️ Lab Details — Difficulty Level"
         type: select
-        description: "How advanced is this article? EXAMPLE: Beginner for a basic Docker tutorial, Advanced for a production Kubernetes architecture. READER SEES: Nothing yet until post.njk is configured to display it."
+        description: "Target audience complexity level."
         options:
           values:
             - "Beginner"
             - "Intermediate"
             - "Advanced"
 
-
       - name: project_status
-        label: Lab / Project Status
+        label: "⚙️ Lab Details — Project Status"
         type: select
-        description: "Current state of the project or lab. EXAMPLE: Completed after you successfully finish and verify the lab. READER SEES: Nothing yet until post.njk renders it."
+        description: "Current development or deployment stage."
         options:
           values:
             - "Planned"
@@ -553,11 +455,10 @@ content:
             - "Completed"
             - "Archived"
 
-
       - name: technologies
-        label: Technologies Used
+        label: "⚙️ Lab Details — Technologies Used"
         type: select
-        description: "Select the main technologies actually used in this project/article. EXAMPLE: Linux + Docker + Terraform + AWS. READER SEES: Nothing yet until post.njk renders these as technology badges."
+        description: "Specific technology stack components demonstrated."
         options:
           multiple: true
           values:
@@ -583,64 +484,93 @@ content:
             - "Prometheus"
             - "Grafana"
 
-
       - name: repository_url
-        label: GitHub Repository
+        label: "⚙️ Lab Details — GitHub Repository"
         type: string
-        description: "Link to the source code or lab repository. EXAMPLE: your GitHub repository for the Terraform project. Leave blank if the article has no repository. READER SEES: Nothing yet until post.njk adds a repository button."
-
+        description: "Direct link to the public GitHub repository or lab source code."
 
       - name: live_demo_url
-        label: Live Demo URL
+        label: "⚙️ Lab Details — Live Demo URL"
         type: string
-        description: "Optional link to a working deployment or demo. EXAMPLE: the live website created in the article. Leave blank for projects that have no live demo."
-
+        description: "Direct link to live running deployment if available."
 
       - name: prerequisites
-        label: Prerequisites
+        label: "⚙️ Lab Details — Prerequisites"
         type: text
-        description: "What should someone have or know before following this article? EXAMPLE: Ubuntu VM, Docker installed, basic Linux commands, AWS account. READER SEES: Nothing yet until post.njk renders a Prerequisites section."
-
+        description: "Tools, accounts, or knowledge needed before starting."
 
       - name: environment
-        label: Environment / Tested On
+        label: "⚙️ Lab Details — Tested Environment"
         type: text
-        description: "Record the environment where you actually tested the work. EXAMPLE: Ubuntu Server 24.04 ARM64, Docker 29, UTM on Apple Silicon. This is useful later when software versions change."
-
+        description: "Host OS, hardware architecture, kernel, and software versions used."
 
       - name: key_takeaways
-        label: Key Takeaways
+        label: "⚙️ Lab Details — Key Takeaways"
         type: text
-        description: "Short summary of the most important things learned or demonstrated. EXAMPLE: Containers use namespaces for isolation; bridge networks provide container-to-container communication. READER SEES: Nothing yet until post.njk renders a Key Takeaways section."
-
+        description: "Key architectural lessons and operational outcomes."
 
       - name: credential_url
-        label: Certificate / Credential URL
+        label: "⚙️ Lab Details — Certificate / Credential URL"
         type: string
-        description: "Optional verification link for certification posts. EXAMPLE: your official Coursera, Credly, Cisco, IBM, or other credential verification page. Leave blank for normal articles."
+        description: "Verification link for certifications (Credly, Coursera, Cisco, IBM)."
 
 
       # ========================================================================
-      # O. PUBLISHING CONTROLS
+      # 7. ADVANCED SETTINGS — SEO & SOCIAL SHARING
       # ========================================================================
 
-      - name: published
-        label: Published
-        type: boolean
-        default: true
-        description: "Controls whether Eleventy includes the article in your public blog collection. ON = public article. OFF = draft. READER SEES: OFF articles should not appear on the blog because .eleventy.js filters published: false."
+      - name: seo
+        label: "⚙️ SEO & Social Sharing"
+        type: object
+        description: "Custom search engine tags and social media card previews."
+        fields:
+          - name: meta_title
+            label: SEO Title
+            type: string
+            description: "Custom title tag for search engines (defaults to article title if blank)."
+
+          - name: meta_description
+            label: Meta Description
+            type: text
+            description: "Custom search snippet (150-160 characters recommended)."
+
+          - name: og_image
+            label: Social Share Image (OpenGraph)
+            type: image
+            description: "Preview image when sharing on LinkedIn, Telegram, Twitter, etc."
+            options:
+              path: images/posts
+              extensions:
+                - png
+                - jpg
+                - webp
+              rename: safe
+
+          - name: canonical_url
+            label: Canonical URL
+            type: string
+            description: "Original URL if cross-posted from another platform."
+
+          - name: no_index
+            label: Hide From Search Engines
+            type: boolean
+            default: false
+            description: "Check this to prevent search engines from indexing this post."
 
 
-      - name: featured
-        label: Featured Post
-        type: boolean
-        default: false
-        description: "Marks an article as especially important. EXAMPLE: Your best infrastructure project or certification write-up. READER SEES: Featured articles appear at the top of the blog feed with a bold ★ FEATURED badge and receive a ★ FEATURED TECHNICAL WRITE-UP banner in the article header."
+      # ========================================================================
+      # 8. SYSTEM & ARCHITECTURE (AUTOMATED DEFAULTS)
+      # ========================================================================
 
+      - name: author
+        label: "Author"
+        type: string
+        default: "Nima Hosseini"
+        description: "Default author attribution."
 
       - name: layout
-        label: Layout Template
+        label: "Layout Template"
         type: string
-        default: post.njk
+        default: "post.njk"
         hidden: true
-        description: "INTERNAL: Tells Eleventy which template should render the post. Normally do not change this."
+        description: "Internal Eleventy layout binding (hidden from author)."
