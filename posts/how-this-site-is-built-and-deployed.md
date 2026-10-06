@@ -315,14 +315,20 @@ Eleventy serves as the build engine. It transforms raw Markdown files and Nunjuc
   </div>
 </div>
 
-### Eleventy Configuration File
+### Eleventy Configuration & Directory Defaults
 
-The site is configured via `.eleventy.js`:
+The build process is governed by two essential declarative files: `.eleventy.js` (asset passthrough copies & post collection sorting) and `posts/posts.json` (dynamic permalinks & layout defaults).
 
-**// .eleventy.js**
-
-```javascript
-module.exports = function (eleventyConfig) {
+<details class="clean-code-accordion">
+  <summary class="clean-code-summary">
+    <div class="summary-left">
+      <span class="file-name">.eleventy.js</span>
+      <span class="file-badge">Configuration</span>
+    </div>
+    <span class="summary-toggle">View full source &darr;</span>
+  </summary>
+  <div class="clean-code-body">
+    <pre><code class="language-javascript">module.exports = function (eleventyConfig) {
   // Passthrough copy for static assets (zero processing, direct copy)
   eleventyConfig.addPassthroughCopy("styles");
   eleventyConfig.addPassthroughCopy("js");
@@ -350,22 +356,26 @@ module.exports = function (eleventyConfig) {
       includes: "_includes",
     },
   };
-};
-```
+};</code></pre>
+  </div>
+</details>
 
-### Post Directory Defaults (`posts/posts.json`)
-
-To avoid repeating configuration across every article, Eleventy reads `posts/posts.json` to assign layout and tags automatically:
-
-**// posts/posts.json**
-
-```json
-{
+<details class="clean-code-accordion">
+  <summary class="clean-code-summary">
+    <div class="summary-left">
+      <span class="file-name">posts/posts.json</span>
+      <span class="file-badge">Directory Defaults</span>
+    </div>
+    <span class="summary-toggle">View schema &darr;</span>
+  </summary>
+  <div class="clean-code-body">
+    <pre><code class="language-json">{
   "layout": "post.njk",
   "tags": ["posts"],
   "permalink": "/posts/{{ page.fileSlug }}.html"
-}
-```
+}</code></pre>
+  </div>
+</details>
 
 ---
 
@@ -375,10 +385,16 @@ While developers are comfortable writing in VS Code and running git commands in 
 
 Pages CMS operates as an open-source, client-side, headless CMS. It authenticates via GitHub OAuth and writes commits directly into the repository via the GitHub REST API.
 
-**// .pages.yml (SCHEMA SPECIFICATION)**
-
-```yaml
-media:
+<details class="clean-code-accordion">
+  <summary class="clean-code-summary">
+    <div class="summary-left">
+      <span class="file-name">.pages.yml</span>
+      <span class="file-badge">Pages CMS Schema</span>
+    </div>
+    <span class="summary-toggle">View YAML specification &darr;</span>
+  </summary>
+  <div class="clean-code-body">
+    <pre><code class="language-yaml">media:
   input: images
   output: /images
   categories: [image, document, compressed, code]
@@ -440,8 +456,9 @@ content:
         default: true
       - name: body
         label: Article Content
-        type: rich-text
-```
+        type: rich-text</code></pre>
+  </div>
+</details>
 
 ---
 
@@ -449,17 +466,24 @@ content:
 
 In `blog.njk`, pagination is evaluated statically at build time using Eleventy's collection engine:
 
-**// blog.njk (BUILD-TIME PAGINATION HEADER)**
-
-```html
----
+<details class="clean-code-accordion">
+  <summary class="clean-code-summary">
+    <div class="summary-left">
+      <span class="file-name">blog.njk</span>
+      <span class="file-badge">Pagination Header</span>
+    </div>
+    <span class="summary-toggle">View front matter &darr;</span>
+  </summary>
+  <div class="clean-code-body">
+    <pre><code class="language-html">---
 pagination:
   data: collections.posts
   size: 5
   alias: posts
 permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1 }}/{% endif %}index.html"
----
-```
+---</code></pre>
+  </div>
+</details>
 
 ### Generated Route Topology
 
@@ -523,10 +547,16 @@ Manual deployments lead to human error, missed asset bundles, and configuration 
 
 ### Complete CI/CD Workflow Specification
 
-**// .github/workflows/deploy.yml**
-
-```yaml
-name: Deploy Eleventy to GitHub Pages
+<details class="clean-code-accordion">
+  <summary class="clean-code-summary">
+    <div class="summary-left">
+      <span class="file-name">.github/workflows/deploy.yml</span>
+      <span class="file-badge">GitHub Actions CI/CD</span>
+    </div>
+    <span class="summary-toggle">View full pipeline source &darr;</span>
+  </summary>
+  <div class="clean-code-body">
+    <pre><code class="language-yaml">name: Deploy Eleventy to GitHub Pages
 
 on:
   push:
@@ -572,8 +602,9 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
-```
+        uses: actions/deploy-pages@v4</code></pre>
+  </div>
+</details>
 
 ---
 

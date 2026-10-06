@@ -8065,3 +8065,141 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: 4px 4px 0px #000000 !important;
   transform: translate(-2px, -2px) !important;
 }
+
+
+/* Exact Title and Logo Spacing */
+.quad-card-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  flex-wrap: wrap !important;
+}
+
+.system-logo-wrap {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  margin-right: 6px !important;
+}
+
+/* This website. Hosted on GitHub... filled with #F4F4F0 */
+#systems-architecture .gum-infra-card,
+.gum-infra-card {
+  background: #F4F4F0 !important;
+  box-shadow: none !important;
+}
+
+[data-theme="dark"] #systems-architecture .gum-infra-card,
+[data-theme="dark"] .gum-infra-card {
+  background: #141416 !important;
+}
+
+/* Clean Collapsible Code Disclosure Accordion */
+.clean-code-accordion {
+  margin: 22px 0 28px;
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 3px 3px 0px #000000;
+}
+
+[data-theme="dark"] .clean-code-accordion {
+  background: #161820;
+  border-color: #333338;
+  box-shadow: 3px 3px 0px rgba(255, 255, 255, 0.08);
+}
+
+.clean-code-summary {
+  padding: 12px 18px;
+  background: #F4F4F0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  font-family: var(--font-mono, monospace);
+  user-select: none;
+  transition: background 0.15s ease;
+}
+
+.clean-code-summary::-webkit-details-marker {
+  display: none;
+}
+
+.clean-code-summary:hover {
+  background: #FFF9E6;
+}
+
+[data-theme="dark"] .clean-code-summary {
+  background: #1E2028;
+}
+
+[data-theme="dark"] .clean-code-summary:hover {
+  background: #252834;
+}
+
+.clean-code-summary .summary-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.clean-code-summary .file-name {
+  font-weight: 800;
+  font-size: 13.5px;
+  color: #000000;
+}
+
+[data-theme="dark"] .clean-code-summary .file-name {
+  color: #FFFFFF;
+}
+
+.clean-code-summary .file-badge {
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  background: #000000;
+  color: var(--gum-yellow, #FFC900);
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+
+[data-theme="dark"] .clean-code-summary .file-badge {
+  background: var(--gum-yellow, #FFC900);
+  color: #000000;
+}
+
+.clean-code-summary .summary-toggle {
+  font-size: 12px;
+  font-weight: 700;
+  color: #555555;
+  transition: transform 0.2s ease;
+}
+
+[data-theme="dark"] .clean-code-summary .summary-toggle {
+  color: #AAAAAA;
+}
+
+.clean-code-accordion[open] .clean-code-summary {
+  border-bottom: 2px solid #000000;
+}
+
+[data-theme="dark"] .clean-code-accordion[open] .clean-code-summary {
+  border-bottom-color: #333338;
+}
+
+.clean-code-body {
+  padding: 0;
+  background: #0D1117;
+}
+
+.clean-code-body pre {
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  max-height: 420px;
+  overflow-y: auto;
+}
