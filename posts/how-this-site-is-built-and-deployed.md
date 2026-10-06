@@ -61,48 +61,102 @@ For this website, I established seven foundational technical requirements:
 
 The site operates across four distinct operational tiers: Local Development, Version Control, Continuous Integration/Continuous Deployment (CI/CD), and Edge Static Hosting.
 
-**// DIAGRAM 01: 4-TIER ARCHITECTURE OVERVIEW**
+<div class="arch-visual-window">
+  <div class="arch-window-bar">
+    <div class="arch-window-dots">
+      <span class="dot-red"></span>
+      <span class="dot-yellow"></span>
+      <span class="dot-green"></span>
+    </div>
+    <span class="arch-window-title">// DIAGRAM 01: 4-TIER ARCHITECTURE TOPOLOGY</span>
+    <span class="arch-status-pill"><span class="pulse-dot-green"></span>PRODUCTION SYSTEM</span>
+  </div>
+  <div class="arch-window-body">
+    <div class="arch-tier-grid">
+      <!-- Tier 1 -->
+      <div class="arch-tier-card">
+        <div class="tier-card-header">
+          <span class="tier-badge">TIER 01 &bull; AUTHORING &amp; DEV</span>
+          <span class="tier-icon">💻</span>
+        </div>
+        <h4 class="tier-title">Local Developer Machine</h4>
+        <p class="tier-desc">Isolated local authoring environment. Zero direct production access or manual FTP uploads.</p>
+        <div class="tier-tools-list">
+          <span class="tier-tool-chip">VS Code</span>
+          <span class="tier-tool-chip">Node.js 22</span>
+          <span class="tier-tool-chip">11ty Dev Server</span>
+          <span class="tier-tool-chip">Atomic Commits</span>
+        </div>
+        <div class="tier-flow-action">
+          <span>git push origin main</span>
+          <span class="flow-arrow">&rarr;</span>
+        </div>
+      </div>
 
-```text
-+---------------------------------------------------------------------------------------------------+
-|                                  SYSTEM ARCHITECTURE TOPOLOGY                                     |
-+---------------------------------------------------------------------------------------------------+
+      <!-- Tier 2 -->
+      <div class="arch-tier-card">
+        <div class="tier-card-header">
+          <span class="tier-badge">TIER 02 &bull; SOURCE OF TRUTH</span>
+          <span class="tier-icon">🐙</span>
+        </div>
+        <h4 class="tier-title">GitHub Git Repository</h4>
+        <p class="tier-desc">Immutable distributed version control tracking 100% of website state and configuration.</p>
+        <div class="tier-tools-list">
+          <span class="tier-tool-chip">Protected main</span>
+          <span class="tier-tool-chip">.pages.yml CMS</span>
+          <span class="tier-tool-chip">Audit Trail</span>
+          <span class="tier-tool-chip">GitOps</span>
+        </div>
+        <div class="tier-flow-action">
+          <span>Webhook trigger on push</span>
+          <span class="flow-arrow">&rarr;</span>
+        </div>
+      </div>
 
- [ TIER 1: AUTHORING & DEV ]             [ TIER 2: SOURCE OF TRUTH ]
- +--------------------------+            +----------------------------------+
- | Local Developer Machine  |            | GitHub Git Repository            |
- | - VS Code / Terminal     |            | (github.com/WVRNER/portfolio)    |
- | - Node.js 22 & npm       |            |                                  |
- | - Eleventy Dev Server    |            | - Protected 'main' branch        |
- | - Local Git Commits      |            | - Complete commit history        |
- +------------+-------------+            | - .pages.yml content schema      |
-              |                          +-----------------+----------------+
-              | git push origin main                       |
-              +------------------------------------------->| Webhook trigger on push
-                                                           v
- [ TIER 4: GLOBAL HOSTING & DNS ]        [ TIER 3: CI/CD PIPELINE ]
- +----------------------------------+    +----------------------------------+
- | GitHub Pages Edge                |    | GitHub Actions Runner            |
- | - Anycast CDN edge servers       |    | (ubuntu-latest)                  |
- | - Static asset storage           | <--+                                  |
- | - Automatic Let's Encrypt TLS    |    | 1. actions/checkout@v4           |
- | - Custom domain: wvrner.com      |    | 2. actions/setup-node@v4 (cache) |
- +----------------+-----------------+    | 3. npm ci (clean lockfile)       |
-                  ^                      | 4. npx @11ty/eleventy (build)    |
-                  | A / CNAME Records    | 5. upload-pages-artifact@v3      |
- +----------------+-----------------+    | 6. deploy-pages@v4 (OIDC)        |
- | Cloudflare DNS Engine            |    +----------------------------------+
- | - Authoritative DNS resolution   |
- | - Global Anycast network         |
- +----------------+-----------------+
-                  ^
-                  | DNS Query (UDP/53)
- +----------------+-----------------+
- | Visitor Browser                  |
- | - Pure semantic HTML5 + CSS      |
- | - Sub-100ms global response      |
- +----------------------------------+
-```
+      <!-- Tier 3 -->
+      <div class="arch-tier-card">
+        <div class="tier-card-header">
+          <span class="tier-badge">TIER 03 &bull; CI/CD AUTOMATION</span>
+          <span class="tier-icon">⚡</span>
+        </div>
+        <h4 class="tier-title">GitHub Actions Runner</h4>
+        <p class="tier-desc">Automated, reproducible container execution executing linting, compilation, and keyless OIDC release.</p>
+        <div class="tier-steps-compact">
+          <div class="step-item"><span class="step-num">1</span><span>actions/checkout@v4</span></div>
+          <div class="step-item"><span class="step-num">2</span><span>actions/setup-node@v4</span></div>
+          <div class="step-item"><span class="step-num">3</span><span>npm ci (strict lockfile)</span></div>
+          <div class="step-item"><span class="step-num">4</span><span>npx @11ty/eleventy</span></div>
+          <div class="step-item"><span class="step-num">5</span><span>upload-pages-artifact@v3</span></div>
+          <div class="step-item"><span class="step-num">6</span><span>deploy-pages@v4 (OIDC)</span></div>
+        </div>
+        <div class="tier-flow-action">
+          <span>Upload artifact to Edge</span>
+          <span class="flow-arrow">&rarr;</span>
+        </div>
+      </div>
+
+      <!-- Tier 4 -->
+      <div class="arch-tier-card">
+        <div class="tier-card-header">
+          <span class="tier-badge">TIER 04 &bull; GLOBAL HOSTING &amp; DNS</span>
+          <span class="tier-icon">🌐</span>
+        </div>
+        <h4 class="tier-title">GitHub Pages Edge &amp; Cloudflare</h4>
+        <p class="tier-desc">Global Anycast edge servers with automatic TLS certificates delivering sub-50ms TTFB.</p>
+        <div class="tier-tools-list">
+          <span class="tier-tool-chip">4 Apex Anycast IPs</span>
+          <span class="tier-tool-chip">Cloudflare DNS</span>
+          <span class="tier-tool-chip">TLS 1.3 HTTPS</span>
+          <span class="tier-tool-chip">wvrner.com</span>
+        </div>
+        <div class="tier-flow-action success">
+          <span>Sub-50ms response to Visitor</span>
+          <span class="flow-check">&check;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 ---
 
@@ -112,46 +166,58 @@ DNS (Domain Name System) is the backbone of internet routing. For `wvrner.com`, 
 
 ### Authoritative DNS Delegation Flow
 
-**// DIAGRAM 02: DNS DELEGATION & RESOLUTION PATH**
+<div class="arch-visual-window">
+  <div class="arch-window-bar">
+    <div class="arch-window-dots">
+      <span class="dot-red"></span>
+      <span class="dot-yellow"></span>
+      <span class="dot-green"></span>
+    </div>
+    <span class="arch-window-title">// DIAGRAM 02: AUTHORITATIVE DNS RESOLUTION TIMELINE</span>
+    <span class="arch-status-pill">UDP / 53</span>
+  </div>
+  <div class="arch-window-body">
+    <div class="dns-timeline-flow">
+      <div class="dns-flow-step">
+        <div class="dns-step-header">
+          <span class="dns-step-num">01</span>
+          <span class="dns-step-title">Browser Query</span>
+        </div>
+        <p class="dns-step-desc">Visitor types <code>wvrner.com</code>. Local OS checks resolver cache, then forwards request to recursive DNS.</p>
+      </div>
 
-```text
-+--------------------+      1. Query "wvrner.com"       +----------------------+
-| Visitor Browser    | -------------------------------> | Local DNS Resolver   |
-+--------------------+                                  +----------+-----------+
-                                                                   |
-                         2. Referral to .com Root TLD              v
-                         <--------------------------------- +------------------+
-                                                            | Root Nameservers |
-                                                            +------------------+
-                                                                   |
-                         3. NS Delegation to Cloudflare            v
-                         <--------------------------------- +------------------+
-                                                            | Registrar (.com) |
-                                                            +------------------+
-                                                                   |
-                                                                   v
-+-------------------------------------------------------------------------------------+
-| Cloudflare DNS (Authoritative)                                                      |
-|                                                                                     |
-| Delegated Nameservers:                                                              |
-|   ns1.cloudflare.com  (Anycast)                                                     |
-|   ns2.cloudflare.com  (Anycast)                                                     |
-|                                                                                     |
-| Records:                                                                            |
-|   @ (apex) IN A     185.199.108.153                                                 |
-|   @ (apex) IN A     185.199.109.153                                                 |
-|   @ (apex) IN A     185.199.110.153                                                 |
-|   @ (apex) IN A     185.199.111.153                                                 |
-|   www      IN CNAME wvrner.github.io.                                               |
-+------------------------------------------+------------------------------------------+
-                                           |
-                                           | 4. Returns GitHub Pages IP
-                                           v
-                               +-----------------------+
-                               | GitHub Pages Ingress  |
-                               | (TLS Handshake & HTTP)|
-                               +-----------------------+
-```
+      <div class="dns-flow-arrow">&rarr;</div>
+
+      <div class="dns-flow-step">
+        <div class="dns-step-header">
+          <span class="dns-step-num">02</span>
+          <span class="dns-step-title">Root &amp; TLD Referral</span>
+        </div>
+        <p class="dns-step-desc">Root nameservers refer resolver to <code>.com</code> registry nameservers operated by Verisign.</p>
+      </div>
+
+      <div class="dns-flow-arrow">&rarr;</div>
+
+      <div class="dns-flow-step">
+        <div class="dns-step-header">
+          <span class="dns-step-num">03</span>
+          <span class="dns-step-title">Cloudflare Delegation</span>
+        </div>
+        <p class="dns-step-desc">Registry delegates authority to Cloudflare Anycast nameservers (<code>ns1.cloudflare.com</code>).</p>
+      </div>
+
+      <div class="dns-flow-arrow">&rarr;</div>
+
+      <div class="dns-flow-step">
+        <div class="dns-step-header">
+          <span class="dns-step-num">04</span>
+          <span class="dns-step-title">Apex A Resolution</span>
+        </div>
+        <p class="dns-step-desc">Cloudflare returns 4 Anycast IPv4 addresses (<code>185.199.108.153</code>...). Browser initiates TLS handshake.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 ### Configured DNS Records
 
@@ -197,48 +263,57 @@ Dynamic content management systems (like WordPress or Drupal) execute code on ev
 
 Eleventy serves as the build engine. It transforms raw Markdown files and Nunjucks layout templates into semantic HTML pages during the build step.
 
-**// DIAGRAM 03: ELEVENTY COMPILATION PIPELINE**
+<div class="arch-visual-window">
+  <div class="arch-window-bar">
+    <div class="arch-window-dots">
+      <span class="dot-red"></span>
+      <span class="dot-yellow"></span>
+      <span class="dot-green"></span>
+    </div>
+    <span class="arch-window-title">// DIAGRAM 03: ELEVENTY COMPILATION PIPELINE</span>
+    <span class="arch-status-pill">0.12s BUILD</span>
+  </div>
+  <div class="arch-window-body">
+    <div class="pipeline-3col-grid">
+      <div class="pipeline-col">
+        <div class="pipeline-col-badge">1. INPUT ARTIFACTS</div>
+        <ul class="pipeline-col-list">
+          <li><code>./posts/*.md</code> (Content)</li>
+          <li><code>./_includes/post.njk</code> (Layout)</li>
+          <li><code>./styles/*</code> (CSS System)</li>
+          <li><code>./js/*</code> (Interactions)</li>
+          <li><code>./CNAME</code> (Domain Binding)</li>
+        </ul>
+      </div>
 
-```text
-+-------------------------------------------------------------------------------------+
-| SOURCE REPOSITORY (INPUT)                                                           |
-|                                                                                     |
-|   ./posts/*.md           (Markdown articles with YAML front matter)                 |
-|   ./_includes/post.njk   (Parent article layout template)                           |
-|   ./blog.njk             (Paginated blog feed template)                             |
-|   ./index.html           (Homepage with infrastructure showcase)                    |
-|   ./about.html           (About & CV engineering page)                              |
-|   ./styles/*             (Neubrutalist CSS design system)                           |
-|   ./js/*                 (Vanilla JavaScript interactions)                          |
-+------------------------------------------+------------------------------------------+
-                                           |
-                                           | npx @11ty/eleventy
-                                           v
-+-------------------------------------------------------------------------------------+
-| ELEVENTY BUILD ENGINE (v3)                                                          |
-|                                                                                     |
-|   1. Read .eleventy.js configuration                                                |
-|   2. Execute passthrough copies (CSS, JS, images, CNAME)                            |
-|   3. Parse posts directory and create 'posts' collection (sorted newest first)      |
-|   4. Generate paginated feed pages (/blog/, /blog/2/, /blog/3/)                     |
-|   5. Transform Markdown to HTML and inject into {{ content | safe }}                |
-|   6. Evaluate permalinks (/posts/{{ page.fileSlug }}.html)                          |
-+------------------------------------------+------------------------------------------+
-                                           |
-                                           | Emits static artifacts (0.12s build time)
-                                           v
-+-------------------------------------------------------------------------------------+
-| OUTPUT DIRECTORY (_site)                                                            |
-|                                                                                     |
-|   ./_site/index.html                                                                |
-|   ./_site/about/index.html                                                          |
-|   ./_site/blog/index.html                                                           |
-|   ./_site/blog/2/index.html                                                         |
-|   ./_site/posts/how-this-site-is-built-and-deployed.html                            |
-|   ./_site/styles/main.css                                                           |
-|   ./_site/CNAME                                                                     |
-+-------------------------------------------------------------------------------------+
-```
+      <div class="pipeline-col-connector">&rarr;</div>
+
+      <div class="pipeline-col featured">
+        <div class="pipeline-col-badge accent">2. 11ty ENGINE (v3)</div>
+        <ul class="pipeline-col-list">
+          <li>Passthrough static copies</li>
+          <li>Parse post collections</li>
+          <li>Sort chronological metadata</li>
+          <li>Inject Markdown into layouts</li>
+          <li>Compute canonical permalinks</li>
+        </ul>
+      </div>
+
+      <div class="pipeline-col-connector">&rarr;</div>
+
+      <div class="pipeline-col">
+        <div class="pipeline-col-badge">3. OUTPUT (_site)</div>
+        <ul class="pipeline-col-list">
+          <li><code>./_site/index.html</code></li>
+          <li><code>./_site/posts/*.html</code></li>
+          <li><code>./_site/blog/index.html</code></li>
+          <li><code>./_site/styles/main.css</code></li>
+          <li><code>./_site/CNAME</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
 ### Eleventy Configuration File
 
@@ -400,37 +475,51 @@ Because each page is compiled into a discrete static HTML file, pagination reque
 
 Manual deployments lead to human error, missed asset bundles, and configuration drift. In this repository, deployment is handled entirely by GitHub Actions.
 
-**// DIAGRAM 04: GITHUB ACTIONS PIPELINE EXECUTION GRAPH**
-
-```text
-[ TRIGGER ] git push origin main
-     |
-     v
-+-------------------------------------------------------------------------------------+
-| GITHUB ACTIONS HOSTED RUNNER (ubuntu-latest)                                        |
-|                                                                                     |
-|   [STEP 1] actions/checkout@v4                                                      |
-|   Clones Git repository commit sha into ephemeral runner workspace                  |
-|                                                                                     |
-|   [STEP 2] actions/setup-node@v4                                                    |
-|   Provisions Node.js 22 environment & restores ~/.npm cache                         |
-|                                                                                     |
-|   [STEP 3] npm ci                                                                   |
-|   Strictly validates package-lock.json checksums & unpacks exact deps               |
-|                                                                                     |
-|   [STEP 4] npx @11ty/eleventy                                                       |
-|   Executes build engine, generating static files into ./_site                       |
-|                                                                                     |
-|   [STEP 5] actions/upload-pages-artifact@v3                                         |
-|   Gzips ./_site directory into a verified tarball artifact                          |
-|                                                                                     |
-|   [STEP 6] actions/deploy-pages@v4                                                  |
-|   Authenticates via OIDC token and atomically publishes to GitHub Pages             |
-+-------------------------------------------------------------------------------------+
-     |
-     v
-[ LIVE DEPLOYMENT ] Atomic release live at https://wvrner.com (Zero downtime)
-```
+<div class="arch-visual-window">
+  <div class="arch-window-bar">
+    <div class="arch-window-dots">
+      <span class="dot-red"></span>
+      <span class="dot-yellow"></span>
+      <span class="dot-green"></span>
+    </div>
+    <span class="arch-window-title">// DIAGRAM 04: GITHUB ACTIONS DEPLOYMENT WORKFLOW</span>
+    <span class="arch-status-pill">UBUNTU RUNNER</span>
+  </div>
+  <div class="arch-window-body">
+    <div class="runner-steps-grid">
+      <div class="runner-step-card">
+        <span class="step-badge">STEP 1</span>
+        <h5>Checkout Repo</h5>
+        <p><code>actions/checkout@v4</code> clones commit SHA into isolated runner workspace.</p>
+      </div>
+      <div class="runner-step-card">
+        <span class="step-badge">STEP 2</span>
+        <h5>Node.js Setup</h5>
+        <p><code>actions/setup-node@v4</code> configures Node 22 and restores cached dependencies.</p>
+      </div>
+      <div class="runner-step-card">
+        <span class="step-badge">STEP 3</span>
+        <h5>Strict Clean Install</h5>
+        <p><code>npm ci</code> validates SHA-512 checksums without mutating <code>package-lock.json</code>.</p>
+      </div>
+      <div class="runner-step-card">
+        <span class="step-badge">STEP 4</span>
+        <h5>Eleventy Build</h5>
+        <p><code>npx @11ty/eleventy</code> compiles site into <code>./_site</code> in &lt;0.2s.</p>
+      </div>
+      <div class="runner-step-card">
+        <span class="step-badge">STEP 5</span>
+        <h5>Archive Artifact</h5>
+        <p><code>upload-pages-artifact@v3</code> packages <code>./_site</code> into a verified tarball.</p>
+      </div>
+      <div class="runner-step-card">
+        <span class="step-badge">STEP 6</span>
+        <h5>Deploy via OIDC</h5>
+        <p><code>deploy-pages@v4</code> authenticates via keyless OIDC token to GitHub Pages.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 ### Complete CI/CD Workflow Specification
 
@@ -492,40 +581,31 @@ jobs:
 
 One of the most critical operational distinctions in pipeline design is using `npm ci` rather than `npm install`:
 
-**// DIAGRAM 05: DEPENDENCY RESOLUTION BEHAVIOR**
-
-```text
-COMMAND: npm install (DEVELOPMENT ONLY)
-------------------------------------------------------------------------------------
-  [ package.json ] ---> Reads semver ranges (e.g. ^3.1.0)
-          |
-          v
-  [ Resolves Remote ] -> Checks npm registry for latest non-breaking version
-          |
-          v
-  [ Mutates Lockfile ]-> Overwrites package-lock.json with newly resolved versions
-          |
-          v
-  [ RISKS IN CI ] -----> Non-deterministic builds; builds pass today, break tomorrow!
-
-====================================================================================
-
-COMMAND: npm ci (STRICT CI/CD AUTOMATION)
-------------------------------------------------------------------------------------
-  [ package-lock.json ] -> Reads exact immutable SHA-512 cryptographic checksums
-          |
-          v
-  [ Strict Equality ] ---> Verifies package.json and package-lock.json match exactly
-          |                (If mismatched, FAILS immediately with non-zero exit code)
-          v
-  [ Purge node_modules ]-> Completely deletes existing node_modules directory
-          |
-          v
-  [ Exact Unpack ] ------> Installs verbatim dependencies without mutating lockfile
-          |
-          v
-  [ GUARANTEE ] ---------> 100% deterministic, reproducible, auditable builds!
-```
+<div class="arch-visual-window">
+  <div class="arch-window-bar">
+    <div class="arch-window-dots">
+      <span class="dot-red"></span>
+      <span class="dot-yellow"></span>
+      <span class="dot-green"></span>
+    </div>
+    <span class="arch-window-title">// DIAGRAM 05: PACKAGE INSTALLATION GUARANTEE</span>
+    <span class="arch-status-pill">LOCKFILE INTEGRITY</span>
+  </div>
+  <div class="arch-window-body">
+    <div class="install-compare-grid">
+      <div class="compare-card danger">
+        <div class="compare-card-badge">MANUAL DEV: npm install</div>
+        <p>Reads semver ranges. Can silently mutate <code>package-lock.json</code> when dependencies release minor updates. Causes build divergence across machines.</p>
+        <span class="compare-verdict risk">&times; Non-deterministic in CI</span>
+      </div>
+      <div class="compare-card success">
+        <div class="compare-card-badge">AUTOMATED CI: npm ci</div>
+        <p>Deletes <code>node_modules/</code> completely. Enforces 100% cryptographic SHA-512 checksum matching against <code>package-lock.json</code>. Fails if lockfile drifts.</p>
+        <span class="compare-verdict safe">&check; 100% Byte-for-byte Deterministic</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 | Operational Characteristic | `npm install` | `npm ci` (Used in wvrner.com) |
 | :--- | :--- | :--- |
@@ -542,26 +622,56 @@ COMMAND: npm ci (STRICT CI/CD AUTOMATION)
 
 To appreciate modern automated infrastructure, consider the complete sequence of events triggered by a simple git push:
 
-**// DIAGRAM 06: END-TO-END EXECUTION SEQUENCE**
-
-```text
-Author               GitHub Repo            Actions Runner         GitHub Pages          Cloudflare DNS           Visitor
-  |                       |                       |                      |                      |                    |
-  |-- git push main ----->|                       |                      |                      |                    |
-  |                       |-- trigger webhook --->|                      |                      |                    |
-  |                       |                       |-- actions/checkout ->|                      |                    |
-  |                       |                       |-- npm ci ----------->|                      |                    |
-  |                       |                       |-- npx eleventy ----->|                      |                    |
-  |                       |                       |-- upload artifact -->|                      |                    |
-  |                       |                       |-- deploy-pages ----->|                      |                    |
-  |                       |                       |   (OIDC Auth)        |-- release update --->|                    |
-  |                       |                       |<-- deployment OK ----|                      |                    |
-  |                       |<-- workflow success --|                      |                      |                    |
-  |                       |                       |                      |                      |<-- DNS Query ------|
-  |                       |                       |                      |                      |--- Return IPs ---->|
-  |                       |                       |                      |<-- HTTP GET / -------+--------------------|
-  |                       |                       |                      |--- 200 OK (HTML) ----+------------------->|
-```
+<div class="arch-visual-window">
+  <div class="arch-window-bar">
+    <div class="arch-window-dots">
+      <span class="dot-red"></span>
+      <span class="dot-yellow"></span>
+      <span class="dot-green"></span>
+    </div>
+    <span class="arch-window-title">// DIAGRAM 06: FULL DEPLOYMENT LIFECYCLE</span>
+    <span class="arch-status-pill">&lt; 4.0s TOTAL</span>
+  </div>
+  <div class="arch-window-body">
+    <div class="sequence-cards-flow">
+      <div class="seq-step">
+        <span class="seq-num">1</span>
+        <div class="seq-content">
+          <strong>Git Commit &amp; Push</strong>
+          <span>Developer executes <code>git push origin main</code> from local workstation.</span>
+        </div>
+      </div>
+      <div class="seq-step">
+        <span class="seq-num">2</span>
+        <div class="seq-content">
+          <strong>GitHub Webhook</strong>
+          <span>GitHub receives push event and dispatches webhook to workflow runner.</span>
+        </div>
+      </div>
+      <div class="seq-step">
+        <span class="seq-num">3</span>
+        <div class="seq-content">
+          <strong>Actions Execution</strong>
+          <span>Runner spins up ephemeral Ubuntu container, verifies lockfile, and runs Eleventy.</span>
+        </div>
+      </div>
+      <div class="seq-step">
+        <span class="seq-num">4</span>
+        <div class="seq-content">
+          <strong>OIDC Deployment</strong>
+          <span>Short-lived federated OIDC token deploys compiled artifact to Pages edge servers.</span>
+        </div>
+      </div>
+      <div class="seq-step success">
+        <span class="seq-num">&check;</span>
+        <div class="seq-content">
+          <strong>Global Edge Live</strong>
+          <span>Site is live worldwide across Cloudflare Anycast and GitHub Pages in &lt; 4.0s.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 1. **Local Commit & Push**: The engineer executes `git commit` and `git push origin main`. Git transfers commit objects to GitHub over SSH.
 2. **Webhook Dispatch**: GitHub's internal event router captures the push event on `refs/heads/main` and queues the `Deploy Eleventy to GitHub Pages` workflow.
