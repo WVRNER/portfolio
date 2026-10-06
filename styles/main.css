@@ -886,6 +886,7 @@ button {
 .quad-card.card-pink { background: var(--gum-pink); }
 .quad-card.card-green { background: var(--gum-green); }
 .quad-card.card-blue { background: var(--gum-blue); }
+.quad-card.card-coral { background: #FF5C58; }
 
 .quad-card-num {
   font-family: var(--font-mono);
@@ -1186,7 +1187,7 @@ button {
 .chapter-tab-btn.active:nth-child(2) { background: var(--gum-pink); }
 .chapter-tab-btn.active:nth-child(3) { background: var(--gum-green); }
 .chapter-tab-btn.active:nth-child(4) { background: var(--gum-blue); }
-.chapter-tab-btn.active:nth-child(5) { background: var(--gum-yellow); }
+.chapter-tab-btn.active:nth-child(5) { background: #FF5C58; }
 
 .tab-num {
   font-family: var(--font-mono);
