@@ -956,44 +956,50 @@ button {
   box-shadow: none !important;
 }
 
-.quad-card.card-yellow { background: var(--gum-yellow); }
-.quad-card.card-pink { background: var(--gum-pink); }
-.quad-card.card-green { background: var(--gum-green); }
-.quad-card.card-blue { background: var(--gum-blue); }
+.quad-card,
+.quad-card.card-yellow,
+.quad-card.card-pink,
+.quad-card.card-green,
+.quad-card.card-blue,
 .quad-card.card-coral,
 .quad-card.card-actions {
-  background: #16183A;
-  color: #FFFFFF;
+  background: #F4F4F0 !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
+  box-shadow: none !important;
 }
 
-.quad-card.card-coral .quad-card-title,
-.quad-card.card-actions .quad-card-title,
-.quad-card.card-coral .quad-card-text,
-.quad-card.card-actions .quad-card-text {
-  color: #FFFFFF;
+.quad-card *,
+.quad-card .quad-card-title,
+.quad-card .quad-card-text,
+.quad-card .quad-card-bullets,
+.quad-card .quad-card-bullets li,
+.quad-card .quad-card-bullets li strong {
+  color: #000000 !important;
 }
 
-.quad-card.card-coral .quad-card-num,
-.quad-card.card-actions .quad-card-num {
-  background: #FFFFFF;
-  color: #16183A;
-  border: 1.5px solid #000000;
+.quad-card .quad-card-num {
+  background: #000000 !important;
+  color: #FFFFFF !important;
 }
 
-.quad-card.card-coral .quad-card-bullets,
-.quad-card.card-actions .quad-card-bullets {
-  border-top-color: rgba(255, 255, 255, 0.25) !important;
-  border-left-color: rgba(255, 255, 255, 0.25) !important;
+.quad-card .quad-card-bullets {
+  border-color: rgba(0, 0, 0, 0.18) !important;
 }
 
-.quad-card.card-coral .quad-card-bullets li,
-.quad-card.card-actions .quad-card-bullets li {
-  color: #E2E8F0;
+[data-theme="dark"] .quad-card {
+  background: #141416 !important;
+  border-color: #333338 !important;
+  color: #FFFFFF !important;
 }
 
-.quad-card.card-coral .quad-card-bullets li strong,
-.quad-card.card-actions .quad-card-bullets li strong {
-  color: #FFFFFF;
+[data-theme="dark"] .quad-card * {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .quad-card .quad-card-num {
+  background: #FFFFFF !important;
+  color: #000000 !important;
 }
 
 .quad-card-num {
