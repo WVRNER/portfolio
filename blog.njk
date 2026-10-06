@@ -29,21 +29,34 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
       content="Engineering notes, lab logs, and technical explorations by Nima Hosseini (@wvrner). Documenting the journey through cloud-native architecture, CI/CD, and DevOps."
     />
 
-    <!-- Favicon -->
+    <!-- Favicon & Search Bar Icon: Bold Red Serif 'W' on Light Background (Frame 11) -->
     <link
       rel="icon"
       type="image/svg+xml"
       sizes="any"
-      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230029ff%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2248%22%20font-family%3D%22system-ui%2C%20-apple-system%2C%20%27Plus%20Jakarta%20Sans%27%2C%20sans-serif%22%20font-weight%3D%22900%22%20font-size%3D%2246%22%20text-anchor%3D%22middle%22%20fill%3D%22%23f6e490%22%3EW%3C/text%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%23F8F8F6%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2247%22%20font-family%3D%22%27Fraunces%27%2C%20Georgia%2C%20%27Times%20New%20Roman%27%2C%20serif%22%20font-weight%3D%22900%22%20font-size%3D%2244%22%20text-anchor%3D%22middle%22%20fill%3D%22%23D60000%22%3EW%3C/text%3E%3C/svg%3E"
     />
-
-    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20261004fix" />
-
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="/favicon.png?v=20261004fix"
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADI0lEQVR4nO2XT2gTQRTGc9hDDgELvRR6aKGgotBDDz0WFBQUFHqzUm8KCgG9KdibgmI9KSgo2CIUUVBQxIo9VERERPFQNK1JTNJskk3TxnTzp72N862Z6ezMJLvNWry48CC7mXnvN+99M/s2FPp/aa5MJjFObZZaihoJaFlq89Si1AyvwBFqc/n8MqlU1ki9XiWbm41ABh+2/YtYlgmYr9R62gHMlUqFwEFbWblcAsQCtbA27Vj5TgVnVizmADGhA5i1Xr0kpfv3FGusrric4F4eU/22oARbezSjjLMeTgMgpgNIpU+Oke+hkGK1pZjLMe7lMXAuA/zo61PG4RnEqQMg9VyW2F8+uyaUnz0lGzXb5Rj3uWiUj8mMjipZckCTcVK8eYOPs65ecZ6ZZgoQ/QoAmxgfGNha2d072lqKq1uMRLQAMPPMaT7O/vTxzzMvAKyITTLPnVXV/OK5ktqV27e0AIn9+zgkh/ICKF6/xh0nh4YUpwxwqbubZ0s3rmEVuJ/UwQP+AVB3Mb2ugyWTIjHDcP6DDvKXLvKx6x/eu3fBk8f8P4zzDQAxiumFMNl/EJJYU2w/Xi5abxEgd+G8S8y+ARyR9fbyyatTDxTxJQYH+TOkXyfG5PAw94FybAsgc/wYn4xUy+LD9uKaEbYaEyNAWKnie3a7d4YfgMLEZe7058iICwqOoQWxZCwYVI9nlTev+fzsqfHtA4gCWuza5RwgLEj66BFF8enDh7bE+O6tawHyWeILAAFFIS6PneC/ccbLANCJuGJkTSdi3wAw7HP5wMGzjUpZ3fO05hChU6JwmP9G9pTT0S+AmNZ2JyMzMUvM4KNjAHEftzpsvI5oaKFjANRadMYU3srwlpTLBqiOAcRTztn79B3RDsDJmvCalg8gL4Cs3ITKJUA9sefbAYhvUogRO0Ke0+yWDRlgHt2rDAAHonkBeM2p0TKh+wrJF/p2tM5eKQ5q6LpprEkdgIG+Ha3zTgXHt0bzQ6VLAWhC9KBvR+tcra7/tcBIe3PlCL5XG1yACKNvR+sMsUCxQawpOHziTbZcuQdQf0Br/z34r6/f1hU2VqyeVaQAAAAASUVORK5CYII="
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADI0lEQVR4nO2XT2gTQRTGc9hDDgELvRR6aKGgotBDDz0WFBQUFHqzUm8KCgG9KdibgmI9KSgo2CIUUVBQxIo9VERERPFQNK1JTNJskk3TxnTzp72N862Z6ezMJLvNWry48CC7mXnvN+99M/s2FPp/aa5MJjFObZZaihoJaFlq89Si1AyvwBFqc/n8MqlU1ki9XiWbm41ABh+2/YtYlgmYr9R62gHMlUqFwEFbWblcAsQCtbA27Vj5TgVnVizmADGhA5i1Xr0kpfv3FGusrric4F4eU/22oARbezSjjLMeTgMgpgNIpU+Oke+hkGK1pZjLMe7lMXAuA/zo61PG4RnEqQMg9VyW2F8+uyaUnz0lGzXb5Rj3uWiUj8mMjipZckCTcVK8eYOPs65ecZ6ZZgoQ/QoAmxgfGNha2d072lqKq1uMRLQAMPPMaT7O/vTxzzMvAKyITTLPnVXV/OK5ktqV27e0AIn9+zgkh/ICKF6/xh0nh4YUpwxwqbubZ0s3rmEVuJ/UwQP+AVB3Mb2ugyWTIjHDcP6DDvKXLvKx6x/eu3fBk8f8P4zzDQAxiumFMNl/EJJYU2w/Xi5abxEgd+G8S8y+ARyR9fbyyatTDxTxJQYH+TOkXyfG5PAw94FybAsgc/wYn4xUy+LD9uKaEbYaEyNAWKnie3a7d4YfgMLEZe7058iICwqOoQWxZCwYVI9nlTev+fzsqfHtA4gCWuza5RwgLEj66BFF8enDh7bE+O6tawHyWeILAAFFIS6PneC/ccbLANCJuGJkTSdi3wAw7HP5wMGzjUpZ3fO05hChU6JwmP9G9pTT0S+AmNZ2JyMzMUvM4KNjAHEftzpsvI5oaKFjANRadMYU3srwlpTLBqiOAcRTztn79B3RDsDJmvCalg8gL4Cs3ITKJUA9sefbAYhvUogRO0Ke0+yWDRlgHt2rDAAHonkBeM2p0TKh+wrJF/p2tM5eKQ5q6LpprEkdgIG+Ha3zTgXHt0bzQ6VLAWhC9KBvR+tcra7/tcBIe3PlCL5XG1yACKNvR+sMsUCxQawpOHziTbZcuQdQf0Br/z34r6/f1hU2VqyeVaQAAAAASUVORK5CYII="
+    />
+    <link
+      rel="shortcut icon"
+      href="/favicon.ico?v=20261006w"
+    />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20261006w" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon.png?v=20261006w"
     />
 
     <!-- Fonts -->

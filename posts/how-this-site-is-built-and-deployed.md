@@ -1,12 +1,8 @@
 ---
 title: "How I Built and Deployed This Website: Git, Eleventy, GitHub Actions & Pages"
 slug: how-this-site-is-built-and-deployed
-subtitle: A technical breakdown of the architecture, build pipeline, DNS
-  resolution, and automated delivery workflow powering my personal portfolio.
-excerpt: A comprehensive DevOps case study exploring the static site
-  architecture, Eleventy compilation, Pages CMS content management, Cloudflare
-  DNS configuration, and automated GitHub Actions deployment pipeline behind
-  wvrner.com.
+subtitle: A technical breakdown of the architecture, build pipeline, DNS resolution, and automated delivery workflow powering my personal portfolio.
+excerpt: A comprehensive DevOps case study exploring the static site architecture, Eleventy compilation, Pages CMS content management, Cloudflare DNS configuration, and automated GitHub Actions deployment pipeline behind wvrner.com.
 author: Nima Hosseini
 category: DEVOPS & INFRASTRUCTURE
 date: 2026-10-05
@@ -30,7 +26,9 @@ seo:
 published: true
 featured: false
 layout: post.njk
+templateEngineOverride: md
 ---
+
 Building a personal portfolio website is a standard rite of passage for software and systems engineers. However, instead of treating this site merely as an online resume or relying on an off-the-shelf dynamic CMS, I approached the portfolio itself as a real infrastructure, automation, and deployment engineering project.
 
 As an aspiring DevOps and infrastructure systems engineer, my objective was not just to put pages on the internet, but to design, implement, and document a disciplined delivery lifecycle: declarative configuration, strict version control, reproducible local builds, automated CI/CD pipelines, managed DNS resolution, and secure HTTPS delivery.
@@ -43,7 +41,7 @@ This technical case study documents the complete architecture, implementation de
 
 When designing modern systems, the boundary between application code and operational infrastructure has largely dissolved. Systems engineers must know how software packages are built, how automated delivery pipelines validate code, and how network packets traverse the internet to reach visitors.
 
-**ARCHITECTURAL PRINCIPLE** **Treating Content as Code (GitOps)**
+**ARCHITECTURAL PRINCIPLE: Treating Content as Code (GitOps)**
 
 Every single artifact—from markdown articles and Nunjucks templates to the CI/CD pipeline and DNS domain bindings—lives in Git. No manual dashboard edits, no unversioned server state, and zero configuration drift.
 
@@ -63,52 +61,48 @@ For this website, I established seven foundational technical requirements:
 
 The site operates across four distinct operational tiers: Local Development, Version Control, Continuous Integration/Continuous Deployment (CI/CD), and Edge Static Hosting.
 
-**// DIAGRAM 01: 4-TIER ARCHITECTURE OVERVIEW** ASCII ARCHITECTURE
+**// DIAGRAM 01: 4-TIER ARCHITECTURE OVERVIEW**
 
-```
+```text
 +---------------------------------------------------------------------------------------------------+
-| SYSTEM ARCHITECTURE TOPOLOGY |
+|                                  SYSTEM ARCHITECTURE TOPOLOGY                                     |
 +---------------------------------------------------------------------------------------------------+
-
-
-```
 
  [ TIER 1: AUTHORING & DEV ]             [ TIER 2: SOURCE OF TRUTH ]
  +--------------------------+            +----------------------------------+
-| Local Developer Machine |  | GitHub Git Repository |
-| - VS Code / Terminal |  | (github.com/WVRNER/portfolio) |
-| - Node.js 22 & npm |  |  |
-| - Eleventy Dev Server |  | - Protected 'main' branch |
-| - Local Git Commits |  | - Complete commit history |
- +------------+-------------+            |  - .pages.yml content schema     |
+ | Local Developer Machine  |            | GitHub Git Repository            |
+ | - VS Code / Terminal     |            | (github.com/WVRNER/portfolio)    |
+ | - Node.js 22 & npm       |            |                                  |
+ | - Eleventy Dev Server    |            | - Protected 'main' branch        |
+ | - Local Git Commits      |            | - Complete commit history        |
+ +------------+-------------+            | - .pages.yml content schema      |
               |                          +-----------------+----------------+
-| git push origin main |
+              | git push origin main                       |
               +------------------------------------------->| Webhook trigger on push
                                                            v
  [ TIER 4: GLOBAL HOSTING & DNS ]        [ TIER 3: CI/CD PIPELINE ]
  +----------------------------------+    +----------------------------------+
-| GitHub Pages Edge |  | GitHub Actions Runner |
-| - Anycast CDN edge servers |  | (ubuntu-latest) |
-| - Static asset storage | <--- |  |
-| - Automatic Let's Encrypt TLS |  | 1. actions/checkout@v4 |
-| - Custom domain: wvrner.com |  | 2. actions/setup-node@v4 (cache) |
- +----------------+-----------------+    |  3. npm ci (clean lockfile)      |
-                  ^                      |  4. npx @11ty/eleventy (build)   |
-| A / CNAME Records | 5. upload-pages-artifact@v3 |
- +----------------+-----------------+    |  6. deploy-pages@v4 (OIDC)       |
- |    Cloudflare DNS Engine         |    +----------------------------------+
-| - Authoritative DNS resolution |
-| - Global Anycast network |
+ | GitHub Pages Edge                |    | GitHub Actions Runner            |
+ | - Anycast CDN edge servers       |    | (ubuntu-latest)                  |
+ | - Static asset storage           | <--+                                  |
+ | - Automatic Let's Encrypt TLS    |    | 1. actions/checkout@v4           |
+ | - Custom domain: wvrner.com      |    | 2. actions/setup-node@v4 (cache) |
+ +----------------+-----------------+    | 3. npm ci (clean lockfile)       |
+                  ^                      | 4. npx @11ty/eleventy (build)    |
+                  | A / CNAME Records    | 5. upload-pages-artifact@v3      |
+ +----------------+-----------------+    | 6. deploy-pages@v4 (OIDC)        |
+ | Cloudflare DNS Engine            |    +----------------------------------+
+ | - Authoritative DNS resolution   |
+ | - Global Anycast network         |
  +----------------+-----------------+
                   ^
                   | DNS Query (UDP/53)
  +----------------+-----------------+
-| Visitor Browser |
-| - Pure semantic HTML5 + CSS |
-| - Sub-100ms global response |
- +----------------------------------+&nbsp;
-
-
+ | Visitor Browser                  |
+ | - Pure semantic HTML5 + CSS      |
+ | - Sub-100ms global response      |
+ +----------------------------------+
+```
 
 ---
 
@@ -118,70 +112,66 @@ DNS (Domain Name System) is the backbone of internet routing. For `wvrner.com`, 
 
 ### Authoritative DNS Delegation Flow
 
-**// DIAGRAM 02: DNS DELEGATION & RESOLUTION PATH** DNS FLOW
+**// DIAGRAM 02: DNS DELEGATION & RESOLUTION PATH**
 
-```
+```text
 +--------------------+      1. Query "wvrner.com"       +----------------------+
-| Visitor Browser | -------------------------------> | Local DNS Resolver |
+| Visitor Browser    | -------------------------------> | Local DNS Resolver   |
 +--------------------+                                  +----------+-----------+
                                                                    |
                          2. Referral to .com Root TLD              v
                          <--------------------------------- +------------------+
-| Root Nameservers |
+                                                            | Root Nameservers |
                                                             +------------------+
                                                                    |
                          3. NS Delegation to Cloudflare            v
                          <--------------------------------- +------------------+
-| Registrar (.com) |
+                                                            | Registrar (.com) |
                                                             +------------------+
                                                                    |
                                                                    v
 +-------------------------------------------------------------------------------------+
-| Cloudflare DNS (Authoritative) |
-|  |
-| Delegated Nameservers: |
-| ns1.cloudflare.com  (Anycast) |
-| ns2.cloudflare.com  (Anycast) |
-|  |
-| Records: |
-| @ (apex) IN A     185.199.108.153 |
-| @ (apex) IN A     185.199.109.153 |
-| @ (apex) IN A     185.199.110.153 |
-| @ (apex) IN A     185.199.111.153 |
-| www      IN CNAME wvrner.github.io. |
+| Cloudflare DNS (Authoritative)                                                      |
+|                                                                                     |
+| Delegated Nameservers:                                                              |
+|   ns1.cloudflare.com  (Anycast)                                                     |
+|   ns2.cloudflare.com  (Anycast)                                                     |
+|                                                                                     |
+| Records:                                                                            |
+|   @ (apex) IN A     185.199.108.153                                                 |
+|   @ (apex) IN A     185.199.109.153                                                 |
+|   @ (apex) IN A     185.199.110.153                                                 |
+|   @ (apex) IN A     185.199.111.153                                                 |
+|   www      IN CNAME wvrner.github.io.                                               |
 +------------------------------------------+------------------------------------------+
                                            |
                                            | 4. Returns GitHub Pages IP
                                            v
                                +-----------------------+
-| GitHub Pages Ingress |
-| (TLS Handshake & HTTP) |
+                               | GitHub Pages Ingress  |
+                               | (TLS Handshake & HTTP)|
                                +-----------------------+
 ```
 
 ### Configured DNS Records
 
-**// DNS ZONE CONFIGURATION (BIND FORMAT)** ZONE FILE
+**// DNS ZONE CONFIGURATION (BIND FORMAT)**
 
-```
+```dns
 ; Authoritative Apex IPv4 Records (GitHub Pages Anycast Load Balancing)
 @               300     IN      A       185.199.108.153
 @               300     IN      A       185.199.109.153
 @               300     IN      A       185.199.110.153
 @               300     IN      A       185.199.111.153
 
-
-```
-
 ; Canonical Name for Subdomain Ingress
 www             300     IN      CNAME   wvrner.github.io.
 
 ; Custom Domain Verification (GitHub Ownership Validation)
-_gh-wvrner      300     IN      TXT     "github-pages-verification-token"&nbsp;
+_gh-wvrner      300     IN      TXT     "github-pages-verification-token"
+```
 
-
-
-**DNS HONESTY** **DNS Management vs. Edge Reverse Proxying**
+**DNS HONESTY: DNS Management vs. Edge Reverse Proxying**
 
 Cloudflare is configured as an authoritative DNS manager (DNS Only mode). Queries resolve to GitHub Pages' official IP addresses. The TLS certificate is issued directly by GitHub Pages via Let's Encrypt, not through Cloudflare edge proxying.
 
@@ -193,15 +183,13 @@ Dynamic content management systems (like WordPress or Drupal) execute code on ev
 
 ### Dynamic Architecture vs. Static Site Generation
 
-
 | Evaluation Criteria | Dynamic CMS (WordPress / Node.js) | Static Site Generator (Eleventy + Pages) |
-| ----------------------- | ------------------------------------------ | -------------------------------------------------- |
+| :--- | :--- | :--- |
 | **Request Execution** | Server evaluates code & queries DB per hit | Pre-compiled static HTML served directly from disk |
 | **Security Surface** | High (SQL injection, XSS, plugin CVEs) | Zero (Read-only static files; no server runtime) |
 | **Time to First Byte** | 200ms – 1200ms (dependent on DB & cache) | 15ms – 50ms (served directly from Anycast edge) |
 | **Infrastructure Cost** | Ongoing ($5–$50/mo for VPS + managed DB) | $0.00 (Zero hosting overhead) |
 | **Disaster Recovery** | Complex SQL dumps & stateful backups | Instant `git clone` contains 100% of website state |
-
 
 ---
 
@@ -209,46 +197,46 @@ Dynamic content management systems (like WordPress or Drupal) execute code on ev
 
 Eleventy serves as the build engine. It transforms raw Markdown files and Nunjucks layout templates into semantic HTML pages during the build step.
 
-**// DIAGRAM 03: ELEVENTY COMPILATION PIPELINE** BUILD PIPELINE
+**// DIAGRAM 03: ELEVENTY COMPILATION PIPELINE**
 
-```
+```text
 +-------------------------------------------------------------------------------------+
-| SOURCE REPOSITORY (INPUT) |
-|  |
-| ./posts/*.md           (Markdown articles with YAML front matter) |
-| ./_includes/post.njk   (Parent article layout template) |
-| ./blog.njk             (Paginated blog feed template) |
-| ./index.html           (Homepage with infrastructure showcase) |
-| ./about.html           (About & CV engineering page) |
-| ./styles/*             (Neubrutalist CSS design system) |
-| ./js/*                 (Vanilla JavaScript interactions) |
+| SOURCE REPOSITORY (INPUT)                                                           |
+|                                                                                     |
+|   ./posts/*.md           (Markdown articles with YAML front matter)                 |
+|   ./_includes/post.njk   (Parent article layout template)                           |
+|   ./blog.njk             (Paginated blog feed template)                             |
+|   ./index.html           (Homepage with infrastructure showcase)                    |
+|   ./about.html           (About & CV engineering page)                              |
+|   ./styles/*             (Neubrutalist CSS design system)                           |
+|   ./js/*                 (Vanilla JavaScript interactions)                          |
 +------------------------------------------+------------------------------------------+
                                            |
                                            | npx @11ty/eleventy
                                            v
 +-------------------------------------------------------------------------------------+
-| ELEVENTY BUILD ENGINE (v3) |
-|  |
-| 1. Read .eleventy.js configuration |
-| 2. Execute passthrough copies (CSS, JS, images, CNAME) |
-| 3. Parse posts directory and create 'posts' collection (sorted newest first) |
-| 4. Generate paginated feed pages (/blog/, /blog/2/, /blog/3/) |
-| 5. Transform Markdown to HTML and inject into {{ content | safe }} |
-| 6. Evaluate permalinks (/posts/{{ page.fileSlug }}.html) |
+| ELEVENTY BUILD ENGINE (v3)                                                          |
+|                                                                                     |
+|   1. Read .eleventy.js configuration                                                |
+|   2. Execute passthrough copies (CSS, JS, images, CNAME)                            |
+|   3. Parse posts directory and create 'posts' collection (sorted newest first)      |
+|   4. Generate paginated feed pages (/blog/, /blog/2/, /blog/3/)                     |
+|   5. Transform Markdown to HTML and inject into {{ content | safe }}                |
+|   6. Evaluate permalinks (/posts/{{ page.fileSlug }}.html)                          |
 +------------------------------------------+------------------------------------------+
                                            |
                                            | Emits static artifacts (0.12s build time)
                                            v
 +-------------------------------------------------------------------------------------+
-| OUTPUT DIRECTORY (_site) |
-|  |
-| ./_site/index.html |
-| ./_site/about/index.html |
-| ./_site/blog/index.html |
-| ./_site/blog/2/index.html |
-| ./_site/posts/how-this-site-is-built-and-deployed.html |
-| ./_site/styles/main.css |
-| ./_site/CNAME |
+| OUTPUT DIRECTORY (_site)                                                            |
+|                                                                                     |
+|   ./_site/index.html                                                                |
+|   ./_site/about/index.html                                                          |
+|   ./_site/blog/index.html                                                           |
+|   ./_site/blog/2/index.html                                                         |
+|   ./_site/posts/how-this-site-is-built-and-deployed.html                            |
+|   ./_site/styles/main.css                                                           |
+|   ./_site/CNAME                                                                     |
 +-------------------------------------------------------------------------------------+
 ```
 
@@ -256,9 +244,9 @@ Eleventy serves as the build engine. It transforms raw Markdown files and Nunjuc
 
 The site is configured via `.eleventy.js`:
 
-**// .eleventy.js** JAVASCRIPT
+**// .eleventy.js**
 
-```
+```javascript
 module.exports = function (eleventyConfig) {
   // Passthrough copy for static assets (zero processing, direct copy)
   eleventyConfig.addPassthroughCopy("styles");
@@ -267,9 +255,6 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("favicon.ico");
   eleventyConfig.addPassthroughCopy("favicon.png");
   eleventyConfig.addPassthroughCopy("CNAME");
-
-
-```
 
   // Automatically collect every Markdown blog post, sorted newest first
   eleventyConfig.addCollection("posts", function (collectionApi) {
@@ -290,17 +275,16 @@ module.exports = function (eleventyConfig) {
       includes: "_includes",
     },
   };
-};&nbsp;
-
-
+};
+```
 
 ### Post Directory Defaults (`posts/posts.json`)
 
 To avoid repeating configuration across every article, Eleventy reads `posts/posts.json` to assign layout and tags automatically:
 
-**// posts/posts.json** JSON
+**// posts/posts.json**
 
-```
+```json
 {
   "layout": "post.njk",
   "tags": ["posts"],
@@ -316,78 +300,73 @@ While developers are comfortable writing in VS Code and running git commands in 
 
 Pages CMS operates as an open-source, client-side, headless CMS. It authenticates via GitHub OAuth and writes commits directly into the repository via the GitHub REST API.
 
-**// .pages.yml (SCHEMA SPECIFICATION)** YAML
+**// .pages.yml (SCHEMA SPECIFICATION)**
 
-```
+```yaml
 media:
   input: images
   output: /images
   categories: [image, document, compressed, code]
   rename: safe
 
-
-```
-
 content:
-
-- name: posts
-label: Blog Posts
-type: collection
-path: posts
-filename: "{fields.slug}.md"
-fields:
-  - name: title
-  label: Post Title
-  type: string
-  required: true
-  - name: slug
-  label: URL Slug
-  type: string
-  required: true
-  pattern: "^[a-z0-9-]+$"
-  - name: subtitle
-  label: Subtitle / Hook
-  type: string
-  required: true
-  - name: excerpt
-  label: Blog Feed Teaser
-  type: text
-  required: true
-  - name: category
-  label: Category Badge
-  type: select
-  required: true
-  options:
-    values:
-  - "DEVOPS & INFRASTRUCTURE"
-  - "CERTIFICATION & LAB LOG"
-  - "CLOUD ARCHITECTURE & AWS"
-  - "LINUX & KERNEL SYSTEMS"
-  - name: date
-  label: Publication Date
-  type: date
-  default: now
-  required: true
-  - name: display_date
-  label: Display Date
-  type: string
-  required: true
-  - name: read_time
-  label: Reading Time
-  type: string
-  required: true
-  - name: post_tags
-  label: Topic Tags
-  type: list
-  - name: published
-  label: Published Status
-  type: boolean
-  default: true
-  - name: body
-  label: Article Content
-  type: rich-text&nbsp;
-
-
+  - name: posts
+    label: Blog Posts
+    type: collection
+    path: posts
+    filename: "{fields.slug}.md"
+    fields:
+      - name: title
+        label: Post Title
+        type: string
+        required: true
+      - name: slug
+        label: URL Slug
+        type: string
+        required: true
+        pattern: "^[a-z0-9-]+$"
+      - name: subtitle
+        label: Subtitle / Hook
+        type: string
+        required: true
+      - name: excerpt
+        label: Blog Feed Teaser
+        type: text
+        required: true
+      - name: category
+        label: Category Badge
+        type: select
+        required: true
+        options:
+          values:
+            - "DEVOPS & INFRASTRUCTURE"
+            - "CERTIFICATION & LAB LOG"
+            - "CLOUD ARCHITECTURE & AWS"
+            - "LINUX & KERNEL SYSTEMS"
+      - name: date
+        label: Publication Date
+        type: date
+        default: now
+        required: true
+      - name: display_date
+        label: Display Date
+        type: string
+        required: true
+      - name: read_time
+        label: Reading Time
+        type: string
+        required: true
+      - name: post_tags
+        label: Topic Tags
+        type: list
+      - name: published
+        label: Published Status
+        type: boolean
+        default: true
+      - name: body
+        label: Article Content
+        type: rich-text
+```
 
 ---
 
@@ -395,9 +374,9 @@ fields:
 
 In `blog.njk`, pagination is evaluated statically at build time using Eleventy's collection engine:
 
-**// blog.njk (BUILD-TIME PAGINATION HEADER)** NUNJUCKS
+**// blog.njk (BUILD-TIME PAGINATION HEADER)**
 
-```
+```html
 ---
 pagination:
   data: collections.posts
@@ -421,32 +400,32 @@ Because each page is compiled into a discrete static HTML file, pagination reque
 
 Manual deployments lead to human error, missed asset bundles, and configuration drift. In this repository, deployment is handled entirely by GitHub Actions.
 
-**// DIAGRAM 04: GITHUB ACTIONS PIPELINE EXECUTION GRAPH** CI/CD FLOW
+**// DIAGRAM 04: GITHUB ACTIONS PIPELINE EXECUTION GRAPH**
 
-```
+```text
 [ TRIGGER ] git push origin main
      |
      v
 +-------------------------------------------------------------------------------------+
-| GITHUB ACTIONS HOSTED RUNNER (ubuntu-latest) |
-|  |
-| [STEP 1] actions/checkout@v4 |
-| Clones Git repository commit sha into ephemeral runner workspace |
-|  |
-| [STEP 2] actions/setup-node@v4 |
-| Provisions Node.js 22 environment & restores ~/.npm cache |
-|  |
-| [STEP 3] npm ci |
-| Strictly validates package-lock.json checksums & unpacks exact deps |
-|  |
-| [STEP 4] npx @11ty/eleventy |
-| Executes build engine, generating static files into ./_site |
-|  |
-| [STEP 5] actions/upload-pages-artifact@v3 |
-| Gzips ./_site directory into a verified tarball artifact |
-|  |
-| [STEP 6] actions/deploy-pages@v4 |
-| Authenticates via OIDC token and atomically publishes to GitHub Pages |
+| GITHUB ACTIONS HOSTED RUNNER (ubuntu-latest)                                        |
+|                                                                                     |
+|   [STEP 1] actions/checkout@v4                                                      |
+|   Clones Git repository commit sha into ephemeral runner workspace                  |
+|                                                                                     |
+|   [STEP 2] actions/setup-node@v4                                                    |
+|   Provisions Node.js 22 environment & restores ~/.npm cache                         |
+|                                                                                     |
+|   [STEP 3] npm ci                                                                   |
+|   Strictly validates package-lock.json checksums & unpacks exact deps               |
+|                                                                                     |
+|   [STEP 4] npx @11ty/eleventy                                                       |
+|   Executes build engine, generating static files into ./_site                       |
+|                                                                                     |
+|   [STEP 5] actions/upload-pages-artifact@v3                                         |
+|   Gzips ./_site directory into a verified tarball artifact                          |
+|                                                                                     |
+|   [STEP 6] actions/deploy-pages@v4                                                  |
+|   Authenticates via OIDC token and atomically publishes to GitHub Pages             |
 +-------------------------------------------------------------------------------------+
      |
      v
@@ -455,13 +434,10 @@ Manual deployments lead to human error, missed asset bundles, and configuration 
 
 ### Complete CI/CD Workflow Specification
 
-**// .github/workflows/deploy.yml** YAML
+**// .github/workflows/deploy.yml**
 
-```
+```yaml
 name: Deploy Eleventy to GitHub Pages
-
-
-```
 
 on:
   push:
@@ -483,37 +459,32 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
 
+      - name: Set up Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Static Site with Eleventy
+        run: npx @11ty/eleventy
+
+      - name: Package Build Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "_site"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 ```
-runs-on: ubuntu-latest
-
-steps:
-  - name: Checkout Source Code
-    uses: actions/checkout@v4
-
-  - name: Set up Node.js Runtime
-    uses: actions/setup-node@v4
-    with:
-      node-version: 22
-      cache: "npm"
-
-  - name: Install Dependencies
-    run: npm ci
-
-  - name: Build Static Site with Eleventy
-    run: npx @11ty/eleventy
-
-  - name: Package Build Artifact
-    uses: actions/upload-pages-artifact@v3
-    with:
-      path: "_site"
-
-  - name: Deploy to GitHub Pages
-    id: deployment
-    uses: actions/deploy-pages@v4</code></pre>
-```
-
-
 
 ---
 
@@ -521,9 +492,9 @@ steps:
 
 One of the most critical operational distinctions in pipeline design is using `npm ci` rather than `npm install`:
 
-**// DIAGRAM 05: DEPENDENCY RESOLUTION BEHAVIOR** EXECUTION MODEL
+**// DIAGRAM 05: DEPENDENCY RESOLUTION BEHAVIOR**
 
-```
+```text
 COMMAND: npm install (DEVELOPMENT ONLY)
 ------------------------------------------------------------------------------------
   [ package.json ] ---> Reads semver ranges (e.g. ^3.1.0)
@@ -537,12 +508,10 @@ COMMAND: npm install (DEVELOPMENT ONLY)
           v
   [ RISKS IN CI ] -----> Non-deterministic builds; builds pass today, break tomorrow!
 
+====================================================================================
 
-
-```
-
-## COMMAND: npm ci (STRICT CI/CD AUTOMATION)
-
+COMMAND: npm ci (STRICT CI/CD AUTOMATION)
+------------------------------------------------------------------------------------
   [ package-lock.json ] -> Reads exact immutable SHA-512 cryptographic checksums
           |
           v
@@ -555,13 +524,11 @@ COMMAND: npm install (DEVELOPMENT ONLY)
   [ Exact Unpack ] ------> Installs verbatim dependencies without mutating lockfile
           |
           v
-  [ GUARANTEE ] ---------> 100% deterministic, reproducible, auditable builds!&nbsp;
-
-
-
+  [ GUARANTEE ] ---------> 100% deterministic, reproducible, auditable builds!
+```
 
 | Operational Characteristic | `npm install` | `npm ci` (Used in wvrner.com) |
-| -------------------------- | -------------------------------------------------- | ------------------------------------------------------- |
+| :--- | :--- | :--- |
 | **Intended Context** | Local manual development | Automated CI/CD execution environments |
 | **Lockfile Handling** | Modifies `package-lock.json` if dependencies drift | Strictly read-only; never touches lockfile |
 | **Dependency Resolution** | Re-evaluates semver ranges against npm registry | Unpacks exact pinned versions from lockfile |
@@ -569,33 +536,31 @@ COMMAND: npm install (DEVELOPMENT ONLY)
 | **Clean-Slate Guarantee** | Overwrites in-place | Automatically deletes `node_modules/` before installing |
 | **Build Reproducibility** | Non-deterministic across machines | 100% byte-for-byte deterministic |
 
-
 ---
 
 ## 10. What Happens When I Push? (End-to-End Sequence Walkthrough)
 
 To appreciate modern automated infrastructure, consider the complete sequence of events triggered by a simple git push:
 
-**// DIAGRAM 06: END-TO-END EXECUTION SEQUENCE** SEQUENCE DIAGRAM
+**// DIAGRAM 06: END-TO-END EXECUTION SEQUENCE**
 
-```
+```text
 Author               GitHub Repo            Actions Runner         GitHub Pages          Cloudflare DNS           Visitor
-|  |  |  |  |  |
-| -- git push main -----> |  |  |  |  |
-|  | -- trigger webhook ---> |  |  |  |
-|  |  | -- actions/checkout -> |  |  |
-|  |  | -- npm ci -----------> |  |  |
-|  |  | -- npx eleventy -----> |  |  |
-|  |  | -- upload artifact --> |  |  |
-|  |  | -- deploy-pages -----> |  |  |
-|  |  | (OIDC Auth) | -- release update ---> |  |
-|  |  | <-- deployment OK ---- |  |  |
-|  | <-- workflow success -- |  |  |  |
-|  |  |  |
-|  |  | <-- DNS Query ------ |
-|  |  | --- Return IPs ----> |
-|  | <-- HTTP GET / -------+-------------------- |
-|  | --- 200 OK (HTML) ----+-------------------> |
+  |                       |                       |                      |                      |                    |
+  |-- git push main ----->|                       |                      |                      |                    |
+  |                       |-- trigger webhook --->|                      |                      |                    |
+  |                       |                       |-- actions/checkout ->|                      |                    |
+  |                       |                       |-- npm ci ----------->|                      |                    |
+  |                       |                       |-- npx eleventy ----->|                      |                    |
+  |                       |                       |-- upload artifact -->|                      |                    |
+  |                       |                       |-- deploy-pages ----->|                      |                    |
+  |                       |                       |   (OIDC Auth)        |-- release update --->|                    |
+  |                       |                       |<-- deployment OK ----|                      |                    |
+  |                       |<-- workflow success --|                      |                      |                    |
+  |                       |                       |                      |                      |<-- DNS Query ------|
+  |                       |                       |                      |                      |--- Return IPs ---->|
+  |                       |                       |                      |<-- HTTP GET / -------+--------------------|
+  |                       |                       |                      |--- 200 OK (HTML) ----+------------------->|
 ```
 
 1. **Local Commit & Push**: The engineer executes `git commit` and `git push origin main`. Git transfers commit objects to GitHub over SSH.
@@ -615,31 +580,30 @@ Author               GitHub Repo            Actions Runner         GitHub Pages 
 
 Infrastructure engineering is defined not by how systems behave when everything goes right, but by how issues are diagnosed when they break. Here are three real engineering problems solved during this build:
 
-**INCIDENT 01** **Broken CSS on Nested Article Paths**
+**INCIDENT 01: Broken CSS on Nested Article Paths**
 
-**Symptom:** The homepage loaded stylesheets properly, but navigating to `/posts/first-course.html` resulted in unstyled plain HTML.  
-**Root Cause:** `_includes/post.njk` used relative stylesheet links: `<link rel="stylesheet" href="styles/main.css">`. On nested URL paths, the browser resolved this relative to the current directory (`/posts/styles/main.css`), returning a 404.  
-**Fix:** Converted all asset links to root-relative paths: `href="/styles/main.css"` and `src="/js/main.js"`.
+- **Symptom:** The homepage loaded stylesheets properly, but navigating to `/posts/first-course.html` resulted in unstyled plain HTML.  
+- **Root Cause:** `_includes/post.njk` used relative stylesheet links: `<link rel="stylesheet" href="styles/main.css">`. On nested URL paths, the browser resolved this relative to the current directory (`/posts/styles/main.css`), returning a 404.  
+- **Fix:** Converted all asset links to root-relative paths: `href="/styles/main.css"` and `src="/js/main.js"`.
 
-**INCIDENT 02** **Git Divergence between Web CMS & Local Machine**
+**INCIDENT 02: Git Divergence between Web CMS & Local Machine**
 
-**Symptom:** Local `git push origin main` was rejected with `[rejected - non-fast-forward]`.  
-**Root Cause:** Pages CMS authors commits directly on the remote GitHub repository via the GitHub REST API. Meanwhile, local file edits occurred offline without pulling the remote changes first.  
-**Fix:** Executed `git pull --rebase origin main` to replay local commits on top of the remote CMS commits, maintaining a linear Git history without messy merge commits.
+- **Symptom:** Local `git push origin main` was rejected with `[rejected - non-fast-forward]`.  
+- **Root Cause:** Pages CMS authors commits directly on the remote GitHub repository via the GitHub REST API. Meanwhile, local file edits occurred offline without pulling the remote changes first.  
+- **Fix:** Executed `git pull --rebase origin main` to replay local commits on top of the remote CMS commits, maintaining a linear Git history without messy merge commits.
 
-**INCIDENT 03** **Template Parsing Crashes on Code Snippets**
+**INCIDENT 03: Template Parsing Crashes on Code Snippets**
 
-**Symptom:** Eleventy crashed during compilation with `AssertionError: undefined filter: safe`.  
-**Root Cause:** Eleventy pre-processes Markdown files with Liquid by default. When the article contained example Nunjucks code snippets like `{{ content | safe }}`, Liquid attempted to evaluate them as active directives.  
-**Fix:** Added `templateEngineOverride: md` to the article's front matter, instructing Eleventy to treat the file body strictly as pure Markdown without template evaluation.
+- **Symptom:** Eleventy crashed during compilation with `AssertionError: undefined filter: safe`.  
+- **Root Cause:** Eleventy pre-processes Markdown files with Liquid by default. When the article contained example Nunjucks code snippets like `{{ content | safe }}`, Liquid attempted to evaluate them as active directives.  
+- **Fix:** Added `templateEngineOverride: md` to the article's front matter, instructing Eleventy to treat the file body strictly as pure Markdown without template evaluation.
 
 ---
 
 ## 12. Technology Breakdown: What, Why & Role
 
-
 | Component | Technology | Operational Role | Rationale & Selection Criteria |
-| ------------------- | ---------------- | --------------------------- | -------------------------------------------------------------------- |
+| :--- | :--- | :--- | :--- |
 | **Version Control** | Git | Distributed change tracking | Immutable historical audit trail; standard for GitOps |
 | **Repository Host** | GitHub | Centralized collaboration | Native CI/CD hooks and secure OIDC integration |
 | **Build Engine** | Eleventy (11ty) | Static site generator | Zero client-side JS overhead, flexible templating, 0.12s build times |
@@ -648,7 +612,6 @@ Infrastructure engineering is defined not by how systems behave when everything 
 | **DNS Management** | Cloudflare DNS | Authoritative nameservers | Global Anycast network, sub-10ms resolution, robust API |
 | **Content Editor** | Pages CMS | Headless Git-backed CMS | Web authoring directly committed to repository as Markdown |
 | **Design System** | Neubrutalist CSS | Frontend presentation | High-contrast readability, 0 runtime framework dependencies |
-
 
 ---
 
@@ -665,5 +628,4 @@ Infrastructure engineering is defined not by how systems behave when everything 
 
 - **Live Website**: [https://wvrner.com](https://wvrner.com)
 - **Source Code Repository**: [https://github.com/WVRNER/portfolio](https://github.com/WVRNER/portfolio)
-- **Author**: Nima Hosseini ([@wvrner](https://github.com/wvrner))\n
-
+- **Author**: Nima Hosseini ([@wvrner](https://github.com/wvrner))
