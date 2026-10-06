@@ -54,7 +54,7 @@
     />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/main.css?v=20261006k8s" />
+    <link rel="stylesheet" href="styles/main.css?v=20261006tight" />
     <link rel="stylesheet" href="styles/animations.css" />
     <!-- Critical Hero & Mobile Styles (Guarantees frames, shadows, and tool chips render even if external CSS is cached) -->
     <style id="hero-critical-styles">
@@ -815,14 +815,40 @@
             </ul>
           </div>
 
-          <!-- Card 4: GitHub Actions / CI/CD -->
+          <!-- Card 4: Kubernetes / Orchestration -->
           <div class="quad-card card-blue">
             <div>
-              <span class="quad-card-num">04 / DELIVERY</span>
+              <span class="quad-card-num">04 / ORCHESTRATION</span>
+              <h3 class="quad-card-title">Kubernetes</h3>
+              <p class="quad-card-text">
+                Automated container scheduling, self-healing replica sets, and
+                declarative cluster management across distributed nodes.
+              </p>
+            </div>
+            <ul class="quad-card-bullets">
+              <li>
+                <strong>Workload Reconciliation:</strong> Deployments, ReplicaSets
+                &amp; control loops
+              </li>
+              <li>
+                <strong>Cluster Ingress:</strong> CoreDNS service discovery,
+                ClusterIP &amp; Ingress routing
+              </li>
+              <li>
+                <strong>State &amp; Config:</strong> Decoupled ConfigMaps, Secrets
+                &amp; PersistentVolumeClaims
+              </li>
+            </ul>
+          </div>
+
+          <!-- Card 5: GitHub Actions / CI/CD -->
+          <div class="quad-card card-yellow card-span-full">
+            <div>
+              <span class="quad-card-num">05 / DELIVERY</span>
               <h3 class="quad-card-title">GitHub Actions CI/CD</h3>
               <p class="quad-card-text">
                 Automated delivery pipeline connecting git pushes to CloudFront
-                edge rollouts.
+                edge rollouts with zero-downtime keyless deployment.
               </p>
             </div>
             <ul class="quad-card-bullets">
@@ -839,6 +865,22 @@
                 invalidation on every deploy
               </li>
             </ul>
+          </div>
+        </div>
+
+        <!-- Linear Monospace Utility & Tooling Strip -->
+        <div class="foundations-tools-strip" aria-label="Extended Tooling &amp; Technologies">
+          <span class="tools-strip-tag">// EXTENDED TOOLING:</span>
+          <div class="tools-strip-list">
+            <span class="tools-strip-item">Prometheus</span>
+            <span class="tools-strip-sep" aria-hidden="true">&bull;</span>
+            <span class="tools-strip-item">Grafana</span>
+            <span class="tools-strip-sep" aria-hidden="true">&bull;</span>
+            <span class="tools-strip-item">Backup &amp; Recovery</span>
+            <span class="tools-strip-sep" aria-hidden="true">&bull;</span>
+            <span class="tools-strip-item">Security</span>
+            <span class="tools-strip-sep" aria-hidden="true">&bull;</span>
+            <span class="tools-strip-item">Python</span>
           </div>
         </div>
       </section>

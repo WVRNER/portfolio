@@ -1402,6 +1402,117 @@ button {
   box-shadow: none !important;
 }
 
+/* Tight, Focused Framing for #foundations ("Packets before pixels") */
+#foundations.gum-section {
+  max-width: 1040px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding-top: 60px !important;
+  padding-bottom: 70px !important;
+}
+
+#foundations .section-lead-block {
+  max-width: 1040px;
+  margin-bottom: 28px;
+}
+
+@media (min-width: 768px) {
+  .quad-card.card-span-full {
+    grid-column: 1 / -1;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr) !important;
+    gap: 32px !important;
+    align-items: center !important;
+  }
+  .quad-card.card-span-full .quad-card-bullets {
+    border-top: none !important;
+    border-left: 1.5px solid rgba(0, 0, 0, 0.18) !important;
+    padding-top: 0 !important;
+    padding-left: 28px !important;
+  }
+}
+
+/* Linear Monospace Supporting Tooling Strip (Completely black, white text, no shine) */
+.foundations-tools-strip {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border: 2.5px solid #000000 !important;
+  border-radius: 0px !important;
+  padding: 14px 22px !important;
+  margin-top: 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 12px 18px !important;
+  box-sizing: border-box !important;
+  box-shadow: none !important;
+  font-family: var(--font-mono, "Space Mono", monospace) !important;
+}
+
+[data-theme="dark"] .foundations-tools-strip {
+  background: #000000 !important;
+  border-color: #FFFFFF !important;
+  color: #FFFFFF !important;
+}
+
+.tools-strip-tag {
+  font-weight: 800 !important;
+  color: #FFFFFF !important;
+  font-size: 12px !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+.tools-strip-list {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px 12px !important;
+}
+
+.tools-strip-item {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #FFFFFF !important;
+  white-space: nowrap !important;
+}
+
+.tools-strip-sep {
+  color: #777777 !important;
+  font-size: 10px !important;
+  user-select: none !important;
+}
+
+@media (max-width: 768px) {
+  #foundations.gum-section {
+    padding-top: 36px !important;
+    padding-bottom: 48px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .foundations-tools-strip {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    padding: 12px 14px !important;
+  }
+
+  .tools-strip-tag {
+    font-size: 11px !important;
+  }
+
+  .tools-strip-list {
+    gap: 6px 10px !important;
+  }
+
+  .tools-strip-item {
+    font-size: 12px !important;
+  }
+}
+
 #learning-exhibition .gum-exhibition-wrapper,
 #learning-exhibition .gum-exhibition-wrapper * {
   border-radius: 0px !important;
