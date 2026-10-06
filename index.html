@@ -54,10 +54,15 @@
     />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/main.css?v=20261006coral" />
+    <link rel="stylesheet" href="styles/main.css?v=20261006v2" />
     <link rel="stylesheet" href="styles/animations.css" />
     <!-- Critical Hero & Mobile Styles (Guarantees frames, shadows, and tool chips render even if external CSS is cached) -->
     <style id="hero-critical-styles">
+      .hero-title-badge,
+      .gum-hero-centered-inner .hero-title-badge {
+        background: #C0C0C0 !important;
+        color: #000000 !important;
+      }
       .hero-desc-lead {
         text-align: center;
         max-width: 700px;
@@ -673,40 +678,15 @@
 
           <!-- Main Title -->
           <h1 class="hero-main-title">
-            Make the Cut <span class="hero-title-badge">in systems</span>.
+            Make the Cut <span class="hero-title-badge">in systems.</span>
           </h1>
 
-          <!-- Lead Subhead: Max 2 short sentences, 2 type treatments (regular sans + mono tool chips), WCAG AA compliant -->
+          <!-- Lead Subhead: Max 2 short sentences, WCAG AA compliant -->
           <p class="hero-desc-lead">
             <strong class="lead-role-text">Aspiring DevOps Engineer</strong>
-            documenting real cloud infrastructure. Built static hosting on
-            <a
-              href="infra/terraform/main.tf"
-              class="lead-mono-chip"
-              title="Inspect Terraform AWS hosting configuration"
-              target="_blank"
-              rel="noopener noreferrer"
-              >AWS</a
-            >
-            provisioned with
-            <a
-              href="infra/terraform/main.tf"
-              class="lead-mono-chip"
-              title="Inspect Terraform code"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Terraform</a
-            >
-            and deployed via
-            <a
-              href=".github/workflows/deploy.yml"
-              class="lead-mono-chip"
-              title="Inspect GitHub Actions OIDC workflow"
-              target="_blank"
-              rel="noopener noreferrer"
-              >GitHub Actions</a
-            >
-            using keyless OIDC.
+            documenting real cloud infrastructure. Built static hosting on AWS
+            provisioned with Terraform and deployed via GitHub Actions using
+            keyless OIDC.
           </p>
 
           <!-- Quick Action Button Row (Centered: Primary Filled Black + Secondary Outlined) -->
@@ -842,7 +822,7 @@
           </div>
 
           <!-- Card 5: GitHub Actions / CI/CD -->
-          <div class="quad-card card-coral card-span-full">
+          <div class="quad-card card-actions card-coral card-span-full">
             <div>
               <span class="quad-card-num">05 / DELIVERY</span>
               <h3 class="quad-card-title">GitHub Actions CI/CD</h3>
@@ -2111,7 +2091,7 @@
           <div id="chapter-panel-actions" class="chapter-content-body">
             <div class="chapter-notes-column">
               <div class="chapter-status-row">
-                <span class="chapter-badge" style="background: #FF5C58; color: #FFFFFF"
+                <span class="chapter-badge" style="background: #16183A; color: #FFFFFF"
                   >KEYLESS OIDC</span
                 >
                 <span style="font-family: var(--font-mono); font-size: 12px"

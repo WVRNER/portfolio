@@ -63,6 +63,8 @@ summary,
   --gum-lavender: #C4B5FD;
   --gum-white: #FFFFFF;
   --gum-black: #000000;
+  --gum-silver: #C0C0C0;
+  --gum-navy: #16183A;
 
   /* Royal Accent from Original Site */
   --royal-indigo: #27187E;
@@ -580,7 +582,7 @@ button {
 
 .hero-title-badge {
   display: inline-block;
-  background: var(--gum-pink);
+  background: var(--gum-silver, #C0C0C0);
   color: #000000;
   padding: 4px 20px;
   border: var(--border-lg);
@@ -886,7 +888,41 @@ button {
 .quad-card.card-pink { background: var(--gum-pink); }
 .quad-card.card-green { background: var(--gum-green); }
 .quad-card.card-blue { background: var(--gum-blue); }
-.quad-card.card-coral { background: #FF5C58; }
+.quad-card.card-coral,
+.quad-card.card-actions {
+  background: #16183A;
+  color: #FFFFFF;
+}
+
+.quad-card.card-coral .quad-card-title,
+.quad-card.card-actions .quad-card-title,
+.quad-card.card-coral .quad-card-text,
+.quad-card.card-actions .quad-card-text {
+  color: #FFFFFF;
+}
+
+.quad-card.card-coral .quad-card-num,
+.quad-card.card-actions .quad-card-num {
+  background: #FFFFFF;
+  color: #16183A;
+  border: 1.5px solid #000000;
+}
+
+.quad-card.card-coral .quad-card-bullets,
+.quad-card.card-actions .quad-card-bullets {
+  border-top-color: rgba(255, 255, 255, 0.25) !important;
+  border-left-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.quad-card.card-coral .quad-card-bullets li,
+.quad-card.card-actions .quad-card-bullets li {
+  color: #E2E8F0;
+}
+
+.quad-card.card-coral .quad-card-bullets li strong,
+.quad-card.card-actions .quad-card-bullets li strong {
+  color: #FFFFFF;
+}
 
 .quad-card-num {
   font-family: var(--font-mono);
@@ -1187,7 +1223,16 @@ button {
 .chapter-tab-btn.active:nth-child(2) { background: var(--gum-pink); }
 .chapter-tab-btn.active:nth-child(3) { background: var(--gum-green); }
 .chapter-tab-btn.active:nth-child(4) { background: var(--gum-blue); }
-.chapter-tab-btn.active:nth-child(5) { background: #FF5C58; }
+.chapter-tab-btn.active:nth-child(5) {
+  background: #16183A;
+  color: #FFFFFF;
+}
+
+.chapter-tab-btn.active:nth-child(5) .tab-num,
+.chapter-tab-btn.active:nth-child(5) .tab-title,
+.chapter-tab-btn.active:nth-child(5) .tab-sub {
+  color: #FFFFFF;
+}
 
 .tab-num {
   font-family: var(--font-mono);
@@ -4842,7 +4887,7 @@ a[href*="#cv"].gum-btn:active {
 
 .gum-hero-centered-inner .hero-title-badge {
   display: inline-block;
-  background: var(--gum-pink);
+  background: var(--gum-silver, #C0C0C0);
   color: #000000;
   padding: 4px 22px;
   border: 3.5px solid #000000;
