@@ -778,65 +778,27 @@ function initBlogPagination() {
    - Visual status pills for key architectural metrics
    ========================================================================== */
 function initRichArticleTables() {
-  const articleTables = document.querySelectorAll(".post-body-section table, .blog-article-body table");
-  if (!articleTables.length) return;
+  // 1. Initialize pre-rendered rich-table-card elements (from build-time transform)
+  const cards = document.querySelectorAll(".rich-table-card");
+  cards.forEach(card => {
+    if (card.dataset.initialized === "true") return;
+    card.dataset.initialized = "true";
 
-  articleTables.forEach((table, index) => {
-    // Avoid double initialization
-    if (table.closest(".rich-table-card")) return;
+    const table = card.querySelector("table");
+    if (!table) return;
 
-    // Detect preceding heading for context title
-    let tableTitle = "Technical Specification Matrix";
-    let prevEl = table.previousElementSibling;
-    while (prevEl) {
-      if (/^H[1-6]$/i.test(prevEl.tagName)) {
-        tableTitle = prevEl.textContent.trim();
-        break;
-      }
-      prevEl = prevEl.previousElementSibling;
-    }
+    const tbody = table.querySelector("tbody");
+    if (!tbody) return;
 
-    const rows = Array.from(table.querySelectorAll("tbody tr"));
+    const rows = Array.from(tbody.querySelectorAll("tr"));
     const totalRows = rows.length;
-
-    // Build card wrapper
-    const card = document.createElement("div");
-    card.className = "rich-table-card";
-
-    // Header toolbar
-    const headerBar = document.createElement("div");
-    headerBar.className = "rich-table-header";
-    headerBar.innerHTML = `
-      <div class="rich-table-title-group">
-        <span class="rich-table-icon" aria-hidden="true">📊</span>
-        <h4 class="rich-table-title">${tableTitle}</h4>
-        <span class="rich-table-count">${totalRows} ${totalRows === 1 ? "record" : "records"}</span>
-      </div>
-      <div class="rich-table-search-box">
-        <span class="rich-table-search-icon" aria-hidden="true">🔍</span>
-        <input type="text" class="rich-table-search-input" placeholder="Search table..." aria-label="Search ${tableTitle}" />
-      </div>
-    `;
-
-    // Scroll wrapper
-    const scrollArea = document.createElement("div");
-    scrollArea.className = "rich-table-scroll-area";
-
-    // Footer hint for mobile
-    const footerHint = document.createElement("div");
-    footerHint.className = "rich-table-footer-hint";
-    footerHint.innerHTML = "<span>⇄ Swipe horizontally to explore full table</span>";
-
-    // Enhance table headers with sort functionality
+    const countBadge = card.querySelector(".rich-table-count");
+    const searchInput = card.querySelector(".rich-table-search-input");
     const headers = table.querySelectorAll("thead th");
-    headers.forEach((th, colIdx) => {
-      const originalText = th.textContent.trim();
-      th.setAttribute("role", "columnheader");
-      th.setAttribute("tabindex", "0");
-      th.setAttribute("title", `Click to sort by ${originalText}`);
-      th.innerHTML = `${originalText} <span class="sort-icon" aria-hidden="true">⇅</span>`;
 
-      let sortDir = 0; // 0 = none, 1 = asc, -1 = desc
+    // Click to sort
+    headers.forEach((th, colIdx) => {
+      let sortDir = 0;
       th.addEventListener("click", () => {
         sortDir = sortDir === 1 ? -1 : 1;
         headers.forEach(h => {
@@ -844,13 +806,9 @@ function initRichArticleTables() {
           const icon = h.querySelector(".sort-icon");
           if (icon) icon.textContent = "⇅";
         });
-
         th.classList.add(sortDir === 1 ? "sort-asc" : "sort-desc");
         const icon = th.querySelector(".sort-icon");
         if (icon) icon.textContent = sortDir === 1 ? "▲" : "▼";
-
-        const tbody = table.querySelector("tbody");
-        if (!tbody) return;
 
         const currentRows = Array.from(tbody.querySelectorAll("tr"));
         currentRows.sort((a, b) => {
@@ -858,7 +816,6 @@ function initRichArticleTables() {
           const bText = (b.children[colIdx]?.textContent || "").trim();
           return sortDir * aText.localeCompare(bText, undefined, { numeric: true, sensitivity: "base" });
         });
-
         currentRows.forEach(r => tbody.appendChild(r));
       });
 
@@ -870,32 +827,7 @@ function initRichArticleTables() {
       });
     });
 
-    // Badge styling enhancements for cell contents
-    rows.forEach(row => {
-      Array.from(row.children).forEach(td => {
-        const text = td.textContent.trim();
-
-        // 1. Success badges (green)
-        if (/^(Zero|Pre-compiled|100%|Instant|Sub-10ms|\$0\.00|Zero hosting overhead|Zero cost|Read-only|High availability|100% byte-for-byte deterministic|Zero \(Read-only static files; no server runtime\))$/i.test(text)) {
-          td.innerHTML = `<span class="tbl-badge tbl-badge-green"><span class="tbl-badge-dot"></span>${text}</span>`;
-        }
-        // 2. Risk / Warning badges (red)
-        else if (/^(High|SQL injection|Complex|Non-deterministic|Vulnerabilities|High \(SQL injection, XSS, plugin CVEs\))$/i.test(text)) {
-          td.innerHTML = `<span class="tbl-badge tbl-badge-red"><span class="tbl-badge-dot"></span>${text}</span>`;
-        }
-        // 3. Performance / Speed badges (blue)
-        else if (/^(15ms\s*–\s*50ms|200ms\s*–\s*1200ms|15ms\s*–\s*50ms \(served directly from Anycast edge\)|200ms\s*–\s*1200ms \(dependent on DB & cache\))$/i.test(text)) {
-          td.innerHTML = `<span class="tbl-badge tbl-badge-blue">${text}</span>`;
-        }
-        // 4. Technology names (teal)
-        else if (/^(Git|GitHub|Eleventy \(11ty\)|GitHub Actions|GitHub Pages|Cloudflare DNS|Pages CMS|Neubrutalist CSS)$/i.test(text)) {
-          td.innerHTML = `<span class="tbl-badge tbl-badge-teal">${text}</span>`;
-        }
-      });
-    });
-
     // Real-time live search filter
-    const searchInput = headerBar.querySelector(".rich-table-search-input");
     if (searchInput) {
       searchInput.addEventListener("input", () => {
         const query = searchInput.value.toLowerCase().trim();
@@ -906,15 +838,60 @@ function initRichArticleTables() {
           row.style.display = matches ? "" : "none";
           if (matches) matchCount++;
         });
-
-        const countBadge = headerBar.querySelector(".rich-table-count");
         if (countBadge) {
-          countBadge.textContent = query ? `${matchCount} found` : `${totalRows} records`;
+          countBadge.textContent = query ? `${matchCount} found` : `${totalRows} ${totalRows === 1 ? "record" : "records"}`;
         }
       });
     }
+  });
 
-    // Insert wrapper in DOM
+  // 2. Fallback: wrap any standalone markdown table that was not pre-rendered
+  const standaloneTables = document.querySelectorAll(".post-body-section table, .blog-article-body table");
+  standaloneTables.forEach(table => {
+    if (table.closest(".rich-table-card")) return;
+
+    let tableTitle = "Technical Specification Matrix";
+    let prevEl = table.previousElementSibling;
+    while (prevEl) {
+      if (/^H[1-6]$/i.test(prevEl.tagName)) {
+        tableTitle = prevEl.textContent.trim().replace(/^\d+\.\s*/, "");
+        break;
+      }
+      prevEl = prevEl.previousElementSibling;
+    }
+
+    const rows = Array.from(table.querySelectorAll("tbody tr"));
+    const totalRows = rows.length;
+
+    const card = document.createElement("div");
+    card.className = "rich-table-card";
+
+    let icon = "📊";
+    if (/npm|ci|install/i.test(tableTitle)) icon = "📦";
+    else if (/architecture|static|dynamic/i.test(tableTitle)) icon = "⚡";
+    else if (/technology|breakdown|component/i.test(tableTitle)) icon = "🛠️";
+
+    const headerBar = document.createElement("div");
+    headerBar.className = "rich-table-header";
+    headerBar.innerHTML = `
+      <div class="rich-table-title-group">
+        <span class="rich-table-icon" aria-hidden="true">${icon}</span>
+        <h4 class="rich-table-title">${tableTitle}</h4>
+        <span class="rich-table-count">${totalRows} ${totalRows === 1 ? "record" : "records"}</span>
+      </div>
+      <div class="rich-table-search-box">
+        <span class="rich-table-search-icon" aria-hidden="true">🔍</span>
+        <input type="text" class="rich-table-search-input" placeholder="Search table..." aria-label="Search ${tableTitle}" />
+      </div>
+    `;
+
+    const scrollArea = document.createElement("div");
+    scrollArea.className = "rich-table-scroll-area";
+
+    const footerHint = document.createElement("div");
+    footerHint.className = "rich-table-footer-hint";
+    footerHint.innerHTML = "<span>⇄ Swipe horizontally to explore full table</span>";
+
     table.parentNode.insertBefore(card, table);
     scrollArea.appendChild(table);
     card.appendChild(headerBar);
