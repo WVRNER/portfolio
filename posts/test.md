@@ -1,12 +1,13 @@
 ---
 title: Yahoo
 subtitle: sdasdasdcas
+cover_image: https://fastly.picsum.photos/id/354/200/200.jpg?hmac=ykMwenrB5tcaT_UHlYwh2ZzAZ4Km48YOmwJTFCiodJ4
 excerpt: Click Login with Turbo
 category: DEVOPS & INFRASTRUCTURE
 post_tags:
   - "#DevOps"
 published: true
-featured: false
+featured: true
 date: 2026-10-07
 display_date: October 2026
 read_time: 5 min read
@@ -14,8 +15,7 @@ slug: test
 toc: false
 callout_box:
   enable: false
-external_links:
-  - open_in_new_tab: true
+external_links: []
 difficulty: null
 project_status: In Progress
 technologies:
