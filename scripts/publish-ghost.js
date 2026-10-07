@@ -39,33 +39,42 @@ try {
   console.log("\n→ Checking local Ghost");
 
   const fs = require("fs");
-  const env = Object.fromEntries(
-    fs.readFileSync(".ghost.env", "utf8")
-      .split(/\\r?\\n/)
-      .filter(line => line.trim() && !line.trim().startsWith("#"))
-      .map(line => {
-        const i = line.indexOf("=");
-        return [line.slice(0, i).trim(), line.slice(i + 1).trim()];
-      })
-  );
 
-  const ghostUrl = env.GHOST_URL?.replace(/\/$/, "");
-  const ghostKey = env.GHOST_CONTENT_API_KEY;
+  if (!fs.existsSync(".ghost.env")) {
+    throw new Error(".ghost.env does not exist.");
+  }
+
+  const envText = fs.readFileSync(".ghost.env", "utf8");
+
+  const getEnv = (name) => {
+    const line = envText
+      .split(/\r?\n/)
+      .find(line => line.startsWith(`${name}=`));
+
+    return line
+      ? line.slice(line.indexOf("=") + 1).trim()
+      : "";
+  };
+
+  const ghostUrl = getEnv("GHOST_URL").replace(/\/$/, "");
+  const ghostKey = getEnv("GHOST_CONTENT_API_KEY");
 
   if (!ghostUrl || !ghostKey) {
     throw new Error(".ghost.env is missing Ghost configuration.");
   }
 
+  console.log(`✓ Configuration loaded for ${ghostUrl}`);
+
   try {
-    execSync(
-      `curl -sf "${ghostUrl}/ghost/api/content/posts/?key=${ghostKey}&limit=1" >/dev/null`,
-      { stdio: "inherit", shell: "/bin/bash" }
+    const response = execSync(
+      `curl -sf "${ghostUrl}/ghost/api/content/posts/?key=${ghostKey}&limit=1"`,
+      { encoding: "utf8", shell: "/bin/bash" }
     );
+
+    JSON.parse(response);
     console.log("✓ Ghost Content API reachable");
   } catch {
-    throw new Error(
-      `Ghost Content API is not reachable at ${ghostUrl}.`
-    );
+    throw new Error(`Ghost Content API is not reachable at ${ghostUrl}.`);
   }
 
   // Sync Ghost and build Eleventy.
