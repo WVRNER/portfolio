@@ -1,7 +1,7 @@
 ---
 title: Yahoo
 subtitle: sdasdasdcas
-cover_image: /images/posts/img_3970.jpg
+cover_image: https://fastly.picsum.photos/id/354/200/200.jpg?hmac=ykMwenrB5tcaT_UHlYwh2ZzAZ4Km48YOmwJTFCiodJ4
 excerpt: Click Login with Turbo
 category: DEVOPS & INFRASTRUCTURE
 post_tags:
