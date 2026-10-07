@@ -1517,13 +1517,20 @@ button {
    2. Currently Learning (#learning-exhibition) -> Sharp corners + Zero shadow
    ========================================================================== */
 #foundations .gum-quad-grid {
-  border-radius: 0px !important;
-  box-shadow: var(--shadow-lg) !important;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 24px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
 }
 
-#foundations .gum-quad-grid * {
-  border-radius: 0px !important;
-  box-shadow: none !important;
+@media (min-width: 768px) {
+  #foundations .gum-quad-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px !important;
+  }
 }
 
 /* Tight, Focused Framing for #foundations ("Packets before pixels") */
@@ -6525,7 +6532,7 @@ a[href*="#cv"].gum-btn:active {
   position: relative !important;
   background: #000000 !important;
   border: 1.5px solid #000000 !important;
-  border-radius: 12px !important;
+  border-radius: 14px !important;
   box-shadow: 8px 8px 0px #FF90E8 !important;
   max-width: 1080px !important;
   width: 100% !important;
@@ -6554,7 +6561,7 @@ a[href*="#cv"].gum-btn:active {
   width: 100% !important;
   background: #FFFFFF !important;
   border: 1.5px solid #000000 !important;
-  border-radius: 8px !important;
+  border-radius: 14px !important;
   box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
   padding: 24px 26px !important;
   display: flex !important;
@@ -6795,12 +6802,12 @@ a[href*="#cv"].gum-btn:active {
     grid-template-columns: 1fr !important;
     padding: 20px 16px 28px !important;
     gap: 24px !important;
-    border-radius: 10px !important;
+    border-radius: 14px !important;
     box-shadow: 6px 6px 0px #FF90E8 !important;
   }
 
   .dispatch-post-card {
-    border-radius: 8px !important;
+    border-radius: 14px !important;
     padding: 20px 18px !important;
   }
 
@@ -8021,6 +8028,7 @@ a[href*="#cv"].gum-btn:active {
   background: #F4F4F0 !important;
   color: #000000 !important;
   border: 1.5px solid #000000 !important;
+  border-radius: 14px !important;
   box-shadow: none !important;
 }
 
