@@ -6,7 +6,7 @@
 
 backend:
   name: turbo-github
-  turbo_site_id: your-site-id # Replace with your Site UUID from the Decap Turbo dashboard (Overview tab)
+  turbo_site_id: "991ede12-5da9-4025-ac27-8e1d6c7bd5c8"
   branch: main
   # Note: Decap Turbo control plane handles the GitHub App auth and repo binding.
   # Everything else (proxy endpoint, content cache) is resolved automatically from turbo_site_id.
