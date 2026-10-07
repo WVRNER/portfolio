@@ -35,17 +35,36 @@ try {
   // Make sure our local main hasn't fallen behind GitHub.
   run("git pull --ff-only origin main");
 
-  // Ghost must be running locally.
+  // Ghost must be running locally and the Content API must respond.
   console.log("\n→ Checking local Ghost");
+
+  const fs = require("fs");
+  const env = Object.fromEntries(
+    fs.readFileSync(".ghost.env", "utf8")
+      .split(/\\r?\\n/)
+      .filter(line => line.trim() && !line.trim().startsWith("#"))
+      .map(line => {
+        const i = line.indexOf("=");
+        return [line.slice(0, i).trim(), line.slice(i + 1).trim()];
+      })
+  );
+
+  const ghostUrl = env.GHOST_URL?.replace(/\/$/, "");
+  const ghostKey = env.GHOST_CONTENT_API_KEY;
+
+  if (!ghostUrl || !ghostKey) {
+    throw new Error(".ghost.env is missing Ghost configuration.");
+  }
 
   try {
     execSync(
-      'curl -sf "http://localhost:2368/ghost/api/content/" >/dev/null',
+      `curl -sf "${ghostUrl}/ghost/api/content/posts/?key=${ghostKey}&limit=1" >/dev/null`,
       { stdio: "inherit", shell: "/bin/bash" }
     );
+    console.log("✓ Ghost Content API reachable");
   } catch {
     throw new Error(
-      "Ghost is not reachable at http://localhost:2368. Start Ghost first."
+      `Ghost Content API is not reachable at ${ghostUrl}.`
     );
   }
 
