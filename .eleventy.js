@@ -33,16 +33,16 @@ module.exports = function (eleventyConfig) {
       .filter((post) => post.data.published !== false)
       .sort((a, b) => {
         // Featured posts on top
-        const isFeaturedA = a.data.featured ? 1 : 0;
-        const isFeaturedB = b.data.featured ? 1 : 0;
+        const isFeaturedA = (a.data.featured === true || a.data.featured === "true") ? 1 : 0;
+        const isFeaturedB = (b.data.featured === true || b.data.featured === "true") ? 1 : 0;
         if (isFeaturedB !== isFeaturedA) {
           return isFeaturedB - isFeaturedA;
         }
 
         // Then sort newest first
-        const dateA = new Date(a.data.date || a.date);
-        const dateB = new Date(b.data.date || b.date);
-        return (dateB.getTime() - dateA.getTime()) || b.inputPath.localeCompare(a.inputPath);
+        const timeA = new Date(a.data.date || a.date).getTime() || 0;
+        const timeB = new Date(b.data.date || b.date).getTime() || 0;
+        return (timeB - timeA) || b.inputPath.localeCompare(a.inputPath);
       });
   });
 

@@ -2572,7 +2572,7 @@
               <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title }}</a>
             </h3>
 
-            {% if spotlightPost.data.subtitle %}
+            {% if spotlightPost.data.subtitle and spotlightPost.data.subtitle != spotlightPost.data.excerpt %}
             <p class="dispatch-card-subtitle">{{ spotlightPost.data.subtitle }}</p>
             {% endif %}
 
