@@ -6,7 +6,10 @@
     "dev": "npx vite",
     "start": "npx serve .",
     "build": "npx vite build",
-    "preview": "npx vite preview"
+    "preview": "npx vite preview",
+    "ghost:sync": "node scripts/sync-ghost.js",
+    "site:build": "npx @11ty/eleventy",
+    "publish:ghost": "node scripts/sync-ghost.js && npx @11ty/eleventy"
   },
   "keywords": [
     "wvrner",

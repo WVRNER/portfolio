@@ -26,7 +26,10 @@ module.exports = function (eleventyConfig) {
   // Automatically collect every Markdown blog post, sorted with featured on top, then newest first
   eleventyConfig.addCollection("posts", function (collectionApi) {
     return collectionApi
-      .getFilteredByGlob("./posts/*.md")
+      .getFilteredByGlob([
+        "./posts/*.md",
+        "./posts/ghost/*.html"
+      ])
       .filter((post) => post.data.published !== false)
       .sort((a, b) => {
         // Featured posts on top
