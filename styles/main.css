@@ -7900,15 +7900,51 @@ a[href*="#cv"].gum-btn:active {
      and show shadows only on hover.
    ========================================================================== */
 
-/* 1. This website hosted on GitHub section: No shadows, black typography */
+/* 1. This website hosted on GitHub section: Compact, de-framed, no shadows */
+#systems-architecture.gum-section {
+  padding-top: 40px !important;
+  padding-bottom: 40px !important;
+}
+
 #systems-architecture .gum-infra-card,
 .gum-infra-card {
+  padding: 22px 24px !important;
+  gap: 14px !important;
   box-shadow: none !important;
 }
 
 #systems-architecture .gum-infra-card *,
 .gum-infra-card * {
   box-shadow: none !important;
+}
+
+#systems-architecture .infra-card-title {
+  font-size: clamp(17px, 2.1vw, 22px) !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+}
+
+#systems-architecture .infra-nodes-flow {
+  gap: 8px !important;
+}
+
+#systems-architecture .node-btn {
+  padding: 9px 12px !important;
+  gap: 3px !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.15) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+#systems-architecture .node-btn:hover {
+  border-color: #000000 !important;
+  transform: translateY(-1px) !important;
+}
+
+#systems-architecture .node-btn.active {
+  background: #21a193 !important;
+  border-color: #21a193 !important;
 }
 
 #systems-architecture .gum-infra-card,
@@ -7924,16 +7960,33 @@ a[href*="#cv"].gum-btn:active {
   color: #000000 !important;
 }
 
-#systems-architecture .gum-infra-card .gum-btn-black {
+#systems-architecture .gum-infra-card .gum-btn-white {
   background: #FFFFFF !important;
   color: #000000 !important;
   border: 1.5px solid #000000 !important;
   box-shadow: none !important;
 }
 
-#systems-architecture .gum-infra-card .gum-btn-black:hover {
+#systems-architecture .gum-infra-card .gum-btn-white:hover {
   background: var(--gum-yellow, #FFC900) !important;
   color: #000000 !important;
+}
+
+[data-theme="dark"] #systems-architecture .node-btn {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] #systems-architecture .gum-infra-card {
+  background: #141416 !important;
+  border-color: #333338 !important;
+}
+
+[data-theme="dark"] #systems-architecture .gum-infra-card * {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] #systems-architecture .node-btn.active * {
+  color: #FFFFFF !important;
 }
 
 /* 2. Packets before pixels: Remove all shadows and hover shadows */
@@ -8025,7 +8078,7 @@ a[href*="#cv"].gum-btn:active {
 .quad-card.card-blue,
 .quad-card.card-coral,
 .quad-card.card-actions {
-  background: #F4F4F0 !important;
+  background: #FFFFFF !important;
   color: #000000 !important;
   border: 1.5px solid #000000 !important;
   border-radius: 14px !important;
@@ -8047,7 +8100,7 @@ a[href*="#cv"].gum-btn:active {
 
 #foundations .quad-card > div:first-child {
   padding: 34px 32px 24px !important;
-  background: #F4F4F0 !important;
+  background: #FFFFFF !important;
   flex: 1 0 auto !important;
   display: flex !important;
   flex-direction: column !important;
@@ -8060,7 +8113,7 @@ a[href*="#cv"].gum-btn:active {
 
 #foundations .quad-card .quad-card-num,
 .quad-card .quad-card-num {
-  background: #F4F4F0 !important;
+  background: #FFFFFF !important;
   color: #000000 !important;
   border: 1.5px solid #000000 !important;
   border-radius: 4px !important;
@@ -8069,7 +8122,7 @@ a[href*="#cv"].gum-btn:active {
 
 #foundations .quad-card .quad-card-bullets,
 .quad-card .quad-card-bullets {
-  background: #F4F4F0 !important;
+  background: #FFFFFF !important;
   color: #000000 !important;
   border-top: 1.5px solid rgba(0, 0, 0, 0.18) !important;
   border-bottom-left-radius: 12px !important;
@@ -8125,7 +8178,7 @@ a[href*="#cv"].gum-btn:active {
   }
   #foundations .quad-card.card-span-full > div:first-child {
     padding: 36px 36px !important;
-    background: #F4F4F0 !important;
+    background: #FFFFFF !important;
     height: 100% !important;
     box-sizing: border-box !important;
     display: flex !important;
@@ -8135,7 +8188,7 @@ a[href*="#cv"].gum-btn:active {
   #foundations .quad-card.card-span-full .quad-card-bullets {
     border-top: none !important;
     border-left: 1.5px solid rgba(0, 0, 0, 0.18) !important;
-    background: #F4F4F0 !important;
+    background: #FFFFFF !important;
     border-radius: 0 !important;
     padding: 36px 36px !important;
     height: 100% !important;
