@@ -6,7 +6,7 @@ category: DEVOPS & INFRASTRUCTURE
 post_tags:
   - "#DevOps"
 published: true
-featured: false
+featured: true
 date: 2026-10-07
 display_date: October 2026
 read_time: 5 min read
