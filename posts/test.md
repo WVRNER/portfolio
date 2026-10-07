@@ -1,6 +1,7 @@
 ---
 title: Yahoo
 subtitle: sdasdasdcas
+cover_image: /images/posts/img_3970.jpg
 excerpt: Click Login with Turbo
 category: DEVOPS & INFRASTRUCTURE
 post_tags:
@@ -14,8 +15,7 @@ slug: test
 toc: false
 callout_box:
   enable: false
-external_links:
-  - open_in_new_tab: true
+external_links: []
 difficulty: null
 project_status: In Progress
 technologies:
