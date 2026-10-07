@@ -4199,38 +4199,45 @@ a[href*="#cv"].gum-btn:active {
     margin-top: 40px;
   }
   .transmission-gallery-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-    align-items: stretch;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    align-items: start !important;
   }
-  .transmission-gallery-grid .gallery-tile:nth-child(1) {
-    grid-column: 1;
-    min-height: auto;
-    padding: 18px 14px;
+  .transmission-gallery-grid .gallery-tile:nth-child(1),
+  .transmission-gallery-grid .tile-big {
+    grid-column: 1 / -1 !important;
+    min-height: auto !important;
+    padding: 32px 24px !important;
+    justify-content: center !important;
   }
-  .transmission-gallery-grid .gallery-tile:nth-child(2) {
-    grid-column: 2;
-    min-height: auto;
-    padding: 18px 14px;
-    margin-top: 0 !important;
+  .transmission-gallery-grid .gallery-tile:nth-child(2),
+  .transmission-gallery-grid .tile-subhead {
+    grid-column: 1 / -1 !important;
+    min-height: auto !important;
+    padding: 22px 20px !important;
+    width: 90% !important;
+    margin-left: auto !important;
+    margin-top: 6px !important;
+    justify-content: center !important;
   }
   .transmission-gallery-grid .tile-artwork {
     grid-column: 1 / -1 !important;
-    min-height: auto;
+    min-height: auto !important;
     padding: 12px 0 !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
   .tile-big-title {
-    font-size: clamp(17px, 4.4vw, 22px);
-    line-height: 1.15;
-    margin-bottom: 12px;
+    font-size: clamp(26px, 7vw, 34px) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.03em !important;
+    margin-bottom: 0 !important;
   }
   .tile-desc {
-    font-size: clamp(12.5px, 3.2vw, 14.5px);
-    line-height: 1.38;
-    margin-bottom: 12px;
+    font-size: clamp(14.5px, 3.8vw, 17px) !important;
+    line-height: 1.45 !important;
+    margin-bottom: 0 !important;
   }
   .tile-card-header {
     margin-bottom: 10px;
@@ -8194,18 +8201,19 @@ a[href*="#cv"].gum-btn:active {
 
 @media (min-width: 768px) {
   #foundations .quad-card:not(.card-span-full) > div:first-child {
-    min-height: 152px !important;
+    min-height: 196px !important;
     padding: 22px 26px 16px !important;
     display: flex !important;
     flex-direction: column !important;
+    justify-content: flex-start !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-title {
-    font-size: 24px !important;
+    font-size: clamp(20px, 2.2vw, 24px) !important;
     line-height: 1.2 !important;
     margin-bottom: 6px !important;
     display: flex !important;
     align-items: center !important;
-    min-height: auto !important;
+    min-height: 58px !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-num {
     font-size: 11px !important;
@@ -8219,7 +8227,7 @@ a[href*="#cv"].gum-btn:active {
     font-size: 14px !important;
     line-height: 1.5 !important;
     margin: 0 !important;
-    min-height: auto !important;
+    min-height: 64px !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-bullets {
     min-height: 140px !important;
