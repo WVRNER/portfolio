@@ -389,17 +389,17 @@
       .dispatch-black-frame {
         position: relative !important;
         background: #000000 !important;
-        border: 2.5px solid #000000 !important;
-        border-radius: 22px !important;
-        box-shadow: 14px 14px 0px #FF90E8 !important;
-        -webkit-box-shadow: 14px 14px 0px #FF90E8 !important;
+        border: 1.5px solid #000000 !important;
+        border-radius: 12px !important;
+        box-shadow: 8px 8px 0px #FF90E8 !important;
+        -webkit-box-shadow: 8px 8px 0px #FF90E8 !important;
         max-width: 1080px !important;
         width: 100% !important;
         margin: 0 auto !important;
-        padding: 36px 40px !important;
+        padding: 32px 36px !important;
         display: grid !important;
         grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr) !important;
-        gap: 36px !important;
+        gap: 32px !important;
         align-items: center !important;
         box-sizing: border-box !important;
         -webkit-box-sizing: border-box !important;
@@ -408,25 +408,25 @@
 
       [data-theme="dark"] .dispatch-black-frame {
         border-color: #FFFFFF !important;
-        box-shadow: 14px 14px 0px #FF90E8 !important;
-        -webkit-box-shadow: 14px 14px 0px #FF90E8 !important;
+        box-shadow: 8px 8px 0px #FF90E8 !important;
+        -webkit-box-shadow: 8px 8px 0px #FF90E8 !important;
       }
 
       .dispatch-black-frame:hover {
         transform: translateY(-2px) !important;
-        box-shadow: 16px 16px 0px #FF90E8 !important;
-        -webkit-box-shadow: 16px 16px 0px #FF90E8 !important;
+        box-shadow: 10px 10px 0px #FF90E8 !important;
+        -webkit-box-shadow: 10px 10px 0px #FF90E8 !important;
       }
 
       /* OBJECT 1: The Latest Post Card inside the black frame */
       .dispatch-post-card {
         width: 100% !important;
         background: #FFFFFF !important;
-        border: 2.5px solid #000000 !important;
-        border-radius: 16px !important;
-        box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
-        -webkit-box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
-        padding: 26px 28px !important;
+        border: 1.5px solid #000000 !important;
+        border-radius: 8px !important;
+        box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+        -webkit-box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+        padding: 24px 26px !important;
         display: flex !important;
         flex-direction: column !important;
         gap: 12px !important;
@@ -672,13 +672,13 @@
           grid-template-columns: 1fr !important;
           padding: 20px 16px 28px !important;
           gap: 24px !important;
-          border-radius: 16px !important;
-          box-shadow: 8px 8px 0px #FF90E8 !important;
-          -webkit-box-shadow: 8px 8px 0px #FF90E8 !important;
+          border-radius: 10px !important;
+          box-shadow: 6px 6px 0px #FF90E8 !important;
+          -webkit-box-shadow: 6px 6px 0px #FF90E8 !important;
         }
 
         .dispatch-post-card {
-          border-radius: 12px !important;
+          border-radius: 8px !important;
           padding: 20px 18px !important;
         }
 
@@ -2554,35 +2554,44 @@
           <article class="dispatch-post-card">
             <div class="dispatch-card-header">
               <div class="dispatch-card-badges">
-                {% if spotlightPost.data.featured %}
+                {% if spotlightPost.data.featured === true or spotlightPost.data.featured == "true" %}
                   <span class="dispatch-badge badge-featured">★ FEATURED</span>
                 {% else %}
                   <span class="dispatch-badge badge-latest"><span class="stage-dot green pulse-dot"></span> LATEST</span>
                 {% endif %}
-                <span class="dispatch-badge badge-category">{{ spotlightPost.data.category }}</span>
+                <span class="dispatch-badge badge-category">{{ spotlightPost.data.category or "DISPATCH" }}</span>
               </div>
               <div class="dispatch-card-meta">
-                <span>{{ spotlightPost.data.display_date }}</span>
-                <span>&bull;</span>
-                <span>{{ spotlightPost.data.read_time }}</span>
+                {% if spotlightPost.data.display_date %}
+                  <span>{{ spotlightPost.data.display_date }}</span>
+                {% endif %}
+                {% if spotlightPost.data.display_date and spotlightPost.data.read_time %}
+                  <span>&bull;</span>
+                {% endif %}
+                {% if spotlightPost.data.read_time %}
+                  <span>{{ spotlightPost.data.read_time }}</span>
+                {% endif %}
               </div>
             </div>
 
             <h3 class="dispatch-card-title">
-              <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title }}</a>
+              <a href="{{ spotlightPost.url }}">{{ spotlightPost.data.title or "Untitled Post" }}</a>
             </h3>
 
             {% if spotlightPost.data.subtitle and spotlightPost.data.subtitle != spotlightPost.data.excerpt %}
             <p class="dispatch-card-subtitle">{{ spotlightPost.data.subtitle }}</p>
             {% endif %}
 
+            {% if spotlightPost.data.excerpt %}
             <p class="dispatch-card-excerpt">{{ spotlightPost.data.excerpt }}</p>
+            {% endif %}
 
             {% if spotlightPost.data.post_tags and spotlightPost.data.post_tags.length > 0 %}
             <div class="dispatch-card-tags">
               {% for tag in spotlightPost.data.post_tags.slice(0, 4) %}
                 {% set colors = ["chip-yellow", "chip-pink", "chip-green", "chip-blue"] %}
-                <span class="about-chip {{ colors[loop.index0 % 4] }}">{{ tag }}</span>
+                {% set cleanTag = tag | replace('#', '') %}
+                <span class="about-chip {{ colors[loop.index0 % 4] }}">#{{ cleanTag }}</span>
               {% endfor %}
             </div>
             {% endif %}

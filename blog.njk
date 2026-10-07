@@ -132,7 +132,7 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
             {% if post.data.featured %}
               <span class="blog-featured-badge">★ FEATURED</span>
             {% endif %}
-            <span class="blog-category-tag"> {{ post.data.category }} </span>
+            <span class="blog-category-tag"> {{ post.data.category or "DISPATCH" }} </span>
 
             <span class="blog-time-badge">
               {{ post.data.display_date }} &bull; {{ post.data.read_time }}
@@ -188,9 +188,10 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
             <div class="about-chips-list" style="margin-top: 0">
               {% for tag in post.data.post_tags %} {% set colors = [
               "chip-yellow", "chip-pink", "chip-green", "chip-blue" ] %}
+              {% set cleanTag = tag | replace('#', '') %}
 
               <span class="about-chip {{ colors[loop.index0 % 4] }}">
-                {{ tag }}
+                #{{ cleanTag }}
               </span>
 
               {% endfor %}

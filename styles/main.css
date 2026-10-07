@@ -6524,16 +6524,16 @@ a[href*="#cv"].gum-btn:active {
 .dispatch-black-frame {
   position: relative !important;
   background: #000000 !important;
-  border: 3.5px solid #000000 !important;
-  border-radius: 22px !important;
-  box-shadow: 14px 14px 0px #FF90E8 !important;
+  border: 1.5px solid #000000 !important;
+  border-radius: 12px !important;
+  box-shadow: 8px 8px 0px #FF90E8 !important;
   max-width: 1080px !important;
   width: 100% !important;
   margin: 0 auto !important;
-  padding: 36px 40px !important;
+  padding: 32px 36px !important;
   display: grid !important;
   grid-template-columns: minmax(0, 1.16fr) minmax(0, 0.84fr) !important;
-  gap: 36px !important;
+  gap: 32px !important;
   align-items: center !important;
   box-sizing: border-box !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
@@ -6541,22 +6541,22 @@ a[href*="#cv"].gum-btn:active {
 
 [data-theme="dark"] .dispatch-black-frame {
   border-color: #FFFFFF !important;
-  box-shadow: 14px 14px 0px #FF90E8 !important;
+  box-shadow: 8px 8px 0px #FF90E8 !important;
 }
 
 .dispatch-black-frame:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 16px 16px 0px #FF90E8 !important;
+  box-shadow: 10px 10px 0px #FF90E8 !important;
 }
 
 /* OBJECT 1: The Latest Post Card inside the black frame */
 .dispatch-post-card {
   width: 100% !important;
   background: #FFFFFF !important;
-  border: 3.5px solid #000000 !important;
-  border-radius: 16px !important;
-  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.35) !important;
-  padding: 26px 28px !important;
+  border: 1.5px solid #000000 !important;
+  border-radius: 8px !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  padding: 24px 26px !important;
   display: flex !important;
   flex-direction: column !important;
   gap: 12px !important;
@@ -6567,12 +6567,12 @@ a[href*="#cv"].gum-btn:active {
 [data-theme="dark"] .dispatch-post-card {
   background: #141416 !important;
   border-color: #FFFFFF !important;
-  box-shadow: 6px 6px 0px rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 4px 4px 0px rgba(255, 255, 255, 0.15) !important;
 }
 
 .dispatch-post-card:hover {
   transform: translate(-2px, -2px) !important;
-  box-shadow: 8px 8px 0px #FF90E8 !important;
+  box-shadow: 6px 6px 0px #FF90E8 !important;
 }
 
 /* Card Header: Badges & Meta */
@@ -6795,12 +6795,12 @@ a[href*="#cv"].gum-btn:active {
     grid-template-columns: 1fr !important;
     padding: 20px 16px 28px !important;
     gap: 24px !important;
-    border-radius: 16px !important;
-    box-shadow: 8px 8px 0px #FF90E8 !important;
+    border-radius: 10px !important;
+    box-shadow: 6px 6px 0px #FF90E8 !important;
   }
 
   .dispatch-post-card {
-    border-radius: 12px !important;
+    border-radius: 8px !important;
     padding: 20px 18px !important;
   }
 
