@@ -56,8 +56,27 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="styles/main.css?v=20261006v6" />
     <link rel="stylesheet" href="styles/animations.css" />
-    <!-- Critical Hero & Mobile Styles (Guarantees frames, shadows, and tool chips render even if external CSS is cached) -->
+    <!-- Critical Navigation & Hero Styles -->
     <style id="hero-critical-styles">
+      html,
+      body {
+        overflow-x: clip !important;
+      }
+      .gum-nav-wrapper {
+        position: -webkit-sticky !important;
+        position: sticky !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        z-index: 10000 !important;
+        background-color: #FFFFFF !important;
+        border-bottom: 2px solid #000000 !important;
+      }
+      [data-theme="dark"] .gum-nav-wrapper {
+        background-color: #141416 !important;
+        border-bottom-color: #333338 !important;
+      }
       .hero-title-badge,
       .gum-hero-centered-inner .hero-title-badge {
         display: inline-block !important;
@@ -527,7 +546,7 @@
       }
     </style>
 
-    <!-- Featured Dispatch Critical Styles (Guarantees frames, shadows, and layout render immediately in Safari) -->
+    <!-- Featured Dispatch Critical Styles -->
     <style id="featured-dispatch-styles">
       #featured-dispatch.gum-section {
         padding-top: 0 !important;
