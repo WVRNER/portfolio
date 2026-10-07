@@ -3444,14 +3444,20 @@ a.nav-contact-btn:hover {
   text-decoration: none;
   transition: all 0.15s ease;
   white-space: nowrap;
+  box-shadow: none !important;
 }
 
 .gum-nav-pill-black:hover {
   background: #FFFFFF;
   color: #000000;
   border-color: #000000;
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0px #000000;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.gum-nav-pill-black:active {
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 /* CV Navigation Link (Plain, no frame) */
@@ -3644,7 +3650,8 @@ a.nav-contact-btn:hover,
   box-shadow: none !important;
 }
 
-/* Explicit No Shadows on CV */
+/* Explicit No Shadows on About & CV */
+.gum-nav-pill-black,
 .gum-nav-pill-white,
 a[title*="Curriculum Vitae"],
 a[href*="#cv"].gum-btn {
@@ -3654,6 +3661,7 @@ a[href*="#cv"].gum-btn {
 .gum-btn-wide-rect:hover,
 .gum-btn-round-black:hover,
 .gum-btn-round-white:hover,
+.gum-nav-pill-black:hover,
 .gum-nav-pill-white:hover,
 a[title*="Curriculum Vitae"]:hover,
 a[href*="#cv"].gum-btn:hover {
