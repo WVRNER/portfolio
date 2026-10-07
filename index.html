@@ -470,22 +470,36 @@
       #foundations .quad-card .quad-card-bullets li,
       .quad-card .quad-card-bullets li {
         font-size: 13.5px !important;
-        line-height: 1.55 !important;
+        line-height: 1.5 !important;
         color: #000000 !important;
-        display: flex !important;
-        align-items: flex-start !important;
-        gap: 10px !important;
+        display: grid !important;
+        grid-template-columns: 16px 1fr !important;
+        column-gap: 8px !important;
+        row-gap: 2px !important;
+        align-items: baseline !important;
       }
       #foundations .quad-card .quad-card-bullets li strong,
       .quad-card .quad-card-bullets li strong {
         color: #000000 !important;
         font-weight: 800 !important;
+        grid-column: 2 !important;
+        grid-row: 1 !important;
       }
       #foundations .quad-card .quad-card-bullets li::before,
       .quad-card .quad-card-bullets li::before {
         content: '➔' !important;
         font-weight: 900 !important;
         color: #000000 !important;
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        font-size: 12px !important;
+      }
+      #foundations .quad-card .quad-card-bullets li .bullet-desc,
+      .quad-card .quad-card-bullets li .bullet-desc {
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        color: #000000 !important;
+        display: block !important;
       }
       @media (max-width: 768px) {
         #foundations .gum-quad-grid {
@@ -621,7 +635,8 @@
       }
       [data-theme="dark"] #foundations .quad-card .quad-card-bullets li,
       [data-theme="dark"] #foundations .quad-card .quad-card-bullets li strong,
-      [data-theme="dark"] #foundations .quad-card .quad-card-bullets li::before {
+      [data-theme="dark"] #foundations .quad-card .quad-card-bullets li::before,
+      [data-theme="dark"] #foundations .quad-card .quad-card-bullets li .bullet-desc {
         color: #FFFFFF !important;
       }
       [data-theme="dark"] #foundations .quad-card:hover {
@@ -1062,16 +1077,19 @@
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Network Isolation:</strong> Multi-AZ subnets, NAT
-                gateways &amp; NACLs
+                <strong>Network Isolation:</strong>
+                <span class="bullet-desc">Multi-AZ subnets, NAT
+                gateways &amp; NACLs</span>
               </li>
               <li>
-                <strong>Edge Ingress:</strong> CloudFront CDN with TLS 1.2+ (1.3
-                enabled)
+                <strong>Edge Ingress:</strong>
+                <span class="bullet-desc">CloudFront CDN with TLS 1.2+ (1.3
+                enabled)</span>
               </li>
               <li>
-                <strong>IAM Security:</strong> Scoped roles with keyless OIDC
-                auth
+                <strong>IAM Security:</strong>
+                <span class="bullet-desc">Scoped roles with keyless OIDC
+                auth</span>
               </li>
             </ul>
           </div>
@@ -1088,15 +1106,18 @@
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Declarative State:</strong> Dependency graph built
-                directly from code
+                <strong>Declarative State:</strong>
+                <span class="bullet-desc">Dependency graph built
+                directly from code</span>
               </li>
               <li>
-                <strong>Remote State:</strong> S3 backend with state locking
+                <strong>Remote State:</strong>
+                <span class="bullet-desc">S3 backend with state locking</span>
               </li>
               <li>
-                <strong>Drift Visibility:</strong> terraform plan surfaces
-                manual console changes
+                <strong>Drift Visibility:</strong>
+                <span class="bullet-desc">terraform plan surfaces
+                manual console changes</span>
               </li>
             </ul>
           </div>
@@ -1113,16 +1134,19 @@
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Multi-Stage Builds:</strong> Compilers isolated from
-                lean runtimes
+                <strong>Multi-Stage Builds:</strong>
+                <span class="bullet-desc">Compilers isolated from
+                lean runtimes</span>
               </li>
               <li>
-                <strong>Hardened Images:</strong> Non-root users, no shell in
-                the runtime image
+                <strong>Hardened Images:</strong>
+                <span class="bullet-desc">Non-root users, no shell in
+                the runtime image</span>
               </li>
               <li>
-                <strong>Bridge Networks:</strong> Isolated container networking
-                and persistent volumes
+                <strong>Bridge Networks:</strong>
+                <span class="bullet-desc">Isolated container networking
+                and persistent volumes</span>
               </li>
             </ul>
           </div>
@@ -1139,16 +1163,19 @@
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Workload Reconciliation:</strong> Deployments, ReplicaSets
-                &amp; control loops
+                <strong>Workload Reconciliation:</strong>
+                <span class="bullet-desc">Deployments, ReplicaSets
+                &amp; control loops</span>
               </li>
               <li>
-                <strong>Cluster Ingress:</strong> CoreDNS service discovery,
-                ClusterIP &amp; Ingress routing
+                <strong>Cluster Ingress:</strong>
+                <span class="bullet-desc">CoreDNS service discovery,
+                ClusterIP &amp; Ingress routing</span>
               </li>
               <li>
-                <strong>State &amp; Config:</strong> Decoupled ConfigMaps, Secrets
-                &amp; PersistentVolumeClaims
+                <strong>State &amp; Config:</strong>
+                <span class="bullet-desc">Decoupled ConfigMaps, Secrets
+                &amp; PersistentVolumeClaims</span>
               </li>
             </ul>
           </div>
@@ -1165,16 +1192,19 @@
             </div>
             <ul class="quad-card-bullets">
               <li>
-                <strong>Keyless OIDC:</strong> Short-lived federated AWS STS
-                credentials (no static secrets)
+                <strong>Keyless OIDC:</strong>
+                <span class="bullet-desc">Short-lived federated AWS STS
+                credentials (no static secrets)</span>
               </li>
               <li>
-                <strong>Automated Gates:</strong> Linting, validation &amp;
-                security scans before deploy
+                <strong>Automated Gates:</strong>
+                <span class="bullet-desc">Linting, validation &amp;
+                security scans before deploy</span>
               </li>
               <li>
-                <strong>Cache Invalidation:</strong> Automated CloudFront
-                invalidation on every deploy
+                <strong>Cache Invalidation:</strong>
+                <span class="bullet-desc">Automated CloudFront
+                invalidation on every deploy</span>
               </li>
             </ul>
           </div>

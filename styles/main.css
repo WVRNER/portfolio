@@ -8179,23 +8179,38 @@ a[href*="#cv"].gum-btn:active {
 #foundations .quad-card .quad-card-bullets li,
 .quad-card .quad-card-bullets li {
   font-size: 13.5px !important;
-  line-height: 1.55 !important;
+  line-height: 1.5 !important;
   color: #000000 !important;
-  display: flex !important;
-  align-items: flex-start !important;
-  gap: 10px !important;
+  display: grid !important;
+  grid-template-columns: 16px 1fr !important;
+  column-gap: 8px !important;
+  row-gap: 2px !important;
+  align-items: baseline !important;
 }
 
 #foundations .quad-card .quad-card-bullets li strong,
 .quad-card .quad-card-bullets li strong {
   color: #000000 !important;
   font-weight: 800 !important;
+  grid-column: 2 !important;
+  grid-row: 1 !important;
 }
 
 #foundations .quad-card .quad-card-bullets li::before,
 .quad-card .quad-card-bullets li::before {
   content: '➔' !important;
   font-weight: 900 !important;
+  color: #000000 !important;
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  font-size: 12px !important;
+}
+
+#foundations .quad-card .quad-card-bullets li .bullet-desc,
+.quad-card .quad-card-bullets li .bullet-desc {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  display: block !important;
   color: #000000 !important;
 }
 
