@@ -69,7 +69,7 @@ The site operates across four distinct operational tiers: Local Development, Ver
       <span class="dot-green"></span>
     </div>
     <span class="arch-window-title">// DIAGRAM 01: 4-TIER ARCHITECTURE TOPOLOGY</span>
-    <span class="arch-status-pill"><span class="pulse-dot-green"></span>PRODUCTION SYSTEM</span>
+    <span class="arch-status-pill">PRODUCTION SYSTEM</span>
   </div>
   <div class="arch-window-body">
     <div class="arch-tier-grid">

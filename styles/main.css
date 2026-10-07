@@ -3145,7 +3145,7 @@ a.nav-contact-btn:hover {
   border-radius: 50%;
   background: #000000;
   display: inline-block;
-  animation: pulse-live-dot 1.8s infinite ease-in-out;
+  animation: none !important;
 }
 
 @keyframes pulse-live-dot {
@@ -8194,11 +8194,31 @@ a[href*="#cv"].gum-btn:active {
 
 @media (min-width: 768px) {
   #foundations .quad-card:not(.card-span-full) > div:first-child {
-    min-height: 160px !important;
+    min-height: 192px !important;
     padding: 24px 28px 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  #foundations .quad-card:not(.card-span-full) .quad-card-title {
+    min-height: 38px !important;
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 8px !important;
+  }
+  #foundations .quad-card:not(.card-span-full) .quad-card-num {
+    min-height: 24px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    margin-top: 2px !important;
+    margin-bottom: 12px !important;
+  }
+  #foundations .quad-card:not(.card-span-full) .quad-card-text {
+    min-height: 68px !important;
+    margin: 0 !important;
+    line-height: 1.55 !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-bullets {
-    min-height: 152px !important;
+    min-height: 150px !important;
     padding: 18px 28px 20px !important;
     gap: 10px !important;
   }
