@@ -1,5 +1,5 @@
 ---
-title: Yahoo
+title: Yahoooo
 subtitle: sdasdasdcas
 cover_image: https://fastly.picsum.photos/id/354/200/200.jpg?hmac=ykMwenrB5tcaT_UHlYwh2ZzAZ4Km48YOmwJTFCiodJ4
 excerpt: Click Login with Turbo
