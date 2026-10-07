@@ -9,7 +9,8 @@
     "preview": "npx vite preview",
     "ghost:sync": "node scripts/sync-ghost.js",
     "site:build": "npx @11ty/eleventy",
-    "publish:ghost": "node scripts/sync-ghost.js && npx @11ty/eleventy"
+    "publish:ghost": "node scripts/sync-ghost.js && npx @11ty/eleventy",
+    "publish": "node scripts/publish-ghost.js"
   },
   "keywords": [
     "wvrner",
