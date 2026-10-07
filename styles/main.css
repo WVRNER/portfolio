@@ -8030,11 +8030,28 @@ a[href*="#cv"].gum-btn:active {
   border: 1.5px solid #000000 !important;
   border-radius: 14px !important;
   box-shadow: none !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  box-sizing: border-box !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
 
-#foundations .quad-card *,
-.quad-card * {
-  color: #000000 !important;
+#foundations .quad-card:hover,
+.quad-card:hover {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 4px 4px 0px #000000 !important;
+}
+
+#foundations .quad-card > div:first-child {
+  padding: 34px 32px 24px !important;
+  background: #F4F4F0 !important;
+  flex: 1 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
 }
 
 #foundations .quad-card .quad-card-num,
@@ -8043,27 +8060,104 @@ a[href*="#cv"].gum-btn:active {
   color: #FFFFFF !important;
 }
 
-#foundations .quad-card .quad-card-bullets,
-.quad-card .quad-card-bullets {
-  border-color: rgba(0, 0, 0, 0.18) !important;
+#foundations .quad-card .quad-card-bullets {
+  background: #000000 !important;
+  color: #FFFFFF !important;
+  border-top: 1.5px solid #000000 !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  padding: 24px 32px 28px !important;
+  margin: 0 !important;
+  list-style: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  box-sizing: border-box !important;
 }
 
-[data-theme="dark"] #foundations .quad-card,
-[data-theme="dark"] .quad-card {
+#foundations .quad-card .quad-card-bullets li,
+.quad-card .quad-card-bullets li {
+  font-size: 13.5px !important;
+  line-height: 1.55 !important;
+  color: #D1D5DB !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+}
+
+#foundations .quad-card .quad-card-bullets li strong,
+.quad-card .quad-card-bullets li strong {
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+}
+
+#foundations .quad-card .quad-card-bullets li::before,
+.quad-card .quad-card-bullets li::before {
+  content: '➔' !important;
+  font-weight: 900 !important;
+  color: #FFC900 !important;
+}
+
+@media (min-width: 768px) {
+  #foundations .quad-card.card-span-full {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr) !important;
+    align-items: stretch !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+  #foundations .quad-card.card-span-full > div:first-child {
+    padding: 36px 36px !important;
+    background: #F4F4F0 !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+  #foundations .quad-card.card-span-full .quad-card-bullets {
+    border-top: none !important;
+    border-left: 1.5px solid #000000 !important;
+    border-radius: 0 !important;
+    padding: 36px 36px !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 14px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+[data-theme="dark"] #foundations .quad-card {
   background: #141416 !important;
   border-color: #333338 !important;
+}
+
+[data-theme="dark"] #foundations .quad-card > div:first-child {
+  background: #141416 !important;
+}
+
+[data-theme="dark"] #foundations .quad-card > div:first-child * {
   color: #FFFFFF !important;
 }
 
-[data-theme="dark"] #foundations .quad-card *,
-[data-theme="dark"] .quad-card * {
-  color: #FFFFFF !important;
-}
-
-[data-theme="dark"] #foundations .quad-card .quad-card-num,
-[data-theme="dark"] .quad-card .quad-card-num {
+[data-theme="dark"] #foundations .quad-card .quad-card-num {
   background: #FFFFFF !important;
   color: #000000 !important;
+}
+
+[data-theme="dark"] #foundations .quad-card .quad-card-bullets {
+  background: #000000 !important;
+  border-top-color: #333338 !important;
+  border-left-color: #333338 !important;
+}
+
+[data-theme="dark"] #foundations .quad-card:hover {
+  border-color: #FFFFFF !important;
+  box-shadow: 4px 4px 0px #FFFFFF !important;
 }
 
 /* Have a project or want to connect (.tile-big): Remove pink, use background #F4F4F0, 1.5px outline, shadow on hover */
@@ -8101,12 +8195,16 @@ a[href*="#cv"].gum-btn:active {
 #systems-architecture .gum-infra-card,
 .gum-infra-card {
   background: #F4F4F0 !important;
+  border: 1.5px solid #000000 !important;
+  border-radius: 14px !important;
   box-shadow: none !important;
 }
 
 [data-theme="dark"] #systems-architecture .gum-infra-card,
 [data-theme="dark"] .gum-infra-card {
   background: #141416 !important;
+  border-color: #333338 !important;
+  border-radius: 14px !important;
 }
 
 /* Clean Collapsible Code Disclosure Accordion */
