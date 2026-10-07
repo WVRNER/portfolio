@@ -5,6 +5,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("favicon.ico");
   eleventyConfig.addPassthroughCopy("favicon.png");
   eleventyConfig.addPassthroughCopy("CNAME");
+  eleventyConfig.addPassthroughCopy("admin");
 
   // Keep Markdown content 100% pure (disables template preprocessing),
   // while allowing directory-data permalinks like /posts/{{ page.fileSlug }}.html to resolve

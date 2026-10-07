@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WVRNER Content Manager · Decap CMS</title>
+    <!-- Explicit link to Decap configuration file -->
+    <link href="config.yml" type="text/yaml" rel="cms-config-url" />
+    <!-- Site Favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      sizes="any"
+      href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%23F8F8F6%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2247%22%20font-family%3D%22%27Fraunces%27%2C%20Georgia%2C%20%27Times%20New%20Roman%27%2C%20serif%22%20font-weight%3D%22900%22%20font-size%3D%2244%22%20text-anchor%3D%22middle%22%20fill%3D%22%23D60000%22%3EW%3C/text%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <!-- Decap CMS with Turbo Backend Support (official beta dist-tag) -->
+    <script src="https://cdn.jsdelivr.net/npm/decap-cms@beta/dist/decap-cms.js"></script>
+
+    <script>
+      // =======================================================================
+      // 1. CUSTOM TABLE EDITOR COMPONENT
+      // Adds visual table authoring via the rich-text '+' component menu,
+      // serializing cleanly to standard Markdown pipe tables.
+      // =======================================================================
+      CMS.registerEditorComponent({
+        id: 'table',
+        label: 'Table',
+        fields: [
+          {
+            name: 'columns',
+            label: 'Column Headers (comma-separated)',
+            widget: 'string',
+            default: 'Header 1, Header 2, Header 3'
+          },
+          {
+            name: 'rows',
+            label: 'Rows (one row per line; cells separated by | or comma)',
+            widget: 'text',
+            default: 'Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3\nRow 2 Col 1 | Row 2 Col 2 | Row 2 Col 3'
+          }
+        ],
+        pattern: /^\|(.+)\|\n\|(?:[ \t]*:?-+:?[ \t]*\|)+\n((?:\|.*\|\n?)*)$/m,
+        fromBlock: function (match) {
+          if (!match) return {};
+          var headerLine = match[1];
+          var bodyLines = match[2];
+          var cols = headerLine
+            .split('|')
+            .map(function (c) {
+              return c.trim();
+            })
+            .filter(Boolean);
+          var rows = (bodyLines || '')
+            .trim()
+            .split('\n')
+            .map(function (line) {
+              return line
+                .replace(/^\|/, '')
+                .replace(/\|$/, '')
+                .split('|')
+                .map(function (c) {
+                  return c.trim();
+                })
+                .join(' | ');
+            })
+            .join('\n');
+          return {
+            columns: cols.join(', '),
+            rows: rows
+          };
+        },
+        toBlock: function (data) {
+          if (!data.columns) return '';
+          var cols = data.columns
+            .split(',')
+            .map(function (c) {
+              return c.trim();
+            })
+            .filter(Boolean);
+          var header = '| ' + cols.join(' | ') + ' |';
+          var divider =
+            '| ' +
+            cols
+              .map(function () {
+                return ':---';
+              })
+              .join(' | ') +
+            ' |';
+          var rawRows = (data.rows || '')
+            .split('\n')
+            .filter(function (r) {
+              return r.trim().length > 0;
+            });
+          var rowLines = rawRows.map(function (row) {
+            var cells;
+            if (row.indexOf('|') !== -1) {
+              cells = row.split('|').map(function (c) {
+                return c.trim();
+              });
+              if (cells.length > 0 && cells[0] === '') cells.shift();
+              if (cells.length > 0 && cells[cells.length - 1] === '') cells.pop();
+            } else {
+              cells = row.split(',').map(function (c) {
+                return c.trim();
+              });
+            }
+            return '| ' + cells.join(' | ') + ' |';
+          });
+          return [header, divider].concat(rowLines).join('\n') + '\n';
+        },
+        toPreview: function (data) {
+          if (!data.columns) return '';
+          var cols = data.columns
+            .split(',')
+            .map(function (c) {
+              return c.trim();
+            })
+            .filter(Boolean);
+          var headerHtml =
+            '<tr>' +
+            cols
+              .map(function (c) {
+                return (
+                  '<th style="border: 2px solid #000; padding: 10px 14px; background: #FFC900; color: #000; font-weight: 800; text-align: left; font-family: monospace;">' +
+                  c +
+                  '</th>'
+                );
+              })
+              .join('') +
+            '</tr>';
+          var rawRows = (data.rows || '')
+            .split('\n')
+            .filter(function (r) {
+              return r.trim().length > 0;
+            });
+          var rowsHtml = rawRows
+            .map(function (row, idx) {
+              var cells;
+              if (row.indexOf('|') !== -1) {
+                cells = row.split('|').map(function (c) {
+                  return c.trim();
+                });
+                if (cells.length > 0 && cells[0] === '') cells.shift();
+                if (cells.length > 0 && cells[cells.length - 1] === '') cells.pop();
+              } else {
+                cells = row.split(',').map(function (c) {
+                  return c.trim();
+                });
+              }
+              var bg = idx % 2 === 0 ? '#FFFFFF' : '#F9F9F7';
+              return (
+                '<tr style="background: ' +
+                bg +
+                ';">' +
+                cells
+                  .map(function (c) {
+                    return (
+                      '<td style="border: 1px solid #000; padding: 10px 14px; color: #111;">' +
+                      c +
+                      '</td>'
+                    );
+                  })
+                  .join('') +
+                '</tr>'
+              );
+            })
+            .join('');
+          return (
+            '<div style="overflow-x: auto; margin: 24px 0;"><table style="border-collapse: collapse; width: 100%; border: 3px solid #000; box-shadow: 4px 4px 0 #000; font-size: 14px;"><thead>' +
+            headerHtml +
+            '</thead><tbody>' +
+            rowsHtml +
+            '</tbody></table></div>'
+          );
+        }
+      });
+
+      // =======================================================================
+      // 2. LIVE NEUBRUTALIST ARTICLE PREVIEW TEMPLATE
+      // Mirrors _includes/post.njk and wvrner.com branding
+      // =======================================================================
+      var PostPreview = createClass({
+        render: function () {
+          var entry = this.props.entry;
+          var title = entry.getIn(['data', 'title']) || 'Untitled Post';
+          var subtitle = entry.getIn(['data', 'subtitle']) || '';
+          var category = entry.getIn(['data', 'category']) || '';
+          var display_date = entry.getIn(['data', 'display_date']) || '';
+          var read_time = entry.getIn(['data', 'read_time']) || '';
+          var cover_image = entry.getIn(['data', 'cover_image']);
+          var post_tags = entry.getIn(['data', 'post_tags']);
+          var featured = entry.getIn(['data', 'featured']);
+          var coverImageSrc = cover_image ? this.props.getAsset(cover_image) : null;
+
+          var tagsArray = post_tags ? post_tags.toJS() : [];
+
+          return h(
+            'div',
+            {
+              className: 'blog-article-frame',
+              style: {
+                background: '#FAF9F5',
+                border: '3px solid #000',
+                boxShadow: '6px 6px 0 #000',
+                padding: '36px',
+                maxWidth: '880px',
+                margin: '24px auto',
+                fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif",
+                color: '#111'
+              }
+            },
+            h(
+              'header',
+              { className: 'post-header-section', style: { marginBottom: '32px' } },
+              h(
+                'div',
+                {
+                  className: 'blog-post-meta',
+                  style: {
+                    display: 'flex',
+                    gap: '10px',
+                    alignItems: 'center',
+                    marginBottom: '16px',
+                    flexWrap: 'wrap'
+                  }
+                },
+                featured
+                  ? h(
+                      'span',
+                      {
+                        style: {
+                          background: '#FF5C00',
+                          color: '#FFF',
+                          padding: '4px 10px',
+                          fontWeight: '900',
+                          fontSize: '11px',
+                          letterSpacing: '0.05em',
+                          border: '2px solid #000',
+                          boxShadow: '2px 2px 0 #000'
+                        }
+                      },
+                      '★ FEATURED'
+                    )
+                  : null,
+                category
+                  ? h(
+                      'span',
+                      {
+                        style: {
+                          background: '#FFC900',
+                          color: '#000',
+                          padding: '4px 10px',
+                          fontWeight: '800',
+                          fontSize: '12px',
+                          border: '2px solid #000',
+                          boxShadow: '2px 2px 0 #000'
+                        }
+                      },
+                      category
+                    )
+                  : null,
+                display_date || read_time
+                  ? h(
+                      'span',
+                      {
+                        style: { fontSize: '13px', fontWeight: '600', color: '#555' }
+                      },
+                      (display_date || '') +
+                        (display_date && read_time ? ' • ' : '') +
+                        (read_time || '')
+                    )
+                  : null
+              ),
+              h(
+                'h1',
+                {
+                  style: {
+                    fontFamily: "'Fraunces', serif",
+                    fontWeight: '900',
+                    fontSize: '34px',
+                    lineHeight: '1.2',
+                    margin: '0 0 16px 0',
+                    color: '#000'
+                  }
+                },
+                title
+              ),
+              subtitle
+                ? h(
+                    'p',
+                    {
+                      style: {
+                        fontSize: '18px',
+                        lineHeight: '1.5',
+                        color: '#333',
+                        margin: '0 0 24px 0',
+                        fontWeight: '500'
+                      }
+                    },
+                    subtitle
+                  )
+                : null,
+              coverImageSrc
+                ? h('img', {
+                    src: coverImageSrc.toString(),
+                    alt: title,
+                    style: {
+                      width: '100%',
+                      maxHeight: '440px',
+                      objectFit: 'cover',
+                      border: '3px solid #000',
+                      boxShadow: '5px 5px 0 #000',
+                      margin: '16px 0 24px 0'
+                    }
+                  })
+                : null
+            ),
+            h(
+              'div',
+              {
+                className: 'post-body-section blog-article-body',
+                style: { fontSize: '16px', lineHeight: '1.75', color: '#222' }
+              },
+              this.props.widgetFor('body')
+            ),
+            tagsArray.length > 0
+              ? h(
+                  'footer',
+                  {
+                    style: {
+                      marginTop: '40px',
+                      paddingTop: '20px',
+                      borderTop: '2px solid #000'
+                    }
+                  },
+                  h(
+                    'div',
+                    { style: { display: 'flex', gap: '8px', flexWrap: 'wrap' } },
+                    tagsArray.map(function (tag, idx) {
+                      var chipColors = ['#FFF3B0', '#FFD8D8', '#D8F3DC', '#D8E2DC'];
+                      var bg = chipColors[idx % chipColors.length];
+                      return h(
+                        'span',
+                        {
+                          key: idx,
+                          style: {
+                            background: bg,
+                            border: '2px solid #000',
+                            boxShadow: '2px 2px 0 #000',
+                            padding: '4px 10px',
+                            fontSize: '12px',
+                            fontWeight: '700'
+                          }
+                        },
+                        tag
+                      );
+                    })
+                  )
+                )
+              : null
+          );
+        }
+      });
+
+      CMS.registerPreviewTemplate('posts', PostPreview);
+      CMS.registerPreviewStyle('/styles/main.css');
+    </script>
+  </body>
+</html>

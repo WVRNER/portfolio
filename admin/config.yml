@@ -1,0 +1,519 @@
+# ==============================================================================
+# WVRNER / NIMA — Decap CMS Configuration
+# Configured for Decap Turbo (turbo-github)
+# Coexists side-by-side with .pages.yml
+# ==============================================================================
+
+backend:
+  name: turbo-github
+  turbo_site_id: your-site-id # Replace with your Site UUID from the Decap Turbo dashboard (Overview tab)
+  branch: main
+  # Note: Decap Turbo control plane handles the GitHub App auth and repo binding.
+  # Everything else (proxy endpoint, content cache) is resolved automatically from turbo_site_id.
+
+# Editorial workflow enables drafting, reviewing, and publishing via PRs
+publish_mode: editorial_workflow
+
+# Media configuration
+media_folder: "images/posts"
+public_folder: "/images/posts"
+
+# Display site URL in the CMS header
+site_url: https://wvrner.com
+logo_url: /favicon.png
+
+collections:
+  - name: "posts"
+    label: "Blog Posts"
+    label_singular: "Blog Post"
+    folder: "posts"
+    create: true
+    slug: "{{fields.slug}}"
+    summary: "{{title}} ({{display_date}}) [{{category}}]"
+    sortable_fields: ["date", "title", "category", "featured", "published"]
+    view_filters:
+      - label: "Published"
+        field: "published"
+        pattern: true
+      - label: "Drafts"
+        field: "published"
+        pattern: false
+      - label: "Featured"
+        field: "featured"
+        pattern: true
+    view_groups:
+      - label: "Category"
+        field: "category"
+    fields:
+      # ========================================================================
+      # 1. PRIMARY WRITING WORKSPACE (Clean, Writing-First Experience)
+      # ========================================================================
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        required: true
+        hint: "The main headline of your article. Keep it bold, clear, and descriptive."
+
+      - label: "Subtitle / Hook"
+        name: "subtitle"
+        widget: "string"
+        required: true
+        hint: "A short, engaging thesis statement or subtitle directly supporting the headline."
+
+      - label: "Cover Image"
+        name: "cover_image"
+        widget: "image"
+        required: false
+        media_folder: "images/posts"
+        public_folder: "/images/posts"
+        hint: "Primary visual for the article (architecture schematic, screenshot, or banner)."
+
+      - label: "Article Content"
+        name: "body"
+        widget: "markdown"
+        required: true
+        hint: "Your main writing space. Use markdown formatting, headings, code blocks, lists, and images. Use the Table tool to insert visual tables."
+
+      # ========================================================================
+      # 2. PUBLISHING & TAXONOMY
+      # ========================================================================
+      - label: "⚙️ Publishing — Feed Teaser (Excerpt)"
+        name: "excerpt"
+        widget: "text"
+        required: true
+        pattern: [".{20,300}", "Must be between 20 and 300 characters"]
+        hint: "Short 1-2 sentence preview displayed on the /blog/ index card (20-300 characters)."
+
+      - label: "⚙️ Publishing — Primary Category"
+        name: "category"
+        widget: "select"
+        required: true
+        default: "DEVOPS & INFRASTRUCTURE"
+        options:
+          - label: "DevOps & Infrastructure"
+            value: "DEVOPS & INFRASTRUCTURE"
+          - label: "Certification & Lab Log"
+            value: "CERTIFICATION & LAB LOG"
+          - label: "Cloud Architecture & AWS"
+            value: "CLOUD ARCHITECTURE & AWS"
+          - label: "Linux & Kernel Systems"
+            value: "LINUX & KERNEL SYSTEMS"
+          - label: "Enterprise Networking"
+            value: "ENTERPRISE NETWORKING"
+          - label: "CI/CD & Automation"
+            value: "CI/CD & AUTOMATION"
+          - label: "Kubernetes & Containers"
+            value: "KUBERNETES & CONTAINERS"
+          - label: "DevSecOps & Observability"
+            value: "DEVSECOPS & OBSERVABILITY"
+          - label: "Infrastructure as Code"
+            value: "INFRASTRUCTURE AS CODE"
+          - label: "Software Engineering"
+            value: "SOFTWARE ENGINEERING"
+          - label: "Project Build Log"
+            value: "PROJECT BUILD LOG"
+          - label: "Career & Learning"
+            value: "CAREER & LEARNING"
+
+      - label: "⚙️ Publishing — Topic Tags"
+        name: "post_tags"
+        widget: "select"
+        multiple: true
+        min: 1
+        max: 12
+        required: true
+        options:
+          - "#DevOps"
+          - "#IBMCloud"
+          - "#Coursera"
+          - "#Docker"
+          - "#Kubernetes"
+          - "#OpenShift"
+          - "#CICD"
+          - "#GitHubActions"
+          - "#Jenkins"
+          - "#Tekton"
+          - "#GitOps"
+          - "#Terraform"
+          - "#Ansible"
+          - "#AWS"
+          - "#Cloudflare"
+          - "#GitHubPages"
+          - "#ZeroDrift"
+          - "#Linux"
+          - "#Bash"
+          - "#Python"
+          - "#PythonFlask"
+          - "#TDD"
+          - "#Networking"
+          - "#CCNA"
+          - "#MCSA"
+          - "#MikroTik"
+          - "#Virtualization"
+          - "#Security"
+          - "#Prometheus"
+          - "#Grafana"
+          - "#OpenSource"
+          - "#Neubrutalism"
+          - "#CareerNotes"
+
+      - label: "⚙️ Publishing — Published Status"
+        name: "published"
+        widget: "boolean"
+        default: false
+        required: false
+        hint: "Toggle ON when ready to publish publicly. Defaults to OFF (draft) for new articles."
+
+      - label: "⚙️ Publishing — Featured Article"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        required: false
+        hint: "Highlight this article at the top of the blog feed and on the homepage showcase."
+
+      - label: "⚙️ Publishing — Publication Date"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        required: true
+        hint: "Chronological sort date (defaults to current date for new articles)."
+
+      - label: "⚙️ Publishing — Display Date"
+        name: "display_date"
+        widget: "string"
+        required: true
+        hint: "Human-friendly date string displayed to readers (e.g., October 2026)."
+
+      - label: "⚙️ Publishing — Read Time"
+        name: "read_time"
+        widget: "string"
+        required: true
+        hint: "Estimated reading time (e.g., 6 min read or 12 min deep dive)."
+
+      - label: "⚙️ Publishing — Last Revised Date"
+        name: "updated"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        required: false
+        hint: "Optional revision date when updating an older technical article."
+
+      # ========================================================================
+      # 3. URL & IDENTITY
+      # ========================================================================
+      - label: "⚙️ URL & Identity — Filename Slug"
+        name: "slug"
+        widget: "string"
+        required: true
+        pattern: ["^[a-z0-9-]+$", "Must be lowercase alphanumeric with hyphens only"]
+        hint: "URL slug that names the markdown file and sets the /posts/<slug>.html path."
+
+      # ========================================================================
+      # 4. COVER IMAGE METADATA
+      # ========================================================================
+      - label: "⚙️ Cover Image — Alt Text"
+        name: "cover_image_alt"
+        widget: "string"
+        required: false
+        hint: "Accessibility text describing the cover image for screen readers."
+
+      - label: "⚙️ Cover Image — Caption / Credit"
+        name: "cover_image_caption"
+        widget: "string"
+        required: false
+        hint: "Optional caption, diagram title, or photographer credit below the cover image."
+
+      # ========================================================================
+      # 5. ARTICLE FEATURES
+      # ========================================================================
+      - label: "⚙️ Features — Table of Contents"
+        name: "toc"
+        widget: "boolean"
+        default: false
+        required: false
+        hint: "Enable automated table of contents navigation based on article headings."
+
+      - label: "⚙️ Features — Highlighted Callout Box"
+        name: "callout_box"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - label: "Show Callout Box"
+            name: "enable"
+            widget: "boolean"
+            default: false
+            required: false
+            hint: "Turn ON to display the callout box."
+          - label: "Small Tag Label"
+            name: "tag_label"
+            widget: "string"
+            required: false
+            hint: "EXAMPLE: // Architecture Note, // Certification, // Warning."
+          - label: "Box Title"
+            name: "title"
+            widget: "string"
+            required: false
+            hint: "Headline for the callout box."
+          - label: "Box Content"
+            name: "content"
+            widget: "text"
+            required: false
+            hint: "Callout explanation in 2-4 sentences."
+          - label: "Link Text"
+            name: "link_text"
+            widget: "string"
+            required: false
+            hint: "EXAMPLE: View the full curriculum →"
+          - label: "Link URL"
+            name: "link_url"
+            widget: "string"
+            required: false
+            hint: "Destination URL starting with https://"
+
+      - label: "⚙️ Features — Multi-Part Series"
+        name: "series"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - label: "Series Name"
+            name: "name"
+            widget: "string"
+            required: false
+            hint: "EXAMPLE: Building My Home Lab, Kubernetes From Scratch."
+          - label: "Part Number"
+            name: "part"
+            widget: "number"
+            value_type: "int"
+            required: false
+            hint: "EXAMPLE: 1 for Part 1, 2 for Part 2."
+
+      - label: "⚙️ Features — Related Posts"
+        name: "related_posts"
+        widget: "relation"
+        collection: "posts"
+        search_fields: ["title", "slug"]
+        value_field: "slug"
+        display_fields: ["title"]
+        multiple: true
+        required: false
+        hint: "Manually cross-link other technical posts from the blog."
+
+      - label: "⚙️ Features — Config / Code Snippets"
+        name: "code_snippets"
+        widget: "list"
+        required: false
+        collapsed: true
+        summary: "{{fields.file_name}} ({{fields.language}})"
+        fields:
+          - label: "File Name"
+            name: "file_name"
+            widget: "string"
+            required: false
+            hint: "EXAMPLE: main.tf, Dockerfile, deploy.yml."
+          - label: "Language / Format"
+            name: "language"
+            widget: "string"
+            required: false
+            hint: "EXAMPLE: Terraform, Dockerfile, YAML, Bash, Python."
+          - label: "Code"
+            name: "code"
+            widget: "text"
+            required: false
+            hint: "Paste complete configuration or code here."
+
+      - label: "⚙️ Features — Downloadable Files"
+        name: "downloads"
+        widget: "list"
+        required: false
+        collapsed: true
+        summary: "{{fields.label}}"
+        fields:
+          - label: "Display Name"
+            name: "label"
+            widget: "string"
+            required: false
+            hint: "EXAMPLE: Download Terraform Lab ZIP."
+          - label: "File"
+            name: "file"
+            widget: "file"
+            required: false
+            media_folder: "images/downloads"
+            public_folder: "/images/downloads"
+            hint: "Upload or select file for download."
+          - label: "Short Description"
+            name: "description"
+            widget: "string"
+            required: false
+            hint: "Brief note describing the download."
+
+      - label: "⚙️ Features — References & External Links"
+        name: "external_links"
+        widget: "list"
+        required: false
+        collapsed: true
+        summary: "{{fields.text}}"
+        fields:
+          - label: "Link Text"
+            name: "text"
+            widget: "string"
+            required: false
+            hint: "EXAMPLE: Terraform AWS Provider Docs."
+          - label: "URL"
+            name: "url"
+            widget: "string"
+            required: false
+            hint: "Full destination URL."
+          - label: "Open in New Tab"
+            name: "open_in_new_tab"
+            widget: "boolean"
+            default: true
+            required: false
+
+      # ========================================================================
+      # 6. TECHNICAL & LAB DETAILS
+      # ========================================================================
+      - label: "⚙️ Lab Details — Difficulty Level"
+        name: "difficulty"
+        widget: "select"
+        required: false
+        options:
+          - "Beginner"
+          - "Intermediate"
+          - "Advanced"
+
+      - label: "⚙️ Lab Details — Project Status"
+        name: "project_status"
+        widget: "select"
+        required: false
+        options:
+          - "Planned"
+          - "In Progress"
+          - "Completed"
+          - "Archived"
+
+      - label: "⚙️ Lab Details — Technologies Used"
+        name: "technologies"
+        widget: "select"
+        multiple: true
+        required: false
+        options:
+          - "Linux"
+          - "Ubuntu"
+          - "Windows Server"
+          - "Docker"
+          - "Kubernetes"
+          - "OpenShift"
+          - "Terraform"
+          - "Ansible"
+          - "AWS"
+          - "IBM Cloud"
+          - "GitHub Actions"
+          - "Jenkins"
+          - "Git"
+          - "Python"
+          - "Bash"
+          - "Cisco"
+          - "MikroTik"
+          - "VMware"
+          - "UTM"
+          - "Prometheus"
+          - "Grafana"
+
+      - label: "⚙️ Lab Details — GitHub Repository"
+        name: "repository_url"
+        widget: "string"
+        required: false
+        hint: "Direct link to the public GitHub repository or lab source code."
+
+      - label: "⚙️ Lab Details — Live Demo URL"
+        name: "live_demo_url"
+        widget: "string"
+        required: false
+        hint: "Direct link to live running deployment if available."
+
+      - label: "⚙️ Lab Details — Prerequisites"
+        name: "prerequisites"
+        widget: "text"
+        required: false
+        hint: "Tools, accounts, or knowledge needed before starting."
+
+      - label: "⚙️ Lab Details — Tested Environment"
+        name: "environment"
+        widget: "text"
+        required: false
+        hint: "Host OS, hardware architecture, kernel, and software versions used."
+
+      - label: "⚙️ Lab Details — Key Takeaways"
+        name: "key_takeaways"
+        widget: "text"
+        required: false
+        hint: "Key architectural lessons and operational outcomes."
+
+      - label: "⚙️ Lab Details — Certificate / Credential URL"
+        name: "credential_url"
+        widget: "string"
+        required: false
+        hint: "Verification link for certifications (Credly, Coursera, Cisco, IBM)."
+
+      # ========================================================================
+      # 7. SEO & SOCIAL SHARING
+      # ========================================================================
+      - label: "⚙️ SEO & Social Sharing"
+        name: "seo"
+        widget: "object"
+        required: false
+        collapsed: true
+        fields:
+          - label: "SEO Title"
+            name: "meta_title"
+            widget: "string"
+            required: false
+            hint: "Custom title tag for search engines (defaults to article title if blank)."
+          - label: "Meta Description"
+            name: "meta_description"
+            widget: "text"
+            required: false
+            hint: "Custom search snippet (150-160 characters recommended)."
+          - label: "Social Share Image (OpenGraph)"
+            name: "og_image"
+            widget: "image"
+            required: false
+            media_folder: "images/posts"
+            public_folder: "/images/posts"
+            hint: "Preview image when sharing on LinkedIn, Telegram, Twitter, etc."
+          - label: "Canonical URL"
+            name: "canonical_url"
+            widget: "string"
+            required: false
+            hint: "Original URL if cross-posted from another platform."
+          - label: "Hide From Search Engines"
+            name: "no_index"
+            widget: "boolean"
+            default: false
+            required: false
+            hint: "Check this to prevent search engines from indexing this post."
+
+      # ========================================================================
+      # 8. SYSTEM & ARCHITECTURE (AUTOMATED DEFAULTS)
+      # ========================================================================
+      - label: "Author"
+        name: "author"
+        widget: "string"
+        default: "Nima Hosseini"
+        required: false
+        hint: "Default author attribution."
+
+      - label: "Layout Template"
+        name: "layout"
+        widget: "hidden"
+        default: "post.njk"
+
+      - label: "Template Engine Override"
+        name: "templateEngineOverride"
+        widget: "hidden"
+        default: "md"
