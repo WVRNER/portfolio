@@ -54,7 +54,7 @@
     />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles/main.css?v=20261007v3" />
+    <link rel="stylesheet" href="styles/main.css?v=20261007v4" />
     <link rel="stylesheet" href="styles/animations.css" />
     <!-- Critical Navigation & Hero Styles -->
     <style id="hero-critical-styles">
@@ -453,18 +453,20 @@
       .quad-card .quad-card-title {
         margin-bottom: 8px !important;
       }
-      #foundations .quad-card .quad-card-bullets {
+      #foundations .quad-card .quad-card-bullets,
+      .quad-card .quad-card-bullets {
         background: #FFFFFF !important;
         color: #000000 !important;
         border-top: 1.5px solid rgba(0, 0, 0, 0.18) !important;
         border-bottom-left-radius: 12px !important;
         border-bottom-right-radius: 12px !important;
-        padding: 24px 32px 28px !important;
+        padding: 20px 24px 22px !important;
         margin: 0 !important;
         list-style: none !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 12px !important;
+        display: grid !important;
+        grid-template-columns: 14px max-content 1fr !important;
+        row-gap: 10px !important;
+        column-gap: 8px !important;
         box-sizing: border-box !important;
       }
       #foundations .quad-card .quad-card-bullets li,
@@ -473,33 +475,40 @@
         line-height: 1.5 !important;
         color: #000000 !important;
         display: grid !important;
-        grid-template-columns: 16px 1fr !important;
-        column-gap: 8px !important;
-        row-gap: 2px !important;
+        grid-column: 1 / -1 !important;
+        grid-template-columns: 14px 150px 1fr !important;
         align-items: baseline !important;
+        gap: 8px !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
-      #foundations .quad-card .quad-card-bullets li strong,
-      .quad-card .quad-card-bullets li strong {
-        color: #000000 !important;
-        font-weight: 800 !important;
-        grid-column: 2 !important;
-        grid-row: 1 !important;
+      @supports (grid-template-columns: subgrid) {
+        #foundations .quad-card .quad-card-bullets li,
+        .quad-card .quad-card-bullets li {
+          grid-template-columns: subgrid !important;
+        }
       }
       #foundations .quad-card .quad-card-bullets li::before,
       .quad-card .quad-card-bullets li::before {
         content: '➔' !important;
         font-weight: 900 !important;
         color: #000000 !important;
+        font-size: 11px !important;
         grid-column: 1 !important;
-        grid-row: 1 !important;
-        font-size: 12px !important;
+        line-height: 1 !important;
+      }
+      #foundations .quad-card .quad-card-bullets li strong,
+      .quad-card .quad-card-bullets li strong {
+        color: #000000 !important;
+        font-weight: 800 !important;
+        grid-column: 2 !important;
+        white-space: nowrap !important;
       }
       #foundations .quad-card .quad-card-bullets li .bullet-desc,
       .quad-card .quad-card-bullets li .bullet-desc {
-        grid-column: 2 !important;
-        grid-row: 2 !important;
+        grid-column: 3 !important;
         color: #000000 !important;
-        display: block !important;
+        display: inline !important;
       }
       @media (max-width: 768px) {
         #foundations .gum-quad-grid {
@@ -532,11 +541,12 @@
           padding: 16px 20px 18px !important;
           gap: 8px !important;
           min-height: auto !important;
+          grid-template-columns: 14px max-content 1fr !important;
         }
         #foundations .quad-card .quad-card-bullets li,
         .quad-card .quad-card-bullets li {
-          font-size: 13.5px !important;
-          line-height: 1.5 !important;
+          font-size: 12.5px !important;
+          line-height: 1.45 !important;
           padding-left: 0 !important;
         }
       }

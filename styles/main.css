@@ -3973,19 +3973,18 @@ a[href*="#cv"].gum-btn:active {
     opacity: 0.9 !important;
   }
   .quad-card-bullets {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 8px !important;
-    font-size: 13.5px !important;
-    line-height: 1.5 !important;
+    display: grid !important;
+    grid-template-columns: 14px max-content 1fr !important;
+    row-gap: 8px !important;
+    column-gap: 8px !important;
     margin: 0 !important;
     padding: 16px 20px 18px !important;
     border-top: 1.5px solid rgba(0, 0, 0, 0.15) !important;
   }
   .quad-card-bullets li,
   #foundations .quad-card .quad-card-bullets li {
-    font-size: 13.5px !important;
-    line-height: 1.5 !important;
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
     padding-left: 0 !important;
   }
 
@@ -8167,12 +8166,13 @@ a[href*="#cv"].gum-btn:active {
   border-top: 1.5px solid rgba(0, 0, 0, 0.18) !important;
   border-bottom-left-radius: 12px !important;
   border-bottom-right-radius: 12px !important;
-  padding: 24px 32px 28px !important;
+  padding: 20px 24px 22px !important;
   margin: 0 !important;
   list-style: none !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 12px !important;
+  display: grid !important;
+  grid-template-columns: 14px max-content 1fr !important;
+  row-gap: 10px !important;
+  column-gap: 8px !important;
   box-sizing: border-box !important;
 }
 
@@ -8182,10 +8182,19 @@ a[href*="#cv"].gum-btn:active {
   line-height: 1.5 !important;
   color: #000000 !important;
   display: grid !important;
-  grid-template-columns: 16px 1fr !important;
-  column-gap: 8px !important;
-  row-gap: 2px !important;
+  grid-column: 1 / -1 !important;
+  grid-template-columns: 14px 150px 1fr !important;
   align-items: baseline !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+@supports (grid-template-columns: subgrid) {
+  #foundations .quad-card .quad-card-bullets li,
+  .quad-card .quad-card-bullets li {
+    grid-template-columns: subgrid !important;
+  }
 }
 
 #foundations .quad-card .quad-card-bullets li strong,
@@ -8193,7 +8202,7 @@ a[href*="#cv"].gum-btn:active {
   color: #000000 !important;
   font-weight: 800 !important;
   grid-column: 2 !important;
-  grid-row: 1 !important;
+  white-space: nowrap !important;
 }
 
 #foundations .quad-card .quad-card-bullets li::before,
@@ -8202,15 +8211,14 @@ a[href*="#cv"].gum-btn:active {
   font-weight: 900 !important;
   color: #000000 !important;
   grid-column: 1 !important;
-  grid-row: 1 !important;
-  font-size: 12px !important;
+  font-size: 11px !important;
+  line-height: 1 !important;
 }
 
 #foundations .quad-card .quad-card-bullets li .bullet-desc,
 .quad-card .quad-card-bullets li .bullet-desc {
-  grid-column: 2 !important;
-  grid-row: 2 !important;
-  display: block !important;
+  grid-column: 3 !important;
+  display: inline !important;
   color: #000000 !important;
 }
 
