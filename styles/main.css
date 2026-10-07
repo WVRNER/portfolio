@@ -2163,11 +2163,18 @@ button {
 .tile-big {
   background: var(--gum-pink);
   color: #000000;
+  justify-content: center !important;
 }
 
 .tile-subhead {
   background: #FFFFFF;
   color: #000000;
+  justify-content: center !important;
+}
+
+.tile-big .tile-big-title,
+.tile-subhead .tile-desc {
+  margin: 0 !important;
 }
 
 /* Tile 3: Drawing with NO frame and NO shadows */
@@ -2904,8 +2911,7 @@ button {
 }
 
 /* ==========================================================================
-   AUTHENTIC GUMROAD NEUBRUTALISM (Rounded Rectangles across all components)
-   Menu bar retains its design; every other rectangle gets Gumroad rounded corners
+   NEUBRUTALIST COMPONENT GEOMETRY (Rounded Rectangles)
    ========================================================================== */
 .gum-btn,
 .gum-btn-wide-rect,
@@ -3334,10 +3340,10 @@ a.nav-contact-btn:hover {
 }
 
 /* ==========================================================================
-   AUTHENTIC GUMROAD NAVIGATION BAR & BUTTON SYSTEM
+   MAIN NAVIGATION BAR & BUTTON SYSTEM
    ========================================================================== */
 
-/* 1. Gumroad Full-Width Navbar */
+/* 1. Full-Width Navbar */
 .gum-nav-wrapper {
   position: -webkit-sticky;
   position: sticky;
@@ -3381,7 +3387,7 @@ a.nav-contact-btn:hover {
   color: #000000;
 }
 
-/* GitHub Stars Pill (Matches Gumroad Navbar 9.7K badge) */
+/* GitHub Stars Pill */
 .nav-github-badge {
   display: inline-flex;
   align-items: center;
@@ -3415,7 +3421,7 @@ a.nav-contact-btn:hover {
   gap: 12px;
 }
 
-/* Round Black Pill with White Text (Matches 'About' in Gumroad Screenshot) */
+/* Round Black Pill with White Text (About) */
 .gum-nav-pill-black {
   display: inline-flex;
   align-items: center;
@@ -3441,29 +3447,30 @@ a.nav-contact-btn:hover {
   box-shadow: 3px 3px 0px #000000;
 }
 
-/* Round White Pill with Black Text (CV - No Shadows) */
+/* CV Navigation Link (Plain, no frame) */
 .gum-nav-pill-white {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #FFFFFF;
-  color: #000000;
-  border: 2px solid #000000;
-  border-radius: 9999px;
-  padding: 8px 22px;
+  background: transparent;
+  color: var(--text-main, #000000);
+  border: none;
+  border-radius: 0;
+  padding: 8px 14px;
   font-family: var(--font-display);
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 800;
   text-decoration: none;
-  transition: all 0.15s ease;
+  transition: opacity 0.15s ease;
   white-space: nowrap;
   box-shadow: none !important;
 }
 
 .gum-nav-pill-white:hover {
-  background: #000000;
-  color: #FFFFFF;
-  border-color: #000000;
+  background: transparent;
+  opacity: 0.65;
+  color: var(--text-main, #000000);
+  border: none;
   transform: none !important;
   box-shadow: none !important;
 }
@@ -3473,7 +3480,7 @@ a.nav-contact-btn:hover {
   box-shadow: none !important;
 }
 
-/* Wide Rectangular Full-Height Contact CTA (Matches 'Start selling' in Gumroad Screenshot) */
+/* Wide Rectangular Full-Height Contact CTA */
 .gum-nav-cta-rect {
   display: inline-flex;
   align-items: center;
@@ -7890,14 +7897,7 @@ a[href*="#cv"].gum-btn:active {
 
 
 /* ==========================================================================
-   USER-REQUESTED PRECISION ADJUSTMENTS
-   - Remove shadows on #systems-architecture (.gum-infra-card) and inside
-   - Switch fonts from white to black in #systems-architecture
-   - Remove all shadows & hover shadows in #foundations (Packets before pixels)
-   - Remove shadows in .foundations-tools-strip & .tools-strip-item
-   - Remove shadows on gallery tiles (Have a project / Let's discuss),
-     reduce outline to 1.5px, set inside background to match page background,
-     and show shadows only on hover.
+   SITE-WIDE REFINEMENTS & COMPONENT OVERRIDES
    ========================================================================== */
 
 /* 1. This website hosted on GitHub section: Compact, de-framed, no shadows */
