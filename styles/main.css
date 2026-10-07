@@ -8194,33 +8194,42 @@ a[href*="#cv"].gum-btn:active {
 
 @media (min-width: 768px) {
   #foundations .quad-card:not(.card-span-full) > div:first-child {
-    min-height: 192px !important;
-    padding: 24px 28px 18px !important;
+    min-height: 152px !important;
+    padding: 22px 26px 16px !important;
     display: flex !important;
     flex-direction: column !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-title {
-    min-height: 38px !important;
+    font-size: 24px !important;
+    line-height: 1.2 !important;
+    margin-bottom: 6px !important;
     display: flex !important;
     align-items: center !important;
-    margin-bottom: 8px !important;
+    min-height: auto !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-num {
-    min-height: 24px !important;
-    display: inline-flex !important;
-    align-items: center !important;
+    font-size: 11px !important;
+    padding: 3px 8px !important;
     margin-top: 2px !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 10px !important;
+    min-height: auto !important;
+    width: fit-content !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-text {
-    min-height: 68px !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
     margin: 0 !important;
-    line-height: 1.55 !important;
+    min-height: auto !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-bullets {
-    min-height: 150px !important;
-    padding: 18px 28px 20px !important;
-    gap: 10px !important;
+    min-height: 140px !important;
+    padding: 16px 26px 18px !important;
+    gap: 8px !important;
+  }
+  #foundations .quad-card:not(.card-span-full) .quad-card-bullets li {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    gap: 8px !important;
   }
   #foundations .quad-card.card-span-full {
     grid-column: 1 / -1 !important;
