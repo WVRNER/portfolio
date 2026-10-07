@@ -8099,6 +8099,13 @@ a[href*="#cv"].gum-btn:active {
 }
 
 @media (min-width: 768px) {
+  #foundations .quad-card:not(.card-span-full) > div:first-child {
+    min-height: 205px !important;
+  }
+  #foundations .quad-card:not(.card-span-full) .quad-card-bullets {
+    min-height: 235px !important;
+    padding: 28px 32px 30px !important;
+  }
   #foundations .quad-card.card-span-full {
     grid-column: 1 / -1 !important;
     display: grid !important;
