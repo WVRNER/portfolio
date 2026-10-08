@@ -3948,16 +3948,20 @@ a[href*="#cv"].gum-btn:active {
     justify-content: flex-start !important;
   }
   #foundations .gum-quad-grid {
-    gap: 16px !important;
+    gap: 14px !important;
+  }
+  #foundations .quad-card {
+    justify-content: flex-start !important;
   }
   #foundations .quad-card > div:first-child {
-    padding: 22px 20px 16px !important;
+    padding: 18px 18px 12px !important;
+    min-height: auto !important;
   }
   .quad-card-num {
     font-size: 11.5px !important;
     padding: 3px 8px !important;
     margin-top: 2px !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
     letter-spacing: 0.05em !important;
   }
   .quad-card-title {
@@ -3965,21 +3969,24 @@ a[href*="#cv"].gum-btn:active {
     line-height: 1.25 !important;
     margin-bottom: 6px !important;
     letter-spacing: -0.02em !important;
+    min-height: auto !important;
   }
   .quad-card-text {
-    font-size: 14.5px !important;
-    line-height: 1.55 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
     margin-bottom: 0 !important;
     opacity: 0.9 !important;
+    min-height: auto !important;
   }
   .quad-card-bullets {
     display: grid !important;
     grid-template-columns: 14px max-content 1fr !important;
-    row-gap: 8px !important;
+    row-gap: 7px !important;
     column-gap: 8px !important;
     margin: 0 !important;
-    padding: 16px 20px 18px !important;
+    padding: 12px 18px 14px !important;
     border-top: 1.5px solid rgba(0, 0, 0, 0.15) !important;
+    min-height: auto !important;
   }
   .quad-card-bullets li,
   #foundations .quad-card .quad-card-bullets li {
@@ -8288,8 +8295,8 @@ a[href*="#cv"].gum-btn:active {
 
 @media (min-width: 768px) {
   #foundations .quad-card:not(.card-span-full) > div:first-child {
-    min-height: 196px !important;
-    padding: 22px 26px 16px !important;
+    min-height: 148px !important;
+    padding: 20px 24px 14px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
@@ -8300,13 +8307,13 @@ a[href*="#cv"].gum-btn:active {
     margin-bottom: 6px !important;
     display: flex !important;
     align-items: center !important;
-    min-height: 58px !important;
+    min-height: auto !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-num {
     font-size: 11px !important;
     padding: 3px 8px !important;
     margin-top: 2px !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 8px !important;
     min-height: auto !important;
     width: fit-content !important;
   }
@@ -8314,12 +8321,12 @@ a[href*="#cv"].gum-btn:active {
     font-size: 14px !important;
     line-height: 1.5 !important;
     margin: 0 !important;
-    min-height: 64px !important;
+    min-height: auto !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-bullets {
-    min-height: 140px !important;
-    padding: 16px 26px 18px !important;
-    gap: 8px !important;
+    min-height: 106px !important;
+    padding: 14px 24px 14px !important;
+    gap: 7px !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-bullets li {
     font-size: 13px !important;
@@ -8336,7 +8343,7 @@ a[href*="#cv"].gum-btn:active {
     padding: 0 !important;
   }
   #foundations .quad-card.card-span-full > div:first-child {
-    padding: 36px 36px !important;
+    padding: 24px 32px !important;
     background: #FFFFFF !important;
     height: 100% !important;
     box-sizing: border-box !important;
@@ -8349,12 +8356,12 @@ a[href*="#cv"].gum-btn:active {
     border-left: 1.5px solid rgba(0, 0, 0, 0.18) !important;
     background: #FFFFFF !important;
     border-radius: 0 !important;
-    padding: 36px 36px !important;
+    padding: 24px 32px !important;
     height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    gap: 14px !important;
+    gap: 10px !important;
     box-sizing: border-box !important;
   }
 }
