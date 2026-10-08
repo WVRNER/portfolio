@@ -73,7 +73,7 @@
         </div>
 
         <div class="gum-nav-right-cluster">
-          <a href="/blog/" class="gum-nav-link-plain active">Browse All Posts</a>
+          <a href="/blog/" class="gum-nav-link-plain active">Blog</a>
           <a href="/about/" class="gum-nav-pill-black">About</a>
           <a href="/about/#cv" class="gum-nav-link-plain">CV</a>
 
@@ -85,20 +85,7 @@
           </a>
         </div>
 
-        <!-- Mobile 2-Line Menu Toggle -->
-        <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
-          <span class="menu-line line-top"></span>
-          <span class="menu-line line-bottom"></span>
-        </button>
       </nav>
-
-      <!-- Mobile Navigation Drawer -->
-      <div id="mobileMenuDrawer" class="mobile-nav-drawer" aria-hidden="true">
-        <a href="/blog/" class="mobile-nav-link">Browse All Posts</a>
-        <a href="/about/" class="mobile-nav-link">About</a>
-        <a href="/about/#cv" class="mobile-nav-link">CV</a>
-        <a href="mailto:wvrner@outlook.com" class="mobile-nav-link">Contact</a>
-      </div>
     </header>
 
 
@@ -128,6 +115,9 @@
             {% if featured %}
               <span class="post-featured-badge">★ FEATURED TECHNICAL WRITE-UP</span>
             {% endif %}
+            <span class="blog-category-tag">
+              {{ category }}
+            </span>
             <span class="blog-time-badge">
               {{ display_date }} &bull; {{ read_time }}
             </span>
@@ -158,7 +148,21 @@
         </div>
 
         <!-- Article Footer Section -->
-        <footer class="post-footer-section" style="display: flex; justify-content: flex-start;">
+        <footer class="post-footer-section">
+          <div class="about-chips-list" style="margin-top: 0;">
+            {% for tag in post_tags %}
+              {% set colors = [
+                "chip-yellow",
+                "chip-pink",
+                "chip-green",
+                "chip-blue"
+              ] %}
+              <span class="about-chip {{ colors[loop.index0 % 4] }}">
+                {{ tag | replace("#", "") }}
+              </span>
+            {% endfor %}
+          </div>
+
           <a href="/blog/" class="blog-read-more-btn">
             <span>&larr; All Articles</span>
           </a>

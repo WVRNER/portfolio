@@ -2157,8 +2157,8 @@ button {
 }
 
 .gallery-tile:hover {
-  transform: none;
-  box-shadow: none;
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0px #000000;
 }
 
 .tile-big {
@@ -3365,7 +3365,7 @@ a.nav-contact-btn:hover {
 .gum-nav-inner {
   width: 100%;
   max-width: 100%;
-  height: 84px !important;
+  height: 68px;
   padding: 0 0 0 28px;
   margin: 0;
   display: flex;
@@ -3388,11 +3388,10 @@ a.nav-contact-btn:hover {
 
 .logo-text {
   font-family: var(--font-display);
-  font-size: 56px !important;
+  font-size: 28px;
   font-weight: 900;
   letter-spacing: -0.06em;
   color: #000000;
-  line-height: 1;
 }
 
 /* GitHub Stars Pill */
@@ -3515,97 +3514,6 @@ a.nav-contact-btn:hover {
   text-decoration: none;
   white-space: nowrap;
   transition: all 0.15s ease;
-}
-
-/* 2-Line Horizontal Menu Toggle (Mobile) */
-.mobile-menu-toggle {
-  display: none;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  width: 44px;
-  height: 44px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  z-index: 10001;
-  transition: opacity 0.2s ease;
-}
-
-.mobile-menu-toggle .menu-line {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background-color: var(--text-main, #000000);
-  border-radius: 2px;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
-  transform-origin: center;
-}
-
-[data-theme="dark"] .mobile-menu-toggle .menu-line {
-  background-color: #FFFFFF;
-}
-
-.mobile-menu-toggle.active .menu-line.line-top {
-  transform: translateY(4px) rotate(45deg);
-}
-
-.mobile-menu-toggle.active .menu-line.line-bottom {
-  transform: translateY(-4px) rotate(-45deg);
-}
-
-/* Mobile Navigation Drawer (Soothing animation when open) */
-.mobile-nav-drawer {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background: var(--bg-canvas, #FFFFFF);
-  border-bottom: 2px solid #000000;
-  padding: 24px 28px 28px;
-  flex-direction: column;
-  gap: 18px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-  opacity: 0;
-  transform: translateY(-8px);
-  pointer-events: none;
-  transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
-  z-index: 9999;
-}
-
-[data-theme="dark"] .mobile-nav-drawer {
-  background: #141416;
-  border-bottom-color: #333338;
-}
-
-.mobile-nav-drawer.open {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.mobile-nav-link {
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-main, #000000);
-  text-decoration: none;
-  padding: 6px 0;
-  display: inline-block;
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.15s ease;
-}
-
-[data-theme="dark"] .mobile-nav-link {
-  color: #FFFFFF;
-}
-
-.mobile-nav-link:hover {
-  transform: translateX(4px);
-  color: var(--gum-pink, #FF90E8);
 }
 
 .nav-contact-btn:hover,
@@ -3832,24 +3740,32 @@ a[href*="#cv"].gum-btn:active {
   /* Sticky Navigation Bar */
   .gum-nav-inner {
     padding: 0 0 0 16px;
-    height: 74px !important;
+    height: 60px;
     gap: 8px;
   }
   .logo-text {
-    font-size: 48px !important;
+    font-size: 26px;
     font-weight: 900;
   }
   .nav-github-badge {
     display: none;
   }
   .gum-nav-right-cluster {
-    display: none !important;
+    gap: 6px;
   }
-  .mobile-menu-toggle {
-    display: flex !important;
+  .gum-nav-pill-black {
+    padding: 6px 14px;
+    font-size: 12.5px;
   }
-  .mobile-nav-drawer {
-    display: flex !important;
+  .gum-nav-pill-white {
+    padding: 6px 14px;
+    font-size: 12.5px;
+    box-shadow: none !important;
+  }
+  .gum-nav-cta-rect {
+    height: 60px;
+    padding: 0 18px;
+    font-size: 13.5px;
   }
 
   /* First Scroll (Hero Section) on Mobile - Refined & Understandable in One Go */
@@ -4385,10 +4301,10 @@ a[href*="#cv"].gum-btn:active {
 @media (max-width: 420px) {
   .gum-nav-inner {
     padding: 0 0 0 12px;
-    height: 68px !important;
+    height: 56px;
   }
   .logo-text {
-    font-size: 42px !important;
+    font-size: 23px;
   }
   .gum-nav-right-cluster {
     gap: 4px;
@@ -5965,30 +5881,28 @@ a[href*="#cv"].gum-btn:active {
 }
 
 .blog-post-card {
-  background: transparent;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  padding: 24px !important;
+  background: #FFFFFF;
+  border: var(--border-lg, 3px solid #000000);
+  border-radius: var(--radius-card, 16px);
+  box-shadow: 6px 6px 0px #000000;
+  padding: 44px 40px 48px;
   box-sizing: border-box;
-  transition: none;
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.12) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .blog-post-card:hover {
-  transform: none !important;
-  box-shadow: none !important;
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 0px #000000;
 }
 
 [data-theme="dark"] .blog-post-card {
-  background: transparent;
-  border: none !important;
-  box-shadow: none !important;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+  background: #141416;
+  border-color: #FFFFFF;
+  box-shadow: 6px 6px 0px #FFFFFF;
 }
 
 [data-theme="dark"] .blog-post-card:hover {
-  box-shadow: none !important;
+  box-shadow: 8px 8px 0px #FFFFFF;
 }
 
 .blog-post-meta {
@@ -6451,27 +6365,26 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: 1.5px 1.5px 0px #FFFFFF;
 }
 
-/* Featured Card Treatment on Blog Index (Frameless) */
+/* Featured Card Treatment on Blog Index */
 .blog-post-card.is-featured {
-  border: none !important;
-  box-shadow: none !important;
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.12) !important;
+  border-width: 3.5px;
+  border-color: #000000;
+  box-shadow: 8px 8px 0px #000000;
   position: relative;
 }
 
 .blog-post-card.is-featured:hover {
-  transform: none !important;
-  box-shadow: none !important;
+  transform: translateY(-2px);
+  box-shadow: 10px 10px 0px #000000;
 }
 
 [data-theme="dark"] .blog-post-card.is-featured {
-  border: none !important;
-  box-shadow: none !important;
-  border-bottom: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+  border-color: #FFFFFF;
+  box-shadow: 8px 8px 0px #FFFFFF;
 }
 
 [data-theme="dark"] .blog-post-card.is-featured:hover {
-  box-shadow: none !important;
+  box-shadow: 10px 10px 0px #FFFFFF;
 }
 
 .blog-post-title.is-featured-title a:hover {
@@ -6503,37 +6416,37 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: 1.5px 1.5px 0px #FFFFFF;
 }
 
-/* Outer Article Case Study Frame (Frameless, full width with 24px padding) */
+/* Outer Article Case Study Frame */
 .blog-article-frame {
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  max-width: 960px;
-  width: 100% !important;
+  background: var(--bg-card, #FFFFFF);
+  border: var(--border-lg, 3px solid #000000);
+  border-radius: var(--radius-card, 16px);
+  box-shadow: 8px 8px 0px #000000;
+  max-width: 920px;
+  width: 100%;
   margin: 0 auto;
-  padding: 24px !important;
   box-sizing: border-box;
-  overflow: visible;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
 }
 
 [data-theme="dark"] .blog-article-frame {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+  background: #141416;
+  border-color: #FFFFFF;
+  box-shadow: 8px 8px 0px #FFFFFF;
 }
 
 /* Framed Article Header */
 .post-header-section {
-  padding: 24px 0 !important;
-  background: transparent !important;
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.15) !important;
+  padding: 44px 44px 34px;
+  background: var(--bg-canvas, #F4F4F0);
+  border-bottom: 2.5px solid #000000;
   box-sizing: border-box;
 }
 
 [data-theme="dark"] .post-header-section {
-  background: transparent !important;
-  border-bottom-color: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Framed Article Body */
@@ -6661,42 +6574,33 @@ a[href*="#cv"].gum-btn:active {
 /* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
   .blog-article-frame {
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    padding: 24px !important;
-    width: 100% !important;
+    border-radius: 12px;
+    box-shadow: 5px 5px 0px #000000;
   }
 
   [data-theme="dark"] .blog-article-frame {
-    border: none !important;
-    box-shadow: none !important;
+    box-shadow: 5px 5px 0px #FFFFFF;
   }
 
   .post-header-section {
-    padding: 20px 0 !important;
+    padding: 28px 20px 22px;
   }
 
   .post-body-section {
-    padding: 20px 0 !important;
+    padding: 28px 18px 36px;
     font-size: 15.5px;
   }
 
   .post-footer-section {
-    padding: 20px 0 !important;
+    padding: 20px 18px;
   }
 
-  .blog-post-card.is-featured,
-  .blog-post-card {
-    border: none !important;
-    box-shadow: none !important;
-    padding: 24px !important;
+  .blog-post-card.is-featured {
+    box-shadow: 5px 5px 0px #000000;
   }
 
-  [data-theme="dark"] .blog-post-card.is-featured,
-  [data-theme="dark"] .blog-post-card {
-    border: none !important;
-    box-shadow: none !important;
+  [data-theme="dark"] .blog-post-card.is-featured {
+    box-shadow: 5px 5px 0px #FFFFFF;
   }
 }
 
@@ -8504,25 +8408,18 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: 4px 4px 0px #FFFFFF !important;
 }
 
-/* Have a project or want to connect (.tile-big) & Let's discuss (.tile-subhead): No animation, hover shift, or shadows */
+/* Have a project or want to connect (.tile-big): Remove pink, use background #F4F4F0, 1.5px outline, shadow on hover */
 .gallery-tile.tile-big,
-.tile-big,
-.gallery-tile.tile-subhead,
-.tile-subhead,
-.gallery-tile {
+.tile-big {
   background: var(--bg-canvas, #F4F4F0) !important;
+  border: 1.5px solid #000000 !important;
   box-shadow: none !important;
-  transform: none !important;
-  transition: none !important;
 }
 
 .gallery-tile.tile-big:hover,
-.tile-big:hover,
-.gallery-tile.tile-subhead:hover,
-.tile-subhead:hover,
-.gallery-tile:hover {
-  box-shadow: none !important;
-  transform: none !important;
+.tile-big:hover {
+  box-shadow: 4px 4px 0px #000000 !important;
+  transform: translate(-2px, -2px) !important;
 }
 
 
