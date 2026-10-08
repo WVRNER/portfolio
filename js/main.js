@@ -894,8 +894,59 @@ function initRichArticleTables() {
   });
 }
 
+/* ==========================================================================
+   Mobile 2-Line Menu Drawer
+   ========================================================================== */
+function initMobileMenu() {
+  const toggles = document.querySelectorAll('.mobile-menu-toggle');
+  const drawers = document.querySelectorAll('.mobile-nav-drawer');
+  if (!toggles.length || !drawers.length) return;
+
+  toggles.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = btn.classList.contains('active');
+      toggles.forEach(b => {
+        b.classList.toggle('active', !isOpen);
+        b.setAttribute('aria-expanded', String(!isOpen));
+      });
+      drawers.forEach(d => {
+        d.classList.toggle('open', !isOpen);
+        d.setAttribute('aria-hidden', String(isOpen));
+      });
+    });
+  });
+
+  drawers.forEach(d => {
+    d.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        toggles.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-expanded', 'false');
+        });
+        d.classList.remove('open');
+        d.setAttribute('aria-hidden', 'true');
+      });
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.gum-nav-wrapper')) {
+      toggles.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-expanded', 'false');
+      });
+      drawers.forEach(d => {
+        d.classList.remove('open');
+        d.setAttribute('aria-hidden', 'true');
+      });
+    }
+  });
+}
+
 function initApp() {
   const tasks = [
+    initMobileMenu,
     initLiveClocks,
     initIntroSplash,
     initHeroDock,

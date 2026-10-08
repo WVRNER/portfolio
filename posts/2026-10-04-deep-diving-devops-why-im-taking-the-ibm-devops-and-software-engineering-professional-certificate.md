@@ -9,7 +9,6 @@ excerpt: In modern technology, the boundary between infrastructure operations
   15-course professional certificate on Coursera, what the CAMS/Agile framework
   teaches about infrastructure, and how mastering Python, Docker, Kubernetes,
   TDD, and CI/CD connects with hard networking roots.
-category: DEVOPS & INFRASTRUCTURE
 display_date: October 2026
 read_time: 5 min read
 post_tags:
