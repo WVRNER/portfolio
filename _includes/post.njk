@@ -52,7 +52,7 @@
     />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="/styles/main.css?v=20261007v3" />
+    <link rel="stylesheet" href="/styles/main.css?v=20261008v5" />
     <link rel="stylesheet" href="/styles/animations.css" />
   </head>
 
@@ -64,7 +64,7 @@
 
     <!-- Article -->
     <main
-      class="gum-section"
+      class="gum-section post-reading-layout"
       style="
         padding-top: 48px;
         padding-bottom: 90px;
@@ -126,132 +126,7 @@
       </article>
     </main>
 
-    <!-- Site Footer -->
-    <footer class="gum-footer">
-
-      <div class="gum-footer-inner">
-
-        <!-- Telemetry -->
-        <div class="footer-top-telemetry">
-
-          
-
-          <div class="telemetry-clocks">
-            <span>NYC (EDT): <strong id="footerLocalClock">--:--:--</strong></span>
-            <span>&middot;</span>
-            <span>TEHRAN (IRST): <strong id="footerTehranClock">--:--:--</strong></span>
-          </div>
-
-        </div>
-
-
-        <!-- Footer Columns -->
-        <div class="footer-cols-grid">
-
-          <div class="footer-brand-col">
-
-            <div
-              class="gum-logo-pill"
-              style="width: fit-content"
-            >
-              <span class="logo-w">W</span>
-              <span>Nima Hosseini</span>
-            </div>
-
-            <div class="footer-brand-role">
-              wvrner &middot; DevOps &amp; Infrastructure Systems
-            </div>
-
-            <p class="footer-brand-desc">
-              Designing automated pipelines, resilient AWS architectures,
-              and understanding modern systems from first principles.
-            </p>
-
-          </div>
-
-
-          <div class="footer-links-col">
-
-            <h5>// VERIFIED PROTOCOLS</h5>
-
-            <ul class="footer-links-list">
-
-              <li>
-                <a
-                  href="https://t.me/wvrner"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>Telegram: @wvrner</span>
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="https://github.com/wvrner"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>GitHub</span>
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="https://linkedin.com/in/wvrner"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span>LinkedIn</span>
-                </a>
-              </li>
-
-              <li>
-                <a href="mailto:wvrner@outlook.com">
-                  <span>Email (Direct)</span>
-                </a>
-              </li>
-
-            </ul>
-
-          </div>
-
-        </div>
-
-
-        <!-- Giant Wordmark -->
-        <div
-          class="footer-giant-wordmark"
-          aria-hidden="true"
-        >
-          WVRNER
-        </div>
-
-
-        <!-- Bottom Bar -->
-        <div class="footer-bottom-bar">
-
-          <span>
-            WVRNER // BUILD: The One
-          </span>
-
-          <span>
-            &copy; 2026 Nima Hosseini wvrner. All rights reserved.
-          </span>
-
-          <button
-            id="backToTopBtn"
-            class="gum-btn gum-btn-white"
-            type="button"
-          >
-            <span>[ &uarr; BACK TO TOP ]</span>
-          </button>
-
-        </div>
-
-      </div>
-
-    </footer>
+    {% include "footer.njk" %}
 
 
     <!-- Scripts -->

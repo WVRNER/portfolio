@@ -1,4 +1,40 @@
 <!-- Main Navigation Header -->
+<style>
+  .gum-nav-wrapper {
+    border-bottom: 1.6px solid #000000 !important;
+  }
+  [data-theme="dark"] .gum-nav-wrapper {
+    border-bottom: 1.6px solid #333338 !important;
+  }
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+  .mobile-nav-dropdown {
+    display: none !important;
+  }
+  @media (min-width: 769px) {
+    .gum-nav-right-cluster {
+      display: flex !important;
+    }
+    .mobile-menu-toggle {
+      display: none !important;
+    }
+    .mobile-nav-dropdown {
+      display: none !important;
+    }
+  }
+  @media (max-width: 768px) {
+    .gum-nav-right-cluster {
+      display: none !important;
+    }
+    .mobile-menu-toggle {
+      display: inline-flex !important;
+    }
+    .mobile-nav-dropdown.is-open {
+      display: block !important;
+    }
+  }
+</style>
 <header class="gum-nav-wrapper">
   <nav class="gum-nav-inner" aria-label="Main Navigation">
     <!-- Brand Logo Group -->
@@ -24,7 +60,7 @@
     </button>
   </nav>
 
-  <!-- Mobile Dropdown Menu (80% white / 20% transparent) -->
+  <!-- Mobile Dropdown Menu -->
   <div class="mobile-nav-dropdown" id="mobileNavMenu" aria-hidden="true">
     <nav class="mobile-nav-links" aria-label="Mobile Navigation Links">
       <a href="/blog/" class="mobile-nav-link">Blog</a>

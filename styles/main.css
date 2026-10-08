@@ -166,7 +166,7 @@ button {
   width: 100% !important;
   z-index: 10000 !important;
   background-color: var(--bg-canvas, #FFFFFF) !important;
-  border-bottom: var(--border-md) !important;
+  border-bottom: 1.6px solid #000000 !important;
   transition: background-color 0.25s ease;
 }
 
@@ -3356,12 +3356,12 @@ a.nav-contact-btn:hover {
   width: 100% !important;
   z-index: 10000 !important;
   background-color: var(--bg-canvas, #FFFFFF) !important;
-  border-bottom: 2px solid #000000 !important;
+  border-bottom: 1.6px solid #000000 !important;
 }
 
 [data-theme="dark"] .gum-nav-wrapper {
   background-color: #141416 !important;
-  border-bottom: 2px solid #333338 !important;
+  border-bottom: 1.6px solid #333338 !important;
 }
 
 .gum-nav-inner {
@@ -3504,6 +3504,13 @@ a.nav-contact-btn:hover {
 }
 
 /* Responsive Switching: Desktop vs Mobile */
+.mobile-menu-toggle {
+  display: none !important;
+}
+.mobile-nav-dropdown {
+  display: none !important;
+}
+
 @media (min-width: 769px) {
   .gum-nav-right-cluster {
     display: flex !important;
@@ -3522,6 +3529,9 @@ a.nav-contact-btn:hover {
   }
   .mobile-menu-toggle {
     display: inline-flex !important;
+  }
+  .mobile-nav-dropdown.is-open {
+    display: block !important;
   }
   .gum-nav-inner {
     height: 64px !important;
@@ -4190,7 +4200,7 @@ a[href*="#cv"].gum-btn:active {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     width: 100%;
-    border-bottom: 2px solid #000000;
+    border-bottom: 1.6px solid #000000;
     scrollbar-width: none;
     border-radius: 0px !important;
     box-shadow: none !important;
@@ -8331,7 +8341,7 @@ main.gum-section > article.blog-article-container:hover {
   display: block;
 }
 
-/* All 5 System Cards in Packets before pixels: Same background as whole page (#F4F4F0) */
+/* All 5 System Cards in Packets before pixels: 20% reduced border (1.2px) & 2-line bullets */
 #foundations .quad-card,
 .quad-card,
 .quad-card.card-yellow,
@@ -8342,7 +8352,7 @@ main.gum-section > article.blog-article-container:hover {
 .quad-card.card-actions {
   background: #FFFFFF !important;
   color: #000000 !important;
-  border: 1.5px solid #000000 !important;
+  border: 1.2px solid #000000 !important;
   border-radius: 14px !important;
   box-shadow: none !important;
   overflow: hidden !important;
@@ -8361,7 +8371,7 @@ main.gum-section > article.blog-article-container:hover {
 }
 
 #foundations .quad-card > div:first-child {
-  padding: 34px 32px 24px !important;
+  padding: 24px 26px 18px !important;
   background: #FFFFFF !important;
   flex: 1 0 auto !important;
   display: flex !important;
@@ -8377,11 +8387,11 @@ main.gum-section > article.blog-article-container:hover {
 .quad-card .quad-card-num {
   background: #FFFFFF !important;
   color: #000000 !important;
-  border: 1.5px solid #000000 !important;
+  border: 1.2px solid #000000 !important;
   border-radius: 4px !important;
   box-shadow: none !important;
   margin-top: 2px !important;
-  margin-bottom: 14px !important;
+  margin-bottom: 12px !important;
   width: fit-content !important;
 }
 
@@ -8394,16 +8404,15 @@ main.gum-section > article.blog-article-container:hover {
 .quad-card .quad-card-bullets {
   background: #FFFFFF !important;
   color: #000000 !important;
-  border-top: 1.5px solid rgba(0, 0, 0, 0.18) !important;
+  border-top: 1.2px solid rgba(0, 0, 0, 0.18) !important;
   border-bottom-left-radius: 12px !important;
   border-bottom-right-radius: 12px !important;
-  padding: 20px 24px 22px !important;
+  padding: 18px 24px 20px !important;
   margin: 0 !important;
   list-style: none !important;
-  display: grid !important;
-  grid-template-columns: 14px max-content 1fr !important;
-  row-gap: 10px !important;
-  column-gap: 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
   box-sizing: border-box !important;
 }
 
@@ -8412,28 +8421,10 @@ main.gum-section > article.blog-article-container:hover {
   font-size: 13.5px !important;
   line-height: 1.5 !important;
   color: #000000 !important;
-  display: grid !important;
-  grid-column: 1 / -1 !important;
-  grid-template-columns: 14px 150px 1fr !important;
-  align-items: baseline !important;
-  gap: 8px !important;
+  display: block !important;
+  position: relative !important;
+  padding-left: 20px !important;
   margin: 0 !important;
-  padding: 0 !important;
-}
-
-@supports (grid-template-columns: subgrid) {
-  #foundations .quad-card .quad-card-bullets li,
-  .quad-card .quad-card-bullets li {
-    grid-template-columns: subgrid !important;
-  }
-}
-
-#foundations .quad-card .quad-card-bullets li strong,
-.quad-card .quad-card-bullets li strong {
-  color: #000000 !important;
-  font-weight: 800 !important;
-  grid-column: 2 !important;
-  white-space: nowrap !important;
 }
 
 #foundations .quad-card .quad-card-bullets li::before,
@@ -8441,22 +8432,83 @@ main.gum-section > article.blog-article-container:hover {
   content: '➔' !important;
   font-weight: 900 !important;
   color: #000000 !important;
-  grid-column: 1 !important;
-  font-size: 11px !important;
-  line-height: 1 !important;
+  font-size: 12px !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 1px !important;
+  line-height: 1.4 !important;
+}
+
+#foundations .quad-card .quad-card-bullets li strong,
+.quad-card .quad-card-bullets li strong {
+  display: block !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  line-height: 1.4 !important;
+  margin-bottom: 2px !important;
 }
 
 #foundations .quad-card .quad-card-bullets li .bullet-desc,
 .quad-card .quad-card-bullets li .bullet-desc {
-  grid-column: 3 !important;
-  display: inline !important;
-  color: #000000 !important;
+  display: block !important;
+  color: #222222 !important;
+  font-weight: 500 !important;
+  line-height: 1.45 !important;
+}
+
+@media (max-width: 768px) {
+  #foundations .gum-quad-grid {
+    gap: 16px !important;
+  }
+  #foundations .quad-card {
+    justify-content: flex-start !important;
+  }
+  #foundations .quad-card > div:first-child {
+    padding: 20px 18px 14px !important;
+    min-height: auto !important;
+  }
+  #foundations .quad-card-title,
+  .quad-card-title {
+    font-size: clamp(20px, 5.5vw, 24px) !important;
+    line-height: 1.25 !important;
+    margin-bottom: 6px !important;
+    min-height: auto !important;
+  }
+  #foundations .quad-card-num,
+  .quad-card-num {
+    font-size: 11.5px !important;
+    padding: 3px 8px !important;
+    margin-top: 2px !important;
+    margin-bottom: 10px !important;
+  }
+  #foundations .quad-card-text,
+  .quad-card-text {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 0 !important;
+    min-height: auto !important;
+  }
+  #foundations .quad-card .quad-card-bullets {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 16px 18px 18px !important;
+    min-height: auto !important;
+  }
+  #foundations .quad-card .quad-card-bullets li,
+  .quad-card .quad-card-bullets li {
+    display: block !important;
+    position: relative !important;
+    padding-left: 18px !important;
+    font-size: 13.5px !important;
+    line-height: 1.5 !important;
+  }
 }
 
 @media (min-width: 768px) {
   #foundations .quad-card:not(.card-span-full) > div:first-child {
-    min-height: 148px !important;
-    padding: 20px 24px 14px !important;
+    min-height: 165px !important;
+    padding: 24px 26px 18px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: flex-start !important;
@@ -8484,14 +8536,9 @@ main.gum-section > article.blog-article-container:hover {
     min-height: auto !important;
   }
   #foundations .quad-card:not(.card-span-full) .quad-card-bullets {
-    min-height: 106px !important;
-    padding: 14px 24px 14px !important;
-    gap: 7px !important;
-  }
-  #foundations .quad-card:not(.card-span-full) .quad-card-bullets li {
-    font-size: 13px !important;
-    line-height: 1.45 !important;
-    gap: 8px !important;
+    min-height: 185px !important;
+    padding: 18px 26px 20px !important;
+    gap: 12px !important;
   }
   #foundations .quad-card.card-span-full {
     grid-column: 1 / -1 !important;
@@ -8503,7 +8550,7 @@ main.gum-section > article.blog-article-container:hover {
     padding: 0 !important;
   }
   #foundations .quad-card.card-span-full > div:first-child {
-    padding: 24px 32px !important;
+    padding: 28px 32px !important;
     background: #FFFFFF !important;
     height: 100% !important;
     box-sizing: border-box !important;
@@ -8513,7 +8560,7 @@ main.gum-section > article.blog-article-container:hover {
   }
   #foundations .quad-card.card-span-full .quad-card-bullets {
     border-top: none !important;
-    border-left: 1.5px solid rgba(0, 0, 0, 0.18) !important;
+    border-left: 1.2px solid rgba(0, 0, 0, 0.18) !important;
     background: #FFFFFF !important;
     border-radius: 0 !important;
     padding: 24px 32px !important;
@@ -8521,7 +8568,7 @@ main.gum-section > article.blog-article-container:hover {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    gap: 10px !important;
+    gap: 12px !important;
     box-sizing: border-box !important;
   }
 }
@@ -8559,6 +8606,7 @@ main.gum-section > article.blog-article-container:hover {
 
 [data-theme="dark"] #foundations .quad-card .quad-card-bullets li,
 [data-theme="dark"] #foundations .quad-card .quad-card-bullets li strong,
+[data-theme="dark"] #foundations .quad-card .quad-card-bullets li .bullet-desc,
 [data-theme="dark"] #foundations .quad-card .quad-card-bullets li::before {
   color: #FFFFFF !important;
 }
@@ -8581,7 +8629,6 @@ div.blog-tags-cluster,
 div.about-chips-list {
   display: none !important;
 }
-
 
 /* Exact Title and Logo Spacing */
 .quad-card-title {
@@ -8718,4 +8765,38 @@ div.about-chips-list {
   box-shadow: none !important;
   max-height: 420px;
   overflow-y: auto;
+}
+
+/* ==========================================================================
+   BLOG ARTICLE MOBILE PADDING (Comfortable reading on mobile screens)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .post-reading-layout,
+  main.post-reading-layout,
+  main.gum-section:has(.blog-article-frame),
+  main.gum-section:has(.blog-article-container),
+  body.post-layout main.gum-section {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .blog-article-frame,
+  .blog-article-container,
+  main.gum-section > article.blog-article-frame,
+  main.gum-section > article.blog-article-container {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-reading-layout,
+  main.post-reading-layout,
+  main.gum-section:has(.blog-article-frame),
+  main.gum-section:has(.blog-article-container),
+  body.post-layout main.gum-section {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
 }
