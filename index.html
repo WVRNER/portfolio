@@ -77,6 +77,112 @@
         background-color: #141416 !important;
         border-bottom-color: #333338 !important;
       }
+      .logo-text {
+        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif) !important;
+        font-size: 84px !important;
+        font-weight: 900 !important;
+        letter-spacing: -0.06em !important;
+        line-height: 0.9 !important;
+        color: #000000 !important;
+      }
+      [data-theme="dark"] .logo-text {
+        color: #FFFFFF !important;
+      }
+      .gum-nav-inner {
+        min-height: 104px !important;
+        padding: 10px 28px !important;
+      }
+      .nav-menu-toggle {
+        display: inline-flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 8px !important;
+        width: 48px !important;
+        height: 48px !important;
+        background: transparent !important;
+        border: none !important;
+        cursor: pointer !important;
+        padding: 0 !important;
+        z-index: 10002 !important;
+        box-shadow: none !important;
+      }
+      .nav-menu-toggle .menu-bar {
+        display: block !important;
+        width: 32px !important;
+        height: 3px !important;
+        background-color: var(--text-main, #000000) !important;
+        border-radius: 2px !important;
+        transition: transform 0.22s ease, opacity 0.22s ease !important;
+      }
+      [data-theme="dark"] .nav-menu-toggle .menu-bar {
+        background-color: #FFFFFF !important;
+      }
+      .nav-menu-toggle.is-active .menu-bar:nth-child(1) {
+        transform: translateY(5.5px) rotate(45deg) !important;
+      }
+      .nav-menu-toggle.is-active .menu-bar:nth-child(2) {
+        transform: translateY(-5.5px) rotate(-45deg) !important;
+      }
+      .nav-menu-drawer {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: var(--bg-canvas, #F4F4F0);
+        border-bottom: 2px solid #000000;
+        box-shadow: 0 10px 0px rgba(0, 0, 0, 0.12);
+        z-index: 10001;
+        padding: 24px 28px;
+        box-sizing: border-box;
+      }
+      .nav-menu-drawer.is-open {
+        display: block !important;
+      }
+      [data-theme="dark"] .nav-menu-drawer {
+        background: #141416;
+        border-bottom-color: #333338;
+      }
+      .nav-drawer-inner {
+        max-width: var(--max-width, 1280px);
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .nav-drawer-link {
+        font-family: var(--font-display, "Plus Jakarta Sans", sans-serif);
+        font-size: clamp(22px, 3.2vw, 32px);
+        font-weight: 900;
+        letter-spacing: -0.02em;
+        color: var(--text-main, #000000);
+        text-decoration: none;
+        padding: 10px 0;
+        border-bottom: 1.5px solid rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: color 0.15s ease, padding-left 0.15s ease;
+      }
+      .nav-drawer-link:hover {
+        color: var(--gum-yellow, #FFC900);
+        padding-left: 10px;
+      }
+      [data-theme="dark"] .nav-drawer-link {
+        color: #FFFFFF;
+        border-bottom-color: rgba(255, 255, 255, 0.15);
+      }
+      @media (max-width: 768px) {
+        .logo-text {
+          font-size: clamp(48px, 12vw, 64px) !important;
+        }
+        .gum-nav-inner {
+          min-height: 76px !important;
+          padding: 8px 16px !important;
+        }
+      }
       .gum-nav-pill-black,
       .gum-nav-pill-black:hover,
       .gum-nav-pill-black:active {
@@ -1015,19 +1121,22 @@
             <span class="logo-text">wvrner</span>
           </a>
         </div>
-
-        <!-- Navigation Links -->
-        <div class="gum-nav-right-cluster">
-          <a href="/blog/" class="gum-nav-link-plain">Blog</a>
-          <a href="/about/" class="gum-nav-pill-black">About</a>
-          <a href="/about/#cv" class="gum-nav-link-plain">CV</a>
-          <a
-            href="mailto:wvrner@outlook.com"
-            class="gum-nav-cta-rect nav-contact-btn"
-            >Contact</a
-          >
-        </div>
+        <!-- 2-Line Menu Toggle -->
+        <button class="nav-menu-toggle" id="navMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
+          <span class="menu-bar"></span>
+          <span class="menu-bar"></span>
+        </button>
       </nav>
+
+      <!-- Navigation Drawer -->
+      <div id="navMenuDrawer" class="nav-menu-drawer" aria-hidden="true">
+        <div class="nav-drawer-inner">
+          <a href="/about/" class="nav-drawer-link">About</a>
+          <a href="/about/#cv" class="nav-drawer-link">CV</a>
+          <a href="/blog/" class="nav-drawer-link">Blog</a>
+          <a href="mailto:wvrner@outlook.com" class="nav-drawer-link">Contact</a>
+        </div>
+      </div>
     </header>
 
     <!-- Main Content Area -->
@@ -2834,7 +2943,6 @@
                 {% else %}
                   <span class="dispatch-badge badge-latest">LATEST</span>
                 {% endif %}
-                <span class="dispatch-badge badge-category">{{ spotlightPost.data.category or "DISPATCH" }}</span>
               </div>
               <div class="dispatch-card-meta">
                 {% if spotlightPost.data.display_date %}

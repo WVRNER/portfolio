@@ -29,8 +29,8 @@ collections:
     folder: "posts"
     create: true
     slug: "{{fields.slug}}"
-    summary: "{{title}} ({{display_date}}) [{{category}}]"
-    sortable_fields: ["date", "title", "category", "featured", "published"]
+    summary: "{{title}} ({{display_date}})"
+    sortable_fields: ["date", "title", "featured", "published"]
     view_filters:
       - label: "Published"
         field: "published"
@@ -41,9 +41,6 @@ collections:
       - label: "Featured"
         field: "featured"
         pattern: true
-    view_groups:
-      - label: "Category"
-        field: "category"
     fields:
       # ========================================================================
       # 1. PRIMARY WRITING WORKSPACE (Clean, Writing-First Experience)
@@ -83,79 +80,6 @@ collections:
         required: true
         pattern: [".{20,300}", "Must be between 20 and 300 characters"]
         hint: "Short 1-2 sentence preview displayed on the /blog/ index card (20-300 characters)."
-
-      - label: "⚙️ Publishing — Primary Category"
-        name: "category"
-        widget: "select"
-        required: true
-        default: "DEVOPS & INFRASTRUCTURE"
-        options:
-          - label: "DevOps & Infrastructure"
-            value: "DEVOPS & INFRASTRUCTURE"
-          - label: "Certification & Lab Log"
-            value: "CERTIFICATION & LAB LOG"
-          - label: "Cloud Architecture & AWS"
-            value: "CLOUD ARCHITECTURE & AWS"
-          - label: "Linux & Kernel Systems"
-            value: "LINUX & KERNEL SYSTEMS"
-          - label: "Enterprise Networking"
-            value: "ENTERPRISE NETWORKING"
-          - label: "CI/CD & Automation"
-            value: "CI/CD & AUTOMATION"
-          - label: "Kubernetes & Containers"
-            value: "KUBERNETES & CONTAINERS"
-          - label: "DevSecOps & Observability"
-            value: "DEVSECOPS & OBSERVABILITY"
-          - label: "Infrastructure as Code"
-            value: "INFRASTRUCTURE AS CODE"
-          - label: "Software Engineering"
-            value: "SOFTWARE ENGINEERING"
-          - label: "Project Build Log"
-            value: "PROJECT BUILD LOG"
-          - label: "Career & Learning"
-            value: "CAREER & LEARNING"
-
-      - label: "⚙️ Publishing — Topic Tags"
-        name: "post_tags"
-        widget: "select"
-        multiple: true
-        min: 1
-        max: 12
-        required: true
-        options:
-          - "DevOps"
-          - "IBMCloud"
-          - "Coursera"
-          - "Docker"
-          - "Kubernetes"
-          - "OpenShift"
-          - "CICD"
-          - "GitHubActions"
-          - "Jenkins"
-          - "Tekton"
-          - "GitOps"
-          - "Terraform"
-          - "Ansible"
-          - "AWS"
-          - "Cloudflare"
-          - "GitHubPages"
-          - "ZeroDrift"
-          - "Linux"
-          - "Bash"
-          - "Python"
-          - "PythonFlask"
-          - "TDD"
-          - "Networking"
-          - "CCNA"
-          - "MCSA"
-          - "MikroTik"
-          - "Virtualization"
-          - "Security"
-          - "Prometheus"
-          - "Grafana"
-          - "OpenSource"
-          - "Neubrutalism"
-          - "CareerNotes"
 
       - label: "⚙️ Publishing — Published Status"
         name: "published"

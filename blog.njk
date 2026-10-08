@@ -82,22 +82,22 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
             <span class="logo-text">wvrner</span>
           </a>
         </div>
-
-        <div class="gum-nav-right-cluster">
-          <a href="/blog/" class="gum-nav-link-plain active"> Blog </a>
-
-          <a href="/about/" class="gum-nav-pill-black"> About </a>
-
-          <a href="/about/#cv" class="gum-nav-link-plain"> CV </a>
-
-          <a
-            href="mailto:wvrner@outlook.com"
-            class="gum-nav-cta-rect nav-contact-btn"
-          >
-            Contact
-          </a>
-        </div>
+        <!-- 2-Line Menu Toggle -->
+        <button class="nav-menu-toggle" id="navMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
+          <span class="menu-bar"></span>
+          <span class="menu-bar"></span>
+        </button>
       </nav>
+
+      <!-- Navigation Drawer -->
+      <div id="navMenuDrawer" class="nav-menu-drawer" aria-hidden="true">
+        <div class="nav-drawer-inner">
+          <a href="/about/" class="nav-drawer-link">About</a>
+          <a href="/about/#cv" class="nav-drawer-link">CV</a>
+          <a href="/blog/" class="nav-drawer-link">Blog</a>
+          <a href="mailto:wvrner@outlook.com" class="nav-drawer-link">Contact</a>
+        </div>
+      </div>
     </header>
 
     <!-- Main Content -->

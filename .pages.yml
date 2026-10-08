@@ -41,7 +41,6 @@ content:
     view:
       fields:
         - title
-        - category
         - date
         - updated
         - published
@@ -57,8 +56,6 @@ content:
         - title
         - subtitle
         - excerpt
-        - category
-        - post_tags
 
     fields:
 
@@ -123,94 +120,6 @@ content:
           minlength: 20
           maxlength: 300
         description: "Short 1-2 sentence preview displayed on the /blog/ index card."
-
-      - name: category
-        label: "⚙️ Publishing — Primary Category"
-        type: select
-        required: true
-        default: "DEVOPS & INFRASTRUCTURE"
-        description: "The primary technical category badge for this post."
-        options:
-          values:
-            - value: "DEVOPS & INFRASTRUCTURE"
-              label: "DevOps & Infrastructure"
-
-            - value: "CERTIFICATION & LAB LOG"
-              label: "Certification & Lab Log"
-
-            - value: "CLOUD ARCHITECTURE & AWS"
-              label: "Cloud Architecture & AWS"
-
-            - value: "LINUX & KERNEL SYSTEMS"
-              label: "Linux & Kernel Systems"
-
-            - value: "ENTERPRISE NETWORKING"
-              label: "Enterprise Networking"
-
-            - value: "CI/CD & AUTOMATION"
-              label: "CI/CD & Automation"
-
-            - value: "KUBERNETES & CONTAINERS"
-              label: "Kubernetes & Containers"
-
-            - value: "DEVSECOPS & OBSERVABILITY"
-              label: "DevSecOps & Observability"
-
-            - value: "INFRASTRUCTURE AS CODE"
-              label: "Infrastructure as Code"
-
-            - value: "SOFTWARE ENGINEERING"
-              label: "Software Engineering"
-
-            - value: "PROJECT BUILD LOG"
-              label: "Project Build Log"
-
-            - value: "CAREER & LEARNING"
-              label: "Career & Learning"
-
-      - name: post_tags
-        label: "⚙️ Publishing — Topic Tags"
-        type: select
-        required: true
-        description: "Select 1 to 12 technology tags rendered as colored chips."
-        options:
-          multiple: true
-          min: 1
-          max: 12
-          values:
-            - "DevOps"
-            - "IBMCloud"
-            - "Coursera"
-            - "Docker"
-            - "Kubernetes"
-            - "OpenShift"
-            - "CICD"
-            - "GitHubActions"
-            - "Jenkins"
-            - "Tekton"
-            - "GitOps"
-            - "Terraform"
-            - "Ansible"
-            - "AWS"
-            - "Cloudflare"
-            - "GitHubPages"
-            - "ZeroDrift"
-            - "Linux"
-            - "Bash"
-            - "Python"
-            - "PythonFlask"
-            - "TDD"
-            - "Networking"
-            - "CCNA"
-            - "MCSA"
-            - "MikroTik"
-            - "Virtualization"
-            - "Security"
-            - "Prometheus"
-            - "Grafana"
-            - "OpenSource"
-            - "Neubrutalism"
-            - "CareerNotes"
 
       - name: published
         label: "⚙️ Publishing — Published Status"
