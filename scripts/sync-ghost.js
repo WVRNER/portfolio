@@ -216,7 +216,7 @@ async function main() {
 
   for (const post of data.posts) {
     const slug = safeSlug(post.slug);
-    const tags = (post.tags || []).map(tag => tag.name);
+    const tags = (post.tags || []).map(tag => (tag.name || "").replace(/^#/, ""));
 
     console.log(`\n→ ${post.title}`);
 

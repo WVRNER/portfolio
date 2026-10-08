@@ -101,7 +101,7 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
     </header>
 
     <!-- Main Content -->
-    <main class="gum-section" style="padding-top: 48px; padding-bottom: 90px">
+    <main class="gum-section blog-main-section">
       <!-- Blog Hero -->
       <div class="blog-hero-block">
         <h1 class="blog-headline">Engineering Notes</h1>
@@ -121,75 +121,24 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
         {% for post in posts %}
 
         <article class="blog-post-card{% if post.data.featured %} is-featured{% endif %}">
-          <!-- Post Metadata -->
-          <div class="blog-post-meta">
-            {% if post.data.featured %}
-              <span class="blog-featured-badge">★ FEATURED</span>
-            {% endif %}
-            <span class="blog-category-tag"> {{ post.data.category or "DISPATCH" }} </span>
-
-            <span class="blog-time-badge">
+          <!-- Post Date and Read Time -->
+          <div class="blog-post-meta" style="margin-bottom: 12px;">
+            <span class="blog-time-badge" style="font-size: 13px; font-weight: 700;">
               {{ post.data.display_date }} &bull; {{ post.data.read_time }}
             </span>
           </div>
 
           <!-- Post Title -->
-          <h2 class="blog-post-title{% if post.data.featured %} is-featured-title{% endif %}">
+          <h2 class="blog-post-title{% if post.data.featured %} is-featured-title{% endif %}" style="margin-bottom: 18px;">
             <a href="{{ post.url }}"> {{ post.data.title }} </a>
           </h2>
 
-          <!-- Subtitle -->
-          {% if post.data.subtitle and post.data.subtitle != post.data.excerpt %}
-          <p
-            class="blog-post-subtitle"
-            style="margin-bottom: 20px; border-bottom: none; padding-bottom: 0"
-          >
-            {{ post.data.subtitle }}
-          </p>
-          {% endif %}
-
-          <!-- Excerpt -->
-          <p
-            class="blog-post-excerpt"
-            style="
-              font-size: 16px;
-              line-height: 1.7;
-              color: var(--text-main);
-              margin-bottom: 22px;
-            "
-          >
-            {{ post.data.excerpt }}
-          </p>
-
-          <!-- Bottom Section -->
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              flex-wrap: wrap;
-              gap: 16px;
-            "
-          >
-            <!-- Read Article -->
+          <!-- Action -->
+          <div class="blog-post-action">
             <a href="{{ post.url }}" class="blog-read-more-btn">
               <span> Read Full Article </span>
-
               <span aria-hidden="true"> &rarr; </span>
             </a>
-
-            <!-- Tags -->
-            <div class="about-chips-list" style="margin-top: 0">
-              {% for tag in post.data.post_tags %} {% set colors = [
-              "chip-yellow", "chip-pink", "chip-green", "chip-blue" ] %}
-              {% set cleanTag = tag | replace('#', '') %}
-
-              <span class="about-chip {{ colors[loop.index0 % 4] }}">
-                #{{ cleanTag }}
-              </span>
-
-              {% endfor %}
-            </div>
           </div>
         </article>
 

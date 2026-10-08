@@ -158,7 +158,7 @@
                 "chip-blue"
               ] %}
               <span class="about-chip {{ colors[loop.index0 % 4] }}">
-                {{ tag }}
+                {{ tag | replace("#", "") }}
               </span>
             {% endfor %}
           </div>
