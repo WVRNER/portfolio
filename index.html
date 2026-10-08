@@ -543,16 +543,28 @@
           min-height: auto !important;
         }
         #foundations .quad-card .quad-card-bullets {
-          padding: 12px 18px 14px !important;
-          row-gap: 7px !important;
+          display: flex !important;
+          flex-direction: column !important;
+          gap: 9px !important;
+          padding: 14px 18px 16px !important;
           min-height: auto !important;
-          grid-template-columns: 14px max-content 1fr !important;
         }
         #foundations .quad-card .quad-card-bullets li,
         .quad-card .quad-card-bullets li {
-          font-size: 12.5px !important;
-          line-height: 1.45 !important;
+          display: flex !important;
+          align-items: flex-start !important;
+          gap: 8px !important;
+          font-size: 13.5px !important;
+          line-height: 1.5 !important;
           padding-left: 0 !important;
+        }
+        #foundations .quad-card .quad-card-bullets li strong,
+        .quad-card .quad-card-bullets li strong {
+          white-space: normal !important;
+        }
+        #foundations .quad-card .quad-card-bullets li .bullet-desc,
+        .quad-card .quad-card-bullets li .bullet-desc {
+          display: inline !important;
         }
       }
       @media (min-width: 768px) {

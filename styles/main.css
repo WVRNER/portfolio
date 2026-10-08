@@ -3978,21 +3978,32 @@ a[href*="#cv"].gum-btn:active {
     opacity: 0.9 !important;
     min-height: auto !important;
   }
-  .quad-card-bullets {
-    display: grid !important;
-    grid-template-columns: 14px max-content 1fr !important;
-    row-gap: 7px !important;
-    column-gap: 8px !important;
+  .quad-card-bullets,
+  #foundations .quad-card .quad-card-bullets {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 9px !important;
     margin: 0 !important;
-    padding: 12px 18px 14px !important;
+    padding: 14px 18px 16px !important;
     border-top: 1.5px solid rgba(0, 0, 0, 0.15) !important;
     min-height: auto !important;
   }
   .quad-card-bullets li,
   #foundations .quad-card .quad-card-bullets li {
-    font-size: 12.5px !important;
-    line-height: 1.45 !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    font-size: 13.5px !important;
+    line-height: 1.5 !important;
     padding-left: 0 !important;
+  }
+  .quad-card-bullets li strong,
+  #foundations .quad-card .quad-card-bullets li strong {
+    white-space: normal !important;
+  }
+  .quad-card-bullets li .bullet-desc,
+  #foundations .quad-card .quad-card-bullets li .bullet-desc {
+    display: inline !important;
   }
 
   /* Section: "This Website is Hosted on AWS" on Mobile - Framed Card */
