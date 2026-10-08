@@ -15,6 +15,19 @@
   @media (min-width: 769px) {
     .gum-nav-right-cluster {
       display: flex !important;
+      height: 100% !important;
+      align-items: center !important;
+    }
+    .gum-nav-cta-rect {
+      height: calc(100% + 1.6px) !important;
+      margin-bottom: -1.6px !important;
+      border-bottom: 1.6px solid #000000 !important;
+      align-self: stretch !important;
+      box-sizing: border-box !important;
+    }
+    [data-theme="dark"] .gum-nav-cta-rect {
+      border-left-color: #333338 !important;
+      border-bottom-color: #333338 !important;
     }
     .mobile-menu-toggle {
       display: none !important;
