@@ -894,48 +894,8 @@ function initRichArticleTables() {
   });
 }
 
-/* ==========================================================================
-   2-Line Menu Toggle & Drawer
-   ========================================================================== */
-function initNavMenu() {
-  const toggle = document.getElementById('navMenuToggle');
-  const drawer = document.getElementById('navMenuDrawer');
-  if (!toggle || !drawer) return;
-
-  function closeMenu() {
-    toggle.classList.remove('is-active');
-    toggle.setAttribute('aria-expanded', 'false');
-    drawer.classList.remove('is-open');
-    drawer.setAttribute('aria-hidden', 'true');
-  }
-
-  toggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const isOpen = drawer.classList.contains('is-open');
-    if (isOpen) {
-      closeMenu();
-    } else {
-      toggle.classList.add('is-active');
-      toggle.setAttribute('aria-expanded', 'true');
-      drawer.classList.add('is-open');
-      drawer.setAttribute('aria-hidden', 'false');
-    }
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!drawer.contains(e.target) && !toggle.contains(e.target)) {
-      closeMenu();
-    }
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
-  });
-}
-
 function initApp() {
   const tasks = [
-    initNavMenu,
     initLiveClocks,
     initIntroSplash,
     initHeroDock,

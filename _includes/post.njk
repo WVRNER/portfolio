@@ -72,22 +72,20 @@
           </a>
         </div>
 
-        <!-- 2-Line Menu Toggle -->
-        <button class="nav-menu-toggle" id="navMenuToggle" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
-          <span class="menu-bar"></span>
-          <span class="menu-bar"></span>
-        </button>
-      </nav>
+        <div class="gum-nav-right-cluster">
+          <a href="/blog/" class="gum-nav-link-plain active">Blog</a>
+          <a href="/about/" class="gum-nav-pill-black">About</a>
+          <a href="/about/#cv" class="gum-nav-link-plain">CV</a>
 
-      <!-- Navigation Drawer -->
-      <div id="navMenuDrawer" class="nav-menu-drawer" aria-hidden="true">
-        <div class="nav-drawer-inner">
-          <a href="/about/" class="nav-drawer-link">About</a>
-          <a href="/about/#cv" class="nav-drawer-link">CV</a>
-          <a href="/blog/" class="nav-drawer-link">Blog</a>
-          <a href="mailto:wvrner@outlook.com" class="nav-drawer-link">Contact</a>
+          <a
+            href="mailto:wvrner@outlook.com"
+            class="gum-nav-cta-rect nav-contact-btn"
+          >
+            Contact
+          </a>
         </div>
-      </div>
+
+      </nav>
     </header>
 
 
@@ -117,6 +115,9 @@
             {% if featured %}
               <span class="post-featured-badge">★ FEATURED TECHNICAL WRITE-UP</span>
             {% endif %}
+            <span class="blog-category-tag">
+              {{ category }}
+            </span>
             <span class="blog-time-badge">
               {{ display_date }} &bull; {{ read_time }}
             </span>
@@ -148,6 +149,20 @@
 
         <!-- Article Footer Section -->
         <footer class="post-footer-section">
+          <div class="about-chips-list" style="margin-top: 0;">
+            {% for tag in post_tags %}
+              {% set colors = [
+                "chip-yellow",
+                "chip-pink",
+                "chip-green",
+                "chip-blue"
+              ] %}
+              <span class="about-chip {{ colors[loop.index0 % 4] }}">
+                {{ tag | replace("#", "") }}
+              </span>
+            {% endfor %}
+          </div>
+
           <a href="/blog/" class="blog-read-more-btn">
             <span>&larr; All Articles</span>
           </a>

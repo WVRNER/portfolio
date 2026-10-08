@@ -4,10 +4,20 @@ slug: how-this-site-is-built-and-deployed
 subtitle: A technical breakdown of the architecture, build pipeline, DNS resolution, and automated delivery workflow powering my personal portfolio.
 excerpt: A comprehensive DevOps case study exploring the static site architecture, Eleventy compilation, Pages CMS content management, Cloudflare DNS configuration, and automated GitHub Actions deployment pipeline behind wvrner.com.
 author: Nima Hosseini
+category: DEVOPS & INFRASTRUCTURE
 date: 2026-10-05
 display_date: October 2026
 updated: 2026-10-05
 read_time: 12 min read
+post_tags:
+  - "DevOps"
+  - "GitHubActions"
+  - "GitHubPages"
+  - "Cloudflare"
+  - "CICD"
+  - "Linux"
+  - "GitOps"
+  - "OpenSource"
 toc: false
 callout_box:
   enable: false

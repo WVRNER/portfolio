@@ -271,6 +271,8 @@ permalink: "/posts/${slug}.html"
 title: ${yamlString(post.title)}
 subtitle: ${yamlString(excerpt)}
 excerpt: ${yamlString(excerpt)}
+category: ${yamlString(category)}
+post_tags: ${JSON.stringify(tags)}
 published: true
 featured: ${post.featured ? "true" : "false"}
 date: ${yamlString(publishedDate)}

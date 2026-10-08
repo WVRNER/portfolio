@@ -3365,9 +3365,8 @@ a.nav-contact-btn:hover {
 .gum-nav-inner {
   width: 100%;
   max-width: 100%;
-  min-height: 104px;
-  height: auto;
-  padding: 10px 28px;
+  height: 68px;
+  padding: 0 0 0 28px;
   margin: 0;
   display: flex;
   align-items: center;
@@ -3389,15 +3388,10 @@ a.nav-contact-btn:hover {
 
 .logo-text {
   font-family: var(--font-display);
-  font-size: 84px !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.06em !important;
-  line-height: 0.9 !important;
-  color: #000000 !important;
-}
-
-[data-theme="dark"] .logo-text {
-  color: #FFFFFF !important;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  color: #000000;
 }
 
 /* GitHub Stars Pill */
@@ -3424,103 +3418,6 @@ a.nav-contact-btn:hover {
   border-color: #000000;
   transform: translate(-1px, -1px);
   box-shadow: 2.5px 2.5px 0px #000000;
-}
-
-/* ==========================================================================
-   2-LINE MENU BUTTON & NAVIGATION DRAWER
-   ========================================================================== */
-.nav-menu-toggle {
-  display: inline-flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-  gap: 8px !important;
-  width: 48px !important;
-  height: 48px !important;
-  background: transparent !important;
-  border: none !important;
-  cursor: pointer !important;
-  padding: 0 !important;
-  z-index: 10002 !important;
-  box-shadow: none !important;
-}
-
-.nav-menu-toggle .menu-bar {
-  display: block !important;
-  width: 32px !important;
-  height: 3px !important;
-  background-color: var(--text-main, #000000) !important;
-  border-radius: 2px !important;
-  transition: transform 0.22s ease, opacity 0.22s ease !important;
-}
-
-[data-theme="dark"] .nav-menu-toggle .menu-bar {
-  background-color: #FFFFFF !important;
-}
-
-.nav-menu-toggle.is-active .menu-bar:nth-child(1) {
-  transform: translateY(5.5px) rotate(45deg) !important;
-}
-
-.nav-menu-toggle.is-active .menu-bar:nth-child(2) {
-  transform: translateY(-5.5px) rotate(-45deg) !important;
-}
-
-.nav-menu-drawer {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background: var(--bg-canvas, #F4F4F0);
-  border-bottom: 2px solid #000000;
-  box-shadow: 0 10px 0px rgba(0, 0, 0, 0.12);
-  z-index: 10001;
-  padding: 24px 28px;
-  box-sizing: border-box;
-}
-
-.nav-menu-drawer.is-open {
-  display: block !important;
-}
-
-[data-theme="dark"] .nav-menu-drawer {
-  background: #141416;
-  border-bottom-color: #333338;
-}
-
-.nav-drawer-inner {
-  max-width: var(--max-width, 1280px);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.nav-drawer-link {
-  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif);
-  font-size: clamp(22px, 3.2vw, 32px);
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  color: var(--text-main, #000000);
-  text-decoration: none;
-  padding: 10px 0;
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: color 0.15s ease, padding-left 0.15s ease;
-}
-
-.nav-drawer-link:hover {
-  color: var(--gum-yellow, #FFC900);
-  padding-left: 10px;
-}
-
-[data-theme="dark"] .nav-drawer-link {
-  color: #FFFFFF;
-  border-bottom-color: rgba(255, 255, 255, 0.15);
 }
 
 /* Navbar Right Navigation Cluster */
@@ -3842,14 +3739,13 @@ a[href*="#cv"].gum-btn:active {
 @media (max-width: 768px) {
   /* Sticky Navigation Bar */
   .gum-nav-inner {
-    padding: 8px 16px !important;
-    min-height: 76px !important;
-    height: auto !important;
+    padding: 0 0 0 16px;
+    height: 60px;
     gap: 8px;
   }
   .logo-text {
-    font-size: clamp(48px, 12vw, 64px) !important;
-    font-weight: 900 !important;
+    font-size: 26px;
+    font-weight: 900;
   }
   .nav-github-badge {
     display: none;
@@ -6520,45 +6416,42 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: 1.5px 1.5px 0px #FFFFFF;
 }
 
-/* Frameless Article Layout for Blog Posts (Desktop & Mobile) */
-.blog-article-frame,
-.blog-article-container {
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  max-width: 860px;
+/* Outer Article Case Study Frame */
+.blog-article-frame {
+  background: var(--bg-card, #FFFFFF);
+  border: var(--border-lg, 3px solid #000000);
+  border-radius: var(--radius-card, 16px);
+  box-shadow: 8px 8px 0px #000000;
+  max-width: 920px;
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
-  overflow: visible;
-  padding: 0 !important;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
 }
 
-[data-theme="dark"] .blog-article-frame,
-[data-theme="dark"] .blog-article-container {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+[data-theme="dark"] .blog-article-frame {
+  background: #141416;
+  border-color: #FFFFFF;
+  box-shadow: 8px 8px 0px #FFFFFF;
 }
 
-/* Frameless Article Header */
+/* Framed Article Header */
 .post-header-section {
-  padding: 0 0 24px 0 !important;
-  background: transparent !important;
-  border-bottom: none !important;
-  border: none !important;
+  padding: 44px 44px 34px;
+  background: var(--bg-canvas, #F4F4F0);
+  border-bottom: 2.5px solid #000000;
   box-sizing: border-box;
 }
 
 [data-theme="dark"] .post-header-section {
-  background: transparent !important;
-  border-bottom: none !important;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Frameless Article Body */
+/* Framed Article Body */
 .post-body-section {
-  padding: 16px 0 36px 0 !important;
+  padding: 44px 44px 48px;
   font-size: 16.5px;
   line-height: 1.8;
   color: var(--text-main, #000000);
@@ -6570,23 +6463,22 @@ a[href*="#cv"].gum-btn:active {
   color: #F4F4F0;
 }
 
-/* Frameless Article Footer */
+/* Framed Article Footer */
 .post-footer-section {
-  padding: 24px 0 0 0 !important;
-  border-top: none !important;
-  border: none !important;
-  background: transparent !important;
+  padding: 24px 44px;
+  border-top: 2.5px solid #000000;
+  background: var(--bg-canvas, #F4F4F0);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
   box-sizing: border-box;
 }
 
 [data-theme="dark"] .post-footer-section {
-  background: transparent !important;
-  border-top: none !important;
+  background: rgba(255, 255, 255, 0.03);
+  border-top-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Table and Component Responsive Safeguards — Pure CSS Responsive Table */
@@ -6682,13 +6574,12 @@ a[href*="#cv"].gum-btn:active {
 /* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
   .blog-article-frame {
-    border: none !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
+    border-radius: 12px;
+    box-shadow: 5px 5px 0px #000000;
   }
+
   [data-theme="dark"] .blog-article-frame {
-    border: none !important;
-    box-shadow: none !important;
+    box-shadow: 5px 5px 0px #FFFFFF;
   }
 
   .post-header-section {
@@ -8667,13 +8558,4 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: none !important;
   max-height: 420px;
   overflow-y: auto;
-}
-
-
-/* Hide Category Badges & Post Tags across site */
-.blog-category-tag,
-.dispatch-badge.badge-category,
-.about-chips-list,
-.dispatch-card-tags {
-  display: none !important;
 }
