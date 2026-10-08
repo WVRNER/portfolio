@@ -121,6 +121,13 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
         {% for post in posts %}
 
         <article class="blog-post-card{% if post.data.featured %} is-featured{% endif %}">
+          {% set postCover = post.data.image or post.data.cover_image or post.data.feature_image %}
+          {% if postCover %}
+          <div class="blog-card-image-wrap" style="margin-bottom: 14px; border-radius: 8px; overflow: hidden; border: 1.5px solid #000000;">
+            <img src="{{ postCover }}" alt="{{ post.data.title }}" style="width: 100%; height: auto; max-height: 240px; object-fit: cover; display: block;" loading="lazy" />
+          </div>
+          {% endif %}
+
           <!-- Post Date and Read Time -->
           <div class="blog-post-meta" style="margin-bottom: 12px;">
             <span class="blog-time-badge" style="font-size: 13px; font-weight: 700;">
