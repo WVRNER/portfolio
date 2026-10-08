@@ -381,13 +381,12 @@ function initTopicPills() {
 }
 
 /* ==========================================================================
-   8. Live Dual World Clocks (NYC EST & UTC)
+   8. Live Dual World Clocks (NYC EDT & Tehran IRST)
    ========================================================================== */
 function initLiveClocks() {
   const localEls = document.querySelectorAll('#footerLocalClock, #footerNycClock');
-  const utcEls = document.querySelectorAll('#footerUtcClock');
   const tehranEls = document.querySelectorAll('#footerTehranClock');
-  if (!localEls.length && !utcEls.length && !tehranEls.length) return;
+  if (!localEls.length && !tehranEls.length) return;
 
   function update() {
     const now = new Date();
@@ -429,11 +428,6 @@ function initLiveClocks() {
     }
     tehranEls.forEach(el => {
       el.textContent = tehranTimeStr;
-    });
-
-    const utcStr = `${pad(now.getUTCHours())}:${pad(now.getUTCMinutes())}:${pad(now.getUTCSeconds())} UTC`;
-    utcEls.forEach(el => {
-      el.textContent = utcStr;
     });
   }
 
