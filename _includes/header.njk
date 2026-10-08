@@ -1,0 +1,36 @@
+<!-- Main Navigation Header -->
+<header class="gum-nav-wrapper">
+  <nav class="gum-nav-inner" aria-label="Main Navigation">
+    <!-- Brand Logo Group -->
+    <div class="gum-logo-group">
+      {% include "logo.njk" %}
+    </div>
+
+    <!-- Desktop Navigation Cluster (Unchanged layout & behavior) -->
+    <div class="gum-nav-right-cluster">
+      <a href="/blog/" class="gum-nav-link-plain{% if activeNav == 'blog' %} active{% endif %}">Blog</a>
+      <a href="/about/" class="gum-nav-pill-black{% if activeNav == 'about' %} active{% endif %}">About</a>
+      <a href="/about/#cv" class="gum-nav-link-plain">CV</a>
+      <a href="mailto:wvrner@outlook.com" class="gum-nav-cta-rect nav-contact-btn">Contact</a>
+    </div>
+
+    <!-- Mobile Hamburger Menu Button -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileNavMenu">
+      <svg class="hamburger-icon-svg" viewBox="0 0 24 24" width="26" height="26" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none" aria-hidden="true">
+        <line class="line-top" x1="3" y1="6" x2="21" y2="6"></line>
+        <line class="line-mid" x1="3" y1="12" x2="21" y2="12"></line>
+        <line class="line-bot" x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile Dropdown Menu (80% white / 20% transparent) -->
+  <div class="mobile-nav-dropdown" id="mobileNavMenu" aria-hidden="true">
+    <nav class="mobile-nav-links" aria-label="Mobile Navigation Links">
+      <a href="/blog/" class="mobile-nav-link">Blog</a>
+      <a href="/about/" class="mobile-nav-link">About</a>
+      <a href="/about/#cv" class="mobile-nav-link">CV</a>
+      <a href="mailto:wvrner@outlook.com" class="mobile-nav-link">Contact</a>
+    </nav>
+  </div>
+</header>

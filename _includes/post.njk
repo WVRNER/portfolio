@@ -58,35 +58,8 @@
 
   <body>
 
-    <!-- Navigation -->
-    <header class="gum-nav-wrapper">
-      <nav class="gum-nav-inner" aria-label="Main Navigation">
-
-        <div class="gum-logo-group">
-          <a
-            href="/"
-            class="gum-logo-link"
-            title="Nima Hosseini (@wvrner)"
-          >
-            <span class="logo-text">wvrner</span>
-          </a>
-        </div>
-
-        <div class="gum-nav-right-cluster">
-          <a href="/blog/" class="gum-nav-link-plain active">Blog</a>
-          <a href="/about/" class="gum-nav-pill-black">About</a>
-          <a href="/about/#cv" class="gum-nav-link-plain">CV</a>
-
-          <a
-            href="mailto:wvrner@outlook.com"
-            class="gum-nav-cta-rect nav-contact-btn"
-          >
-            Contact
-          </a>
-        </div>
-
-      </nav>
-    </header>
+    {% set activeNav = "blog" %}
+    {% include "header.njk" %}
 
 
     <!-- Article -->
@@ -101,23 +74,20 @@
       "
     >
       <!-- Back Button -->
-      <div style="max-width: 920px; margin: 0 auto 24px;">
+      <div style="max-width: 860px; margin: 0 auto 24px;">
         <a href="/blog/" class="blog-back-btn" style="margin-bottom: 0;">
           <span aria-hidden="true">&larr;</span>
           <span>Back to Engineering Notes</span>
         </a>
       </div>
 
-      <article class="blog-article-frame">
+      <article class="blog-article-frame" style="border: none !important; box-shadow: none !important; background: transparent !important; padding: 0 !important;">
         <!-- Article Header Section -->
-        <header class="post-header-section">
+        <header class="post-header-section" style="border: none !important; background: transparent !important; padding: 0 0 24px 0 !important;">
           <div class="blog-post-meta" style="margin-bottom: 16px; gap: 10px;">
             {% if featured %}
               <span class="post-featured-badge">★ FEATURED TECHNICAL WRITE-UP</span>
             {% endif %}
-            <span class="blog-category-tag">
-              {{ category }}
-            </span>
             <span class="blog-time-badge">
               {{ display_date }} &bull; {{ read_time }}
             </span>
@@ -148,21 +118,7 @@
         </div>
 
         <!-- Article Footer Section -->
-        <footer class="post-footer-section">
-          <div class="about-chips-list" style="margin-top: 0;">
-            {% for tag in post_tags %}
-              {% set colors = [
-                "chip-yellow",
-                "chip-pink",
-                "chip-green",
-                "chip-blue"
-              ] %}
-              <span class="about-chip {{ colors[loop.index0 % 4] }}">
-                {{ tag | replace("#", "") }}
-              </span>
-            {% endfor %}
-          </div>
-
+        <footer class="post-footer-section" style="border-top: 1.5px solid rgba(0, 0, 0, 0.15) !important; background: transparent !important; padding: 24px 0 !important;">
           <a href="/blog/" class="blog-read-more-btn">
             <span>&larr; All Articles</span>
           </a>

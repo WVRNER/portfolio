@@ -55,33 +55,8 @@
     <link rel="stylesheet" href="/styles/animations.css" />
   </head>
   <body>
-    <!-- Top Sticky Main Navigation Bar -->
-    <header class="gum-nav-wrapper">
-      <nav class="gum-nav-inner" aria-label="Main Navigation">
-        <!-- Brand Monogram & Status Badge -->
-        <div class="gum-logo-group">
-          <a
-            href="/"
-            class="gum-logo-link"
-            title="Nima Hosseini (@wvrner)"
-          >
-            <span class="logo-text">wvrner</span>
-          </a>
-        </div>
-
-        <!-- Navigation Cluster -->
-        <div class="gum-nav-right-cluster">
-          <a href="/blog/" class="gum-nav-link-plain">Blog</a>
-          <a href="/about/" class="gum-nav-pill-black active">About</a>
-          <a href="#cv" class="gum-nav-link-plain">CV</a>
-          <a
-            href="mailto:wvrner@outlook.com"
-            class="gum-nav-cta-rect nav-contact-btn"
-            >Contact</a
-          >
-        </div>
-      </nav>
-    </header>
+    {% set activeNav = "about" %}
+    {% include "header.njk" %}
 
     <!-- Main About Content -->
     <main class="gum-section" style="padding-top: 48px; padding-bottom: 90px; width: 100%; box-sizing: border-box; margin: 0 auto;">

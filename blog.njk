@@ -74,31 +74,8 @@ permalink: "/blog/{% if pagination.pageNumber > 0 %}{{ pagination.pageNumber + 1
   </head>
 
   <body>
-    <!-- Navigation -->
-    <header class="gum-nav-wrapper">
-      <nav class="gum-nav-inner" aria-label="Main Navigation">
-        <div class="gum-logo-group">
-          <a href="/" class="gum-logo-link" title="Nima Hosseini (@wvrner)">
-            <span class="logo-text">wvrner</span>
-          </a>
-        </div>
-
-        <div class="gum-nav-right-cluster">
-          <a href="/blog/" class="gum-nav-link-plain active"> Blog </a>
-
-          <a href="/about/" class="gum-nav-pill-black"> About </a>
-
-          <a href="/about/#cv" class="gum-nav-link-plain"> CV </a>
-
-          <a
-            href="mailto:wvrner@outlook.com"
-            class="gum-nav-cta-rect nav-contact-btn"
-          >
-            Contact
-          </a>
-        </div>
-      </nav>
-    </header>
+    {% set activeNav = "blog" %}
+    {% include "header.njk" %}
 
     <!-- Main Content -->
     <main class="gum-section blog-main-section">

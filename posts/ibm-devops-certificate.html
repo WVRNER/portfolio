@@ -54,29 +54,8 @@
     <link rel="stylesheet" href="../styles/animations.css" />
   </head>
   <body>
-    <!-- Top Sticky Main Navigation Bar -->
-    <header class="gum-nav-wrapper">
-      <nav class="gum-nav-inner" aria-label="Main Navigation">
-        <!-- Brand Monogram -->
-        <div class="gum-logo-group">
-          <a
-            href="/"
-            class="gum-logo-link"
-            title="Nima Hosseini (@wvrner)"
-          >
-            <span class="logo-text">wvrner</span>
-          </a>
-        </div>
-
-        <!-- Navigation Cluster: Blog (active), About, CV, Contact -->
-        <div class="gum-nav-right-cluster">
-          <a href="/blog/" class="gum-nav-link-plain active">Blog</a>
-          <a href="/about/" class="gum-nav-pill-black">About</a>
-          <a href="/about/#cv" class="gum-nav-link-plain">CV</a>
-          <a href="mailto:wvrner@outlook.com" class="gum-nav-cta-rect nav-contact-btn">Contact</a>
-        </div>
-      </nav>
-    </header>
+    {% set activeNav = "blog" %}
+    {% include "header.njk" %}
 
     <!-- Main Content Area -->
     <main class="gum-section" style="padding-top: 48px; padding-bottom: 90px;">
@@ -91,10 +70,9 @@
         </div>
 
         <!-- Dedicated Article Container -->
-        <article class="blog-post-card">
+        <article class="blog-post-card" style="border: none !important; box-shadow: none !important; background: transparent !important; padding: 0 !important;">
           <!-- Meta Header -->
           <div class="blog-post-meta">
-            <span class="blog-category-tag">CERTIFICATION &amp; LAB LOG</span>
             <span class="blog-time-badge">October 2026 &bull; 6 min read</span>
           </div>
 
@@ -176,18 +154,6 @@
               I will continue sharing hands-on project write-ups, architecture breakdowns, and code snippets here as I complete upcoming labs and milestones.
             </p>
 
-            <!-- Tags Cluster -->
-            <div class="blog-tags-cluster">
-              <span class="about-chip chip-yellow">DevOps</span>
-              <span class="about-chip chip-pink">IBMCloud</span>
-              <span class="about-chip chip-green">Coursera</span>
-              <span class="about-chip chip-blue">Docker</span>
-              <span class="about-chip chip-yellow">Kubernetes</span>
-              <span class="about-chip chip-pink">CICD</span>
-              <span class="about-chip chip-green">PythonFlask</span>
-              <span class="about-chip">TDD</span>
-              <span class="about-chip chip-blue">Networking</span>
-            </div>
           </div>
         </article>
 

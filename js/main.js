@@ -894,8 +894,51 @@ function initRichArticleTables() {
   });
 }
 
+/* ==========================================================================
+   Mobile Navigation Hamburger Menu & Dropdown
+   ========================================================================== */
+function initMobileMenu() {
+  const toggleBtn = document.getElementById('mobileMenuToggle');
+  const dropdown = document.getElementById('mobileNavMenu');
+  if (!toggleBtn || !dropdown) return;
+
+  function toggle(open) {
+    const shouldOpen = typeof open === 'boolean' ? open : !dropdown.classList.contains('is-open');
+    dropdown.classList.toggle('is-open', shouldOpen);
+    toggleBtn.classList.toggle('active', shouldOpen);
+    toggleBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+    dropdown.setAttribute('aria-hidden', shouldOpen ? 'false' : 'true');
+  }
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggle();
+  });
+
+  document.addEventListener('click', (e) => {
+    if (dropdown.classList.contains('is-open')) {
+      if (!dropdown.contains(e.target) && !toggleBtn.contains(e.target)) {
+        toggle(false);
+      }
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && dropdown.classList.contains('is-open')) {
+      toggle(false);
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && dropdown.classList.contains('is-open')) {
+      toggle(false);
+    }
+  });
+}
+
 function initApp() {
   const tasks = [
+    initMobileMenu,
     initLiveClocks,
     initIntroSplash,
     initHeroDock,

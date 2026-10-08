@@ -2968,10 +2968,12 @@ button {
 
 .logo-text {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: 42px !important;
   font-weight: 900;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.06em;
   color: #000000;
+  line-height: 1;
+  display: inline-block;
 }
 
 .nav-github-badge {
@@ -3333,7 +3335,7 @@ a.nav-contact-btn:hover {
     padding: 6px 10px;
   }
   .logo-text {
-    font-size: 22px;
+    font-size: 36px !important;
   }
   .nav-github-badge {
     display: none;
@@ -3365,7 +3367,7 @@ a.nav-contact-btn:hover {
 .gum-nav-inner {
   width: 100%;
   max-width: 100%;
-  height: 68px;
+  height: 74px;
   padding: 0 0 0 28px;
   margin: 0;
   display: flex;
@@ -3388,10 +3390,12 @@ a.nav-contact-btn:hover {
 
 .logo-text {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 42px !important;
   font-weight: 900;
   letter-spacing: -0.06em;
   color: #000000;
+  line-height: 1;
+  display: inline-block;
 }
 
 /* GitHub Stars Pill */
@@ -3426,6 +3430,117 @@ a.nav-contact-btn:hover {
   align-items: center;
   height: 100%;
   gap: 12px;
+}
+
+/* Mobile Navigation & Hamburger Toggle System */
+.mobile-menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+  color: #000000;
+  border-radius: 4px;
+  transition: opacity 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-menu-toggle:hover,
+.mobile-menu-toggle:focus {
+  opacity: 0.7;
+}
+
+.hamburger-icon-svg {
+  display: block;
+}
+
+.mobile-nav-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1.5px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  padding: 16px 24px 20px;
+  box-sizing: border-box;
+  z-index: 99999;
+}
+
+.mobile-nav-dropdown.is-open {
+  display: block !important;
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 12px 0;
+  font-family: var(--font-display, "Plus Jakarta Sans", sans-serif);
+  font-size: 19px;
+  font-weight: 800;
+  color: #000000 !important;
+  text-decoration: none;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  transition: opacity 0.15s ease;
+}
+
+.mobile-nav-link:hover,
+.mobile-nav-link:focus {
+  opacity: 0.6;
+}
+
+/* Responsive Switching: Desktop vs Mobile */
+@media (min-width: 769px) {
+  .gum-nav-right-cluster {
+    display: flex !important;
+  }
+  .mobile-menu-toggle {
+    display: none !important;
+  }
+  .mobile-nav-dropdown {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .gum-nav-right-cluster {
+    display: none !important;
+  }
+  .mobile-menu-toggle {
+    display: inline-flex !important;
+  }
+  .gum-nav-inner {
+    height: 64px !important;
+    padding: 0 16px !important;
+  }
+}
+
+/* Dark Mode Navigation */
+[data-theme="dark"] .mobile-menu-toggle {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .mobile-nav-dropdown {
+  background-color: rgba(20, 20, 22, 0.85) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .mobile-nav-link {
+  color: #FFFFFF !important;
 }
 
 /* Round Black Pill with White Text (About) */
@@ -3744,7 +3859,7 @@ a[href*="#cv"].gum-btn:active {
     gap: 8px;
   }
   .logo-text {
-    font-size: 26px;
+    font-size: 36px !important;
     font-weight: 900;
   }
   .nav-github-badge {
@@ -4315,7 +4430,7 @@ a[href*="#cv"].gum-btn:active {
     height: 56px;
   }
   .logo-text {
-    font-size: 23px;
+    font-size: 32px !important;
   }
   .gum-nav-right-cluster {
     gap: 4px;
@@ -6427,69 +6542,86 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: 1.5px 1.5px 0px #FFFFFF;
 }
 
-/* Outer Article Case Study Frame */
-.blog-article-frame {
-  background: var(--bg-card, #FFFFFF);
-  border: var(--border-lg, 3px solid #000000);
-  border-radius: var(--radius-card, 16px);
-  box-shadow: 8px 8px 0px #000000;
-  max-width: 920px;
-  width: 100%;
-  margin: 0 auto;
+/* Individual Blog Post Articles — 100% Frameless Editorial Style */
+.blog-article-frame,
+main.gum-section > article.blog-article-frame,
+main.gum-section > article.blog-post-card,
+main.gum-section > article.blog-article-container,
+article.blog-article-frame {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  max-width: 860px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
   box-sizing: border-box;
-  overflow: hidden;
-  transition: box-shadow 0.2s ease;
+  overflow: visible !important;
+  transition: none !important;
+  transform: none !important;
+  animation: none !important;
 }
 
-[data-theme="dark"] .blog-article-frame {
-  background: #141416;
-  border-color: #FFFFFF;
-  box-shadow: 8px 8px 0px #FFFFFF;
+[data-theme="dark"] .blog-article-frame,
+[data-theme="dark"] main.gum-section > article.blog-article-frame,
+[data-theme="dark"] main.gum-section > article.blog-post-card,
+[data-theme="dark"] main.gum-section > article.blog-article-container {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-/* Framed Article Header */
+.blog-article-frame:hover,
+main.gum-section > article.blog-article-frame:hover,
+main.gum-section > article.blog-post-card:hover,
+main.gum-section > article.blog-article-container:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  outline: none !important;
+}
+
+/* Frameless Article Header */
 .post-header-section {
-  padding: 44px 44px 34px;
-  background: var(--bg-canvas, #F4F4F0);
-  border-bottom: 2.5px solid #000000;
+  padding: 0 0 24px 0 !important;
+  background: transparent !important;
+  border-bottom: none !important;
   box-sizing: border-box;
 }
 
 [data-theme="dark"] .post-header-section {
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom-color: rgba(255, 255, 255, 0.2);
+  background: transparent !important;
+  border-bottom: none !important;
 }
 
-/* Framed Article Body */
+/* Frameless Article Body */
 .post-body-section {
-  padding: 44px 44px 48px;
+  padding: 0 0 40px 0 !important;
   font-size: 16.5px;
   line-height: 1.8;
   color: var(--text-main, #000000);
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 [data-theme="dark"] .post-body-section {
   color: #F4F4F0;
 }
 
-/* Framed Article Footer */
+/* Frameless Article Footer */
 .post-footer-section {
-  padding: 24px 44px;
-  border-top: 2.5px solid #000000;
-  background: var(--bg-canvas, #F4F4F0);
+  padding: 24px 0 !important;
+  border-top: 1.5px solid rgba(0, 0, 0, 0.15) !important;
+  background: transparent !important;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
+  justify-content: flex-end !important;
   box-sizing: border-box;
 }
 
 [data-theme="dark"] .post-footer-section {
-  background: rgba(255, 255, 255, 0.03);
-  border-top-color: rgba(255, 255, 255, 0.2);
+  background: transparent !important;
+  border-top-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 /* Table and Component Responsive Safeguards — Pure CSS Responsive Table */
@@ -6584,26 +6716,31 @@ a[href*="#cv"].gum-btn:active {
 
 /* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
-  .blog-article-frame {
-    border-radius: 12px;
-    box-shadow: 5px 5px 0px #000000;
+  .blog-article-frame,
+  main.gum-section > article.blog-article-frame,
+  main.gum-section > article.blog-post-card,
+  main.gum-section > article.blog-article-container {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
   }
 
   [data-theme="dark"] .blog-article-frame {
-    box-shadow: 5px 5px 0px #FFFFFF;
+    box-shadow: none !important;
   }
 
   .post-header-section {
-    padding: 28px 20px 22px;
+    padding: 0 0 20px 0 !important;
   }
 
   .post-body-section {
-    padding: 28px 18px 36px;
+    padding: 0 0 32px 0 !important;
     font-size: 15.5px;
   }
 
   .post-footer-section {
-    padding: 20px 18px;
+    padding: 20px 0 !important;
   }
 
   .blog-post-card.is-featured {
@@ -8101,10 +8238,7 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: none !important;
 }
 
-/* 4. Transmission Gallery Tiles:
-   "Have a project or want to connect?" (.tile-main / .tile-big)
-   "Let's discuss infrastructure design..." (.tile-subhead)
-   No hover animations, no shadows, seamless clean presentation */
+/* 4. Transmission Gallery / Contact Content: Clean flat text, no frames */
 .transmission-gallery-grid .gallery-tile,
 .transmission-gallery-grid .gallery-tile.tile-big,
 .transmission-gallery-grid .gallery-tile.tile-main,
@@ -8112,12 +8246,19 @@ a[href*="#cv"].gum-btn:active {
 .gallery-tile,
 .gallery-tile.tile-main,
 .gallery-tile.tile-subhead,
-.gallery-tile.tile-big {
-  background: var(--bg-canvas, #F4F4F0) !important;
+.gallery-tile.tile-big,
+.contact-flat-lead,
+.contact-flat-subhead {
+  background: transparent !important;
   border: none !important;
+  outline: none !important;
   box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  min-height: auto !important;
   transform: none !important;
   transition: none !important;
+  animation: none !important;
 }
 
 .transmission-gallery-grid .gallery-tile:hover,
@@ -8127,8 +8268,12 @@ a[href*="#cv"].gum-btn:active {
 .gallery-tile:hover,
 .gallery-tile.tile-main:hover,
 .gallery-tile.tile-subhead:hover,
-.gallery-tile.tile-big:hover {
+.gallery-tile.tile-big:hover,
+.contact-flat-lead:hover,
+.contact-flat-subhead:hover {
+  background: transparent !important;
   border: none !important;
+  outline: none !important;
   box-shadow: none !important;
   transform: none !important;
 }
@@ -8140,8 +8285,10 @@ a[href*="#cv"].gum-btn:active {
 [data-theme="dark"] .gallery-tile,
 [data-theme="dark"] .gallery-tile.tile-main,
 [data-theme="dark"] .gallery-tile.tile-subhead,
-[data-theme="dark"] .gallery-tile.tile-big {
-  background: var(--bg-canvas, #141416) !important;
+[data-theme="dark"] .gallery-tile.tile-big,
+[data-theme="dark"] .contact-flat-lead,
+[data-theme="dark"] .contact-flat-subhead {
+  background: transparent !important;
   border: none !important;
   box-shadow: none !important;
 }
@@ -8153,7 +8300,9 @@ a[href*="#cv"].gum-btn:active {
 [data-theme="dark"] .gallery-tile:hover,
 [data-theme="dark"] .gallery-tile.tile-main:hover,
 [data-theme="dark"] .gallery-tile.tile-subhead:hover,
-[data-theme="dark"] .gallery-tile.tile-big:hover {
+[data-theme="dark"] .gallery-tile.tile-big:hover,
+[data-theme="dark"] .contact-flat-lead:hover,
+[data-theme="dark"] .contact-flat-subhead:hover {
   box-shadow: none !important;
   border: none !important;
   transform: none !important;
@@ -8419,18 +8568,18 @@ a[href*="#cv"].gum-btn:active {
   box-shadow: 4px 4px 0px #FFFFFF !important;
 }
 
-/* Have a project or want to connect (.tile-big): Remove pink, use background #F4F4F0, 1.5px outline, shadow on hover */
-.gallery-tile.tile-big,
-.tile-big {
-  background: var(--bg-canvas, #F4F4F0) !important;
-  border: 1.5px solid #000000 !important;
-  box-shadow: none !important;
-}
-
-.gallery-tile.tile-big:hover,
-.tile-big:hover {
-  box-shadow: 4px 4px 0px #000000 !important;
-  transform: translate(-2px, -2px) !important;
+/* Site-Wide Removal of Visible Tag & Category UI */
+.blog-category-tag,
+.dispatch-badge.badge-category,
+.dispatch-card-tags,
+.post-footer-section .about-chips-list,
+.blog-tags-cluster,
+.blog-post-meta .blog-category-tag,
+.post-header-section .blog-category-tag,
+span.blog-category-tag,
+div.blog-tags-cluster,
+div.about-chips-list {
+  display: none !important;
 }
 
 

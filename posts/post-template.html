@@ -52,33 +52,12 @@
     <link rel="stylesheet" href="../styles/animations.css" />
   </head>
   <body>
-    <!-- Top Sticky Main Navigation Bar -->
-    <header class="gum-nav-wrapper">
-      <nav class="gum-nav-inner" aria-label="Main Navigation">
-        <!-- Brand Monogram -->
-        <div class="gum-logo-group">
-          <a
-            href="/"
-            class="gum-logo-link"
-            title="Nima Hosseini (@wvrner)"
-          >
-            <span class="logo-text">wvrner</span>
-          </a>
-        </div>
-
-        <!-- Navigation Cluster: Blog (active), About, CV, Contact -->
-        <div class="gum-nav-right-cluster">
-          <a href="/blog/" class="gum-nav-link-plain active">Blog</a>
-          <a href="/about/" class="gum-nav-pill-black">About</a>
-          <a href="/about/#cv" class="gum-nav-link-plain">CV</a>
-          <a href="mailto:wvrner@outlook.com" class="gum-nav-cta-rect nav-contact-btn">Contact</a>
-        </div>
-      </nav>
-    </header>
+    {% set activeNav = "blog" %}
+    {% include "header.njk" %}
 
     <!-- Main Content Area: Article Reading Layout -->
     <main class="gum-section" style="padding-top: 48px; padding-bottom: 90px; width: 100%; box-sizing: border-box; margin: 0 auto;">
-      <article class="blog-article-container" style="max-width: 860px; margin: 0 auto;">
+      <article class="blog-article-container" style="max-width: 860px; margin: 0 auto; border: none !important; box-shadow: none !important; background: transparent !important; padding: 0 !important;">
         
         <!-- Back to Blog Button -->
         <div style="margin-bottom: 24px;">
@@ -91,7 +70,6 @@
         <!-- Article Header -->
         <header class="blog-article-header" style="margin-bottom: 36px;">
           <div class="blog-post-meta" style="margin-bottom: 14px;">
-            <span class="blog-category-tag">CATEGORY NAME</span>
             <span class="blog-time-badge">Month 2026 &bull; X min read</span>
           </div>
 
@@ -158,13 +136,9 @@
         </div>
 
         <!-- Article Footer: Topic Tags & Share/Back Links -->
-        <footer style="margin-top: 48px; padding-top: 28px; border-top: 2px solid #000000;">
-          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
-            <div class="about-chips-list" style="margin-top: 0;">
-              <span class="about-chip chip-yellow">Topic1</span>
-              <span class="about-chip chip-pink">Topic2</span>
-              <span class="about-chip chip-green">Topic3</span>
-            </div>
+        <!-- Article Footer: Back Link -->
+        <footer style="margin-top: 48px; padding-top: 28px; border-top: 1.5px solid rgba(0, 0, 0, 0.15);">
+          <div style="display: flex; align-items: center; justify-content: flex-end;">
             <a href="/blog/" class="blog-read-more-btn">
               <span>&larr; All Articles</span>
             </a>
