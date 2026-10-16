@@ -1,0 +1,289 @@
+@import "tailwindcss";
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #0A0A0A;
+  --foreground-muted: #5A5A5A;
+  --foreground-subtle: #8A8A8A;
+  --border-hairline: #E5E5E5;
+  --border-strong: #0A0A0A;
+  --surface-elevated: #FFFFFF;
+  --surface-recessed: #F5F5F5;
+  --surface-accent: #EEEEEE;
+  --primary: #E1E0CC;
+  --primary-foreground: #0A0A0A;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-subtle: var(--foreground-subtle);
+  --color-border-hairline: var(--border-hairline);
+  --color-border-strong: var(--border-strong);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-recessed: var(--surface-recessed);
+  --color-surface-accent: var(--surface-accent);
+  --color-primary: #E1E0CC;
+  --color-primary-foreground: #0A0A0A;
+  --font-display: var(--font-manrope);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-instrument-serif);
+}
+
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-manrope), var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.font-serif {
+  font-family: var(--font-instrument-serif), "Times New Roman", Georgia, serif;
+}
+
+html {
+  background-color: var(--background);
+  color: var(--foreground);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  min-height: 100dvh;
+}
+
+::selection {
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+}
+
+/* Lenis Smooth Scroll Integration */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Subtle Architectural Grid Lines & Markers */
+.bg-subtle-grid {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(20, 20, 18, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 20, 18, 0.03) 1px, transparent 1px);
+}
+
+/* Noise texture overlay for high-end editorial paper feel */
+.bg-noise-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* TEXTURE HIERARCHY — FLAT 2D SURFACE GRAIN (NO 3D CURVATURE OR VOLUMETRIC LIGHTING) */
+
+/* Level 1: QUIET — Subtle fine monochromatic surface grain for secondary geometry */
+.grain-level-1 {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='quietGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23quietGrain)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+/* Level 2: PRESENT — Clearly visible tactile flat printed ink grain for major shapes */
+.grain-level-2 {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='presentGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23presentGrain)' opacity='0.095'/%3E%3C/svg%3E");
+}
+
+/* Level 3: HERO — Richer tactile flat dither/halftone surface character */
+.grain-level-3 {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heroGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heroGrain)' opacity='0.16'/%3E%3C/svg%3E");
+}
+
+/* RARE HERO COLOR MATERIAL (System 02: Flat 2D screen-printed pigment bands for Contact only — NO radial sphere lighting) */
+.hero-material-gradient {
+  background: linear-gradient(
+    138deg,
+    #0A0A0A 0%,
+    #141413 24%,
+    #1C2333 46%,
+    #2E3D60 68%,
+    #6B7A99 84%,
+    #E8ebf7 100%
+  );
+}
+
+.hero-dither-overlay {
+  background-image: 
+    radial-gradient(#0A0A0A 0.65px, transparent 0.65px),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='ditherPattern'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23ditherPattern)' opacity='0.24'/%3E%3C/svg%3E");
+  background-size: 3px 3px, 160px 160px;
+}
+
+/* Backward-compatible utilities */
+.tactile-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='presentGrainCompat'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23presentGrainCompat)' opacity='0.095'/%3E%3C/svg%3E");
+}
+
+.tactile-grain-strong {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heroGrainCompat'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heroGrainCompat)' opacity='0.16'/%3E%3C/svg%3E");
+}
+
+/* Hardware-accelerated transformation layer */
+.gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+
+
+/* Accessible focus styling */
+:focus-visible {
+  outline: 1.5px solid #121211;
+  outline-offset: 3px;
+}
+
+/* ========================================================
+   THE PERFECT EYE // CONTINUOUS LOOPING GAZE, PUPIL & BLINK
+   ======================================================== */
+
+@keyframes eyeGazeCycle {
+  0%, 100% {
+    transform: translate(0px, 0px);
+  }
+  16% {
+    transform: translate(0px, 0px);
+  }
+  28% {
+    transform: translate(-24px, 5px);
+  }
+  42% {
+    transform: translate(-24px, 5px);
+  }
+  56% {
+    transform: translate(18px, -9px);
+  }
+  72% {
+    transform: translate(18px, -9px);
+  }
+  84% {
+    transform: translate(0px, 0px);
+  }
+}
+
+@keyframes pupilBreathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  18% {
+    transform: scale(0.96);
+  }
+  28% {
+    transform: scale(1.15);
+  }
+  42% {
+    transform: scale(1.02);
+  }
+  56% {
+    transform: scale(1.12);
+  }
+  72% {
+    transform: scale(1.0);
+  }
+  84% {
+    transform: scale(0.95);
+  }
+}
+
+@keyframes eyelidBlink {
+  0%, 42%, 46%, 86%, 90%, 100% {
+    transform: scaleY(1);
+  }
+  44% {
+    transform: scaleY(0.04);
+  }
+  88% {
+    transform: scaleY(0.04);
+  }
+}
+
+@keyframes slowRingRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-sacred-rings {
+  transform-box: view-box;
+  transform-origin: 320px 320px;
+  animation: slowRingRotate 90s linear infinite;
+  will-change: transform;
+}
+
+.animate-eye-gaze {
+  transform-box: view-box;
+  animation: eyeGazeCycle 9.6s cubic-bezier(0.45, 0.05, 0.25, 0.95) infinite;
+  will-change: transform;
+}
+
+.animate-pupil-breathe {
+  transform-box: view-box;
+  transform-origin: 320px 312px;
+  animation: pupilBreathe 9.6s cubic-bezier(0.45, 0.05, 0.25, 0.95) infinite;
+  will-change: transform;
+}
+
+@keyframes heroFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-fade-in-1 {
+  animation: heroFadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-fade-in-2 {
+  animation: heroFadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .subtratum-stage {
+    transform: rotateX(24deg) rotateZ(-12deg) !important;
+  }
+}
