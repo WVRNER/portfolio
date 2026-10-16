@@ -9,44 +9,47 @@ import { BLOG_POSTS, type BlogPost } from "@/lib/blogData";
 
 /**
  * Editorial Blog Archive — WVRNER STORIES
- * Designed as a fusion of Apple Newsroom craftsmanship and Medium.com's effortless readability.
- * 
- * Tenets:
- * - Apple-grade typography: San Francisco / Neo-grotesque discipline, tight tracking, optical leading
- * - Medium-inspired reading comfort: Warm paper backgrounds, clear bylines, distraction-free measure
- * - Tactile, irresistible click affordances: Frosted capsules, specular highlights, smooth glide icons
- * - Clean taxonomy: Topic pills with subtle active states
- * - Zero noisy jargon: Calm, confident, editorial authority
+ * Designed with Apple Newsroom craftsmanship and Medium.com's effortless reading comfort.
+ * Pure typographic restraint — zero noisy e-commerce tag filters, zero artificial status counters.
  */
 export default function BlogIndexPage() {
   const [cvOpen, setCvOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const POSTS_PER_PAGE = 10;
 
-  const categories = useMemo(() => {
-    const set = new Set<string>();
-    BLOG_POSTS.forEach((p) => set.add(p.category));
-    return ["All", ...Array.from(set)];
-  }, []);
-
-  const filteredPosts = useMemo(() => {
-    if (selectedCategory === "All") return BLOG_POSTS;
-    return BLOG_POSTS.filter((p) => p.category === selectedCategory);
-  }, [selectedCategory]);
-
-  const leadPost = filteredPosts[0];
-  const remainingPosts = useMemo(() => filteredPosts.slice(1), [filteredPosts]);
+  const leadPost = BLOG_POSTS[0];
+  const remainingPosts = useMemo(() => BLOG_POSTS.slice(1), []);
 
   const totalPages = Math.max(1, Math.ceil(remainingPosts.length / POSTS_PER_PAGE));
   const paginatedRecentPosts = useMemo(() => {
-    const start = (currentPage - 1) * POSTS_PER_PAGE;
+    const validPage = Math.max(1, Math.min(currentPage, totalPages));
+    const start = (validPage - 1) * POSTS_PER_PAGE;
     return remainingPosts.slice(start, start + POSTS_PER_PAGE);
-  }, [remainingPosts, currentPage]);
+  }, [remainingPosts, currentPage, totalPages]);
 
-  const handleCategoryChange = (cat: string) => {
-    setSelectedCategory(cat);
-    setCurrentPage(1);
+  const handlePageChange = (targetPage: number) => {
+    const next = Math.max(1, Math.min(targetPage, totalPages));
+    setCurrentPage(next);
+    if (typeof window !== "undefined") {
+      const el = document.getElementById("recent-stories");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
+  // Generate robust page numbers with smart ellipsis for any number of pages
+  const getPageNumbers = () => {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    if (currentPage <= 4) {
+      return [1, 2, 3, 4, 5, "...", totalPages];
+    }
+    if (currentPage >= totalPages - 3) {
+      return [1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    }
+    return [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
   };
 
   return (
@@ -89,51 +92,10 @@ export default function BlogIndexPage() {
               Notes on distributed architecture, cloud infrastructure, and the disciplined engineering behind quiet production systems.
             </p>
 
-            {/* Apple Publication Sub-strip */}
             <div className="flex items-center gap-2.5 pt-2 text-[13px] text-[#86868B]">
               <span className="font-medium text-[#1D1D1F]">Cloud &amp; DevOps Engineering</span>
               <span>&middot;</span>
               <span>Production Field Notes</span>
-            </div>
-          </div>
-
-          {/* Interactive Category Filter Pills (Apple / Medium style) */}
-          <div className="mt-12 pt-6 border-t border-black/[0.07] flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
-              {categories.map((cat) => {
-                const isActive = selectedCategory === cat;
-                const count =
-                  cat === "All"
-                    ? BLOG_POSTS.length
-                    : BLOG_POSTS.filter((p) => p.category === cat).length;
-
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => handleCategoryChange(cat)}
-                    className={`px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-200 cursor-pointer flex items-center gap-2 active:scale-95 ${
-                      isActive
-                        ? "bg-[#1D1D1F] text-white shadow-[0_2px_10px_rgba(0,0,0,0.15)]"
-                        : "bg-black/[0.04] text-[#6E6E73] hover:bg-black/[0.08] hover:text-[#1D1D1F]"
-                    }`}
-                  >
-                    <span>{cat === "All" ? "All Stories" : cat}</span>
-                    <span
-                      className={`text-[11px] px-1.5 py-0.2 rounded-full ${
-                        isActive
-                          ? "bg-white/20 text-white"
-                          : "bg-black/5 text-[#86868B]"
-                      }`}
-                    >
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="text-[12px] text-[#86868B] hidden sm:block">
-              {filteredPosts.length} {filteredPosts.length === 1 ? "story" : "stories"} published
             </div>
           </div>
         </header>
@@ -141,11 +103,11 @@ export default function BlogIndexPage() {
         {/* ======================================================== */}
         {/* STORY FEED CADENCE                                       */}
         {/* ======================================================== */}
-        {filteredPosts.length > 0 ? (
-          <div className="space-y-12 sm:space-y-16">
+        {BLOG_POSTS.length > 0 && (
+          <div className="space-y-14 sm:space-y-16">
 
-            {/* 1. LEAD FEATURE STORY (Apple Showcase + Medium Depth) */}
-            {leadPost && (
+            {/* 1. LEAD FEATURE STORY (Only on Page 1 to let Page 2+ focus on recent archive) */}
+            {currentPage === 1 && leadPost && (
               <section className="relative">
                 <Link
                   href={`/blog/${leadPost.slug}`}
@@ -157,11 +119,13 @@ export default function BlogIndexPage() {
                   {/* Header Meta Row */}
                   <div className="flex flex-wrap items-center justify-between gap-3 pb-6 mb-6 border-b border-black/[0.06] text-[12.5px] text-[#86868B]">
                     <div className="flex items-center gap-2.5">
-                      <span className="px-3 py-1 rounded-full bg-[#F5F5F7] text-[#1D1D1F] font-medium text-[11.5px]">
-                        {leadPost.category}
+                      <span className="px-3 py-1 rounded-full bg-[#1D1D1F] text-white font-medium text-[11.5px]">
+                        Featured Story
                       </span>
                       <span>&middot;</span>
-                      <span className="font-medium text-[#1D1D1F]">Featured Story</span>
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] font-medium text-[11px]">
+                        {leadPost.category}
+                      </span>
                     </div>
 
                     <div className="flex items-center gap-3">
@@ -201,7 +165,7 @@ export default function BlogIndexPage() {
                     {leadPost.excerpt}
                   </p>
 
-                  {/* Action Bar with Apple + Medium Button */}
+                  {/* Action Bar */}
                   <div className="pt-6 border-t border-black/[0.06] flex flex-wrap items-center justify-between gap-4">
                     <div className="flex items-center gap-2">
                       {leadPost.tags.slice(0, 3).map((tag) => (
@@ -214,7 +178,6 @@ export default function BlogIndexPage() {
                       ))}
                     </div>
 
-                    {/* Tactile Read Story Button */}
                     <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#161617] text-white text-[13.5px] font-medium tracking-tight shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_4px_16px_rgba(0,0,0,0.12)] group-hover:bg-[#2C2C2E] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_6px_22px_rgba(0,0,0,0.2)] transition-all duration-300">
                       <span>Read story</span>
                       <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5">
@@ -226,21 +189,13 @@ export default function BlogIndexPage() {
               </section>
             )}
 
-            {/* 2. THE STORY STREAM (Clean Medium Grid / List with Apple Polish) */}
+            {/* 2. RECENT STORIES STREAM (Clean Editorial Grid with Zero Clutter) */}
             {remainingPosts.length > 0 && (
               <div id="recent-stories" className="space-y-8 scroll-mt-28">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-black/[0.07]">
-                  <div className="flex items-center gap-3">
-                    <h3 className="font-display text-[22px] sm:text-[24px] font-semibold text-[#1D1D1F] tracking-tight">
-                      Recent Stories
-                    </h3>
-                    <span className="text-[11.5px] px-2.5 py-0.5 rounded-full bg-black/[0.04] text-[#6E6E73] font-medium">
-                      Page {currentPage} of {totalPages}
-                    </span>
-                  </div>
-                  <span className="text-[12.5px] text-[#86868B]">
-                    Showing {(currentPage - 1) * POSTS_PER_PAGE + 1}–{Math.min(currentPage * POSTS_PER_PAGE, remainingPosts.length)} of {remainingPosts.length} stories
-                  </span>
+                <div className="pb-4 border-b border-black/[0.07]">
+                  <h3 className="font-display text-[22px] sm:text-[24px] font-semibold text-[#1D1D1F] tracking-tight">
+                    Recent Stories
+                  </h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
@@ -251,13 +206,11 @@ export default function BlogIndexPage() {
                         className="group flex-1 p-7 sm:p-8 bg-white rounded-3xl border border-black/[0.07] hover:border-black/[0.18] transition-all duration-300 shadow-[0_2px_12px_rgba(0,0,0,0.015)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.05)] hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D1D1F]"
                       >
                         <div>
-                          {/* Author & Meta */}
+                          {/* Topic & Reading Time */}
                           <div className="flex items-center justify-between text-[12px] text-[#86868B] mb-3.5">
-                            <div className="flex items-center gap-2">
-                              <span className="px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] font-medium text-[11px]">
-                                {post.category}
-                              </span>
-                            </div>
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] font-medium text-[11px]">
+                              {post.category}
+                            </span>
                             <span className="flex items-center gap-1.5 text-[#1D1D1F]">
                               <Clock className="w-3 h-3 text-[#86868B]" />
                               <span>{post.readingTime}</span>
@@ -288,82 +241,73 @@ export default function BlogIndexPage() {
                   ))}
                 </div>
 
-                {/* Apple + Medium Inspired Pagination Navigation */}
+                {/* Apple + Medium Minimal Centered Pagination */}
                 {totalPages > 1 && (
                   <nav
-                    aria-label="Recent Stories Pagination"
-                    className="pt-6 sm:pt-8 border-t border-black/[0.07] flex flex-col sm:flex-row items-center justify-between gap-4"
+                    aria-label="Stories pagination"
+                    className="pt-10 sm:pt-12 border-t border-black/[0.07] flex items-center justify-center gap-2"
                   >
-                    <div className="text-[12.5px] text-[#86868B]">
-                      Showing <span className="text-[#1D1D1F] font-medium">{(currentPage - 1) * POSTS_PER_PAGE + 1}–{Math.min(currentPage * POSTS_PER_PAGE, remainingPosts.length)}</span> of{" "}
-                      <span className="text-[#1D1D1F] font-medium">{remainingPosts.length}</span> stories
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage <= 1}
+                      aria-label="Previous page"
+                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
+                        currentPage <= 1
+                          ? "text-black/25 bg-black/[0.02] cursor-not-allowed"
+                          : "text-[#1D1D1F] bg-black/[0.04] hover:bg-black/[0.08] active:scale-95 cursor-pointer"
+                      }`}
+                    >
+                      <ArrowLeft className="w-3.5 h-3.5" />
+                      <span>Previous</span>
+                    </button>
 
-                    <div className="flex items-center gap-2">
-                      {/* Previous Page Button */}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (currentPage > 1) {
-                            setCurrentPage((p) => p - 1);
-                            document.getElementById("recent-stories")?.scrollIntoView({ behavior: "smooth" });
-                          }
-                        }}
-                        disabled={currentPage === 1}
-                        className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[12.5px] font-medium transition-all ${
-                          currentPage === 1
-                            ? "text-black/30 bg-black/[0.02] cursor-not-allowed"
-                            : "text-[#1D1D1F] bg-black/[0.04] hover:bg-black/[0.08] active:scale-95 cursor-pointer"
-                        }`}
-                      >
-                        <ArrowLeft className="w-3.5 h-3.5" />
-                        <span>Previous</span>
-                      </button>
-
-                      {/* Numbered Page Buttons */}
-                      <div className="flex items-center gap-1">
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
-                          const isActive = pageNum === currentPage;
+                    <div className="flex items-center gap-1.5">
+                      {getPageNumbers().map((item, idx) => {
+                        if (item === "...") {
                           return (
-                            <button
-                              key={pageNum}
-                              type="button"
-                              onClick={() => {
-                                setCurrentPage(pageNum);
-                                document.getElementById("recent-stories")?.scrollIntoView({ behavior: "smooth" });
-                              }}
-                              className={`w-8 h-8 rounded-full text-[13px] font-medium transition-all flex items-center justify-center cursor-pointer ${
-                                isActive
-                                  ? "bg-[#1D1D1F] text-white shadow-sm"
-                                  : "text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-black/[0.05] active:scale-95"
-                              }`}
+                            <span
+                              key={`ellipsis-${idx}`}
+                              className="w-8 h-8 flex items-center justify-center text-[#86868B] text-[13px] font-medium select-none"
                             >
-                              {pageNum}
-                            </button>
+                              &hellip;
+                            </span>
                           );
-                        })}
-                      </div>
-
-                      {/* Next Page Button */}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (currentPage < totalPages) {
-                            setCurrentPage((p) => p + 1);
-                            document.getElementById("recent-stories")?.scrollIntoView({ behavior: "smooth" });
-                          }
-                        }}
-                        disabled={currentPage === totalPages}
-                        className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[12.5px] font-medium transition-all ${
-                          currentPage === totalPages
-                            ? "text-black/30 bg-black/[0.02] cursor-not-allowed"
-                            : "text-[#1D1D1F] bg-black/[0.04] hover:bg-black/[0.08] active:scale-95 cursor-pointer"
-                        }`}
-                      >
-                        <span>Next</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
+                        }
+                        const pageNum = item as number;
+                        const isActive = pageNum === currentPage;
+                        return (
+                          <button
+                            key={pageNum}
+                            type="button"
+                            onClick={() => handlePageChange(pageNum)}
+                            aria-current={isActive ? "page" : undefined}
+                            className={`w-9 h-9 rounded-full text-[13px] font-medium transition-all flex items-center justify-center cursor-pointer ${
+                              isActive
+                                ? "bg-[#1D1D1F] text-white shadow-sm"
+                                : "text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-black/[0.05] active:scale-95"
+                            }`}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
                     </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage >= totalPages}
+                      aria-label="Next page"
+                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
+                        currentPage >= totalPages
+                          ? "text-black/25 bg-black/[0.02] cursor-not-allowed"
+                          : "text-[#1D1D1F] bg-black/[0.04] hover:bg-black/[0.08] active:scale-95 cursor-pointer"
+                      }`}
+                    >
+                      <span>Next</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
                   </nav>
                 )}
               </div>
@@ -399,18 +343,6 @@ export default function BlogIndexPage() {
               </div>
             </div>
 
-          </div>
-        ) : (
-          <div className="py-20 text-center rounded-3xl border border-dashed border-black/15 bg-white space-y-4">
-            <p className="text-[15px] text-[#6E6E73]">
-              No published stories under &ldquo;{selectedCategory}&rdquo;.
-            </p>
-            <button
-              onClick={() => setSelectedCategory("All")}
-              className="text-[13px] font-medium text-[#1D1D1F] underline underline-offset-4 cursor-pointer"
-            >
-              Reset to all stories
-            </button>
           </div>
         )}
 

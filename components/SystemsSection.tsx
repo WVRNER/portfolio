@@ -152,35 +152,15 @@ export function CompleteStaticRegister() {
       aria-label="Systems and Disciplines"
     >
       <div className="max-w-[1720px] mx-auto space-y-12 sm:space-y-16">
-        {/* Apple-Grade Monumental Section Header: SYSTEMS & DISCIPLINES */}
-        <header className="space-y-6 pb-10 sm:pb-12 border-b border-white/10">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-            
-            <div className="space-y-3.5 max-w-3xl">
-              {/* Apple Eyebrow Pill */}
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full bg-white/[0.06] border border-white/15 text-[11px] sm:text-[11.5px] font-mono tracking-[0.2em] uppercase text-white/75">
-                <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
-                <span>ARCHITECTURAL FOUNDATIONS</span>
-              </div>
+        {/* Section Header: Systems & Disciplines (Apple / Notion Minimalist Restraint) */}
+        <header className="space-y-4 pb-8 sm:pb-10 border-b border-white/10">
+          <h2 className="font-display text-[clamp(2.4rem,5.5vw,4.2rem)] font-medium leading-[1.05] tracking-[-0.035em] text-white select-none">
+            Systems &amp; Disciplines.
+          </h2>
 
-              {/* Monumental Apple Title */}
-              <h2 className="font-display text-[clamp(2.5rem,6.2vw,4.8rem)] font-medium leading-[1.0] tracking-[-0.04em] bg-gradient-to-b from-white via-white to-white/75 bg-clip-text text-transparent select-none">
-                Systems &amp; Disciplines.
-              </h2>
-
-              {/* Apple Explanatory Lead */}
-              <p className="text-[15px] sm:text-[17px] text-white/65 leading-relaxed font-normal max-w-[56ch] pt-0.5">
-                Six codified operational domains engineered from first principles &mdash; bridging declarative cloud topology, immutable container runtimes, and automated zero-downtime delivery.
-              </p>
-            </div>
-
-            {/* Apple Pro Status Capsule */}
-            <div className="self-start lg:self-end flex items-center gap-3 px-4 py-2 rounded-full bg-white/[0.05] border border-white/12 backdrop-blur-xl text-[12px] font-mono text-white/80">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]" />
-              <span>06 DOMAINS &bull; PRODUCTION READY</span>
-            </div>
-
-          </div>
+          <p className="text-[15px] sm:text-[17px] text-white/60 leading-relaxed font-normal max-w-[58ch]">
+            Six codified operational domains engineered from first principles &mdash; bridging declarative cloud topology, immutable container runtimes, and automated zero-downtime delivery.
+          </p>
         </header>
 
         {/* Assembled Architectural Ledger: All 6 Disciplines Unified */}
@@ -276,22 +256,11 @@ function AnimatedSystemsIntro() {
           </svg>
         </div>
 
-        {/* Apple-Grade Header: SYSTEMS & DISCIPLINES */}
-        <div className="relative z-10 w-full flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-4 sm:pb-5">
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2 text-[11px] font-mono tracking-[0.22em] uppercase text-white/60">
-              <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
-              <span>ARCHITECTURAL FOUNDATIONS</span>
-            </div>
-            <h2 className="font-display text-[clamp(1.9rem,4.2vw,3rem)] font-medium tracking-[-0.035em] text-white leading-tight">
-              Systems &amp; Disciplines.
-            </h2>
-          </div>
-
-          <div className="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 text-[11.5px] font-mono text-white/75 self-start sm:self-auto">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]" />
-            <span>06 CORE RUNTIMES</span>
-          </div>
+        {/* Section Header: Systems & Disciplines (Apple / Notion Minimalist Restraint) */}
+        <div className="relative z-10 w-full border-b border-white/10 pb-4 sm:pb-5">
+          <h2 className="font-display text-[clamp(1.9rem,4.2vw,3rem)] font-medium tracking-[-0.035em] text-white leading-tight">
+            Systems &amp; Disciplines.
+          </h2>
         </div>
 
         {/* Central Stage: Single Mechanical Aperture transforms into Complete Assembly */}

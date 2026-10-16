@@ -4,8 +4,7 @@ import http from "http";
 import https from "https";
 
 const GHOST_URL = process.env.GHOST_URL || "http://localhost:2368";
-const GHOST_CONTENT_API_KEY =
-  process.env.GHOST_CONTENT_API_KEY || "15774e85f0f8aa089bb434f030";
+const GHOST_CONTENT_API_KEY = process.env.GHOST_CONTENT_API_KEY || "";
 
 console.log("====================================");
 console.log("       GHOST CMS → WVRNER SYNC      ");

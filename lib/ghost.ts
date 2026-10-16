@@ -7,7 +7,7 @@ const GHOST_URL =
 const GHOST_CONTENT_API_KEY =
   process.env.GHOST_CONTENT_API_KEY ||
   process.env.NEXT_PUBLIC_GHOST_CONTENT_API_KEY ||
-  "15774e85f0f8aa089bb434f030";
+  "";
 
 export interface GhostRawPost {
   id: string;
