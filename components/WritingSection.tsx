@@ -67,9 +67,9 @@ export function WritingSection() {
                     Featured
                   </span>
                   <span>&middot;</span>
-                  <span>{featuredPost.date}</span>
-                  <span>&middot;</span>
                   <span>{featuredPost.readingTime}</span>
+                  <span>&middot;</span>
+                  <span>{featuredPost.date}</span>
                 </div>
 
                 {/* Super bold punchy title (Modern 2026 Medium style) */}
@@ -118,9 +118,9 @@ export function WritingSection() {
                 {/* Left Content */}
                 <div className="flex-1 min-w-0 space-y-1.5 sm:space-y-2">
                   <div className="flex items-center gap-2 text-[12px] text-[#6B6B6B]">
-                    <span>{post.date}</span>
-                    <span>&middot;</span>
                     <span>{post.readingTime}</span>
+                    <span>&middot;</span>
+                    <span>{post.date}</span>
                   </div>
 
                   {/* Super bold punchy headline */}

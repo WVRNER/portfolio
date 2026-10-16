@@ -1,14 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
   Share2,
   Check,
   Copy,
-  Volume2,
-  VolumeX,
 } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
@@ -19,66 +17,21 @@ interface ArticleClientWrapperProps {
 }
 
 /**
- * Find warm, natural narrative voices (storytelling, Claude-like tone).
- * Prioritizes British English / enhanced neural storytelling voices with calm, deliberate cadence.
- */
-function getStorytellingVoice(): SpeechSynthesisVoice | null {
-  if (typeof window === "undefined" || !("speechSynthesis" in window)) return null;
-  const voices = window.speechSynthesis.getVoices();
-  if (!voices || voices.length === 0) return null;
-
-  const preferredPatterns = [
-    /daniel.*enhanced/i,
-    /oliver.*enhanced/i,
-    /arthur.*enhanced/i,
-    /serena.*premium/i,
-    /ava.*premium/i,
-    /samantha.*enhanced/i,
-    /karen.*enhanced/i,
-    /daniel/i,
-    /oliver/i,
-    /serena/i,
-    /george/i,
-    /google uk english male/i,
-    /google uk english female/i,
-    /google us english/i,
-  ];
-
-  for (const pattern of preferredPatterns) {
-    const match = voices.find((v) => pattern.test(v.name));
-    if (match) return match;
-  }
-
-  // Fallback to any enhanced or natural English voice
-  const enhanced = voices.find(
-    (v) => (v.name.includes("Enhanced") || v.name.includes("Premium") || v.name.includes("Natural")) && v.lang.startsWith("en")
-  );
-  if (enhanced) return enhanced;
-
-  // Fallback to British English
-  const enGB = voices.find((v) => v.lang === "en-GB");
-  if (enGB) return enGB;
-
-  return voices.find((v) => v.lang.startsWith("en")) || voices[0] || null;
-}
-
-/**
- * ArticleClientWrapper — Pure Editorial Longform Reading Experience
+ * ArticleClientWrapper — Editorial Longform Reader (matching Medium screenshot)
  * 
- * - Super bold punchy typography (Modern Medium 2026 style, font-black / font-extrabold)
- * - Pure reader UI (zero claps, zero comments, zero bookmarks, zero "Read story" buttons)
- * - Natural, warm storytelling voice (Claude-like pacing & pitch) for audio narration
- * - Strictly calibrated 680px reading measure
- * - Monochromatic palette (black accents, zero green)
- * - Zero redundant "WVRNER JOURNAL" repetitions
+ * - Super bold headline (font-extrabold / font-black)
+ * - Subtitle
+ * - Meta line: "X min read · Date" (e.g. 5 min read · Aug 4, 2026)
+ * - Single bordered Share pill button
+ * - Zero listen button, zero more button, zero follow, zero author names, zero member-only badges
+ * - Feature cover image directly below Share button
+ * - Pure reader typography in Source Serif 4
  */
 export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
   const [cvOpen, setCvOpen] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copiedLink, setCopiedLink] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   // Track reading scroll progress (hairline indicator)
   useEffect(() => {
@@ -94,15 +47,6 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Cleanup speech synthesis on unmount
-  useEffect(() => {
-    return () => {
-      if (typeof window !== "undefined" && "speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, []);
-
   const handleCopyCode = (code: string, id: string) => {
     navigator.clipboard.writeText(code).then(() => {
       setCopiedCode(id);
@@ -116,47 +60,6 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         setCopiedLink(true);
         setTimeout(() => setCopiedLink(false), 2000);
       });
-    }
-  };
-
-  // Warm, storytelling, non-robotic audio narration
-  const handleListenToggle = () => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-
-    if (isListening) {
-      window.speechSynthesis.cancel();
-      setIsListening(false);
-      speechRef.current = null;
-    } else {
-      window.speechSynthesis.cancel();
-
-      // Assemble narrative prose in storytelling order
-      const sectionsProse = post.content.sections
-        .map((s) => `${s.heading ? s.heading + ". " : ""}${s.paragraphs.join(" ")}`)
-        .join(" ");
-      const fullText = `${post.title}. ${post.subtitle ? post.subtitle + ". " : ""}${post.content.lead ? post.content.lead + ". " : ""}${sectionsProse}`;
-
-      const utterance = new SpeechSynthesisUtterance(fullText);
-      const voice = getStorytellingVoice();
-      if (voice) {
-        utterance.voice = voice;
-      }
-      // Claude-like storytelling cadence: measured, intimate, calm
-      utterance.rate = 0.92;
-      utterance.pitch = 0.98;
-
-      utterance.onend = () => {
-        setIsListening(false);
-        speechRef.current = null;
-      };
-      utterance.onerror = () => {
-        setIsListening(false);
-        speechRef.current = null;
-      };
-
-      speechRef.current = utterance;
-      window.speechSynthesis.speak(utterance);
-      setIsListening(true);
     }
   };
 
@@ -178,8 +81,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
       {/* Main Longform Article Wrapper (Strict 680px column) */}
       <main className="max-w-[680px] mx-auto px-6 sm:px-8 md:px-0 pt-28 sm:pt-36 pb-28">
         
-        {/* Navigation Breadcrumb & Header Share */}
-        <div className="flex items-center justify-between gap-4 mb-8 pb-4 border-b border-[#F2F2F2] text-[13px] text-[#6B6B6B]">
+        {/* Navigation Breadcrumb */}
+        <div className="mb-8 pb-4 border-b border-[#F2F2F2] text-[13px] text-[#6B6B6B]">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 text-[#6B6B6B] hover:text-[#242424] transition-colors group cursor-pointer font-medium"
@@ -187,72 +90,46 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-1" />
             <span>Stories</span>
           </Link>
-
-          <button
-            onClick={handleShare}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full hover:bg-[#F2F2F2] text-[#6B6B6B] hover:text-[#242424] transition-colors cursor-pointer text-[12.5px] font-medium"
-            title="Share story URL"
-          >
-            {copiedLink ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-[#161617]" />
-                <span className="text-[#161617]">Copied</span>
-              </>
-            ) : (
-              <>
-                <Share2 className="w-3.5 h-3.5" />
-                <span>Share</span>
-              </>
-            )}
-          </button>
         </div>
 
-        {/* Story Header */}
-        <header className="space-y-4">
+        {/* Story Header (Exact hierarchy matching uploaded screenshot) */}
+        <header className="space-y-4 mb-8">
           
-          {/* Super bold punchy headline (Modern 2026 Medium style) */}
+          {/* Super bold punchy headline */}
           <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[32px] sm:text-[42px] md:text-[46px] font-extrabold sm:font-black text-[#1D1D1F] leading-[1.18] sm:leading-[1.12] tracking-[-0.035em]">
             {post.title}
           </h1>
 
           {/* Subtitle */}
           {post.subtitle && (
-            <p className="text-[19px] sm:text-[22px] text-[#6B6B6B] font-normal leading-[1.4] tracking-normal font-sans pt-1">
+            <p className="text-[18px] sm:text-[21px] text-[#6B6B6B] font-normal leading-[1.4] tracking-normal font-sans">
               {post.subtitle}
             </p>
           )}
 
-          {/* Clean Meta Strip (Zero redundant WVRNER repetitions) */}
-          <div className="pt-4 pb-2 flex items-center justify-between gap-4 text-[13.5px] text-[#6B6B6B] border-b border-[#F2F2F2] pb-5">
-            <div className="flex items-center gap-2.5">
-              <span>{post.date}</span>
-              <span>&middot;</span>
-              <span>{post.readingTime}</span>
-              <span>&middot;</span>
-              <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] text-[#242424] font-medium text-[11px]">
-                {post.category}
-              </span>
-            </div>
+          {/* Meta line: "5 min read · Aug 4, 2026" */}
+          <div className="pt-2 text-[14px] sm:text-[14.5px] text-[#6B6B6B] font-normal">
+            <span>{post.readingTime}</span>
+            <span className="mx-2">&middot;</span>
+            <span>{post.date}</span>
+          </div>
 
-            {/* Warm Storytelling Audio Narration Pill */}
+          {/* Share Pill Button (Matching screenshot bordered pill button) */}
+          <div className="pt-2">
             <button
-              onClick={handleListenToggle}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12.5px] font-medium transition-all cursor-pointer ${
-                isListening
-                  ? "bg-[#161617] text-white shadow-sm"
-                  : "bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424]"
-              }`}
-              title={isListening ? "Pause narration" : "Listen to article narration"}
+              onClick={handleShare}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/15 hover:border-black/30 hover:bg-black/[0.03] text-[#242424] text-[13.5px] font-medium transition-colors cursor-pointer"
+              title="Share story"
             >
-              {isListening ? (
+              {copiedLink ? (
                 <>
-                  <VolumeX className="w-3.5 h-3.5" />
-                  <span>Listening...</span>
+                  <Check className="w-4 h-4 text-[#161617]" />
+                  <span>Copied</span>
                 </>
               ) : (
                 <>
-                  <Volume2 className="w-3.5 h-3.5" />
-                  <span>Listen</span>
+                  <Share2 className="w-4 h-4 text-[#242424]" />
+                  <span>Share</span>
                 </>
               )}
             </button>
@@ -260,17 +137,17 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         </header>
 
-        {/* Feature / Cover Image */}
+        {/* Feature / Cover Image (Sitting cleanly below Share button) */}
         {post.featureImage && (
-          <figure className="my-9">
+          <figure className="my-8 rounded-[3px] overflow-hidden bg-neutral-100">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={post.featureImage}
               alt={post.title}
-              className="w-full h-auto max-h-[460px] object-cover rounded-[3px] bg-neutral-100"
+              className="w-full h-auto max-h-[460px] object-cover bg-neutral-100"
               loading="eager"
             />
-            <figcaption className="text-center text-[13.5px] text-[#6B6B6B] mt-2.5 font-sans font-normal">
+            <figcaption className="text-center text-[13px] text-[#6B6B6B] mt-2.5 font-sans font-normal">
               Architectural state boundaries and deployment topology &bull; Verified in production
             </figcaption>
           </figure>
@@ -299,7 +176,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           {post.content.sections.map((section, sIdx) => (
             <div key={sIdx} className="space-y-6 pt-4">
               
-              {/* Section Heading (Bolder) */}
+              {/* Section Heading */}
               {section.heading && (
                 <h2 className="font-[family-name:var(--font-plus-jakarta)] font-extrabold text-[24px] sm:text-[28px] text-[#1D1D1F] tracking-[-0.025em] leading-tight pt-8 pb-2">
                   {section.heading}
@@ -395,34 +272,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         </article>
 
-        {/* Bottom Topic Tags & Clean Share Button */}
-        <div className="pt-8 pb-10 border-b border-[#F2F2F2] space-y-6">
-          {/* Topic Tags */}
-          <div className="flex flex-wrap gap-2">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="px-4 py-1.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] text-[13px] font-medium font-sans cursor-pointer transition-colors"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {/* Bottom Share Strip */}
-          <div className="flex items-center justify-end text-[#6B6B6B] text-[13px] pt-2">
-            <button
-              onClick={handleShare}
-              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] text-[12.5px] font-medium transition-colors cursor-pointer"
-            >
-              <Share2 className="w-3.5 h-3.5" />
-              <span>{copiedLink ? "Link copied" : "Share story"}</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Quiet Publication Note */}
-        <section className="py-10 border-b border-[#F2F2F2]">
+        {/* Quiet Colophon */}
+        <section className="py-10 border-t border-b border-[#F2F2F2] mt-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <p className="text-[14.5px] text-[#6B6B6B] leading-relaxed max-w-md font-sans">
               Engineering automated cloud systems, declarative infrastructure, and reproducible state across AWS.
@@ -437,7 +288,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </div>
         </section>
 
-        {/* Selected Stories Recommendations (Zero "Read story" buttons) */}
+        {/* Selected Stories Recommendations */}
         {recommendedPosts.length > 0 && (
           <section className="pt-12 space-y-6">
             <div className="flex items-center justify-between">

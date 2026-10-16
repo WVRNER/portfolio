@@ -10,23 +10,27 @@ import { BLOG_POSTS, type BlogPost } from "@/lib/blogData";
 /**
  * Editorial Blog Archive — Stories
  * 
- * - Super bold punchy titles (Modern Medium 2026 style, font-black / font-extrabold)
+ * - Super bold punchy titles (font-black / font-extrabold)
  * - Mobile & desktop compact side-by-side thumbnail layout (matching screenshot)
+ * - Exact topic tags: "For you" and exactly 4 tags (Architecture, Security, DevOps, Infrastructure)
+ * - Meta line: "X min read · Date" (e.g. 5 min read · Aug 4, 2026)
  * - Zero "Read story" buttons anywhere
  * - Zero reactions (no claps, no likes, no reposts, no dislikes, no bookmarks)
- * - Clean masthead without redundant "WVRNER JOURNAL" repetitions
  * - Synchronized "Selected Stories" section
  */
 export default function BlogIndexPage() {
   const [cvOpen, setCvOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [activeCategory, setActiveCategory] = useState<string>("For you");
   const POSTS_PER_PAGE = 10;
+
+  // Exact 4 tags + For you
+  const topics = ["For you", "Architecture", "Security", "DevOps", "Infrastructure"];
 
   // Filter posts based on active category
   const filteredPosts = useMemo(() => {
     let list = BLOG_POSTS;
-    if (activeCategory !== "All") {
+    if (activeCategory !== "For you") {
       list = BLOG_POSTS.filter((p) =>
         p.category.toLowerCase().includes(activeCategory.toLowerCase()) ||
         p.tags.some((t) => t.toLowerCase().includes(activeCategory.toLowerCase()))
@@ -75,9 +79,6 @@ export default function BlogIndexPage() {
     return BLOG_POSTS.slice(0, 3);
   }, []);
 
-  // Category topics
-  const topics = ["All", "Architecture", "Security", "DevOps", "Infrastructure", "Reliability"];
-
   return (
     <div className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#EAEAEA] selection:text-[#242424]">
       {/* Floating Navigation Pill */}
@@ -99,7 +100,7 @@ export default function BlogIndexPage() {
           <span className="text-[#242424] font-medium">Stories</span>
         </div>
 
-        {/* Masthead (Zero redundant WVRNER repetitions) */}
+        {/* Masthead */}
         <header className="mb-8 pb-6 border-b border-[#F2F2F2]">
           <div className="space-y-2">
             <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[34px] sm:text-[46px] font-extrabold sm:font-black tracking-[-0.035em] text-[#1D1D1F] leading-[1.08]">
@@ -111,7 +112,7 @@ export default function BlogIndexPage() {
             </p>
           </div>
 
-          {/* Topic Tab Bar */}
+          {/* Topic Tab Bar: "For you" + exactly 4 tags */}
           <div className="flex items-center gap-6 mt-8 overflow-x-auto no-scrollbar border-b border-[#F2F2F2] text-[14px]">
             {topics.map((t) => (
               <button
@@ -126,7 +127,7 @@ export default function BlogIndexPage() {
                     : "border-transparent text-[#6B6B6B] hover:text-[#242424]"
                 }`}
               >
-                {t === "All" ? "For you" : t}
+                {t}
               </button>
             ))}
           </div>
@@ -141,7 +142,7 @@ export default function BlogIndexPage() {
               <div className="py-16 text-center text-[#6B6B6B]">
                 <p>No stories found for topic &ldquo;{activeCategory}&rdquo;.</p>
                 <button
-                  onClick={() => setActiveCategory("All")}
+                  onClick={() => setActiveCategory("For you")}
                   className="mt-3 text-[13px] text-[#242424] hover:underline font-medium cursor-pointer"
                 >
                   View all stories
@@ -161,8 +162,8 @@ export default function BlogIndexPage() {
                           
                           {/* Left Text Block */}
                           <div className="flex-1 min-w-0 space-y-1.5 sm:space-y-2">
-                            {/* Meta: Date & Reading time */}
-                            <div className="flex items-center gap-2 text-[12px] sm:text-[12.5px] text-[#6B6B6B]">
+                            {/* Meta: Reading time · Date (matching screenshot) */}
+                            <div className="flex items-center gap-2 text-[12.5px] sm:text-[13px] text-[#6B6B6B]">
                               {post.featured && (
                                 <>
                                   <span className="text-[#1D1D1F] font-semibold uppercase tracking-wider text-[11px]">
@@ -171,12 +172,12 @@ export default function BlogIndexPage() {
                                   <span>&middot;</span>
                                 </>
                               )}
-                              <span>{post.date}</span>
-                              <span>&middot;</span>
                               <span>{post.readingTime}</span>
+                              <span>&middot;</span>
+                              <span>{post.date}</span>
                             </div>
 
-                            {/* Super bold punchy headline (Modern 2026 Medium style) */}
+                            {/* Super bold punchy headline */}
                             <h2 className="font-[family-name:var(--font-plus-jakarta)] text-[17px] sm:text-[20px] md:text-[22px] font-extrabold sm:font-black text-[#1D1D1F] group-hover:underline transition-colors leading-[1.25] tracking-[-0.03em] line-clamp-2">
                               {post.title}
                             </h2>
@@ -310,20 +311,20 @@ export default function BlogIndexPage() {
                       {pick.title}
                     </h4>
                     <span className="text-[12px] text-[#6B6B6B] block">
-                      {pick.date} &middot; {pick.readingTime}
+                      {pick.readingTime} &middot; {pick.date}
                     </span>
                   </Link>
                 ))}
               </div>
             </div>
 
-            {/* Recommended Topics */}
+            {/* Recommended Topics: Exactly 4 tags */}
             <div className="pt-6 border-t border-[#F2F2F2] space-y-3">
               <h3 className="font-bold text-[13.5px] text-[#242424]">
                 Recommended topics
               </h3>
               <div className="flex flex-wrap gap-2">
-                {["DevOps", "Terraform", "AWS", "Kubernetes", "Security", "CI/CD", "Architecture"].map((tag) => (
+                {["Architecture", "Security", "DevOps", "Infrastructure"].map((tag) => (
                   <button
                     key={tag}
                     onClick={() => {
