@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
+  ArrowRight,
   Share2,
   Bookmark,
   Check,
@@ -20,8 +21,8 @@ interface ArticleClientWrapperProps {
   post: BlogPost;
 }
 
-// Modern Medium Clapping Hands SVG Icon
-function MediumClapIcon({ className = "w-4 h-4" }: { className?: string }) {
+// Clapping Hands SVG Icon
+function ClapIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -39,13 +40,13 @@ function MediumClapIcon({ className = "w-4 h-4" }: { className?: string }) {
 }
 
 /**
- * ArticleClientWrapper — Modern Medium.com Longform Reading Experience
+ * ArticleClientWrapper — Editorial Longform Reading Experience
  * 
- * - Width: Strictly calibrated 680px reading column (Medium's gold standard measure)
- * - Modern Medium Palette: Pure white #FFFFFF, #242424 ink, #6B6B6B secondary, #F2F2F2 hairline dividers
- * - Modern Medium Typography: Bold sans headings + Source Serif 4 body (20px / 34px line-height)
- * - Medium Action Bar: Claps counter, comments, Audio "Listen", Bookmark, Share, More
- * - Modern Medium Author footer card & recommended stories
+ * - Strictly calibrated 680px reading column
+ * - Minimalist monochromatic palette (#FFFFFF canvas, #242424 ink, #6B6B6B secondary)
+ * - Source Serif 4 body typography (20px / 34px line-height)
+ * - Pure black "Read story" links and actions
+ * - Audio "Listen" feature, claps, bookmarking, and share
  */
 export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
   const [cvOpen, setCvOpen] = useState(false);
@@ -55,10 +56,9 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
   const [claps, setClaps] = useState(184);
   const [hasClapped, setHasClapped] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
-  const [following, setFollowing] = useState(false);
   const [isListening, setIsListening] = useState(false);
 
-  // Track reading scroll progress (for top hairline indicator)
+  // Track reading scroll progress (hairline indicator)
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight =
@@ -110,11 +110,11 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     }
   };
 
-  // 3 Recommended articles for bottom grid
+  // 3 Recommended articles
   const recommendedPosts = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 3);
 
   return (
-    <div className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#E8F3EC] selection:text-[#1A8917]">
+    <div className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#EAEAEA] selection:text-[#242424]">
       {/* Top Reading Progress Indicator (Hairline) */}
       <div
         className="fixed top-0 left-0 right-0 h-[2.5px] bg-[#242424] z-50 transition-transform duration-100 origin-left will-change-transform"
@@ -125,8 +125,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
       {/* Navigation */}
       <Navigation onOpenCV={() => setCvOpen(true)} />
 
-      {/* Main Longform Article Wrapper (Medium's exact 680px column) */}
-      <main className="max-w-[680px] mx-auto px-5 sm:px-6 md:px-0 pt-28 sm:pt-36 pb-28">
+      {/* Main Longform Article Wrapper (Strict 680px column) */}
+      <main className="max-w-[680px] mx-auto px-6 sm:px-8 md:px-0 pt-28 sm:pt-36 pb-28">
         
         {/* Navigation Breadcrumb & Folio Header */}
         <div className="flex items-center justify-between gap-4 mb-8 pb-4 border-b border-[#F2F2F2] text-[13px] text-[#6B6B6B]">
@@ -146,8 +146,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             >
               {copiedLink ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-[#1A8917]" />
-                  <span className="text-[#1A8917]">Copied</span>
+                  <Check className="w-3.5 h-3.5 text-[#242424]" />
+                  <span className="text-[#242424]">Copied</span>
                 </>
               ) : (
                 <>
@@ -159,62 +159,42 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </div>
         </div>
 
-        {/* Medium Story Header */}
+        {/* Story Header */}
         <header className="space-y-4">
           
-          {/* Headline (Modern Medium bold high-contrast sans) */}
+          {/* Headline */}
           <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[32px] sm:text-[40px] md:text-[44px] font-bold text-[#242424] leading-[1.2] sm:leading-[1.15] tracking-[-0.022em]">
             {post.title}
           </h1>
 
-          {/* Subtitle (Medium signature secondary line) */}
+          {/* Subtitle */}
           {post.subtitle && (
             <p className="text-[19px] sm:text-[22px] text-[#6B6B6B] font-normal leading-[1.4] tracking-normal font-sans pt-1">
               {post.subtitle}
             </p>
           )}
 
-          {/* Modern Medium Author Byline Bar */}
-          <div className="pt-6 pb-2 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5">
-              <div className="w-11 h-11 rounded-full bg-[#161617] text-white flex items-center justify-center font-bold text-[13px] shrink-0">
-                NH
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold text-[#242424] text-[15px]">Nima Hosseini</span>
-                  <button
-                    onClick={() => setFollowing(!following)}
-                    className={`text-[13px] font-medium transition-colors cursor-pointer ${
-                      following ? "text-[#6B6B6B]" : "text-[#1A8917] hover:text-[#156912]"
-                    }`}
-                  >
-                    {following ? "Following" : "Follow"}
-                  </button>
-                </div>
-                <div className="flex items-center gap-2 text-[13px] text-[#6B6B6B] pt-0.5">
-                  <span>Published in WVRNER Journal</span>
-                  <span>&middot;</span>
-                  <span>{post.readingTime}</span>
-                  <span>&middot;</span>
-                  <span>{post.date}</span>
-                </div>
-              </div>
-            </div>
+          {/* Clean Byline (No redundant follow buttons) */}
+          <div className="pt-4 pb-2 flex items-center gap-2.5 text-[13.5px] text-[#6B6B6B]">
+            <span className="font-medium text-[#242424]">WVRNER Journal</span>
+            <span>&middot;</span>
+            <span>{post.date}</span>
+            <span>&middot;</span>
+            <span>{post.readingTime}</span>
           </div>
 
-          {/* Modern Medium Action Strip (Claps, Audio, Bookmark, Share) */}
+          {/* Action Strip (Claps, Audio, Bookmark, Share in pure black) */}
           <div className="py-3 px-0 border-y border-[#F2F2F2] flex items-center justify-between text-[#6B6B6B] text-[13.5px] my-7">
             <div className="flex items-center gap-6">
               <button
                 onClick={handleClap}
                 className={`inline-flex items-center gap-2 transition-all active:scale-125 cursor-pointer ${
-                  hasClapped ? "text-[#1A8917] font-medium" : "hover:text-[#242424]"
+                  hasClapped ? "text-[#242424] font-medium" : "hover:text-[#242424]"
                 }`}
                 title="Clap for this story"
               >
                 <span className="w-6 h-6 flex items-center justify-center rounded-full">
-                  <MediumClapIcon className="w-4 h-4" />
+                  <ClapIcon className="w-4 h-4" />
                 </span>
                 <span>{claps}</span>
               </button>
@@ -226,12 +206,12 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             </div>
 
             <div className="flex items-center gap-4">
-              {/* Modern Medium Audio Listen Pill */}
+              {/* Audio Listen Pill */}
               <button
                 onClick={handleListenToggle}
-                className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12.5px] font-medium transition-colors cursor-pointer ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12.5px] font-medium transition-colors cursor-pointer ${
                   isListening
-                    ? "bg-[#1A8917] text-white"
+                    ? "bg-[#161617] text-white"
                     : "hover:bg-[#F2F2F2] text-[#6B6B6B] hover:text-[#242424]"
                 }`}
                 title={isListening ? "Stop listening" : "Listen to article"}
@@ -269,7 +249,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         </header>
 
-        {/* Feature / Cover Image (Modern Medium Breakout) */}
+        {/* Feature / Cover Image */}
         {post.featureImage && (
           <figure className="my-9">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -285,7 +265,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </figure>
         )}
 
-        {/* Medium Editorial Pullquote */}
+        {/* Editorial Pullquote */}
         {post.pullQuote && (
           <blockquote className="my-9 pl-6 border-l-[3px] border-[#242424]">
             <p className="font-[family-name:var(--font-source-serif),Charter,Georgia,serif] italic text-[21px] sm:text-[23px] text-[#242424] leading-[1.45]">
@@ -294,8 +274,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </blockquote>
         )}
 
-        {/* Article Body Content (Medium's Signature Serif Typography) */}
-        <article className="py-4 font-[family-name:var(--font-source-serif),Charter,Georgia,serif] text-[20px] leading-[34px] text-[#242424] font-normal selection:bg-[#E8F3EC]">
+        {/* Article Body Content */}
+        <article className="py-4 font-[family-name:var(--font-source-serif),Charter,Georgia,serif] text-[20px] leading-[34px] text-[#242424] font-normal selection:bg-[#EAEAEA]">
           
           {/* Lead Abstract */}
           {post.content.lead && (
@@ -308,7 +288,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           {post.content.sections.map((section, sIdx) => (
             <div key={sIdx} className="space-y-6 pt-4">
               
-              {/* Section Heading (Medium Bold Sans) */}
+              {/* Section Heading */}
               {section.heading && (
                 <h2 className="font-[family-name:var(--font-plus-jakarta)] font-bold text-[24px] sm:text-[28px] text-[#242424] tracking-[-0.016em] leading-tight pt-8 pb-2">
                   {section.heading}
@@ -404,7 +384,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         </article>
 
-        {/* Modern Medium Bottom Article Actions & Tags */}
+        {/* Bottom Article Actions & Tags */}
         <div className="pt-8 pb-10 border-b border-[#F2F2F2] space-y-6">
           {/* Topic Tags */}
           <div className="flex flex-wrap gap-2">
@@ -424,11 +404,11 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
               <button
                 onClick={handleClap}
                 className={`inline-flex items-center gap-2 transition-all active:scale-125 cursor-pointer ${
-                  hasClapped ? "text-[#1A8917] font-medium" : "hover:text-[#242424]"
+                  hasClapped ? "text-[#242424] font-medium" : "hover:text-[#242424]"
                 }`}
               >
                 <span className="w-6 h-6 flex items-center justify-center rounded-full">
-                  <MediumClapIcon className="w-4 h-4" />
+                  <ClapIcon className="w-4 h-4" />
                 </span>
                 <span>{claps} claps</span>
               </button>
@@ -460,15 +440,15 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </div>
         </div>
 
-        {/* Modern Medium Author Signature Box */}
+        {/* Author Bio Box (Clean and purposeful) */}
         <section className="py-10 border-b border-[#F2F2F2]">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <div className="flex items-start gap-4">
-              <div className="w-16 h-16 rounded-full bg-[#161617] text-white flex items-center justify-center font-bold text-[18px] shrink-0">
+              <div className="w-14 h-14 rounded-full bg-[#161617] text-white flex items-center justify-center font-bold text-[16px] shrink-0">
                 NH
               </div>
               <div className="space-y-1">
-                <span className="text-[12px] uppercase font-bold text-[#6B6B6B] tracking-wider block font-sans">
+                <span className="text-[11.5px] uppercase font-bold text-[#6B6B6B] tracking-wider block font-sans">
                   WRITTEN BY
                 </span>
                 <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[18px] font-bold text-[#242424]">
@@ -477,26 +457,13 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                 <p className="text-[14px] text-[#6B6B6B] leading-relaxed max-w-md font-sans">
                   Cloud &amp; DevOps Engineer. Engineering automated cloud systems, declarative infrastructure, and reproducible state across AWS.
                 </p>
-                <div className="text-[12.5px] text-[#6B6B6B] pt-1 font-sans">
-                  <span>1.4K Followers</span> &middot; <span>WVRNER Journal</span>
-                </div>
               </div>
             </div>
 
-            <div className="flex sm:flex-col items-center gap-2.5 shrink-0">
-              <button
-                onClick={() => setFollowing(!following)}
-                className={`px-5 py-2 rounded-full text-[13.5px] font-medium transition-all cursor-pointer font-sans ${
-                  following
-                    ? "bg-[#F2F2F2] text-[#242424] hover:bg-[#E6E6E6]"
-                    : "bg-[#1A8917] hover:bg-[#156912] text-white"
-                }`}
-              >
-                {following ? "Following" : "Follow"}
-              </button>
+            <div className="flex items-center gap-2.5 shrink-0">
               <button
                 onClick={() => setCvOpen(true)}
-                className="px-4 py-2 rounded-full border border-black/15 hover:bg-black/5 text-[#242424] text-[13px] font-medium transition-all cursor-pointer font-sans"
+                className="px-5 py-2 rounded-full bg-[#161617] hover:bg-[#2C2C2E] text-white text-[13px] font-medium transition-all cursor-pointer font-sans"
               >
                 View CV
               </button>
@@ -504,16 +471,16 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </div>
         </section>
 
-        {/* Modern Medium "More from Nima Hosseini" Recommendations */}
+        {/* More Stories Recommendations */}
         {recommendedPosts.length > 0 && (
           <section className="pt-12 space-y-6">
             <div className="flex items-center justify-between">
               <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[20px] font-bold text-[#242424]">
-                More from Nima Hosseini
+                More from WVRNER Journal
               </h3>
               <Link
                 href="/blog"
-                className="text-[13px] text-[#1A8917] hover:underline font-medium font-sans"
+                className="text-[13px] text-[#242424] hover:underline font-medium font-sans"
               >
                 See all stories
               </Link>
@@ -538,22 +505,19 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                         />
                       </div>
                     )}
-                    <div className="flex items-center gap-2 text-[12px] text-[#6B6B6B] mb-1.5">
-                      <div className="w-4 h-4 rounded-full bg-[#242424] text-white flex items-center justify-center font-bold text-[8px]">
-                        NH
-                      </div>
-                      <span className="font-medium text-[#242424]">Nima Hosseini</span>
-                    </div>
-                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[16px] font-bold text-[#242424] group-hover:underline transition-colors leading-snug line-clamp-2">
+                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15.5px] font-bold text-[#242424] group-hover:underline transition-colors leading-snug line-clamp-2">
                       {rec.title}
                     </h4>
-                    <p className="text-[13.5px] text-[#6B6B6B] line-clamp-2 mt-1.5 font-normal leading-relaxed">
+                    <p className="text-[13px] text-[#6B6B6B] line-clamp-2 mt-1.5 font-normal leading-relaxed">
                       {rec.subtitle || rec.excerpt}
                     </p>
                   </div>
                   <div className="pt-2 flex items-center justify-between text-[12px] text-[#6B6B6B] font-sans">
                     <span>{rec.readingTime} &middot; {rec.date}</span>
-                    <MediumClapIcon className="w-3.5 h-3.5" />
+                    <span className="font-medium text-[#242424] inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                      <span>Read story</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </span>
                   </div>
                 </Link>
               ))}

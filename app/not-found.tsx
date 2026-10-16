@@ -12,7 +12,7 @@ import { useRef, useEffect } from "react";
  * - Truly imperceptible background cinemagraph loop player
  * - Dark vignette gradient overlay
  * - Monumental Apple-grade typography with WordsPullUp animation
- * - Apple + Medium tactile navigation affordances to return home or explore stories
+ * - Tactile navigation affordances to return home or explore stories
  */
 export default function NotFoundPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
