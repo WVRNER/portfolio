@@ -1,26 +1,42 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef, useState, useEffect, useLayoutEffect } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useMotionValueEvent,
+} from "framer-motion";
+
+// Safe isomorphic layout effect for Next.js SSR/export
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+// Single-run per refresh / page load tracker
+let hasAnimatedOnce = false;
 
 /**
  * EditorialStatement / StoryScrollSequence
  * High-end Swiss Minimalist & Editorial Typography design.
  * 
- * Strict Anti-AI-Slop:
- * - Zero artificial operator pills / pulsing green dots
- * - Zero pseudo-technical terminal brackets
- * - Pure typographic hierarchy, calibrated contrast, and fluid scroll illumination.
+ * Runs the cinematic scroll sequence ONCE per page refresh:
+ * - Beat 1: Nima Hosseini holds with monumental typography.
+ * - Beat 2: "You didn't notice anything. That was the job." illuminates.
+ * - Once scrolled past: The sentence is removed completely, collapsing
+ *   into a static, permanent Nima Hosseini section with zero replay interruption.
  */
 export function StoryScrollSequence() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const heightDiffRef = useRef<number>(0);
   const [mounted, setMounted] = useState(false);
+  const [hasCompleted, setHasCompleted] = useState(hasAnimatedOnce);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Track scroll progress through this tight, responsive track
+  // Track scroll progress through this responsive sequence track
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -65,6 +81,108 @@ export function StoryScrollSequence() {
   // Bottom sequence progress indicator
   const progressWidth = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
 
+  // Transition to permanent static mode once the user scrolls past the animation
+  const completeSequence = () => {
+    if (hasAnimatedOnce) return;
+    hasAnimatedOnce = true;
+
+    const el = containerRef.current;
+    if (el) {
+      const oldHeight = el.offsetHeight;
+      const newHeight = window.innerHeight;
+      const diff = oldHeight - newHeight;
+      heightDiffRef.current = diff > 0 ? diff : 0;
+    }
+
+    setHasCompleted(true);
+  };
+
+  // Monitor motion scroll progress to trigger completion at the end of the track
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    if (!hasCompleted && latest >= 0.98) {
+      completeSequence();
+    }
+  });
+
+  // Fallback scroll listener in case of fast wheel/touch scroll jumps
+  useEffect(() => {
+    if (hasCompleted) return;
+
+    const handleScroll = () => {
+      const el = containerRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.bottom <= window.innerHeight + 20) {
+        completeSequence();
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [hasCompleted]);
+
+  // Instantly compensate document scroll offset when collapsing track height so the viewport never jumps
+  useIsomorphicLayoutEffect(() => {
+    if (hasCompleted && heightDiffRef.current > 0) {
+      const diff = heightDiffRef.current;
+      heightDiffRef.current = 0;
+      window.scrollBy({ top: -diff, behavior: "instant" });
+      const lenis = (window as unknown as { __lenis?: { resize: () => void; scroll: number; scrollTo: (target: number, opts?: { immediate?: boolean }) => void } }).__lenis;
+      if (lenis) {
+        lenis.resize();
+        lenis.scrollTo(lenis.scroll - diff, { immediate: true });
+      }
+    }
+  }, [hasCompleted]);
+
+  // STATIC MODE: Rendered once the user scrolls past the animation (sentence is gone)
+  if (hasCompleted) {
+    return (
+      <section
+        ref={containerRef}
+        id="nima-hosseini"
+        aria-label="Editorial Narrative Sequence"
+        className="relative w-full h-[100dvh] min-h-[640px] flex items-center justify-center bg-white border-t border-[#0A0A0A]/10 px-6 sm:px-12 md:px-16 lg:px-24"
+      >
+        <div id="story" className="absolute top-0 left-0" />
+
+        {/* Ambient Top & Bottom Vignettes */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white to-transparent z-20" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white to-transparent z-20" />
+
+        {/* Static Nima Hosseini Presentation */}
+        <div className="relative w-full max-w-[1440px] mx-auto z-10 flex items-center justify-center">
+          <div className="w-full max-w-[1280px]">
+            <div className="space-y-4 sm:space-y-6">
+              
+              {/* Clean Discipline Descriptor */}
+              <div className="font-mono text-[11px] sm:text-xs tracking-[0.24em] uppercase text-black/50 font-medium">
+                SYSTEMS ARCHITECT &bull; CLOUD INFRASTRUCTURE
+              </div>
+
+              {/* Monumental Name */}
+              <h2 className="font-display text-[clamp(3.6rem,9.5vw,8.8rem)] font-medium leading-[0.88] tracking-[-0.045em] text-[#0A0A0A] select-none">
+                Nima Hosseini
+              </h2>
+
+              {/* Focus & Architecture Description */}
+              <div className="space-y-3 max-w-[58ch] pt-1">
+                <div className="text-[18px] sm:text-[23px] md:text-[26px] text-[#222222] font-normal tracking-tight">
+                  Infrastructure as Code &bull; Systems Reliability
+                </div>
+                <p className="text-[14.5px] sm:text-[16.5px] text-[#5A5A5A] leading-relaxed font-normal">
+                  Building resilient architectures from first principles &mdash; with an emphasis on clarity, security boundaries, and reproducible cloud state across AWS and modern container environments.
+                </p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // ACTIVE SEQUENCE: Runs once per refresh
   return (
     <section
       ref={containerRef}
@@ -73,7 +191,7 @@ export function StoryScrollSequence() {
       className="relative w-full h-[280vh] sm:h-[300vh] bg-white border-t border-[#0A0A0A]/10"
     >
       <div id="story" className="absolute top-0 left-0" />
-      {/* Sticky Stage Viewport: Locked for a tight, buttery 1.8-screen sequence */}
+      {/* Sticky Stage Viewport: Locked for a tight, buttery sequence */}
       <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center bg-white px-6 sm:px-12 md:px-16 lg:px-24">
         
         {/* Ambient Top & Bottom Vignettes */}
