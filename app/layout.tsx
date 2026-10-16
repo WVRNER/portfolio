@@ -1,6 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Geist, Geist_Mono, Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
+import { Manrope, Geist, Geist_Mono, Instrument_Serif, Plus_Jakarta_Sans, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
+
+const sourceSerif = Source_Serif_4({
+  variable: "--font-source-serif",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+});
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta",
@@ -71,7 +79,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} selection:bg-[#0A0A0A] selection:text-white`}
+      className={`${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${sourceSerif.variable} selection:bg-[#0A0A0A] selection:text-white`}
     >
       <body className="min-h-[100dvh] bg-white text-[#0A0A0A] font-sans antialiased relative selection:bg-[#0A0A0A] selection:text-white">
         <div className="fixed inset-0 pointer-events-none bg-noise-grain opacity-40 z-50" aria-hidden="true" />

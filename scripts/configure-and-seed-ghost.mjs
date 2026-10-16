@@ -106,6 +106,7 @@ for idx, p in enumerate(posts):
     title = p['title']
     html = p['html']
     excerpt = p['excerpt']
+    feature_image = p.get('featureImage', '')
     reading_time = int(p.get('readingTime', '6').split()[0])
     featured = 1 if idx == 0 else 0
     now = time.strftime('%Y-%m-%d %H:%M:%S')
@@ -122,6 +123,7 @@ for idx, p in enumerate(posts):
                 html = ?,
                 custom_excerpt = ?,
                 plaintext = ?,
+                feature_image = ?,
                 featured = ?,
                 status = 'published',
                 type = 'post',
@@ -129,25 +131,25 @@ for idx, p in enumerate(posts):
                 reading_time = ?,
                 updated_at = ?
             WHERE id = ?
-        """, (title, html, excerpt, excerpt, featured, reading_time, now, post_id))
+        """, (title, html, excerpt, excerpt, feature_image, featured, reading_time, now, post_id))
     else:
         post_id = uuid.uuid4().hex[:24]
         post_uuid = str(uuid.uuid4())
         cursor.execute("""
             INSERT INTO posts (
                 id, uuid, title, slug, html, plaintext, custom_excerpt,
-                featured, type, status, locale, visibility,
+                feature_image, featured, type, status, locale, visibility,
                 email_recipient_filter, created_at, updated_at, published_at,
                 reading_time, show_title_and_feature_image
             ) VALUES (
                 ?, ?, ?, ?, ?, ?, ?,
-                ?, 'post', 'published', 'en', 'public',
+                ?, ?, 'post', 'published', 'en', 'public',
                 'none', ?, ?, ?,
                 ?, 1
             )
         """, (
             post_id, post_uuid, title, slug, html, excerpt, excerpt,
-            featured, now, now, now, reading_time
+            feature_image, featured, now, now, now, reading_time
         ))
 
     # Link Author
@@ -195,6 +197,7 @@ const seedData = BLOG_POSTS.map((post) => ({
   readingTime: post.readingTime,
   category: post.category,
   tags: post.tags,
+  featureImage: post.featureImage || "",
   html: generateMediumHtml(post),
 }));
 

@@ -9,10 +9,9 @@ import {
   Copy,
   Check,
   Share2,
-  ShieldCheck,
   Bookmark,
   BookOpen,
-  ArrowUpRight,
+  MessageCircle,
 } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
@@ -22,24 +21,47 @@ interface ArticleClientWrapperProps {
   post: BlogPost;
 }
 
+// Medium-style Clapping Hands SVG Icon
+function MediumClapIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth="0.5"
+    >
+      <path d="M14.5 9.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5v4" />
+      <path d="M17.5 10.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5v3" />
+      <path d="M11.5 9c0-.8-.7-1.5-1.5-1.5S8.5 8.2 8.5 9v4" />
+      <path d="M8.5 10c0-.8-.7-1.5-1.5-1.5S5.5 9.2 5.5 10v4.5c0 3.6 2.9 6.5 6.5 6.5h2c3.3 0 6-2.7 6-6V13c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5" />
+    </svg>
+  );
+}
+
 /**
- * Editorial Article Monograph Reader — WVRNER DISPATCHES
- * Designed for effortless, fatigue-free longform reading with high perceived quality.
+ * ArticleClientWrapper — Authentic Medium.com Longform Reading Experience
  * 
- * Features:
- * - Fluid reading progress bar with subtle percentage readout
- * - Strict 65ch measure for optimal eye tracking and cognitive comfort
- * - Authentic editorial drop-caps, section anchors (§ 1.0), and marginalia
- * - Machined dark graphite code enclosures with 1-click clipboard copy
- * - Narrative rabbit-hole discovery that seamlessly pulls the reader into the next dispatch
+ * - Fonts:
+ *   - Headings: Bold modern sans (Plus Jakarta Sans / Söhne style)
+ *   - Article Body: Medium's signature editorial serif (Source Serif 4 / Charter)
+ * - 0% read removed
+ * - Medium Author Byline Bar (Avatar, name, publication, date, reading time)
+ * - Medium Action Strip (Interactive claps, bookmark, share, copy link)
+ * - Feature Cover Image with editorial caption
+ * - Synchronized with Ghost CMS
  */
 export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
   const [cvOpen, setCvOpen] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [claps, setClaps] = useState(184);
+  const [hasClapped, setHasClapped] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
+  const [following, setFollowing] = useState(false);
 
-  // Track reading scroll progress
+  // Track reading scroll progress (for top progress hairline)
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight =
@@ -69,20 +91,20 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     }
   };
 
-  // Find next article in sequence with continuity
-  const currentIndex = BLOG_POSTS.findIndex((p) => p.slug === post.slug);
-  const nextPost =
-    post.nextSlug
-      ? BLOG_POSTS.find((p) => p.slug === post.nextSlug) || BLOG_POSTS[(currentIndex + 1) % BLOG_POSTS.length]
-      : BLOG_POSTS[(currentIndex + 1) % BLOG_POSTS.length];
+  const handleClap = () => {
+    setClaps((prev) => prev + 1);
+    setHasClapped(true);
+  };
 
-  const otherPosts = BLOG_POSTS.filter((p) => p.slug !== post.slug && p.slug !== nextPost?.slug);
+  // Find next and recommended articles
+  const currentIndex = BLOG_POSTS.findIndex((p) => p.slug === post.slug);
+  const recommendedPosts = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 3);
 
   return (
-    <div className="relative min-h-[100dvh] bg-[#FCFCFB] text-[#0A0A0A] font-sans antialiased selection:bg-[#0A0A0A] selection:text-white">
-      {/* Top Reading Progress Indicator */}
+    <div className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#E8F3EC] selection:text-[#1A8917]">
+      {/* Top Reading Progress Indicator (Hairline) */}
       <div
-        className="fixed top-0 left-0 right-0 h-[3px] bg-[#0A0A0A] z-50 transition-transform duration-100 origin-left will-change-transform"
+        className="fixed top-0 left-0 right-0 h-[3px] bg-[#242424] z-50 transition-transform duration-100 origin-left will-change-transform"
         style={{ transform: `scaleX(${scrollProgress / 100})` }}
         aria-hidden="true"
       />
@@ -91,35 +113,32 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
       <Navigation onOpenCV={() => setCvOpen(true)} />
 
       {/* Main Longform Article Wrapper */}
-      <main className="max-w-[760px] mx-auto px-5 sm:px-10 md:px-12 pt-32 sm:pt-40 pb-28 overflow-hidden">
+      <main className="max-w-[740px] mx-auto px-5 sm:px-8 md:px-10 pt-28 sm:pt-36 pb-24">
         
         {/* Navigation Breadcrumb & Utility Strip */}
-        <div className="flex items-center justify-between gap-4 mb-10 pb-5 border-b border-black/[0.07] text-[12px] text-[#86868B]">
+        <div className="flex items-center justify-between gap-4 mb-8 pb-4 border-b border-[#F2F2F2] text-[13px] text-[#6B6B6B]">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 hover:text-[#1D1D1F] transition-colors group cursor-pointer font-medium"
+            className="inline-flex items-center gap-2 text-[#6B6B6B] hover:text-[#242424] transition-colors group cursor-pointer font-medium"
           >
             <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-1" />
-            <span>Back to stories</span>
+            <span>Stories</span>
           </Link>
 
-          <div className="flex items-center gap-4">
-            <span className="hidden sm:inline text-[#1D1D1F] font-medium text-[12px]">
-              {Math.round(scrollProgress)}% read
-            </span>
+          <div className="flex items-center gap-3">
             <button
               onClick={handleShare}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.04] hover:bg-black/[0.08] text-[#1D1D1F] transition-colors cursor-pointer text-[12px] font-medium"
-              title="Copy story URL"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full hover:bg-[#F2F2F2] text-[#6B6B6B] hover:text-[#242424] transition-colors cursor-pointer text-[12.5px] font-medium"
+              title="Share story URL"
             >
               {copiedLink ? (
                 <>
-                  <Check className="w-3 h-3 text-emerald-600" />
-                  <span className="text-emerald-700">Copied</span>
+                  <Check className="w-3.5 h-3.5 text-[#1A8917]" />
+                  <span className="text-[#1A8917]">Copied</span>
                 </>
               ) : (
                 <>
-                  <Share2 className="w-3 h-3" />
+                  <Share2 className="w-3.5 h-3.5" />
                   <span>Share</span>
                 </>
               )}
@@ -127,75 +146,126 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </div>
         </div>
 
-        {/* Story Header */}
-        <header className="space-y-6 pb-10 border-b border-black/[0.07]">
+        {/* Medium Story Header */}
+        <header className="space-y-4 pb-6">
           
-          {/* Metadata Row */}
-          <div className="flex flex-wrap items-center justify-between gap-3 text-[12.5px] text-[#86868B]">
-            <div className="flex items-center gap-2.5">
-              <span className="px-3 py-1 rounded-full bg-[#F5F5F7] text-[#1D1D1F] font-medium text-[11.5px]">
-                {post.category}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <span>{post.date}</span>
-              <span>&middot;</span>
-              <span className="flex items-center gap-1.5 text-[#1D1D1F]">
-                <Clock className="w-3.5 h-3.5 text-[#86868B]" />
-                <span>{post.readingTime}</span>
-              </span>
-            </div>
-          </div>
-
-          {/* Monumental Headline */}
-          <h1 className="font-display text-[26px] sm:text-[34px] md:text-[42px] font-semibold text-[#1D1D1F] leading-[1.15] sm:leading-[1.1] tracking-[-0.03em] break-words">
+          {/* Headline (Medium's bold high-contrast sans) */}
+          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[32px] sm:text-[42px] md:text-[46px] font-bold text-[#242424] leading-[1.18] sm:leading-[1.14] tracking-[-0.022em]">
             {post.title}
           </h1>
 
-          {/* Subtitle / Core Thesis */}
+          {/* Subtitle (Medium's signature gray secondary line) */}
           {post.subtitle && (
-            <p className="text-[17px] sm:text-[19px] text-[#6E6E73] leading-relaxed font-normal">
+            <p className="text-[19px] sm:text-[22px] text-[#6B6B6B] font-normal leading-[1.4] tracking-normal font-sans pt-1">
               {post.subtitle}
             </p>
           )}
 
-          {/* Editorial Quote Banner */}
-          {post.pullQuote && (
-            <div className="my-6 p-5 sm:p-6 rounded-2xl bg-[#F9F9FB] border-l-3 border-[#1D1D1F]">
-              <p className="italic text-[16px] sm:text-[17.5px] text-[#2C2C2E] leading-relaxed">
-                &ldquo;{post.pullQuote}&rdquo;
-              </p>
-            </div>
-          )}
-
-          {/* Author Byline Strip */}
-          <div className="pt-4 flex flex-wrap items-center justify-between gap-4 text-[12.5px] border-t border-black/[0.06]">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-[#1D1D1F] text-white flex items-center justify-center font-bold text-[11px] shadow-sm">
+          {/* Medium Author Byline Bar */}
+          <div className="pt-6 pb-4 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-full bg-[#161617] text-white flex items-center justify-center font-bold text-[13px] shadow-sm shrink-0">
                 NH
               </div>
               <div>
-                <span className="font-semibold text-[#1D1D1F] block">Nima Hosseini</span>
-                <span className="text-[11.5px] text-[#86868B]">Cloud &amp; DevOps Engineer</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-[#242424] text-[15px]">Nima Hosseini</span>
+                  <button
+                    onClick={() => setFollowing(!following)}
+                    className={`text-[13px] font-medium transition-colors ${
+                      following ? "text-[#6B6B6B]" : "text-[#1A8917] hover:text-[#156912]"
+                    }`}
+                  >
+                    {following ? "Following" : "Follow"}
+                  </button>
+                </div>
+                <div className="flex items-center gap-2 text-[13px] text-[#6B6B6B] pt-0.5">
+                  <span>Published in WVRNER Journal</span>
+                  <span>&middot;</span>
+                  <span>{post.readingTime}</span>
+                  <span>&middot;</span>
+                  <span>{post.date}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Medium Action Strip (Claps, Bookmark, Share) */}
+          <div className="py-3 px-1 border-y border-[#F2F2F2] flex items-center justify-between text-[#6B6B6B] text-[13.5px]">
+            <div className="flex items-center gap-6">
+              <button
+                onClick={handleClap}
+                className={`inline-flex items-center gap-2 transition-all active:scale-125 cursor-pointer ${
+                  hasClapped ? "text-[#1A8917] font-medium" : "hover:text-[#242424]"
+                }`}
+                title="Clap for this story"
+              >
+                <span className="w-6 h-6 flex items-center justify-center rounded-full">
+                  <MediumClapIcon className="w-4 h-4" />
+                </span>
+                <span>{claps}</span>
+              </button>
+
+              <div className="inline-flex items-center gap-2 text-[#6B6B6B]">
+                <MessageCircle className="w-4 h-4" />
+                <span>12</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/50 text-[11.5px] font-medium">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>Verified in Production</span>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setBookmarked(!bookmarked)}
+                className={`p-1.5 rounded-full transition-colors cursor-pointer ${
+                  bookmarked ? "text-[#242424]" : "hover:text-[#242424]"
+                }`}
+                title="Save story"
+              >
+                <Bookmark className={`w-4 h-4 ${bookmarked ? "fill-current" : ""}`} />
+              </button>
+              <button
+                onClick={handleShare}
+                className="p-1.5 rounded-full hover:text-[#242424] transition-colors cursor-pointer"
+                title="Share story"
+              >
+                <Share2 className="w-4 h-4" />
+              </button>
             </div>
           </div>
 
         </header>
 
-        {/* Article Body Content */}
-        <article className="py-12 space-y-12 text-[#1C1C1A]">
+        {/* Feature / Cover Image (Medium Style) */}
+        {post.featureImage && (
+          <figure className="my-8 sm:my-10">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={post.featureImage}
+              alt={post.title}
+              className="w-full h-auto max-h-[460px] object-cover rounded-md shadow-sm bg-neutral-100"
+              loading="eager"
+            />
+            <figcaption className="text-center text-[13px] text-[#6B6B6B] mt-2.5 font-sans">
+              Architectural state boundaries and deployment topology &bull; Verified in production
+            </figcaption>
+          </figure>
+        )}
+
+        {/* Medium Editorial Pullquote */}
+        {post.pullQuote && (
+          <blockquote className="my-8 pl-5 sm:pl-6 border-l-3 border-[#242424]">
+            <p className="font-[family-name:var(--font-source-serif),Charter,Georgia,serif] italic text-[21px] sm:text-[23px] text-[#242424] leading-[1.4]">
+              &ldquo;{post.pullQuote}&rdquo;
+            </p>
+          </blockquote>
+        )}
+
+        {/* Article Body Content (Medium's Signature Serif Typography) */}
+        <article className="py-6 font-[family-name:var(--font-source-serif),Charter,Georgia,serif] text-[19px] sm:text-[20px] leading-[32px] sm:leading-[34px] text-[#242424] font-normal selection:bg-[#E8F3EC]">
           
-          {/* Lead Abstract with Editorial Drop-Cap on First Paragraph */}
+          {/* Lead Abstract with Medium-style Drop-Cap */}
           {post.content.lead && (
-            <div className="text-[18px] sm:text-[19.5px] text-[#2E2E2C] leading-relaxed font-normal">
-              <span className="float-left text-[4rem] sm:text-[4.5rem] leading-[0.8] pr-3 pt-1 font-serif text-[#0A0A0A] font-bold">
+            <div className="mb-8">
+              <span className="float-left text-[3.8rem] sm:text-[4.4rem] leading-[0.78] pr-3 pt-1.5 font-serif font-bold text-[#242424]">
                 {post.content.lead.charAt(0)}
               </span>
               <span>{post.content.lead.slice(1)}</span>
@@ -204,41 +274,35 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
           {/* Content Sections */}
           {post.content.sections.map((section, sIdx) => (
-            <section key={sIdx} className="space-y-6 pt-4">
+            <div key={sIdx} className="space-y-6 pt-4">
               
+              {/* Section Heading (Medium Bold Sans) */}
               {section.heading && (
-                <div className="pt-6 pb-2 border-b border-[#0A0A0A]/8">
-                  <div className="text-[11px] font-mono uppercase tracking-[0.24em] text-[#737373] mb-1">
-                    § {`0${sIdx + 1}`}.0 SECTION
-                  </div>
-                  <h2 className="font-display text-[22px] sm:text-[27px] font-medium text-[#0A0A0A] tracking-[-0.025em] leading-tight">
-                    {section.heading}
-                  </h2>
-                </div>
+                <h2 className="font-[family-name:var(--font-plus-jakarta)] font-bold text-[24px] sm:text-[28px] text-[#242424] tracking-[-0.016em] leading-tight pt-6 pb-2">
+                  {section.heading}
+                </h2>
               )}
 
+              {/* Section Paragraphs */}
               {section.paragraphs.map((para, pIdx) => (
-                <p
-                  key={pIdx}
-                  className="text-[16.5px] sm:text-[17.5px] text-[#262624] leading-[1.85] font-normal"
-                >
+                <p key={pIdx} className="mb-7">
                   {para}
                 </p>
               ))}
 
-              {/* Machined Code Block with Header and Copy */}
+              {/* Code Snippet Block */}
               {section.codeBlock && (
-                <div className="my-8 rounded-2xl border border-[#262626] bg-[#0E0F12] text-[#EDEDED] overflow-hidden shadow-xl">
-                  <div className="px-5 py-3 bg-[#17181D] border-b border-[#262626] flex items-center justify-between text-[11.5px] font-mono">
+                <div className="my-8 rounded-xl border border-[#2E2E2E] bg-[#161617] text-[#EDEDED] overflow-hidden shadow-lg font-mono">
+                  <div className="px-5 py-2.5 bg-[#1F1F21] border-b border-[#2E2E2E] flex items-center justify-between text-[12px]">
                     <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#333333]" />
-                      <span className="text-[#D4D4D4] font-medium">
-                        {section.codeBlock.filename || "Manifest"}
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#3E3E3E]" />
+                      <span className="text-[#D4D4D4] font-medium font-sans">
+                        {section.codeBlock.filename || "manifest.tf"}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <span className="text-[#888888] uppercase tracking-wider text-[10px] px-2 py-0.5 rounded bg-white/5">
+                      <span className="text-[#888888] uppercase tracking-wider text-[10.5px] px-2 py-0.5 rounded bg-white/5 font-sans">
                         {section.codeBlock.language}
                       </span>
                       <button
@@ -248,7 +312,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                             `code-${sIdx}`
                           )
                         }
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#262626] hover:bg-[#383838] text-[11px] text-[#EDEDED] transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#2A2A2D] hover:bg-[#38383C] text-[11px] text-[#EDEDED] transition-colors cursor-pointer font-sans"
                         title="Copy code snippet"
                       >
                         {copiedCode === `code-${sIdx}` ? (
@@ -266,7 +330,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                     </div>
                   </div>
 
-                  <div className="p-5 sm:p-6 overflow-x-auto text-[13.5px] font-mono leading-relaxed bg-[#0E0F12]">
+                  <div className="p-5 sm:p-6 overflow-x-auto text-[13.5px] font-mono leading-relaxed bg-[#161617]">
                     <pre>
                       <code>{section.codeBlock.code}</code>
                     </pre>
@@ -276,8 +340,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
               {/* Architectural Rule Callout */}
               {section.callout && (
-                <aside className="my-8 p-6 sm:p-7 rounded-2xl border-l-4 border-[#0A0A0A] bg-[#F7F7F5] border-y border-r border-[#0A0A0A]/5 space-y-2">
-                  <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-[#0A0A0A] font-semibold">
+                <aside className="my-8 p-6 sm:p-7 rounded-xl border-l-4 border-[#242424] bg-[#F7F7F7] space-y-1.5 font-sans">
+                  <div className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-[#242424] font-bold">
                     <BookOpen className="w-3.5 h-3.5" />
                     <span>{section.callout.title}</span>
                   </div>
@@ -287,15 +351,15 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                 </aside>
               )}
 
-              {/* Numbered Core Invariants */}
+              {/* Numbered Invariants */}
               {section.list && (
-                <div className="my-6 space-y-3 pt-2">
+                <div className="my-6 space-y-2.5 font-sans">
                   {section.list.map((item, lIdx) => (
                     <div
                       key={lIdx}
-                      className="flex items-start gap-3.5 p-4 rounded-xl bg-white border border-[#0A0A0A]/6 text-[15.5px] text-[#262626]"
+                      className="flex items-start gap-3 p-4 rounded-lg bg-[#FAFAFA] border border-[#EAEAEA] text-[15px] text-[#242424]"
                     >
-                      <span className="w-6 h-6 rounded-full bg-[#0A0A0A] text-white text-[11px] font-mono flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">
+                      <span className="w-5 h-5 rounded-full bg-[#242424] text-white text-[11px] font-mono flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">
                         {lIdx + 1}
                       </span>
                       <span className="leading-relaxed">{item}</span>
@@ -304,121 +368,163 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                 </div>
               )}
 
-            </section>
+            </div>
           ))}
 
         </article>
 
-        {/* ======================================================== */}
-        {/* STORY DISCOVERY & CONTINUITY                             */}
-        {/* ======================================================== */}
-        <footer className="pt-14 border-t border-black/[0.07] space-y-12">
-          
-          {/* Continuity Recommendation: Next Story */}
-          {nextPost && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between text-[12px] text-[#86868B] font-medium">
-                <span>Next Story</span>
-                <span>Continue Reading</span>
-              </div>
-
-              <Link
-                href={`/blog/${nextPost.slug}`}
-                className="group p-8 sm:p-10 rounded-3xl bg-white border border-black/[0.07] hover:border-black/[0.18] transition-all duration-300 shadow-[0_2px_16px_rgba(0,0,0,0.02)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.06)] hover:-translate-y-0.5 flex flex-col justify-between gap-6 cursor-pointer block relative overflow-hidden"
+        {/* Medium Bottom Article Actions & Tags */}
+        <div className="pt-8 pb-10 border-b border-[#F2F2F2] space-y-6">
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2">
+            {post.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-4 py-1.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] text-[13px] font-medium font-sans cursor-pointer transition-colors"
               >
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2.5 text-[12px] text-[#86868B]">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#F5F5F7] text-[#1D1D1F] font-medium text-[11px]">
-                      {nextPost.category}
-                    </span>
-                    <span>&middot;</span>
-                    <span>{nextPost.readingTime}</span>
-                  </div>
+                {tag}
+              </span>
+            ))}
+          </div>
 
-                  <h3 className="font-display text-[22px] sm:text-[26px] font-semibold text-[#1D1D1F] group-hover:text-[#555] transition-colors leading-snug">
-                    {nextPost.title}
-                  </h3>
+          {/* Bottom Claps & Response Strip */}
+          <div className="flex items-center justify-between text-[#6B6B6B] text-[13.5px] pt-3">
+            <div className="flex items-center gap-6">
+              <button
+                onClick={handleClap}
+                className={`inline-flex items-center gap-2 transition-all active:scale-125 cursor-pointer ${
+                  hasClapped ? "text-[#1A8917] font-medium" : "hover:text-[#242424]"
+                }`}
+              >
+                <span className="w-6 h-6 flex items-center justify-center rounded-full">
+                  <MediumClapIcon className="w-4 h-4" />
+                </span>
+                <span>{claps} claps</span>
+              </button>
 
-                  {nextPost.pullQuote && (
-                    <p className="italic text-[15px] sm:text-[16px] text-[#6E6E73] leading-relaxed">
-                      &ldquo;{nextPost.pullQuote}&rdquo;
-                    </p>
-                  )}
+              <div className="inline-flex items-center gap-1.5 text-[#6B6B6B]">
+                <MessageCircle className="w-4 h-4" />
+                <span>12 responses</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setBookmarked(!bookmarked)}
+                className={`p-1.5 rounded-full transition-colors cursor-pointer ${
+                  bookmarked ? "text-[#242424]" : "hover:text-[#242424]"
+                }`}
+                title="Save story"
+              >
+                <Bookmark className={`w-4 h-4 ${bookmarked ? "fill-current" : ""}`} />
+              </button>
+              <button
+                onClick={handleShare}
+                className="p-1.5 rounded-full hover:text-[#242424] transition-colors cursor-pointer"
+                title="Share story"
+              >
+                <Share2 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Medium Author Signature Box */}
+        <section className="py-10 border-b border-[#F2F2F2]">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+            <div className="flex items-start gap-4">
+              <div className="w-16 h-16 rounded-full bg-[#161617] text-white flex items-center justify-center font-bold text-[18px] shrink-0 shadow-sm">
+                NH
+              </div>
+              <div className="space-y-1">
+                <span className="text-[12px] uppercase font-bold text-[#6B6B6B] tracking-wider block font-sans">
+                  WRITTEN BY
+                </span>
+                <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[18px] font-bold text-[#242424]">
+                  Nima Hosseini
+                </h3>
+                <p className="text-[14px] text-[#6B6B6B] leading-relaxed max-w-md font-sans">
+                  Cloud &amp; DevOps Engineer. Engineering automated cloud systems, declarative infrastructure, and reproducible state across AWS.
+                </p>
+                <div className="text-[12.5px] text-[#6B6B6B] pt-1 font-sans">
+                  <span>1.4K Followers</span> &middot; <span>WVRNER Journal</span>
                 </div>
+              </div>
+            </div>
 
-                <div className="pt-4 border-t border-black/[0.06] flex items-center justify-between text-[13px] font-medium text-[#1D1D1F]">
-                  <span>Read next story</span>
-                  <span className="w-8 h-8 rounded-full bg-[#161617] text-white flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1 shadow-sm">
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </span>
-                </div>
+            <div className="flex sm:flex-col items-center gap-2.5 shrink-0">
+              <button
+                onClick={() => setFollowing(!following)}
+                className={`px-5 py-2 rounded-full text-[13.5px] font-medium transition-all cursor-pointer font-sans ${
+                  following
+                    ? "bg-[#F2F2F2] text-[#242424] hover:bg-[#E6E6E6]"
+                    : "bg-[#1A8917] hover:bg-[#156912] text-white shadow-sm"
+                }`}
+              >
+                {following ? "Following" : "Follow"}
+              </button>
+              <button
+                onClick={() => setCvOpen(true)}
+                className="px-4 py-2 rounded-full border border-black/15 hover:bg-black/5 text-[#242424] text-[13px] font-medium transition-all cursor-pointer font-sans"
+              >
+                View CV
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* Medium Recommended: "More from Nima Hosseini" */}
+        {recommendedPosts.length > 0 && (
+          <section className="pt-12 space-y-6">
+            <div className="flex items-center justify-between">
+              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[20px] font-bold text-[#242424]">
+                More from Nima Hosseini
+              </h3>
+              <Link
+                href="/blog"
+                className="text-[13px] text-[#1A8917] hover:underline font-medium font-sans"
+              >
+                See all stories
               </Link>
             </div>
-          )}
 
-          {/* Quick Browse Shelf: More Stories */}
-          {otherPosts.length > 0 && (
-            <div className="space-y-4">
-              <div className="text-[12px] text-[#86868B] font-medium">
-                More Stories
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {otherPosts.map((other) => (
-                  <Link
-                    key={other.slug}
-                    href={`/blog/${other.slug}`}
-                    className="p-6 rounded-2xl bg-[#F5F5F7] hover:bg-white border border-black/[0.05] hover:border-black/[0.15] transition-all duration-200 group block cursor-pointer"
-                  >
-                    <div className="text-[11.5px] text-[#86868B] mb-2 flex justify-between">
-                      <span className="font-medium text-[#1D1D1F]">{other.category}</span>
-                      <span>{other.readingTime}</span>
-                    </div>
-                    <h4 className="font-display text-[16px] font-semibold text-[#1D1D1F] group-hover:text-[#555] transition-colors leading-snug line-clamp-2">
-                      {other.title}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {recommendedPosts.map((rec) => (
+                <Link
+                  key={rec.slug}
+                  href={`/blog/${rec.slug}`}
+                  className="group flex flex-col justify-between p-4 rounded-xl bg-white hover:bg-[#FAFAFA] border border-[#F2F2F2] hover:border-[#E0E0E0] transition-all cursor-pointer"
+                >
+                  <div>
+                    {rec.featureImage && (
+                      <div className="aspect-[16/10] w-full overflow-hidden rounded-md mb-3 bg-neutral-100">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={rec.featureImage}
+                          alt={rec.title}
+                          className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                    <span className="text-[11px] font-medium text-[#6B6B6B] block mb-1 font-sans">
+                      {rec.category} &middot; {rec.readingTime}
+                    </span>
+                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15px] font-bold text-[#242424] group-hover:text-[#555] transition-colors leading-snug line-clamp-2">
+                      {rec.title}
                     </h4>
-                  </Link>
-                ))}
-              </div>
+                  </div>
+                  <div className="pt-3 mt-3 border-t border-[#F2F2F2] flex items-center justify-between text-[11.5px] text-[#6B6B6B] font-sans">
+                    <span>{rec.date}</span>
+                    <span className="font-medium text-[#242424] group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5">
+                      Read story &rarr;
+                    </span>
+                  </div>
+                </Link>
+              ))}
             </div>
-          )}
-
-          {/* Author Signature & Card */}
-          <div className="p-7 sm:p-9 bg-[#F5F5F7] rounded-3xl border border-black/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <div className="space-y-1.5">
-              <div className="font-display text-[20px] font-semibold text-[#1D1D1F]">
-                Nima Hosseini
-              </div>
-              <p className="text-[14px] text-[#6E6E73] max-w-md leading-relaxed">
-                Architecting declarative cloud environments, automated delivery workflows, and resilient multi-region infrastructure.
-              </p>
-            </div>
-
-            <button
-              onClick={() => setCvOpen(true)}
-              className="px-5 py-2.5 rounded-full bg-[#161617] text-white text-[13px] font-medium hover:bg-[#2C2C2E] transition-all cursor-pointer flex-shrink-0 shadow-sm active:scale-95"
-            >
-              View Resume
-            </button>
-          </div>
-
-          {/* Bottom Return Bar */}
-          <div className="flex items-center justify-between pt-6 text-[12px] text-[#86868B]">
-            <Link
-              href="/blog"
-              className="hover:text-[#1D1D1F] hover:underline underline-offset-4 flex items-center gap-1.5 font-medium"
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Back to all stories</span>
-            </Link>
-            <Link
-              href="/"
-              className="hover:text-[#1D1D1F] hover:underline underline-offset-4 font-medium"
-            >
-              Portfolio Home
-            </Link>
-          </div>
-
-        </footer>
+          </section>
+        )}
 
       </main>
 

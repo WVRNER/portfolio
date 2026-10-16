@@ -43,6 +43,7 @@ export function transformGhostPost(raw: GhostRawPost): BlogPost {
     readingTime: `${Math.max(1, raw.reading_time || 5)} min read`,
     excerpt: raw.custom_excerpt || matchingLocal?.excerpt || "",
     tags: tags.length > 0 ? tags : (matchingLocal?.tags || ["Cloud", "DevOps"]),
+    featureImage: raw.feature_image || matchingLocal?.featureImage || undefined,
     subtitle: matchingLocal?.subtitle || raw.custom_excerpt || undefined,
     pullQuote: matchingLocal?.pullQuote,
     invariant: matchingLocal?.invariant,
