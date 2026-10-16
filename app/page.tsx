@@ -41,7 +41,7 @@ export default function Home() {
         <AboutSection />
 
         {/* 8. Contact & Footer */}
-        <ContactSection />
+        <ContactSection onOpenCV={() => setCvOpen(true)} />
 
         {/* Modal CV View */}
         <CVDrawer isOpen={cvOpen} onClose={() => setCvOpen(false)} />

@@ -13,10 +13,10 @@ export function IdentitySection() {
 
         <div className="space-y-3.5 max-w-[56ch]">
           <div className="text-[20px] sm:text-[26px] md:text-[30px] text-[#5A5A5A] font-normal tracking-tight">
-            Systems Architecture &bull; Cloud Reliability
+            Infrastructure as Code &bull; Systems Reliability
           </div>
           <p className="text-[15px] sm:text-[16.5px] text-[#6A6A6A] leading-relaxed font-normal pt-1">
-            Building declarative infrastructure with an emphasis on cryptographic boundaries, immutable containers, and deterministic cloud state.
+            Building resilient architectures from first principles &mdash; with an emphasis on clarity, security boundaries, and reproducible cloud state across AWS and modern container environments.
           </p>
         </div>
       </div>

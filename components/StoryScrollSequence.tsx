@@ -104,10 +104,10 @@ export function StoryScrollSequence() {
               {/* Focus & Architecture Description */}
               <div className="space-y-3 max-w-[58ch] pt-1">
                 <div className="text-[18px] sm:text-[23px] md:text-[26px] text-[#222222] font-normal tracking-tight">
-                  Infrastructure as Code &bull; Cloud Reliability
+                  Infrastructure as Code &bull; Systems Reliability
                 </div>
                 <p className="text-[14.5px] sm:text-[16.5px] text-[#5A5A5A] leading-relaxed font-normal">
-                  Building declarative systems with an emphasis on cryptographic boundaries, immutable container packaging, and deterministic cloud state across AWS.
+                  Building resilient architectures from first principles &mdash; with an emphasis on clarity, security boundaries, and reproducible cloud state across AWS and modern container environments.
                 </p>
               </div>
 

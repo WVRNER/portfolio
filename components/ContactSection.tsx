@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Check, ArrowUpRight, Mail, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { Copy, Check, ArrowUpRight, Mail, Sparkles, ArrowUp } from "lucide-react";
 
 /* Clean Brand Icons */
 function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
@@ -40,20 +41,15 @@ function GitHubIcon({ className = "w-5 h-5" }: { className?: string }) {
   );
 }
 
+interface ContactSectionProps {
+  onOpenCV?: () => void;
+}
+
 /**
  * ContactSection — Apple + Notion Hybrid Redesign
- * 
- * Tenets:
- * - Notion: Block-based channels, tactile interactive cards, 1-click copy feedback, status callout
- * - Apple: Precision typography, continuous rounded-3xl radii, subtle specular hairline borders, spring physics
- * - Direct Channels:
- *   - WhatsApp: wvrner
- *   - Telegram: wvrner
- *   - LinkedIn: wvrner
- *   - GitHub: wvrner
- *   - Email: wvrner@outlook.com
+ * Optimized for both desktop and mobile viewports with tactile ergonomics.
  */
-export function ContactSection() {
+export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const email = "wvrner@outlook.com";
 
@@ -118,69 +114,69 @@ export function ContactSection() {
     <footer
       id="contact"
       aria-label="Contact and Channels"
-      className="relative py-24 sm:py-32 lg:py-36 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-black/[0.08] bg-white text-[#1D1D1F]"
+      className="relative py-20 sm:py-28 lg:py-36 px-5 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-black/[0.08] bg-white text-[#1D1D1F]"
     >
       {/* Header Row */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 mb-12 sm:mb-16 border-b border-black/[0.07]">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 mb-10 sm:mb-16 border-b border-black/[0.07]">
         <div className="space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/[0.04] text-[11.5px] font-medium tracking-wide uppercase text-[#6E6E73]">
             <Sparkles className="w-3 h-3 text-[#1D1D1F]" />
             <span>CONTACT &bull; GET IN TOUCH</span>
           </div>
-          <h2 className="font-display text-[clamp(2.4rem,5vw,4rem)] font-semibold tracking-[-0.035em] text-[#1D1D1F] leading-tight">
+          <h2 className="font-display text-[clamp(2.2rem,5vw,4rem)] font-semibold tracking-[-0.035em] text-[#1D1D1F] leading-tight">
             Let&rsquo;s connect.
           </h2>
-          <p className="text-[17px] text-[#6E6E73] font-normal leading-relaxed max-w-[52ch]">
+          <p className="text-[16px] sm:text-[17px] text-[#6E6E73] font-normal leading-relaxed max-w-[52ch]">
             Open for architectural consultations, DevOps advisory, and high-impact infrastructure engineering.
           </p>
         </div>
 
-        {/* Apple-style Status Pill */}
-        <div className="sm:self-end inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#F5F5F7] border border-black/[0.06] text-[12.5px]">
+        {/* Status Pill */}
+        <div className="self-start sm:self-end inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#F5F5F7] border border-black/[0.06] text-[12.5px]">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
           <span className="text-[#1D1D1F] font-medium">Available for select projects</span>
         </div>
       </div>
 
       {/* Main Grid: Direct Line Card + Social Channels Bento */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-stretch">
         
         {/* Direct Email Card (Apple Spotlight Card) */}
-        <div className="lg:col-span-5 p-8 sm:p-10 rounded-3xl bg-[#F5F5F7] border border-black/[0.07] flex flex-col justify-between gap-8 relative overflow-hidden">
+        <div className="lg:col-span-5 p-6 sm:p-9 md:p-10 rounded-3xl bg-[#F5F5F7] border border-black/[0.07] flex flex-col justify-between gap-6 sm:gap-8 relative overflow-hidden">
           {/* Subtle top specular sheen */}
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
 
-          <div className="space-y-4">
-            <div className="w-12 h-12 rounded-2xl bg-white shadow-sm border border-black/[0.06] flex items-center justify-center text-[#1D1D1F]">
-              <Mail className="w-6 h-6" />
+          <div className="space-y-3.5 sm:space-y-4">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white shadow-sm border border-black/[0.06] flex items-center justify-center text-[#1D1D1F]">
+              <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
 
             <div className="space-y-1">
-              <span className="text-[11.5px] font-medium uppercase tracking-wider text-[#86868B]">
+              <span className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-wider text-[#86868B]">
                 DIRECT EMAIL CHANNEL
               </span>
-              <h3 className="font-display text-[22px] sm:text-[26px] font-semibold text-[#1D1D1F] tracking-tight">
+              <h3 className="font-display text-[21px] sm:text-[26px] font-semibold text-[#1D1D1F] tracking-tight">
                 Send a direct dispatch.
               </h3>
             </div>
 
-            <p className="text-[14.5px] text-[#6E6E73] leading-relaxed">
+            <p className="text-[14px] sm:text-[14.5px] text-[#6E6E73] leading-relaxed">
               For detailed proposals, architecture reviews, or confidential project inquiries.
             </p>
           </div>
 
-          <div className="space-y-3 pt-6 border-t border-black/[0.06]">
+          <div className="space-y-3 pt-5 sm:pt-6 border-t border-black/[0.06]">
             <a
               href={`mailto:${email}`}
-              className="text-[19px] sm:text-[22px] font-semibold text-[#1D1D1F] hover:text-[#555] transition-colors break-all block"
+              className="text-[17px] sm:text-[22px] font-semibold text-[#1D1D1F] hover:text-[#555] transition-colors break-all block"
             >
               {email}
             </a>
 
-            <div className="flex items-center gap-2.5 pt-1">
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 pt-1">
               <a
                 href={`mailto:${email}`}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#161617] text-white text-[13px] font-medium hover:bg-[#2C2C2E] transition-all cursor-pointer shadow-sm active:scale-95"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#161617] text-white text-[13px] font-medium hover:bg-[#2C2C2E] transition-all cursor-pointer shadow-sm active:scale-95 min-h-[42px]"
               >
                 <span>Compose Mail</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -189,7 +185,7 @@ export function ContactSection() {
               <button
                 type="button"
                 onClick={() => handleCopy(email, "email")}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-black/[0.04] text-[#1D1D1F] border border-black/[0.08] text-[13px] font-medium transition-all cursor-pointer active:scale-95"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-black/[0.04] text-[#1D1D1F] border border-black/[0.08] text-[13px] font-medium transition-all cursor-pointer active:scale-95 min-h-[42px]"
               >
                 {copiedKey === "email" ? (
                   <>
@@ -208,7 +204,7 @@ export function ContactSection() {
         </div>
 
         {/* Notion-Style Channels Bento Grid (Right 7 cols) */}
-        <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
           {contactChannels.map((channel) => {
             const IconComponent = channel.IconComponent;
             const isCopied = copiedKey === channel.key;
@@ -216,10 +212,10 @@ export function ContactSection() {
             return (
               <div
                 key={channel.key}
-                className={`p-6 sm:p-7 rounded-3xl bg-white border border-black/[0.07] ${channel.color} hover:shadow-[0_12px_32px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between gap-6 group`}
+                className={`p-5 sm:p-7 rounded-3xl bg-white border border-black/[0.07] ${channel.color} hover:shadow-[0_12px_32px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between gap-5 sm:gap-6 group`}
               >
                 <div>
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between mb-3.5 sm:mb-4">
                     <div className={`w-10 h-10 rounded-2xl ${channel.bgAccent} ${channel.accent} flex items-center justify-center`}>
                       <IconComponent className="w-5 h-5" />
                     </div>
@@ -236,22 +232,22 @@ export function ContactSection() {
                   </div>
 
                   <div className="space-y-1">
-                    <div className="text-[12px] font-medium uppercase tracking-wider text-[#86868B]">
+                    <div className="text-[11.5px] sm:text-[12px] font-medium uppercase tracking-wider text-[#86868B]">
                       {channel.name}
                     </div>
-                    <div className="font-display text-[18px] sm:text-[20px] font-semibold text-[#1D1D1F]">
+                    <div className="font-display text-[17px] sm:text-[20px] font-semibold text-[#1D1D1F]">
                       {channel.handle}
                     </div>
                   </div>
                 </div>
 
-                {/* Bottom Notion-Style Action Row */}
-                <div className="pt-4 border-t border-black/[0.06] flex items-center justify-between text-[12px]">
+                {/* Bottom Action Row */}
+                <div className="pt-3.5 sm:pt-4 border-t border-black/[0.06] flex items-center justify-between text-[12px]">
                   <a
                     href={channel.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-medium text-[#1D1D1F] group-hover:underline underline-offset-4 flex items-center gap-1"
+                    className="font-medium text-[#1D1D1F] group-hover:underline underline-offset-4 flex items-center gap-1 py-1"
                   >
                     <span>{channel.actionLabel}</span>
                     <ArrowUpRight className="w-3 h-3" />
@@ -282,20 +278,37 @@ export function ContactSection() {
 
       </div>
 
-      {/* Clean Colophon Bottom Bar */}
-      <div className="pt-12 sm:pt-16 mt-12 sm:mt-16 border-t border-black/[0.07] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-[12px] text-[#86868B]">
+      {/* Clean Colophon Bottom Bar (Desktop & Mobile Optimized) */}
+      <div className="pt-10 sm:pt-16 mt-10 sm:mt-16 border-t border-black/[0.07] flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-4 text-[12px] text-[#86868B] text-center sm:text-left">
         <div className="flex items-center gap-2.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[#1D1D1F]" />
           <span>WVRNER &bull; Nima Hosseini &bull; 2026</span>
         </div>
 
-        <div className="flex items-center gap-6">
-          <a href="#about" className="hover:text-[#1D1D1F] transition-colors">
+        <div className="flex flex-wrap items-center justify-center sm:justify-end gap-5 sm:gap-6">
+          <a href="#about" className="hover:text-[#1D1D1F] transition-colors py-1">
             About
           </a>
-          <a href="#writing" className="hover:text-[#1D1D1F] transition-colors">
+          <Link href="/blog" className="hover:text-[#1D1D1F] transition-colors py-1">
             Stories
-          </a>
+          </Link>
+          {onOpenCV && (
+            <button
+              type="button"
+              onClick={onOpenCV}
+              className="hover:text-[#1D1D1F] transition-colors cursor-pointer py-1 underline underline-offset-4"
+            >
+              Curriculum Vitae
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="hover:text-[#1D1D1F] transition-colors cursor-pointer py-1 inline-flex items-center gap-1"
+          >
+            <span>Top</span>
+            <ArrowUp className="w-3 h-3" />
+          </button>
           <span>All rights reserved</span>
         </div>
       </div>
