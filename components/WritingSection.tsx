@@ -111,18 +111,7 @@ export function WritingSection() {
                 </p>
 
                 {/* Card Action Footer */}
-                <div className="pt-5 border-t border-black/[0.06] flex items-center justify-between text-[12.5px]">
-                  <div className="flex items-center gap-1.5">
-                    {featuredPost.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[11px] px-2 py-0.5 rounded-full bg-white border border-black/[0.06] text-[#6E6E73]"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
+                <div className="pt-5 border-t border-black/[0.06] flex items-center justify-end text-[12.5px]">
                   <span className="inline-flex items-center gap-1.5 font-medium text-[#1D1D1F] group-hover:translate-x-0.5 transition-transform">
                     <span>Read featured story</span>
                     <ArrowRight className="w-3.5 h-3.5" />

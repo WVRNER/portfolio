@@ -127,15 +127,47 @@ function ImperceptibleHeroVideo({
     const video = videoRef.current;
     if (!video) return;
 
+    // Enforce DOM properties required by Safari / mobile WebKit
+    video.defaultMuted = true;
     video.muted = true;
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Fallback for strict browser autoplay policies
-        video.muted = true;
+    video.playsInline = true;
+    video.setAttribute("playsinline", "true");
+    video.setAttribute("webkit-playsinline", "true");
+
+    const attemptPlay = () => {
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // If iOS low power mode or strict autoplay restricts initial play,
+          // resume immediately on the very first user interaction or scroll
+          const onFirstInteraction = () => {
+            video.play().catch(() => {});
+            window.removeEventListener("touchstart", onFirstInteraction);
+            window.removeEventListener("touchend", onFirstInteraction);
+            window.removeEventListener("click", onFirstInteraction);
+            window.removeEventListener("scroll", onFirstInteraction);
+          };
+          window.addEventListener("touchstart", onFirstInteraction, { once: true, passive: true });
+          window.addEventListener("touchend", onFirstInteraction, { once: true, passive: true });
+          window.addEventListener("click", onFirstInteraction, { once: true, passive: true });
+          window.addEventListener("scroll", onFirstInteraction, { once: true, passive: true });
+        });
+      }
+    };
+
+    attemptPlay();
+
+    // Auto-resume if mobile app/browser tab wakes from sleep
+    const onVisibilityChange = () => {
+      if (!document.hidden && video.paused) {
         video.play().catch(() => {});
-      });
-    }
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
   }, [src]);
 
   return (
@@ -146,10 +178,20 @@ function ImperceptibleHeroVideo({
         loop
         muted
         playsInline
+        {...({ "webkit-playsinline": "true" } as Record<string, string>)}
         preload="auto"
         poster={poster}
         src={src}
+        disablePictureInPicture
+        disableRemotePlayback
         className="absolute inset-0 h-full w-full object-cover will-change-transform"
+        style={{
+          objectPosition: "center center",
+          transform: "translate3d(0, 0, 0)",
+          WebkitTransform: "translate3d(0, 0, 0)",
+          backfaceVisibility: "hidden",
+          WebkitBackfaceVisibility: "hidden",
+        }}
       />
     </div>
   );
@@ -228,8 +270,7 @@ const PrismaHero = ({
               <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-black/45 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.25)] space-y-4">
                 
                 {/* Notion-style minimal eyebrow metadata */}
-                <div className="flex items-center gap-2 text-[11px] font-mono tracking-widest uppercase text-[#E1E0CC]/75">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#E1E0CC]" />
+                <div className="text-[11px] font-mono tracking-widest uppercase text-[#E1E0CC]/75">
                   <span>DISTRIBUTED ARCHITECTURE</span>
                 </div>
 

@@ -130,12 +130,6 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
             Open for architectural consultations, DevOps advisory, and high-impact infrastructure engineering.
           </p>
         </div>
-
-        {/* Status Pill */}
-        <div className="self-start sm:self-end inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#F5F5F7] border border-black/[0.06] text-[12.5px]">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
-          <span className="text-[#1D1D1F] font-medium">Available for select projects</span>
-        </div>
       </div>
 
       {/* Main Grid: Direct Line Card + Social Channels Bento */}

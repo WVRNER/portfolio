@@ -34,33 +34,33 @@ export function StoryScrollSequence() {
   });
 
   /* ---------------- BEAT 1: Identity (Nima Hosseini) ---------------- */
-  // Visible immediately when entering, holds, then gently transitions into Beat 2
-  const identityOpacity = useTransform(smoothProgress, [0.0, 0.22, 0.36], [1, 1, 0]);
-  const identityY = useTransform(smoothProgress, [0.0, 0.22, 0.36], [0, 0, -25]);
-  const identityScale = useTransform(smoothProgress, [0.0, 0.22, 0.36], [1, 1, 0.985]);
+  // Generous Apple-style dwell: holds rock-solid for 44% of the track before dissolving
+  const identityOpacity = useTransform(smoothProgress, [0.0, 0.44, 0.55], [1, 1, 0]);
+  const identityY = useTransform(smoothProgress, [0.0, 0.44, 0.55], [0, 0, -24]);
+  const identityScale = useTransform(smoothProgress, [0.0, 0.44, 0.55], [1, 1, 0.985]);
 
   /* ---------------- BEAT 2: The Unified Punchline ---------------- */
   // "You didn't notice anything. That was the job."
   // Enters as Beat 1 exits and holds with dynamic illumination
-  const manifestoOpacity = useTransform(smoothProgress, [0.26, 0.38, 0.85, 0.98], [0, 1, 1, 0]);
-  const manifestoY = useTransform(smoothProgress, [0.26, 0.38, 0.85, 0.98], [25, 0, 0, -20]);
+  const manifestoOpacity = useTransform(smoothProgress, [0.48, 0.58, 0.88, 0.98], [0, 1, 1, 0]);
+  const manifestoY = useTransform(smoothProgress, [0.48, 0.58, 0.88, 0.98], [24, 0, 0, -20]);
 
   // Kinetic Text Illumination (Words light up as user scrolls)
   // Line 1: "You didn't notice anything."
   const line1Color = useTransform(
     smoothProgress,
-    [0.30, 0.48],
+    [0.52, 0.68],
     ["rgba(10, 10, 10, 0.32)", "rgba(10, 10, 10, 0.95)"]
   );
-  const line1X = useTransform(smoothProgress, [0.28, 0.48], [-10, 0]);
+  const line1X = useTransform(smoothProgress, [0.50, 0.68], [-10, 0]);
 
   // Line 2: "That was the job."
   const line2Color = useTransform(
     smoothProgress,
-    [0.40, 0.60],
+    [0.62, 0.78],
     ["rgba(10, 10, 10, 0.25)", "rgba(10, 10, 10, 1.0)"]
   );
-  const line2Scale = useTransform(smoothProgress, [0.40, 0.60], [0.985, 1.0]);
+  const line2Scale = useTransform(smoothProgress, [0.62, 0.78], [0.985, 1.0]);
 
   // Bottom sequence progress indicator
   const progressWidth = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
@@ -70,7 +70,7 @@ export function StoryScrollSequence() {
       ref={containerRef}
       id="nima-hosseini"
       aria-label="Editorial Narrative Sequence"
-      className="relative w-full h-[180vh] sm:h-[200vh] bg-white border-t border-[#0A0A0A]/10"
+      className="relative w-full h-[280vh] sm:h-[300vh] bg-white border-t border-[#0A0A0A]/10"
     >
       <div id="story" className="absolute top-0 left-0" />
       {/* Sticky Stage Viewport: Locked for a tight, buttery 1.8-screen sequence */}

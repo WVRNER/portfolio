@@ -70,8 +70,7 @@ export default function BlogIndexPage() {
             <span>Back to portfolio</span>
           </Link>
 
-          <div className="flex items-center gap-2 text-[12px] text-[#86868B]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#1D1D1F]" />
+          <div className="text-[12px] text-[#86868B]">
             <span className="text-[#1D1D1F] font-medium">Stories &amp; Field Notes</span>
           </div>
         </div>
@@ -166,18 +165,7 @@ export default function BlogIndexPage() {
                   </p>
 
                   {/* Action Bar */}
-                  <div className="pt-6 border-t border-black/[0.06] flex flex-wrap items-center justify-between gap-4">
-                    <div className="flex items-center gap-2">
-                      {leadPost.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-[11.5px] px-2.5 py-1 rounded-full bg-[#F5F5F7] text-[#6E6E73] font-medium"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
+                  <div className="pt-6 border-t border-black/[0.06] flex items-center justify-end">
                     <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-[#161617] text-white text-[13.5px] font-medium tracking-tight shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_4px_16px_rgba(0,0,0,0.12)] group-hover:bg-[#2C2C2E] group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_6px_22px_rgba(0,0,0,0.2)] transition-all duration-300">
                       <span>Read story</span>
                       <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-0.5">
