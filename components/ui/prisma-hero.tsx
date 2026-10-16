@@ -243,10 +243,10 @@ const PrismaHero = ({
                 {/* Apple-grade Action Pill Button with Sheen Glint */}
                 <div className="pt-1">
                   <a
-                    href="#projects"
+                    href="#nima-hosseini"
                     onClick={(e) => {
                       e.preventDefault();
-                      scrollToTarget("#projects", { duration: 1.4 });
+                      scrollToTarget("#nima-hosseini", { duration: 1.2 });
                     }}
                     className="group relative inline-flex items-center gap-3 rounded-full bg-[#E1E0CC] hover:bg-white text-[#121211] py-2 pl-5 pr-2 text-[14px] font-medium tracking-tight transition-all duration-300 shadow-[0_10px_25px_rgba(0,0,0,0.35)] active:scale-95 cursor-pointer overflow-hidden"
                   >

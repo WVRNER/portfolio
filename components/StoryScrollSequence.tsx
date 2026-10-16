@@ -68,10 +68,11 @@ export function StoryScrollSequence() {
   return (
     <section
       ref={containerRef}
-      id="story"
+      id="nima-hosseini"
       aria-label="Editorial Narrative Sequence"
       className="relative w-full h-[180vh] sm:h-[200vh] bg-white border-t border-[#0A0A0A]/10"
     >
+      <div id="story" className="absolute top-0 left-0" />
       {/* Sticky Stage Viewport: Locked for a tight, buttery 1.8-screen sequence */}
       <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center bg-white px-6 sm:px-12 md:px-16 lg:px-24">
         
