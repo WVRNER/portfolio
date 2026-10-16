@@ -72,13 +72,13 @@ export function WritingSection() {
                   <span>{featuredPost.date}</span>
                 </div>
 
-                {/* Super bold punchy title (Modern 2026 Medium style: Inter 900) */}
-                <h3 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[26px] md:text-[30px] font-[900] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.16] tracking-[-0.035em]">
+                {/* Super bold punchy title (Exact match to reference: thick, prominent, large) */}
+                <h3 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[25px] sm:text-[30px] md:text-[34px] font-[900] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.12] tracking-[-0.035em]">
                   {featuredPost.title}
                 </h3>
 
                 {/* Subtitle / Excerpt */}
-                <p className="text-[15px] sm:text-[16.5px] text-[#4A4A4A] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                <p className="text-[16px] sm:text-[18px] text-[#555555] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                   {featuredPost.subtitle || featuredPost.excerpt}
                 </p>
 
@@ -91,7 +91,7 @@ export function WritingSection() {
 
               {/* Right Thumbnail Image (Compact on mobile and desktop) */}
               {featuredPost.featureImage && (
-                <div className="w-[88px] h-[60px] sm:w-[130px] sm:h-[88px] md:w-[150px] md:h-[100px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-1">
+                <div className="w-[90px] h-[62px] sm:w-[130px] sm:h-[88px] md:w-[150px] md:h-[100px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-1">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={featuredPost.featureImage}
@@ -124,12 +124,12 @@ export function WritingSection() {
                   </div>
 
                   {/* Super bold punchy headline */}
-                  <h4 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[20px] sm:text-[23px] md:text-[25px] font-[900] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.18] tracking-[-0.035em] line-clamp-2">
+                  <h4 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[24px] sm:text-[28px] md:text-[30px] font-[900] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.15] tracking-[-0.035em] line-clamp-2">
                     {post.title}
                   </h4>
 
                   {/* Excerpt */}
-                  <p className="text-[15px] sm:text-[16px] text-[#4A4A4A] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                  <p className="text-[16px] sm:text-[17.5px] text-[#555555] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                     {post.subtitle || post.excerpt}
                   </p>
 

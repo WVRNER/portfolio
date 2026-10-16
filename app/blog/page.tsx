@@ -177,13 +177,13 @@ export default function BlogIndexPage() {
                               <span>{post.date}</span>
                             </div>
 
-                            {/* Super bold punchy headline (Matching reference: Ultra-black 900) */}
-                            <h2 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[20px] sm:text-[23px] md:text-[25px] font-[900] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.18] tracking-[-0.035em] line-clamp-2">
+                            {/* Super bold punchy headline (Exact match to reference: thick, prominent, large) */}
+                            <h2 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[24px] sm:text-[28px] md:text-[30px] font-[900] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.15] tracking-[-0.035em] line-clamp-2">
                               {post.title}
                             </h2>
 
                             {/* Subtitle / Excerpt */}
-                            <p className="text-[15px] sm:text-[16px] text-[#4A4A4A] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                            <p className="text-[16px] sm:text-[17.5px] text-[#555555] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                               {post.subtitle || post.excerpt}
                             </p>
 
