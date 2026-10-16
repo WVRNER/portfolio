@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
-  ArrowRight,
   Share2,
   Check,
   Copy,
@@ -56,7 +55,7 @@ function getStorytellingVoice(): SpeechSynthesisVoice | null {
   );
   if (enhanced) return enhanced;
 
-  // Fallback to British English (typically most narrative)
+  // Fallback to British English
   const enGB = voices.find((v) => v.lang === "en-GB");
   if (enGB) return enGB;
 
@@ -66,12 +65,12 @@ function getStorytellingVoice(): SpeechSynthesisVoice | null {
 /**
  * ArticleClientWrapper — Pure Editorial Longform Reading Experience
  * 
- * - Readers only, not reactors: zero claps, zero comments, zero bookmarks
+ * - Super bold punchy typography (Modern Medium 2026 style, font-black / font-extrabold)
+ * - Pure reader UI (zero claps, zero comments, zero bookmarks, zero "Read story" buttons)
  * - Natural, warm storytelling voice (Claude-like pacing & pitch) for audio narration
  * - Strictly calibrated 680px reading measure
  * - Monochromatic palette (black accents, zero green)
- * - Single header share & single bottom share (redundant duplicate removed)
- * - Zero author repetition across recommendations
+ * - Zero redundant "WVRNER JOURNAL" repetitions
  */
 export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
   const [cvOpen, setCvOpen] = useState(false);
@@ -211,8 +210,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         {/* Story Header */}
         <header className="space-y-4">
           
-          {/* Headline */}
-          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[32px] sm:text-[40px] md:text-[44px] font-bold text-[#242424] leading-[1.2] sm:leading-[1.15] tracking-[-0.022em]">
+          {/* Super bold punchy headline (Modern 2026 Medium style) */}
+          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[32px] sm:text-[42px] md:text-[46px] font-extrabold sm:font-black text-[#1D1D1F] leading-[1.18] sm:leading-[1.12] tracking-[-0.035em]">
             {post.title}
           </h1>
 
@@ -223,14 +222,16 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             </p>
           )}
 
-          {/* Clean Meta Strip */}
+          {/* Clean Meta Strip (Zero redundant WVRNER repetitions) */}
           <div className="pt-4 pb-2 flex items-center justify-between gap-4 text-[13.5px] text-[#6B6B6B] border-b border-[#F2F2F2] pb-5">
             <div className="flex items-center gap-2.5">
-              <span className="font-medium text-[#242424]">WVRNER Journal</span>
-              <span>&middot;</span>
               <span>{post.date}</span>
               <span>&middot;</span>
               <span>{post.readingTime}</span>
+              <span>&middot;</span>
+              <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] text-[#242424] font-medium text-[11px]">
+                {post.category}
+              </span>
             </div>
 
             {/* Warm Storytelling Audio Narration Pill */}
@@ -298,9 +299,9 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           {post.content.sections.map((section, sIdx) => (
             <div key={sIdx} className="space-y-6 pt-4">
               
-              {/* Section Heading */}
+              {/* Section Heading (Bolder) */}
               {section.heading && (
-                <h2 className="font-[family-name:var(--font-plus-jakarta)] font-bold text-[24px] sm:text-[28px] text-[#242424] tracking-[-0.016em] leading-tight pt-8 pb-2">
+                <h2 className="font-[family-name:var(--font-plus-jakarta)] font-extrabold text-[24px] sm:text-[28px] text-[#1D1D1F] tracking-[-0.025em] leading-tight pt-8 pb-2">
                   {section.heading}
                 </h2>
               )}
@@ -409,8 +410,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </div>
 
           {/* Bottom Share Strip */}
-          <div className="flex items-center justify-between text-[#6B6B6B] text-[13px] pt-2">
-            <span>Published in WVRNER Journal</span>
+          <div className="flex items-center justify-end text-[#6B6B6B] text-[13px] pt-2">
             <button
               onClick={handleShare}
               className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] text-[12.5px] font-medium transition-colors cursor-pointer"
@@ -424,14 +424,9 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         {/* Quiet Publication Note */}
         <section className="py-10 border-b border-[#F2F2F2]">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <div className="space-y-1">
-              <span className="text-[11.5px] uppercase font-bold text-[#6B6B6B] tracking-wider block font-sans">
-                WVRNER JOURNAL
-              </span>
-              <p className="text-[14.5px] text-[#6B6B6B] leading-relaxed max-w-md font-sans">
-                Engineering automated cloud systems, declarative infrastructure, and reproducible state across AWS.
-              </p>
-            </div>
+            <p className="text-[14.5px] text-[#6B6B6B] leading-relaxed max-w-md font-sans">
+              Engineering automated cloud systems, declarative infrastructure, and reproducible state across AWS.
+            </p>
 
             <button
               onClick={() => setCvOpen(true)}
@@ -442,7 +437,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </div>
         </section>
 
-        {/* Selected Stories Recommendations */}
+        {/* Selected Stories Recommendations (Zero "Read story" buttons) */}
         {recommendedPosts.length > 0 && (
           <section className="pt-12 space-y-6">
             <div className="flex items-center justify-between">
@@ -476,19 +471,15 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                         />
                       </div>
                     )}
-                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15.5px] font-bold text-[#242424] group-hover:underline transition-colors leading-snug line-clamp-2">
+                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15.5px] font-extrabold sm:font-black text-[#1D1D1F] group-hover:underline transition-colors leading-snug line-clamp-2 tracking-tight">
                       {rec.title}
                     </h4>
                     <p className="text-[13px] text-[#6B6B6B] line-clamp-2 mt-1.5 font-normal leading-relaxed">
                       {rec.subtitle || rec.excerpt}
                     </p>
                   </div>
-                  <div className="pt-2 flex items-center justify-between text-[12px] text-[#6B6B6B] font-sans">
+                  <div className="pt-2 text-[12px] text-[#6B6B6B] font-sans">
                     <span>{rec.readingTime} &middot; {rec.date}</span>
-                    <span className="font-medium text-[#242424] inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                      <span>Read story</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </span>
                   </div>
                 </Link>
               ))}

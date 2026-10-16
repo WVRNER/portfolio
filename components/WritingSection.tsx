@@ -5,13 +5,13 @@ import { ArrowRight } from "lucide-react";
 import { BLOG_POSTS } from "@/lib/blogData";
 
 /**
- * WritingSection — Personal Engineering Journal & Stories Showcase
+ * WritingSection — Personal Engineering Stories Showcase
  * 
- * - Pure reader UI (zero reactions, zero claps, zero bookmarks, zero comments)
- * - Contained, well-padded width (not overly wide, optimal reading line length)
- * - Zero author repetition (it's a solo journal)
- * - Monochromatic palette (#161617 black accents, zero green)
- * - Featured story automatically elevated to the lead spot
+ * - Super bold punchy headlines (Modern Medium 2026 style)
+ * - Compact right-aligned thumbnails on mobile and desktop (never stacked or oversized)
+ * - Zero "Read story" buttons (clicking the card/title is natural affordance)
+ * - Zero reactions (no claps, no likes, no bookmarks, no reposts)
+ * - Zero redundant "WVRNER JOURNAL" repetitions
  */
 export function WritingSection() {
   if (!BLOG_POSTS || BLOG_POSTS.length === 0) {
@@ -31,13 +31,9 @@ export function WritingSection() {
       <div id="stories" className="absolute -top-12" />
 
       {/* Publication Masthead */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 mb-10 sm:mb-12 border-b border-[#F2F2F2]">
-        <div className="space-y-2.5 max-w-xl">
-          <div className="inline-flex items-center gap-2 text-[12px] font-medium tracking-wider uppercase text-[#6B6B6B] font-sans">
-            <span>WVRNER JOURNAL &bull; ARCHITECTURE &amp; SYSTEMS</span>
-          </div>
-
-          <h2 className="font-[family-name:var(--font-plus-jakarta)] text-[32px] sm:text-[40px] font-bold text-[#242424] tracking-[-0.025em] leading-[1.12]">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 mb-8 sm:mb-10 border-b border-[#F2F2F2]">
+        <div className="space-y-2 max-w-xl">
+          <h2 className="font-[family-name:var(--font-plus-jakarta)] text-[32px] sm:text-[42px] font-extrabold sm:font-black text-[#1D1D1F] tracking-[-0.035em] leading-[1.1]">
             Stories
           </h2>
 
@@ -58,88 +54,77 @@ export function WritingSection() {
 
       {/* 1. LEAD FEATURED STORY */}
       {featuredPost && (
-        <article className="pb-12 sm:pb-14 border-b border-[#F2F2F2]">
+        <article className="pb-8 sm:pb-10 border-b border-[#F2F2F2]">
           <Link
             href={`/blog/${featuredPost.slug}`}
-            className="group block cursor-pointer space-y-4"
+            className="group block cursor-pointer"
           >
-            {/* Top Meta Line */}
-            <div className="flex items-center gap-2.5 text-[12.5px] text-[#6B6B6B]">
-              <span className="text-[#242424] font-medium text-[11.5px] uppercase tracking-wider">
-                Featured Story
-              </span>
-              <span>&middot;</span>
-              <span>{featuredPost.date}</span>
-              <span>&middot;</span>
-              <span>{featuredPost.readingTime}</span>
-            </div>
+            <div className="flex items-start justify-between gap-4 sm:gap-7">
+              {/* Left Content */}
+              <div className="flex-1 min-w-0 space-y-2">
+                <div className="flex items-center gap-2 text-[12px] sm:text-[12.5px] text-[#6B6B6B]">
+                  <span className="text-[#1D1D1F] font-semibold uppercase tracking-wider text-[11px]">
+                    Featured
+                  </span>
+                  <span>&middot;</span>
+                  <span>{featuredPost.date}</span>
+                  <span>&middot;</span>
+                  <span>{featuredPost.readingTime}</span>
+                </div>
 
-            {/* Title */}
-            <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[22px] sm:text-[28px] font-bold text-[#242424] group-hover:underline transition-colors leading-[1.22] tracking-[-0.02em]">
-              {featuredPost.title}
-            </h3>
+                {/* Super bold punchy title (Modern 2026 Medium style) */}
+                <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[19px] sm:text-[23px] md:text-[25px] font-extrabold sm:font-black text-[#1D1D1F] group-hover:underline transition-colors leading-[1.22] tracking-[-0.03em]">
+                  {featuredPost.title}
+                </h3>
 
-            {/* Subtitle / Excerpt */}
-            <p className="text-[15.5px] sm:text-[16.5px] text-[#6B6B6B] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
-              {featuredPost.subtitle || featuredPost.excerpt}
-            </p>
+                {/* Subtitle / Excerpt */}
+                <p className="text-[14px] sm:text-[15px] text-[#6B6B6B] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                  {featuredPost.subtitle || featuredPost.excerpt}
+                </p>
 
-            {/* Featured Image */}
-            {featuredPost.featureImage && (
-              <div className="aspect-[16/9] w-full overflow-hidden rounded-[4px] bg-neutral-100 mt-2">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={featuredPost.featureImage}
-                  alt={featuredPost.title}
-                  className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500"
-                  loading="lazy"
-                />
+                <div className="pt-1">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11px] transition-colors">
+                    {featuredPost.category}
+                  </span>
+                </div>
               </div>
-            )}
 
-            {/* Action Footer */}
-            <div className="pt-2 flex items-center justify-between text-[12.5px] text-[#6B6B6B]">
-              <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11.5px] transition-colors">
-                {featuredPost.category}
-              </span>
-
-              <span className="inline-flex items-center gap-1 font-medium text-[#242424] group-hover:translate-x-0.5 transition-transform text-[13px]">
-                <span>Read story</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </span>
+              {/* Right Thumbnail Image (Compact on mobile and desktop) */}
+              {featuredPost.featureImage && (
+                <div className="w-[88px] h-[60px] sm:w-[130px] sm:h-[88px] md:w-[150px] md:h-[100px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-1">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={featuredPost.featureImage}
+                    alt={featuredPost.title}
+                    className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              )}
             </div>
           </Link>
         </article>
       )}
 
       {/* 2. RECENT STORIES STREAM */}
-      <div className="pt-8 sm:pt-10 space-y-2">
-        <div className="pb-3 flex items-center justify-between">
-          <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[17px] sm:text-[18px] font-bold text-[#242424]">
-            Recent Stories
-          </h3>
-          <span className="text-[12.5px] text-[#6B6B6B]">
-            From WVRNER Journal
-          </span>
-        </div>
-
-        <div className="divide-y divide-[#F2F2F2]">
-          {recentPosts.map((post) => (
-            <article key={post.slug} className="py-7 sm:py-8 first:pt-4">
-              <Link
-                href={`/blog/${post.slug}`}
-                className="group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-7 cursor-pointer"
-              >
+      <div className="divide-y divide-[#F2F2F2]">
+        {recentPosts.map((post) => (
+          <article key={post.slug} className="py-7 sm:py-8">
+            <Link
+              href={`/blog/${post.slug}`}
+              className="group block cursor-pointer"
+            >
+              <div className="flex items-start justify-between gap-4 sm:gap-7">
                 {/* Left Content */}
-                <div className="flex-1 space-y-2 min-w-0">
+                <div className="flex-1 min-w-0 space-y-1.5 sm:space-y-2">
                   <div className="flex items-center gap-2 text-[12px] text-[#6B6B6B]">
                     <span>{post.date}</span>
                     <span>&middot;</span>
                     <span>{post.readingTime}</span>
                   </div>
 
-                  {/* Headline */}
-                  <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[17px] sm:text-[19px] font-bold text-[#242424] group-hover:underline transition-colors leading-[1.28] tracking-[-0.015em] line-clamp-2">
+                  {/* Super bold punchy headline */}
+                  <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[17px] sm:text-[20px] md:text-[21px] font-extrabold sm:font-black text-[#1D1D1F] group-hover:underline transition-colors leading-[1.25] tracking-[-0.03em] line-clamp-2">
                     {post.title}
                   </h4>
 
@@ -148,22 +133,16 @@ export function WritingSection() {
                     {post.subtitle || post.excerpt}
                   </p>
 
-                  {/* Metadata Row */}
-                  <div className="pt-2 flex items-center justify-between text-[12px] text-[#6B6B6B]">
+                  <div className="pt-1">
                     <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11px] transition-colors">
                       {post.category}
-                    </span>
-
-                    <span className="font-medium text-[#242424] text-[12.5px] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
-                      <span>Read story</span>
-                      <ArrowRight className="w-3 h-3" />
                     </span>
                   </div>
                 </div>
 
-                {/* Right Thumbnail Image */}
+                {/* Right Thumbnail Image (Compact on mobile and desktop) */}
                 {post.featureImage && (
-                  <div className="w-full sm:w-[130px] md:w-[140px] aspect-[16/10] sm:aspect-[4/3] rounded-[4px] overflow-hidden bg-neutral-100 shrink-0 self-center sm:self-start">
+                  <div className="w-[84px] h-[58px] sm:w-[120px] sm:h-[80px] md:w-[140px] md:h-[95px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-1">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={post.featureImage}
@@ -173,10 +152,10 @@ export function WritingSection() {
                     />
                   </div>
                 )}
-              </Link>
-            </article>
-          ))}
-        </div>
+              </div>
+            </Link>
+          </article>
+        ))}
       </div>
 
       {/* 3. BOTTOM BUTTON */}
