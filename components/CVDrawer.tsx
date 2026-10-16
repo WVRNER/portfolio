@@ -212,7 +212,7 @@ export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
             {/* Apple Card Footer / Direct Channels */}
             <div className="pt-4 border-t border-black/[0.07] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[12.5px] text-[#6E6E73]">
               <div className="flex items-center gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#161617] shrink-0" />
                 <span className="text-[#1D1D1F] font-medium">Available for Infrastructure Engagements</span>
               </div>
 
@@ -224,7 +224,7 @@ export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
                 >
                   {copied ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <Check className="w-3.5 h-3.5 text-[#161617]" />
                       <span>Copied email</span>
                     </>
                   ) : (

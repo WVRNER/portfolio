@@ -50,6 +50,7 @@ export function transformGhostPost(raw: GhostRawPost): BlogPost {
     issueNo: matchingLocal?.issueNo,
     nextSlug: matchingLocal?.nextSlug,
     nextTeaser: matchingLocal?.nextTeaser,
+    featured: raw.featured ?? matchingLocal?.featured ?? false,
     content: matchingLocal?.content || {
       lead: raw.custom_excerpt || "",
       sections: [
@@ -65,6 +66,7 @@ export function transformGhostPost(raw: GhostRawPost): BlogPost {
 
 /**
  * Fetch all posts from Ghost CMS Content API with fallback to static BLOG_POSTS.
+ * Sorts automatically so featured posts are elevated to the top.
  */
 export async function getMergedPosts(): Promise<BlogPost[]> {
   try {
@@ -78,12 +80,16 @@ export async function getMergedPosts(): Promise<BlogPost[]> {
     });
 
     if (!res.ok) {
-      return BLOG_POSTS;
+      const fallback = [...BLOG_POSTS];
+      fallback.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+      return fallback;
     }
 
     const data = await res.json();
     if (!data.posts || data.posts.length === 0) {
-      return BLOG_POSTS;
+      const fallback = [...BLOG_POSTS];
+      fallback.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+      return fallback;
     }
 
     // Map Ghost posts to BlogPost schema
@@ -93,9 +99,14 @@ export async function getMergedPosts(): Promise<BlogPost[]> {
     const ghostSlugs = new Set(ghostPosts.map((p: BlogPost) => p.slug));
     const extraLocals = BLOG_POSTS.filter((p) => !ghostSlugs.has(p.slug));
 
-    return [...ghostPosts, ...extraLocals];
+    const all = [...ghostPosts, ...extraLocals];
+    // Sort so featured posts are elevated to the top
+    all.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+    return all;
   } catch {
-    // If Ghost server is offline or unreachable, return local blog data
-    return BLOG_POSTS;
+    // If Ghost server is offline or unreachable, return local blog data with featured first
+    const fallback = [...BLOG_POSTS];
+    fallback.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+    return fallback;
   }
 }

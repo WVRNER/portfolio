@@ -13,6 +13,7 @@ export interface BlogPost {
   invariant?: string;
   nextSlug?: string;
   nextTeaser?: string;
+  featured?: boolean;
   content: {
     lead: string;
     sections: Array<{
@@ -51,6 +52,7 @@ export const BLOG_POSTS: BlogPost[] = [
     invariant: "No ephemeral workspace may share a root state file or IAM privilege domain with another.",
     nextSlug: "zero-downtime-canary-verification",
     nextTeaser: "Once state is deterministic, the next vulnerability is traffic shifting under live production load.",
+    featured: true,
     excerpt:
       "How we decoupled state isolation, enforced cryptographic immutability guarantees, and eliminated configuration drift across on-demand ephemeral clusters.",
     content: {
@@ -131,6 +133,7 @@ export const BLOG_POSTS: BlogPost[] = [
     invariant: "Roll back to baseline in < 250ms when HTTP 5xx ratios breach 0.05% or P99 degrades.",
     nextSlug: "short-lived-credentials-aws-oidc-github",
     nextTeaser: "Deployments are hardened, but long-lived cloud keys in CI remain an existential vector.",
+    featured: true,
     excerpt:
       "Replacing heuristic wait times with automated metric thresholds to safely roll out high-throughput microservices across geographically distributed clusters.",
     content: {
@@ -197,6 +200,7 @@ spec:
     invariant: "Zero permanent API access keys stored anywhere in repository secrets. Ever.",
     nextSlug: "telemetry-beyond-dashboards",
     nextTeaser: "Security boundaries are sealed, but diagnosing distributed failure requires semantic tracing.",
+    featured: true,
     excerpt:
       "A blueprint for hardening CI/CD pipelines through cryptographically verified tokens, ephemeral IAM role assumptions, and strict scoping boundaries.",
     content: {

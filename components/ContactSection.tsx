@@ -183,7 +183,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
               >
                 {copiedKey === "email" ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-emerald-600" />
+                    <Check className="w-3.5 h-3.5 text-[#161617]" />
                     <span>Copied</span>
                   </>
                 ) : (
@@ -254,8 +254,8 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
                   >
                     {isCopied ? (
                       <>
-                        <Check className="w-3 h-3 text-emerald-600" />
-                        <span className="text-emerald-700 font-medium">Copied</span>
+                        <Check className="w-3 h-3 text-[#161617]" />
+                        <span className="text-[#161617] font-medium">Copied</span>
                       </>
                     ) : (
                       <>

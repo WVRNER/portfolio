@@ -1,17 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
   ArrowRight,
   Share2,
-  Bookmark,
   Check,
   Copy,
   Volume2,
-  MoreHorizontal,
-  MessageCircle,
+  VolumeX,
 } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
@@ -21,42 +19,67 @@ interface ArticleClientWrapperProps {
   post: BlogPost;
 }
 
-// Clapping Hands SVG Icon
-function ClapIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="currentColor"
-      stroke="currentColor"
-      strokeWidth="0.5"
-    >
-      <path d="M14.5 9.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5v4" />
-      <path d="M17.5 10.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5v3" />
-      <path d="M11.5 9c0-.8-.7-1.5-1.5-1.5S8.5 8.2 8.5 9v4" />
-      <path d="M8.5 10c0-.8-.7-1.5-1.5-1.5S5.5 9.2 5.5 10v4.5c0 3.6 2.9 6.5 6.5 6.5h2c3.3 0 6-2.7 6-6V13c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5" />
-    </svg>
+/**
+ * Find warm, natural narrative voices (storytelling, Claude-like tone).
+ * Prioritizes British English / enhanced neural storytelling voices with calm, deliberate cadence.
+ */
+function getStorytellingVoice(): SpeechSynthesisVoice | null {
+  if (typeof window === "undefined" || !("speechSynthesis" in window)) return null;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices || voices.length === 0) return null;
+
+  const preferredPatterns = [
+    /daniel.*enhanced/i,
+    /oliver.*enhanced/i,
+    /arthur.*enhanced/i,
+    /serena.*premium/i,
+    /ava.*premium/i,
+    /samantha.*enhanced/i,
+    /karen.*enhanced/i,
+    /daniel/i,
+    /oliver/i,
+    /serena/i,
+    /george/i,
+    /google uk english male/i,
+    /google uk english female/i,
+    /google us english/i,
+  ];
+
+  for (const pattern of preferredPatterns) {
+    const match = voices.find((v) => pattern.test(v.name));
+    if (match) return match;
+  }
+
+  // Fallback to any enhanced or natural English voice
+  const enhanced = voices.find(
+    (v) => (v.name.includes("Enhanced") || v.name.includes("Premium") || v.name.includes("Natural")) && v.lang.startsWith("en")
   );
+  if (enhanced) return enhanced;
+
+  // Fallback to British English (typically most narrative)
+  const enGB = voices.find((v) => v.lang === "en-GB");
+  if (enGB) return enGB;
+
+  return voices.find((v) => v.lang.startsWith("en")) || voices[0] || null;
 }
 
 /**
- * ArticleClientWrapper — Editorial Longform Reading Experience
+ * ArticleClientWrapper — Pure Editorial Longform Reading Experience
  * 
- * - Strictly calibrated 680px reading column
- * - Minimalist monochromatic palette (#FFFFFF canvas, #242424 ink, #6B6B6B secondary)
- * - Source Serif 4 body typography (20px / 34px line-height)
- * - Pure black "Read story" links and actions
- * - Audio "Listen" feature, claps, bookmarking, and share
+ * - Readers only, not reactors: zero claps, zero comments, zero bookmarks
+ * - Natural, warm storytelling voice (Claude-like pacing & pitch) for audio narration
+ * - Strictly calibrated 680px reading measure
+ * - Monochromatic palette (black accents, zero green)
+ * - Single header share & single bottom share (redundant duplicate removed)
+ * - Zero author repetition across recommendations
  */
 export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
   const [cvOpen, setCvOpen] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copiedLink, setCopiedLink] = useState(false);
-  const [claps, setClaps] = useState(184);
-  const [hasClapped, setHasClapped] = useState(false);
-  const [bookmarked, setBookmarked] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   // Track reading scroll progress (hairline indicator)
   useEffect(() => {
@@ -70,6 +93,15 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Cleanup speech synthesis on unmount
+  useEffect(() => {
+    return () => {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
   }, []);
 
   const handleCopyCode = (code: string, id: string) => {
@@ -88,36 +120,55 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     }
   };
 
-  const handleClap = () => {
-    setClaps((prev) => prev + 1);
-    setHasClapped(true);
-  };
-
+  // Warm, storytelling, non-robotic audio narration
   const handleListenToggle = () => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      if (isListening) {
-        window.speechSynthesis.cancel();
-        setIsListening(false);
-      } else {
-        const textToRead = `${post.title}. ${post.subtitle || ""}. ${post.content.lead || ""}`;
-        const utterance = new SpeechSynthesisUtterance(textToRead);
-        utterance.rate = 1.0;
-        utterance.onend = () => setIsListening(false);
-        utterance.onerror = () => setIsListening(false);
-        window.speechSynthesis.speak(utterance);
-        setIsListening(true);
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+    if (isListening) {
+      window.speechSynthesis.cancel();
+      setIsListening(false);
+      speechRef.current = null;
+    } else {
+      window.speechSynthesis.cancel();
+
+      // Assemble narrative prose in storytelling order
+      const sectionsProse = post.content.sections
+        .map((s) => `${s.heading ? s.heading + ". " : ""}${s.paragraphs.join(" ")}`)
+        .join(" ");
+      const fullText = `${post.title}. ${post.subtitle ? post.subtitle + ". " : ""}${post.content.lead ? post.content.lead + ". " : ""}${sectionsProse}`;
+
+      const utterance = new SpeechSynthesisUtterance(fullText);
+      const voice = getStorytellingVoice();
+      if (voice) {
+        utterance.voice = voice;
       }
+      // Claude-like storytelling cadence: measured, intimate, calm
+      utterance.rate = 0.92;
+      utterance.pitch = 0.98;
+
+      utterance.onend = () => {
+        setIsListening(false);
+        speechRef.current = null;
+      };
+      utterance.onerror = () => {
+        setIsListening(false);
+        speechRef.current = null;
+      };
+
+      speechRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
+      setIsListening(true);
     }
   };
 
-  // 3 Recommended articles
+  // Recommended articles (Selected Stories)
   const recommendedPosts = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 3);
 
   return (
     <div className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#EAEAEA] selection:text-[#242424]">
       {/* Top Reading Progress Indicator (Hairline) */}
       <div
-        className="fixed top-0 left-0 right-0 h-[2.5px] bg-[#242424] z-50 transition-transform duration-100 origin-left will-change-transform"
+        className="fixed top-0 left-0 right-0 h-[2px] bg-[#161617] z-50 transition-transform duration-100 origin-left will-change-transform"
         style={{ transform: `scaleX(${scrollProgress / 100})` }}
         aria-hidden="true"
       />
@@ -128,7 +179,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
       {/* Main Longform Article Wrapper (Strict 680px column) */}
       <main className="max-w-[680px] mx-auto px-6 sm:px-8 md:px-0 pt-28 sm:pt-36 pb-28">
         
-        {/* Navigation Breadcrumb & Folio Header */}
+        {/* Navigation Breadcrumb & Header Share */}
         <div className="flex items-center justify-between gap-4 mb-8 pb-4 border-b border-[#F2F2F2] text-[13px] text-[#6B6B6B]">
           <Link
             href="/blog"
@@ -138,25 +189,23 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             <span>Stories</span>
           </Link>
 
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleShare}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full hover:bg-[#F2F2F2] text-[#6B6B6B] hover:text-[#242424] transition-colors cursor-pointer text-[12.5px] font-medium"
-              title="Share story URL"
-            >
-              {copiedLink ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-[#242424]" />
-                  <span className="text-[#242424]">Copied</span>
-                </>
-              ) : (
-                <>
-                  <Share2 className="w-3.5 h-3.5" />
-                  <span>Share</span>
-                </>
-              )}
-            </button>
-          </div>
+          <button
+            onClick={handleShare}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full hover:bg-[#F2F2F2] text-[#6B6B6B] hover:text-[#242424] transition-colors cursor-pointer text-[12.5px] font-medium"
+            title="Share story URL"
+          >
+            {copiedLink ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-[#161617]" />
+                <span className="text-[#161617]">Copied</span>
+              </>
+            ) : (
+              <>
+                <Share2 className="w-3.5 h-3.5" />
+                <span>Share</span>
+              </>
+            )}
+          </button>
         </div>
 
         {/* Story Header */}
@@ -174,77 +223,38 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             </p>
           )}
 
-          {/* Clean Byline (No redundant follow buttons) */}
-          <div className="pt-4 pb-2 flex items-center gap-2.5 text-[13.5px] text-[#6B6B6B]">
-            <span className="font-medium text-[#242424]">WVRNER Journal</span>
-            <span>&middot;</span>
-            <span>{post.date}</span>
-            <span>&middot;</span>
-            <span>{post.readingTime}</span>
-          </div>
-
-          {/* Action Strip (Claps, Audio, Bookmark, Share in pure black) */}
-          <div className="py-3 px-0 border-y border-[#F2F2F2] flex items-center justify-between text-[#6B6B6B] text-[13.5px] my-7">
-            <div className="flex items-center gap-6">
-              <button
-                onClick={handleClap}
-                className={`inline-flex items-center gap-2 transition-all active:scale-125 cursor-pointer ${
-                  hasClapped ? "text-[#242424] font-medium" : "hover:text-[#242424]"
-                }`}
-                title="Clap for this story"
-              >
-                <span className="w-6 h-6 flex items-center justify-center rounded-full">
-                  <ClapIcon className="w-4 h-4" />
-                </span>
-                <span>{claps}</span>
-              </button>
-
-              <div className="inline-flex items-center gap-2 text-[#6B6B6B]">
-                <MessageCircle className="w-4 h-4" />
-                <span>12</span>
-              </div>
+          {/* Clean Meta Strip */}
+          <div className="pt-4 pb-2 flex items-center justify-between gap-4 text-[13.5px] text-[#6B6B6B] border-b border-[#F2F2F2] pb-5">
+            <div className="flex items-center gap-2.5">
+              <span className="font-medium text-[#242424]">WVRNER Journal</span>
+              <span>&middot;</span>
+              <span>{post.date}</span>
+              <span>&middot;</span>
+              <span>{post.readingTime}</span>
             </div>
 
-            <div className="flex items-center gap-4">
-              {/* Audio Listen Pill */}
-              <button
-                onClick={handleListenToggle}
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[12.5px] font-medium transition-colors cursor-pointer ${
-                  isListening
-                    ? "bg-[#161617] text-white"
-                    : "hover:bg-[#F2F2F2] text-[#6B6B6B] hover:text-[#242424]"
-                }`}
-                title={isListening ? "Stop listening" : "Listen to article"}
-              >
-                <Volume2 className="w-3.5 h-3.5" />
-                <span>{isListening ? "Playing..." : "Listen"}</span>
-              </button>
-
-              <button
-                onClick={() => setBookmarked(!bookmarked)}
-                className={`p-1.5 rounded-full transition-colors cursor-pointer ${
-                  bookmarked ? "text-[#242424]" : "hover:text-[#242424]"
-                }`}
-                title="Save story"
-              >
-                <Bookmark className={`w-4 h-4 ${bookmarked ? "fill-current text-[#242424]" : ""}`} />
-              </button>
-
-              <button
-                onClick={handleShare}
-                className="p-1.5 rounded-full hover:text-[#242424] transition-colors cursor-pointer"
-                title="Share story"
-              >
-                <Share2 className="w-4 h-4" />
-              </button>
-
-              <button
-                className="p-1.5 rounded-full hover:text-[#242424] transition-colors cursor-pointer"
-                title="More options"
-              >
-                <MoreHorizontal className="w-4 h-4" />
-              </button>
-            </div>
+            {/* Warm Storytelling Audio Narration Pill */}
+            <button
+              onClick={handleListenToggle}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[12.5px] font-medium transition-all cursor-pointer ${
+                isListening
+                  ? "bg-[#161617] text-white shadow-sm"
+                  : "bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424]"
+              }`}
+              title={isListening ? "Pause narration" : "Listen to article narration"}
+            >
+              {isListening ? (
+                <>
+                  <VolumeX className="w-3.5 h-3.5" />
+                  <span>Listening...</span>
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-3.5 h-3.5" />
+                  <span>Listen</span>
+                </>
+              )}
+            </button>
           </div>
 
         </header>
@@ -267,7 +277,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         {/* Editorial Pullquote */}
         {post.pullQuote && (
-          <blockquote className="my-9 pl-6 border-l-[3px] border-[#242424]">
+          <blockquote className="my-9 pl-6 border-l-[3px] border-[#161617]">
             <p className="font-[family-name:var(--font-source-serif),Charter,Georgia,serif] italic text-[21px] sm:text-[23px] text-[#242424] leading-[1.45]">
               &ldquo;{post.pullQuote}&rdquo;
             </p>
@@ -329,8 +339,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                       >
                         {copiedCode === `code-${sIdx}` ? (
                           <>
-                            <Check className="w-3 h-3 text-emerald-400" />
-                            <span className="text-emerald-400">Copied</span>
+                            <Check className="w-3 h-3 text-white" />
+                            <span className="text-white">Copied</span>
                           </>
                         ) : (
                           <>
@@ -352,8 +362,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
               {/* Architectural Rule Callout */}
               {section.callout && (
-                <aside className="my-9 p-6 rounded-r-lg border-l-[3px] border-[#242424] bg-[#F9F9F9] space-y-1.5 font-sans">
-                  <div className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-[#242424] font-bold">
+                <aside className="my-9 p-6 rounded-r-lg border-l-[3px] border-[#161617] bg-[#F9F9F9] space-y-1.5 font-sans">
+                  <div className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-[#161617] font-bold">
                     <span>{section.callout.title}</span>
                   </div>
                   <p className="text-[15px] sm:text-[16px] text-[#404040] leading-relaxed font-normal">
@@ -370,7 +380,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                       key={lIdx}
                       className="flex items-start gap-3.5 text-[16px] text-[#242424]"
                     >
-                      <span className="w-6 h-6 rounded-full bg-[#242424] text-white text-[11px] font-mono flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">
+                      <span className="w-6 h-6 rounded-full bg-[#161617] text-white text-[11px] font-mono flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">
                         {lIdx + 1}
                       </span>
                       <span className="leading-relaxed">{item}</span>
@@ -384,7 +394,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         </article>
 
-        {/* Bottom Article Actions & Tags */}
+        {/* Bottom Topic Tags & Clean Share Button */}
         <div className="pt-8 pb-10 border-b border-[#F2F2F2] space-y-6">
           {/* Topic Tags */}
           <div className="flex flex-wrap gap-2">
@@ -398,85 +408,46 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             ))}
           </div>
 
-          {/* Bottom Claps & Response Strip */}
-          <div className="flex items-center justify-between text-[#6B6B6B] text-[13.5px] pt-3">
-            <div className="flex items-center gap-6">
-              <button
-                onClick={handleClap}
-                className={`inline-flex items-center gap-2 transition-all active:scale-125 cursor-pointer ${
-                  hasClapped ? "text-[#242424] font-medium" : "hover:text-[#242424]"
-                }`}
-              >
-                <span className="w-6 h-6 flex items-center justify-center rounded-full">
-                  <ClapIcon className="w-4 h-4" />
-                </span>
-                <span>{claps} claps</span>
-              </button>
-
-              <div className="inline-flex items-center gap-1.5 text-[#6B6B6B]">
-                <MessageCircle className="w-4 h-4" />
-                <span>12 responses</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <button
-                onClick={() => setBookmarked(!bookmarked)}
-                className={`p-1.5 rounded-full transition-colors cursor-pointer ${
-                  bookmarked ? "text-[#242424]" : "hover:text-[#242424]"
-                }`}
-                title="Save story"
-              >
-                <Bookmark className={`w-4 h-4 ${bookmarked ? "fill-current text-[#242424]" : ""}`} />
-              </button>
-              <button
-                onClick={handleShare}
-                className="p-1.5 rounded-full hover:text-[#242424] transition-colors cursor-pointer"
-                title="Share story"
-              >
-                <Share2 className="w-4 h-4" />
-              </button>
-            </div>
+          {/* Bottom Share Strip */}
+          <div className="flex items-center justify-between text-[#6B6B6B] text-[13px] pt-2">
+            <span>Published in WVRNER Journal</span>
+            <button
+              onClick={handleShare}
+              className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] text-[12.5px] font-medium transition-colors cursor-pointer"
+            >
+              <Share2 className="w-3.5 h-3.5" />
+              <span>{copiedLink ? "Link copied" : "Share story"}</span>
+            </button>
           </div>
         </div>
 
-        {/* Author Bio Box (Clean and purposeful) */}
+        {/* Quiet Publication Note */}
         <section className="py-10 border-b border-[#F2F2F2]">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <div className="flex items-start gap-4">
-              <div className="w-14 h-14 rounded-full bg-[#161617] text-white flex items-center justify-center font-bold text-[16px] shrink-0">
-                NH
-              </div>
-              <div className="space-y-1">
-                <span className="text-[11.5px] uppercase font-bold text-[#6B6B6B] tracking-wider block font-sans">
-                  WRITTEN BY
-                </span>
-                <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[18px] font-bold text-[#242424]">
-                  Nima Hosseini
-                </h3>
-                <p className="text-[14px] text-[#6B6B6B] leading-relaxed max-w-md font-sans">
-                  Cloud &amp; DevOps Engineer. Engineering automated cloud systems, declarative infrastructure, and reproducible state across AWS.
-                </p>
-              </div>
+            <div className="space-y-1">
+              <span className="text-[11.5px] uppercase font-bold text-[#6B6B6B] tracking-wider block font-sans">
+                WVRNER JOURNAL
+              </span>
+              <p className="text-[14.5px] text-[#6B6B6B] leading-relaxed max-w-md font-sans">
+                Engineering automated cloud systems, declarative infrastructure, and reproducible state across AWS.
+              </p>
             </div>
 
-            <div className="flex items-center gap-2.5 shrink-0">
-              <button
-                onClick={() => setCvOpen(true)}
-                className="px-5 py-2 rounded-full bg-[#161617] hover:bg-[#2C2C2E] text-white text-[13px] font-medium transition-all cursor-pointer font-sans"
-              >
-                View CV
-              </button>
-            </div>
+            <button
+              onClick={() => setCvOpen(true)}
+              className="px-5 py-2 rounded-full bg-[#161617] hover:bg-[#2C2C2E] text-white text-[13px] font-medium transition-all cursor-pointer font-sans shrink-0"
+            >
+              View CV
+            </button>
           </div>
         </section>
 
-        {/* More Stories Recommendations */}
+        {/* Selected Stories Recommendations */}
         {recommendedPosts.length > 0 && (
           <section className="pt-12 space-y-6">
             <div className="flex items-center justify-between">
               <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[20px] font-bold text-[#242424]">
-                More from WVRNER Journal
+                Selected Stories
               </h3>
               <Link
                 href="/blog"

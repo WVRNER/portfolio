@@ -1,42 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Bookmark } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { BLOG_POSTS } from "@/lib/blogData";
 
-// Clapping Hands SVG Icon
-function ClapIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="currentColor"
-      stroke="currentColor"
-      strokeWidth="0.5"
-    >
-      <path d="M14.5 9.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5v4" />
-      <path d="M17.5 10.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5v3" />
-      <path d="M11.5 9c0-.8-.7-1.5-1.5-1.5S8.5 8.2 8.5 9v4" />
-      <path d="M8.5 10c0-.8-.7-1.5-1.5-1.5S5.5 9.2 5.5 10v4.5c0 3.6 2.9 6.5 6.5 6.5h2c3.3 0 6-2.7 6-6V13c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5" />
-    </svg>
-  );
-}
-
 /**
- * WritingSection — Editorial Stories Showcase
+ * WritingSection — Personal Engineering Journal & Stories Showcase
  * 
- * - Contrained, well-padded width (not overly wide, optimal line measure)
- * - Removed redundant author repetition on every post
- * - "Read story" links and buttons in refined black
- * - Clean borderless stream with subtle hairline dividers
+ * - Pure reader UI (zero reactions, zero claps, zero bookmarks, zero comments)
+ * - Contained, well-padded width (not overly wide, optimal reading line length)
+ * - Zero author repetition (it's a solo journal)
+ * - Monochromatic palette (#161617 black accents, zero green)
+ * - Featured story automatically elevated to the lead spot
  */
 export function WritingSection() {
   if (!BLOG_POSTS || BLOG_POSTS.length === 0) {
     return null;
   }
 
-  const featuredPost = BLOG_POSTS[0];
-  const recentPosts = BLOG_POSTS.slice(1, 4);
+  // Find featured post (or first post)
+  const featuredPost = BLOG_POSTS.find((p) => p.featured) || BLOG_POSTS[0];
+  const recentPosts = BLOG_POSTS.filter((p) => p.slug !== featuredPost.slug).slice(0, 3);
 
   return (
     <section
@@ -50,7 +34,7 @@ export function WritingSection() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 mb-10 sm:mb-12 border-b border-[#F2F2F2]">
         <div className="space-y-2.5 max-w-xl">
           <div className="inline-flex items-center gap-2 text-[12px] font-medium tracking-wider uppercase text-[#6B6B6B] font-sans">
-            <span>PUBLISHED IN WVRNER JOURNAL</span>
+            <span>WVRNER JOURNAL &bull; ARCHITECTURE &amp; SYSTEMS</span>
           </div>
 
           <h2 className="font-[family-name:var(--font-plus-jakarta)] text-[32px] sm:text-[40px] font-bold text-[#242424] tracking-[-0.025em] leading-[1.12]">
@@ -72,20 +56,22 @@ export function WritingSection() {
         </Link>
       </div>
 
-      {/* 1. LEAD FEATURED STORY — Refined Editorial Card */}
+      {/* 1. LEAD FEATURED STORY */}
       {featuredPost && (
         <article className="pb-12 sm:pb-14 border-b border-[#F2F2F2]">
           <Link
             href={`/blog/${featuredPost.slug}`}
             className="group block cursor-pointer space-y-4"
           >
-            {/* Top Meta Line (Clean date and status, no repeated author name) */}
+            {/* Top Meta Line */}
             <div className="flex items-center gap-2.5 text-[12.5px] text-[#6B6B6B]">
               <span className="text-[#242424] font-medium text-[11.5px] uppercase tracking-wider">
                 Featured Story
               </span>
               <span>&middot;</span>
               <span>{featuredPost.date}</span>
+              <span>&middot;</span>
+              <span>{featuredPost.readingTime}</span>
             </div>
 
             {/* Title */}
@@ -111,19 +97,11 @@ export function WritingSection() {
               </div>
             )}
 
-            {/* Action Footer (Read story in pure black) */}
+            {/* Action Footer */}
             <div className="pt-2 flex items-center justify-between text-[12.5px] text-[#6B6B6B]">
-              <div className="flex items-center gap-3">
-                <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11.5px] transition-colors">
-                  {featuredPost.category}
-                </span>
-                <span>{featuredPost.readingTime}</span>
-                <span>&middot;</span>
-                <span className="inline-flex items-center gap-1">
-                  <ClapIcon className="w-3.5 h-3.5 text-[#6B6B6B]" />
-                  <span>184</span>
-                </span>
-              </div>
+              <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11.5px] transition-colors">
+                {featuredPost.category}
+              </span>
 
               <span className="inline-flex items-center gap-1 font-medium text-[#242424] group-hover:translate-x-0.5 transition-transform text-[13px]">
                 <span>Read story</span>
@@ -134,7 +112,7 @@ export function WritingSection() {
         </article>
       )}
 
-      {/* 2. RECENT STORIES STREAM — Generous padding, comfortable measure */}
+      {/* 2. RECENT STORIES STREAM */}
       <div className="pt-8 sm:pt-10 space-y-2">
         <div className="pb-3 flex items-center justify-between">
           <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[17px] sm:text-[18px] font-bold text-[#242424]">
@@ -154,9 +132,10 @@ export function WritingSection() {
               >
                 {/* Left Content */}
                 <div className="flex-1 space-y-2 min-w-0">
-                  {/* Clean Date Row (No author repetition) */}
-                  <div className="text-[12px] text-[#6B6B6B]">
+                  <div className="flex items-center gap-2 text-[12px] text-[#6B6B6B]">
                     <span>{post.date}</span>
+                    <span>&middot;</span>
+                    <span>{post.readingTime}</span>
                   </div>
 
                   {/* Headline */}
@@ -169,27 +148,16 @@ export function WritingSection() {
                     {post.subtitle || post.excerpt}
                   </p>
 
-                  {/* Metadata Row (Read story in black) */}
+                  {/* Metadata Row */}
                   <div className="pt-2 flex items-center justify-between text-[12px] text-[#6B6B6B]">
-                    <div className="flex items-center gap-3">
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11px] transition-colors">
-                        {post.category}
-                      </span>
-                      <span>{post.readingTime}</span>
-                      <span>&middot;</span>
-                      <span className="inline-flex items-center gap-1">
-                        <ClapIcon className="w-3.5 h-3.5 text-[#6B6B6B]" />
-                        <span>92</span>
-                      </span>
-                    </div>
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11px] transition-colors">
+                      {post.category}
+                    </span>
 
-                    <div className="flex items-center gap-3">
-                      <span className="font-medium text-[#242424] text-[12.5px] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
-                        <span>Read story</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </span>
-                      <Bookmark className="w-3.5 h-3.5 hover:fill-current text-[#6B6B6B] group-hover:text-[#242424] transition-colors" />
-                    </div>
+                    <span className="font-medium text-[#242424] text-[12.5px] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
+                      <span>Read story</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </span>
                   </div>
                 </div>
 
@@ -211,7 +179,7 @@ export function WritingSection() {
         </div>
       </div>
 
-      {/* 3. BOTTOM BUTTON — Clean Black Pill */}
+      {/* 3. BOTTOM BUTTON */}
       <div className="pt-10 sm:pt-12 flex justify-center">
         <Link
           href="/blog"

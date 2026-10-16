@@ -2,52 +2,37 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Bookmark, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
 import { BLOG_POSTS, type BlogPost } from "@/lib/blogData";
 
-// Clapping Hands SVG Icon
-function ClapIcon({ className = "w-4 h-4" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className}
-      fill="currentColor"
-      stroke="currentColor"
-      strokeWidth="0.5"
-    >
-      <path d="M14.5 9.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5v4" />
-      <path d="M17.5 10.5c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5v3" />
-      <path d="M11.5 9c0-.8-.7-1.5-1.5-1.5S8.5 8.2 8.5 9v4" />
-      <path d="M8.5 10c0-.8-.7-1.5-1.5-1.5S5.5 9.2 5.5 10v4.5c0 3.6 2.9 6.5 6.5 6.5h2c3.3 0 6-2.7 6-6V13c0-.8-.7-1.5-1.5-1.5s-1.5.7-1.5 1.5" />
-    </svg>
-  );
-}
-
 /**
  * Editorial Blog Archive — WVRNER JOURNAL
  * 
- * - Refined 2-column editorial layout with comfortable measure and padding
- * - Removed repeated author name on every post card
- * - Removed author promo box from sidebar
- * - "Read story" links and actions in crisp black
- * - Topic filters (For you, Architecture, Security, DevOps, Infrastructure, Reliability)
+ * - Pure reader UI (zero claps, zero comments, zero bookmarks)
+ * - "Selected Stories" (renamed from Staff Picks for a personal publication)
+ * - Automatically elevates featured posts to the top and Selected Stories
+ * - Monochromatic palette (black accents, zero green)
+ * - Zero author repetition across story cards
  */
 export default function BlogIndexPage() {
   const [cvOpen, setCvOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [activeCategory, setActiveCategory] = useState<string>("All");
-  const [savedPosts, setSavedPosts] = useState<Set<string>>(new Set());
   const POSTS_PER_PAGE = 10;
 
   // Filter posts based on active category
   const filteredPosts = useMemo(() => {
-    if (activeCategory === "All") return BLOG_POSTS;
-    return BLOG_POSTS.filter((p) =>
-      p.category.toLowerCase().includes(activeCategory.toLowerCase()) ||
-      p.tags.some((t) => t.toLowerCase().includes(activeCategory.toLowerCase()))
-    );
+    let list = BLOG_POSTS;
+    if (activeCategory !== "All") {
+      list = BLOG_POSTS.filter((p) =>
+        p.category.toLowerCase().includes(activeCategory.toLowerCase()) ||
+        p.tags.some((t) => t.toLowerCase().includes(activeCategory.toLowerCase()))
+      );
+    }
+    // Elevate featured posts
+    return [...list].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
   }, [activeCategory]);
 
   const leadPost = filteredPosts[0];
@@ -71,17 +56,6 @@ export default function BlogIndexPage() {
     }
   };
 
-  const toggleBookmark = (slug: string, e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setSavedPosts((prev) => {
-      const next = new Set(prev);
-      if (next.has(slug)) next.delete(slug);
-      else next.add(slug);
-      return next;
-    });
-  };
-
   // Generate page numbers with ellipsis
   const getPageNumbers = () => {
     if (totalPages <= 7) {
@@ -96,10 +70,14 @@ export default function BlogIndexPage() {
     return [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
   };
 
-  // Staff picks for right sidebar
-  const staffPicks = BLOG_POSTS.slice(0, 3);
+  // Selected stories for sidebar: prioritized by featured flag
+  const selectedStories = useMemo(() => {
+    const featured = BLOG_POSTS.filter((p) => p.featured);
+    if (featured.length >= 3) return featured.slice(0, 4);
+    return BLOG_POSTS.slice(0, 3);
+  }, []);
 
-  // Recommended topics
+  // Category topics
   const topics = ["All", "Architecture", "Security", "DevOps", "Infrastructure", "Reliability"];
 
   return (
@@ -107,7 +85,7 @@ export default function BlogIndexPage() {
       {/* Floating Navigation Pill */}
       <Navigation onOpenCV={() => setCvOpen(true)} />
 
-      {/* Main Publication Container (Comfortable, well-padded width) */}
+      {/* Main Container */}
       <div className="max-w-[1120px] mx-auto px-6 sm:px-8 md:px-10 pt-28 sm:pt-36 pb-24">
         
         {/* Navigation Breadcrumb / Folio Bar */}
@@ -199,13 +177,15 @@ export default function BlogIndexPage() {
                         </div>
                       )}
 
-                      {/* Clean Date Row (No author repetition) */}
+                      {/* Clean Date Row */}
                       <div className="flex items-center gap-2 text-[12px] text-[#6B6B6B] mb-2.5">
                         <span className="text-[#242424] font-medium uppercase tracking-wider text-[11px]">
                           Featured Story
                         </span>
                         <span>&middot;</span>
                         <span>{leadPost.date}</span>
+                        <span>&middot;</span>
+                        <span>{leadPost.readingTime}</span>
                       </div>
 
                       {/* Title */}
@@ -218,39 +198,22 @@ export default function BlogIndexPage() {
                         {leadPost.subtitle || leadPost.excerpt}
                       </p>
 
-                      {/* Metadata Row (Read story in black) */}
+                      {/* Metadata Row */}
                       <div className="flex items-center justify-between text-[12.5px] text-[#6B6B6B]">
-                        <div className="flex items-center gap-3">
-                          <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11px] transition-colors">
-                            {leadPost.category}
-                          </span>
-                          <span>{leadPost.readingTime}</span>
-                          <span>&middot;</span>
-                          <span className="inline-flex items-center gap-1">
-                            <ClapIcon className="w-3.5 h-3.5 text-[#6B6B6B]" />
-                            <span>184</span>
-                          </span>
-                        </div>
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11px] transition-colors">
+                          {leadPost.category}
+                        </span>
 
-                        <div className="flex items-center gap-3">
-                          <span className="font-medium text-[#242424] text-[12.5px] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
-                            <span>Read story</span>
-                            <ArrowRight className="w-3 h-3" />
-                          </span>
-                          <button
-                            onClick={(e) => toggleBookmark(leadPost.slug, e)}
-                            className="p-1 text-[#6B6B6B] hover:text-[#242424] cursor-pointer"
-                            title="Save story"
-                          >
-                            <Bookmark className={`w-4 h-4 ${savedPosts.has(leadPost.slug) ? "fill-[#242424] text-[#242424]" : ""}`} />
-                          </button>
-                        </div>
+                        <span className="font-medium text-[#242424] text-[12.5px] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
+                          <span>Read story</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </span>
                       </div>
                     </Link>
                   </article>
                 )}
 
-                {/* 2. RECENT STORIES STREAM — Generous padding, clean measure */}
+                {/* 2. RECENT STORIES STREAM */}
                 <div className="divide-y divide-[#F2F2F2]">
                   {paginatedRecentPosts.map((post) => (
                     <article key={post.slug} className="py-8 first:pt-8">
@@ -260,9 +223,10 @@ export default function BlogIndexPage() {
                       >
                         {/* Left Content */}
                         <div className="flex-1 space-y-2 min-w-0">
-                          {/* Clean Date (No author repetition) */}
-                          <div className="text-[12px] text-[#6B6B6B]">
+                          <div className="flex items-center gap-2 text-[12px] text-[#6B6B6B]">
                             <span>{post.date}</span>
+                            <span>&middot;</span>
+                            <span>{post.readingTime}</span>
                           </div>
 
                           {/* Title */}
@@ -277,31 +241,14 @@ export default function BlogIndexPage() {
 
                           {/* Footer with Black Read Story Link */}
                           <div className="pt-2 flex items-center justify-between text-[12px] text-[#6B6B6B]">
-                            <div className="flex items-center gap-3">
-                              <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11px] transition-colors">
-                                {post.category}
-                              </span>
-                              <span>{post.readingTime}</span>
-                              <span>&middot;</span>
-                              <span className="inline-flex items-center gap-1">
-                                <ClapIcon className="w-3.5 h-3.5 text-[#6B6B6B]" />
-                                <span>96</span>
-                              </span>
-                            </div>
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11px] transition-colors">
+                              {post.category}
+                            </span>
 
-                            <div className="flex items-center gap-3">
-                              <span className="font-medium text-[#242424] text-[12.5px] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
-                                <span>Read story</span>
-                                <ArrowRight className="w-3 h-3" />
-                              </span>
-                              <button
-                                onClick={(e) => toggleBookmark(post.slug, e)}
-                                className="p-1 text-[#6B6B6B] hover:text-[#242424] cursor-pointer"
-                                title="Save story"
-                              >
-                                <Bookmark className={`w-4 h-4 ${savedPosts.has(post.slug) ? "fill-[#242424] text-[#242424]" : ""}`} />
-                              </button>
-                            </div>
+                            <span className="font-medium text-[#242424] text-[12.5px] group-hover:translate-x-0.5 transition-transform inline-flex items-center gap-1">
+                              <span>Read story</span>
+                              <ArrowRight className="w-3 h-3" />
+                            </span>
                           </div>
                         </div>
 
@@ -398,18 +345,18 @@ export default function BlogIndexPage() {
             )}
           </main>
 
-          {/* RIGHT: EDITORIAL STICKY SIDEBAR (Col 9-12) */}
+          {/* RIGHT: SELECTED STORIES SIDEBAR (Col 9-12) */}
           <aside className="hidden lg:block lg:col-span-4 border-l border-[#F2F2F2] pl-8 space-y-10 sticky top-28">
             
-            {/* Staff Picks (No author repetition) */}
+            {/* Selected Stories (Renamed from Staff Picks, elevated by featured flag) */}
             <div className="space-y-4">
               <div className="flex items-center gap-2 text-[13.5px] font-bold text-[#242424]">
                 <Sparkles className="w-4 h-4 text-[#242424]" />
-                <span>Featured Stories</span>
+                <span>Selected Stories</span>
               </div>
 
               <div className="space-y-4">
-                {staffPicks.map((pick) => (
+                {selectedStories.map((pick) => (
                   <Link
                     key={pick.slug}
                     href={`/blog/${pick.slug}`}
