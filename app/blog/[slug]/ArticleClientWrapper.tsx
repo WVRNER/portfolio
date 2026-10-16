@@ -95,14 +95,14 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         {/* Story Header (Exact hierarchy matching uploaded screenshot) */}
         <header className="space-y-4 mb-8">
           
-          {/* Super bold punchy headline */}
-          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[36px] sm:text-[46px] md:text-[52px] font-black text-[#1D1D1F] leading-[1.12] tracking-[-0.035em]">
+          {/* Super bold punchy headline (Matching reference: Ultra-black 900 neo-grotesque) */}
+          <h1 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[36px] sm:text-[48px] md:text-[54px] font-[900] text-[#0A0A0A] leading-[1.08] tracking-[-0.04em]">
             {post.title}
           </h1>
 
           {/* Subtitle */}
           {post.subtitle && (
-            <p className="text-[20px] sm:text-[23px] md:text-[25px] text-[#555555] font-normal leading-[1.4] tracking-normal font-sans">
+            <p className="text-[20px] sm:text-[24px] md:text-[26px] text-[#4A4A4A] font-normal leading-[1.38] tracking-normal font-sans">
               {post.subtitle}
             </p>
           )}
