@@ -73,12 +73,12 @@ export function WritingSection() {
                 </div>
 
                 {/* Super bold punchy title (Modern 2026 Medium style) */}
-                <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[19px] sm:text-[23px] md:text-[25px] font-extrabold sm:font-black text-[#1D1D1F] group-hover:underline transition-colors leading-[1.22] tracking-[-0.03em]">
+                <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[21px] sm:text-[25px] md:text-[28px] font-black text-[#1D1D1F] group-hover:underline transition-colors leading-[1.18] tracking-[-0.03em]">
                   {featuredPost.title}
                 </h3>
 
                 {/* Subtitle / Excerpt */}
-                <p className="text-[14px] sm:text-[15px] text-[#6B6B6B] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                <p className="text-[14.5px] sm:text-[16px] text-[#555555] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                   {featuredPost.subtitle || featuredPost.excerpt}
                 </p>
 
@@ -124,12 +124,12 @@ export function WritingSection() {
                   </div>
 
                   {/* Super bold punchy headline */}
-                  <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[17px] sm:text-[20px] md:text-[21px] font-extrabold sm:font-black text-[#1D1D1F] group-hover:underline transition-colors leading-[1.25] tracking-[-0.03em] line-clamp-2">
+                  <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[19px] sm:text-[22px] md:text-[24px] font-black text-[#1D1D1F] group-hover:underline transition-colors leading-[1.2] tracking-[-0.03em] line-clamp-2">
                     {post.title}
                   </h4>
 
                   {/* Excerpt */}
-                  <p className="text-[13.5px] sm:text-[14px] text-[#6B6B6B] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                  <p className="text-[14.5px] sm:text-[15.5px] text-[#555555] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                     {post.subtitle || post.excerpt}
                   </p>
 

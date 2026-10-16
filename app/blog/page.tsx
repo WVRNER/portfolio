@@ -178,12 +178,12 @@ export default function BlogIndexPage() {
                             </div>
 
                             {/* Super bold punchy headline */}
-                            <h2 className="font-[family-name:var(--font-plus-jakarta)] text-[17px] sm:text-[20px] md:text-[22px] font-extrabold sm:font-black text-[#1D1D1F] group-hover:underline transition-colors leading-[1.25] tracking-[-0.03em] line-clamp-2">
+                            <h2 className="font-[family-name:var(--font-plus-jakarta)] text-[19px] sm:text-[22px] md:text-[24px] font-black text-[#1D1D1F] group-hover:underline transition-colors leading-[1.2] tracking-[-0.03em] line-clamp-2">
                               {post.title}
                             </h2>
 
                             {/* Subtitle / Excerpt */}
-                            <p className="text-[13.5px] sm:text-[14.5px] text-[#6B6B6B] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                            <p className="text-[14.5px] sm:text-[15.5px] text-[#555555] leading-relaxed line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                               {post.subtitle || post.excerpt}
                             </p>
 
@@ -307,7 +307,7 @@ export default function BlogIndexPage() {
                     href={`/blog/${pick.slug}`}
                     className="group block space-y-1"
                   >
-                    <h4 className="font-[family-name:var(--font-plus-jakarta)] font-extrabold text-[14.5px] text-[#1D1D1F] group-hover:underline line-clamp-2 leading-snug tracking-tight">
+                    <h4 className="font-[family-name:var(--font-plus-jakarta)] font-black text-[15px] sm:text-[15.5px] text-[#1D1D1F] group-hover:underline line-clamp-2 leading-snug tracking-tight">
                       {pick.title}
                     </h4>
                     <span className="text-[12px] text-[#6B6B6B] block">

@@ -96,13 +96,13 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         <header className="space-y-4 mb-8">
           
           {/* Super bold punchy headline */}
-          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[32px] sm:text-[42px] md:text-[46px] font-extrabold sm:font-black text-[#1D1D1F] leading-[1.18] sm:leading-[1.12] tracking-[-0.035em]">
+          <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[36px] sm:text-[46px] md:text-[52px] font-black text-[#1D1D1F] leading-[1.12] tracking-[-0.035em]">
             {post.title}
           </h1>
 
           {/* Subtitle */}
           {post.subtitle && (
-            <p className="text-[18px] sm:text-[21px] text-[#6B6B6B] font-normal leading-[1.4] tracking-normal font-sans">
+            <p className="text-[20px] sm:text-[23px] md:text-[25px] text-[#555555] font-normal leading-[1.4] tracking-normal font-sans">
               {post.subtitle}
             </p>
           )}
