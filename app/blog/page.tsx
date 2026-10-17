@@ -177,8 +177,8 @@ export default function BlogIndexPage() {
                               <span>{post.date}</span>
                             </div>
 
-                            {/* Super bold punchy headline (Exact match to reference: thick, prominent, large) */}
-                            <h2 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[24px] sm:text-[28px] md:text-[30px] font-[900] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.15] tracking-[-0.035em] line-clamp-2">
+                            {/* Super bold punchy headline (Lowered size, amplified thickness) */}
+                            <h2 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[21px] sm:text-[24px] md:text-[26px] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.2] tracking-[-0.03em] line-clamp-2">
                               {post.title}
                             </h2>
 
@@ -307,7 +307,7 @@ export default function BlogIndexPage() {
                     href={`/blog/${pick.slug}`}
                     className="group block space-y-1"
                   >
-                    <h4 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] font-[900] text-[15px] sm:text-[16px] text-[#0A0A0A] group-hover:underline line-clamp-2 leading-snug tracking-tight">
+                    <h4 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[15px] sm:text-[15.5px] text-[#0A0A0A] group-hover:underline line-clamp-2 leading-snug tracking-tight">
                       {pick.title}
                     </h4>
                     <span className="text-[12px] text-[#6B6B6B] block">

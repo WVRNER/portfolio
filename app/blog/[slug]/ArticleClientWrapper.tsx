@@ -95,8 +95,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         {/* Story Header (Exact hierarchy matching uploaded screenshot) */}
         <header className="space-y-4 mb-8">
           
-          {/* Super bold punchy headline (Exact match to reference: Ultra-black 900 neo-grotesque) */}
-          <h1 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[38px] sm:text-[50px] md:text-[56px] font-[900] text-[#0A0A0A] leading-[1.06] tracking-[-0.04em]">
+          {/* Super bold punchy headline (Lowered size, amplified thickness) */}
+          <h1 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[34px] sm:text-[44px] md:text-[48px] text-[#0A0A0A] leading-[1.1] tracking-[-0.035em]">
             {post.title}
           </h1>
 

@@ -72,13 +72,13 @@ export function WritingSection() {
                   <span>{featuredPost.date}</span>
                 </div>
 
-                {/* Super bold punchy title (Exact match to reference: thick, prominent, large) */}
-                <h3 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[25px] sm:text-[30px] md:text-[34px] font-[900] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.12] tracking-[-0.035em]">
+                {/* Super bold punchy title (Lowered size, amplified thickness) */}
+                <h3 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[26px] md:text-[29px] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.16] tracking-[-0.03em]">
                   {featuredPost.title}
                 </h3>
 
                 {/* Subtitle / Excerpt */}
-                <p className="text-[16px] sm:text-[18px] text-[#555555] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                <p className="text-[15px] sm:text-[16.5px] text-[#555555] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                   {featuredPost.subtitle || featuredPost.excerpt}
                 </p>
 
@@ -123,8 +123,8 @@ export function WritingSection() {
                     <span>{post.date}</span>
                   </div>
 
-                  {/* Super bold punchy headline */}
-                  <h4 className="font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[24px] sm:text-[28px] md:text-[30px] font-[900] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.15] tracking-[-0.035em] line-clamp-2">
+                  {/* Super bold punchy headline (Lowered size, amplified thickness) */}
+                  <h4 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[21px] sm:text-[24px] md:text-[26px] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.2] tracking-[-0.03em] line-clamp-2">
                     {post.title}
                   </h4>
 
