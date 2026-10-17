@@ -307,7 +307,7 @@ export default function BlogIndexPage() {
                     href={`/blog/${pick.slug}`}
                     className="group block space-y-1"
                   >
-                    <h4 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[15px] sm:text-[15.5px] text-[#0A0A0A] group-hover:underline line-clamp-2 leading-snug tracking-tight">
+                    <h4 className="font-bold text-[14.5px] sm:text-[15px] text-[#242424] group-hover:underline line-clamp-2 leading-snug tracking-tight">
                       {pick.title}
                     </h4>
                     <span className="text-[12px] text-[#6B6B6B] block">
