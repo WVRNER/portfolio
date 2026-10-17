@@ -52,7 +52,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "WVRNER — Nima Hosseini | Cloud / DevOps Engineer",
+  title: "WVRNER | Nima Hosseini - Cloud / DevOps Engineer",
   description:
     "Personal Cloud / DevOps engineering portfolio of Nima Hosseini (WVRNER). AWS, Terraform, GitHub Actions, Docker & container architectures.",
   authors: [{ name: "Nima Hosseini" }],

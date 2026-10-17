@@ -34,7 +34,7 @@ export interface BlogPost {
 }
 
 /**
- * TECHNICAL WRITING REPOSITORY — NIMA HOSSEINI
+ * TECHNICAL WRITING REPOSITORY - NIMA HOSSEINI
  * Real, production-grade cloud & DevOps essays and field documentation.
  */
 export const BLOG_POSTS: BlogPost[] = [
@@ -96,7 +96,7 @@ export const BLOG_POSTS: BlogPost[] = [
         {
           heading: "Automated Garbage Collection & Reversible Teardown",
           paragraphs: [
-            "The hardest problem in ephemeral cloud infrastructure is not creation—it is deletion. Merged or abandoned pull requests leave expensive NAT Gateways, ALB listeners, and RDS read replicas running unchecked.",
+            "The hardest problem in ephemeral cloud infrastructure is not creation - it is deletion. Merged or abandoned pull requests leave expensive NAT Gateways, ALB listeners, and RDS read replicas running unchecked.",
             "We resolved this by pairing an automated TTL tag with an event-driven AWS Lambda sweeper triggered by GitHub webhook events. If a PR is closed or inactive for more than 48 hours, the sweeper initiates a coordinated 'terraform destroy' run with automated fallback alerting.",
           ],
           callout: {
@@ -277,7 +277,7 @@ spec:
           heading: "The Aggregation Blindspot",
           paragraphs: [
             "Averages lie. Even 99th percentile latency graphs hide the fact that a single downstream third-party payment gateway or database connection lock is impacting specific enterprise customers.",
-            "High-cardinality metadata—such as customer_id, tenant_tier, and request_uuid—cannot be indexed in traditional time-series databases without exploding costs. By capturing contextual exemplars inside OpenTelemetry spans, we link anomalous metric spikes directly to the exact trace execution graph.",
+            "High-cardinality metadata (such as customer_id, tenant_tier, and request_uuid) cannot be indexed in traditional time-series databases without exploding costs. By capturing contextual exemplars inside OpenTelemetry spans, we link anomalous metric spikes directly to the exact trace execution graph.",
           ],
         },
         {
@@ -377,7 +377,7 @@ spec:
         {
           heading: "The Problem with Alpine and Debian",
           paragraphs: [
-            "Default base images bundle curl, wget, and package managers—tools that developers rarely need in production but attackers rely on for remote shell downloads.",
+            "Default base images bundle curl, wget, and package managers - tools that developers rarely need in production but attackers rely on for remote shell downloads.",
             "Distroless images include only the application runtime and its dynamic dependencies, making interactive shell escapes physically impossible.",
           ],
         },

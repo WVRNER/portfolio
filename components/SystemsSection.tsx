@@ -159,7 +159,7 @@ export function CompleteStaticRegister() {
           </h2>
 
           <p className="text-[15px] sm:text-[17px] text-white/60 leading-relaxed font-normal max-w-[58ch]">
-            Six codified operational domains engineered from first principles &mdash; bridging declarative cloud topology, immutable container runtimes, and automated zero-downtime delivery.
+            Six codified operational domains engineered from first principles - bridging declarative cloud topology, immutable container runtimes, and automated zero-downtime delivery.
           </p>
         </header>
 

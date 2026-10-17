@@ -30,7 +30,7 @@ export function AboutSection() {
             BACKGROUND
           </div>
           <p className="text-[15px] sm:text-[16px] text-[#4A4A4A] leading-relaxed max-w-[480px]">
-            My path started in hands-on IT and infrastructure operations—troubleshooting systems directly, seeing where environments break, and understanding the physical and operational reality beneath modern abstractions.
+            My path started in hands-on IT and infrastructure operations - troubleshooting systems directly, seeing where environments break, and understanding the physical and operational reality beneath modern abstractions.
           </p>
         </div>
 

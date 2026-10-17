@@ -194,7 +194,7 @@ export function StoryScrollSequence() {
                   Infrastructure as Code &bull; Systems Reliability
                 </div>
                 <p className="text-[14.5px] sm:text-[16.5px] text-[#5A5A5A] leading-relaxed font-normal">
-                  Building resilient architectures from first principles &mdash; with an emphasis on clarity, security boundaries, and reproducible cloud state across AWS and modern container environments.
+                  Building resilient architectures from first principles - with an emphasis on clarity, security boundaries, and reproducible cloud state across AWS and modern container environments.
                 </p>
               </div>
 

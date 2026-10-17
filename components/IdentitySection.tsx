@@ -16,7 +16,7 @@ export function IdentitySection() {
             Infrastructure as Code &bull; Systems Reliability
           </div>
           <p className="text-[15px] sm:text-[16.5px] text-[#6A6A6A] leading-relaxed font-normal pt-1">
-            Building resilient architectures from first principles &mdash; with an emphasis on clarity, security boundaries, and reproducible cloud state across AWS and modern container environments.
+            Building resilient architectures from first principles - with an emphasis on clarity, security boundaries, and reproducible cloud state across AWS and modern container environments.
           </p>
         </div>
       </div>

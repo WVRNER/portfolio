@@ -22,12 +22,12 @@ export async function generateMetadata({
 
   if (!post) {
     return {
-      title: "Article Not Found — WVRNER",
+      title: "Article Not Found | WVRNER",
     };
   }
 
   return {
-    title: `${post.title} — WVRNER`,
+    title: `${post.title} | WVRNER`,
     description: post.excerpt,
   };
 }
