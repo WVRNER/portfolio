@@ -25,7 +25,7 @@ provider "aws" {
 
 # The bucket that will hold your website's files
 resource "aws_s3_bucket" "site" {
-  bucket = "wvrner-site-370819018992"
+  bucket = local.site_bucket
 }
 
 # Keep it private: visitors never reach the bucket directly, only through CloudFront
@@ -141,4 +141,9 @@ resource "aws_s3_bucket_policy" "site" {
 # Print CloudFront's own address so we can test it
 output "cloudfront_domain" {
   value = aws_cloudfront_distribution.site.domain_name
+}
+data "aws_caller_identity" "me" {
+}
+locals {
+  site_bucket = "wvrner-site-${data.aws_caller_identity.me.account_id}"
 }
