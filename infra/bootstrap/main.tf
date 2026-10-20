@@ -7,8 +7,15 @@ terraform {
       version = "~> 6.0"
     }
   }
-}
 
+  backend "s3" {
+    bucket       = "wvrner-tfstate-370819018992"
+    key          = "bootstrap/terraform.tfstate"
+    region       = "eu-central-1"
+    use_lockfile = true
+    encrypt      = true
+  }
+}
 provider "aws" {
   region = "eu-central-1"
 }
