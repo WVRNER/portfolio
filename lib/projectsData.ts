@@ -52,21 +52,21 @@ export const PROJECTS_AND_LABS: ProjectOrLab[] = [
   {
     slug: "project-01",
     number: "01",
-    title: "",
+    title: "Project 01",
     kind: "PROJECT",
-    shortDescription: "",
-    technologies: [],
+    shortDescription: "Cloud Infrastructure & System Architecture",
+    technologies: ["AWS", "Terraform", "Docker", "CI/CD"],
     imageUrl: undefined, // Upload path for wide Project 01 image (e.g., "/projects/project-01.png")
-    relatedPostSlug: undefined, // Set to matching slug in lib/blogData.ts to enable READ WRITE-UP ↗
+    relatedPostSlug: "project-01",
   },
   {
     slug: "project-02",
     number: "02",
-    title: "",
+    title: "Project 02",
     kind: "LAB",
-    shortDescription: "",
-    technologies: [],
+    shortDescription: "Systems Engineering & Architectural Lab",
+    technologies: ["Kubernetes", "DevOps", "Telemetry", "Linux"],
     imageUrl: undefined, // Upload path for square Project/Lab 02 image (e.g., "/projects/project-02.png")
-    relatedPostSlug: undefined, // Set to matching slug in lib/blogData.ts to enable READ WRITE-UP ↗
+    relatedPostSlug: "project-02",
   },
 ];

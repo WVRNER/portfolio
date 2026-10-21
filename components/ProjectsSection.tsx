@@ -59,10 +59,7 @@ function ProjectInfo({
       BLOG_POSTS.some((p) => p.slug === project.relatedPostSlug)
   );
 
-  const targetUrl =
-    project.slug === "project-02" || project.kind?.toLowerCase() === "lab"
-      ? "/blog/lab"
-      : `/blog/${project.slug}`;
+  const targetUrl = `/blog/${project.slug}`;
 
   return (
     <div className={`space-y-3 pt-6 sm:pt-8 ${className}`}>
@@ -167,7 +164,7 @@ export function ProjectsGallery() {
           {/* Square Project/Lab 02 */}
           <div className="w-[420px] xl:w-[480px] shrink-0 h-full aspect-square">
             <Link
-              href="/blog/lab"
+              href="/blog/project-02"
               className="group block w-full h-full focus:outline-none"
               aria-label={project2.title ? `View ${project2.title}` : "View Lab"}
             >
@@ -206,7 +203,7 @@ export function ProjectsGallery() {
         <div className="space-y-4 pt-10 border-t border-[#0A0A0A]/10">
           <div className="w-[75%] sm:w-[65%] aspect-square">
             <Link
-              href="/blog/lab"
+              href="/blog/project-02"
               className="group block w-full h-full focus:outline-none"
             >
               <ProjectMediaTile project={project2} />
