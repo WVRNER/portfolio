@@ -3,40 +3,69 @@
 import React, { useRef, useEffect, useState, useCallback } from "react";
 
 /**
- * StoryScrollSequence - Awwwards Site of the Day Theatrical Typography Sequence
+ * StoryScrollSequence - Awwwards Site of the Day 3D Kinetic Typographic Drum
  * 
  * Strict User Requirements:
- * - REMOVED all extra copy (Core Stack, bullet points, Law of Invisible Systems, paragraphs)
- * - REMOVED the 3D canvas animation
- * - ONLY the two key sentences and identity:
+ * - REMOVED: "Scroll to experience • Click to jump"
+ * - REMOVED: "Silence", "Standard", "100%"
+ * - REMOVED: "THE MANIFESTO", "01 / 03"
+ * - ZERO UI clutter, badges, or pill buttons
+ * - ONLY the three core items:
  *   1. "You didn't notice anything."
  *   2. "That was the job."
  *   3. "Nima Hosseini"
- * - Replaced with a theatrical, cinematic scroll-driven kinetic typography transition
- * - DONT USE BLACK COLORS (Warm sunlit ivory ground #FAF6F0, deep warm espresso ink #1E1612)
- * - ZERO BOXES (No bordered rectangles, no outlined cards, no card grids, no 1px divider lines)
- * - ZERO EM DASHES (Strictly enforced)
- * - Alive and responsive: smooth 60fps lerped scroll scrub, cursor parallax tilt, chapter navigation
+ * - TRANSITION: Not boring! Smooth 3D cylindrical drum / kinetic wheel with infinite loop
+ *   seamlessly rotating from top to bottom and bottom to top.
+ * - DONT USE BLACK COLORS: Warm ivory ground (#FAF6F0), deep warm espresso ink (#1E1612), warm terracotta (#D94B26)
+ * - ZERO BOXES, ZERO CARDS, ZERO 1px LINES
+ * - ZERO EM DASHES
  */
+
+interface SlideItem {
+  type: "silence" | "standard" | "identity";
+}
+
+const DRUM_FACES: SlideItem[] = [
+  { type: "silence" },
+  { type: "standard" },
+  { type: "identity" },
+  { type: "silence" },
+  { type: "standard" },
+  { type: "identity" },
+];
 
 export function StoryScrollSequence() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
+  const [rotationAngle, setRotationAngle] = useState(0);
+  const [drumRadius, setDrumRadius] = useState(280);
 
-  // Active chapter state: 0 -> "You didn't notice anything.", 1 -> "That was the job.", 2 -> "Nima Hosseini"
-  const [progress, setProgress] = useState(0);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-
-  // Smooth lerp tracking for 60/120fps fluid transitions
-  const scrollTrackerRef = useRef({
-    currentProgress: 0,
-    targetProgress: 0,
+  // Velocity, drag, and scroll tracking
+  const physicsRef = useRef({
+    currentAngle: 0,
+    targetAngle: 0,
+    dragStartY: 0,
+    isDragging: false,
+    dragVelocity: 0,
     rafId: 0,
   });
 
-  const updateScroll = useCallback(() => {
+  // Calculate drum radius based on viewport height
+  const updateDimensions = useCallback(() => {
+    const h = window.innerHeight;
+    // Radius dynamically calibrated to viewport
+    if (h < 640) {
+      setDrumRadius(160);
+    } else if (h < 900) {
+      setDrumRadius(220);
+    } else {
+      setDrumRadius(280);
+    }
+  }, []);
+
+  // Update target angle based on scroll position
+  const handleScroll = useCallback(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || physicsRef.current.isDragging) return;
 
     const rect = container.getBoundingClientRect();
     const windowH = window.innerHeight;
@@ -44,285 +73,185 @@ export function StoryScrollSequence() {
 
     if (totalDistance <= 0) return;
 
-    const raw = -rect.top / totalDistance;
-    const clamped = Math.max(0, Math.min(1, raw));
-    scrollTrackerRef.current.targetProgress = clamped;
+    // Progress from 0.0 to 1.0 through the track
+    const progress = Math.max(0, Math.min(1, -rect.top / totalDistance));
+
+    // Full 360 degree rotation over the track (smooth loop back to origin)
+    physicsRef.current.targetAngle = progress * 360;
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      updateScroll();
-    };
+    updateDimensions();
+    handleScroll();
 
-    const handleResize = () => {
-      updateScroll();
-    };
-
+    window.addEventListener("resize", updateDimensions);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleResize);
-    updateScroll();
 
-    // 60fps Lerp Loop for organic fluid motion between scroll states
+    // 60/120fps Smooth Lerp Physics Loop
     const loop = () => {
-      const tracker = scrollTrackerRef.current;
-      tracker.currentProgress += (tracker.targetProgress - tracker.currentProgress) * 0.12;
-      
-      // Update state when change is noticeable
-      setProgress(tracker.currentProgress);
+      const p = physicsRef.current;
 
-      tracker.rafId = requestAnimationFrame(loop);
+      if (p.isDragging) {
+        p.currentAngle += (p.targetAngle - p.currentAngle) * 0.25;
+      } else {
+        // Smooth continuous approach with inertial easing
+        p.currentAngle += (p.targetAngle - p.currentAngle) * 0.1;
+      }
+
+      setRotationAngle(p.currentAngle);
+      p.rafId = requestAnimationFrame(loop);
     };
 
-    trackerLoop: {
-      scrollTrackerRef.current.rafId = requestAnimationFrame(loop);
-    }
+    physicsRef.current.rafId = requestAnimationFrame(loop);
 
     return () => {
+      window.removeEventListener("resize", updateDimensions);
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(scrollTrackerRef.current.rafId);
+      cancelAnimationFrame(physicsRef.current.rafId);
     };
-  }, [updateScroll]);
+  }, [updateDimensions, handleScroll]);
 
-  // Subtle interactive pointer parallax tilt for tactile depth
+  // Touch and Pointer Drag Physics for Direct Tactile Interaction
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const p = physicsRef.current;
+    p.isDragging = true;
+    p.dragStartY = e.clientY;
+    p.dragVelocity = 0;
+  };
+
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-    const normX = (clientX / innerWidth - 0.5) * 2;
-    const normY = (clientY / innerHeight - 0.5) * 2;
+    const p = physicsRef.current;
+    if (!p.isDragging) return;
 
-    setTilt({
-      x: normX * 8, // max 8 deg tilt
-      y: -normY * 8,
-    });
+    const deltaY = e.clientY - p.dragStartY;
+    p.dragStartY = e.clientY;
+
+    // Convert pixel delta to angular rotation (drag down moves wheel down)
+    const angularDelta = deltaY * 0.45;
+    p.targetAngle -= angularDelta;
+    p.dragVelocity = angularDelta;
   };
 
-  const handlePointerLeave = () => {
-    setTilt({ x: 0, y: 0 });
+  const handlePointerUp = () => {
+    const p = physicsRef.current;
+    p.isDragging = false;
+    // Add residual flick momentum
+    p.targetAngle -= p.dragVelocity * 4;
   };
-
-  // Clickable Chapter Navigation
-  const scrollToChapter = (chapterIndex: number) => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const rect = container.getBoundingClientRect();
-    const currentScrollY = window.scrollY;
-    const containerTop = currentScrollY + rect.top;
-    const totalDistance = rect.height - window.innerHeight;
-
-    // Targets: chapter 0 -> 0.15, chapter 1 -> 0.50, chapter 2 -> 0.85
-    const targetNormalized = chapterIndex === 0 ? 0.12 : chapterIndex === 1 ? 0.50 : 0.88;
-    const destination = containerTop + targetNormalized * totalDistance;
-
-    window.scrollTo({
-      top: destination,
-      behavior: "smooth",
-    });
-  };
-
-  // Chapter 1 Transition Dynamics: "You didn't notice anything."
-  // Prominent in 0.0 -> 0.35, fades out 0.35 -> 0.45
-  const ch1Opacity = Math.max(0, Math.min(1, 1 - (progress - 0.28) / 0.15));
-  const ch1TranslateY = progress > 0.28 ? -(progress - 0.28) * 240 : 0;
-  const ch1Scale = 1 + progress * 0.12;
-
-  // Chapter 2 Transition Dynamics: "That was the job."
-  // Enters 0.32 -> 0.44, peaks at 0.50, exits 0.62 -> 0.74
-  let ch2Opacity = 0;
-  if (progress < 0.32) {
-    ch2Opacity = 0;
-  } else if (progress <= 0.46) {
-    ch2Opacity = (progress - 0.32) / 0.14;
-  } else if (progress <= 0.62) {
-    ch2Opacity = 1;
-  } else if (progress <= 0.74) {
-    ch2Opacity = 1 - (progress - 0.62) / 0.12;
-  }
-  const ch2TranslateY = progress < 0.46
-    ? (0.46 - progress) * 160
-    : progress > 0.62
-    ? -(progress - 0.62) * 220
-    : 0;
-  const ch2Scale = progress < 0.46
-    ? 0.94 + (progress - 0.32) * 0.45
-    : 1 + (progress - 0.46) * 0.08;
-
-  // Chapter 3 Transition Dynamics: "Nima Hosseini"
-  // Enters 0.64 -> 0.78, fully present 0.78 -> 1.0
-  const ch3Opacity = Math.max(0, Math.min(1, (progress - 0.64) / 0.16));
-  const ch3TranslateY = progress < 0.78 ? (0.78 - progress) * 180 : 0;
-  const ch3Scale = 0.94 + Math.min(0.06, Math.max(0, (progress - 0.64) * 0.2));
-
-  // Determine active indicator (0, 1, or 2)
-  const activeChapter = progress < 0.38 ? 0 : progress < 0.68 ? 1 : 2;
 
   return (
     <section
       ref={containerRef}
       id="nima-hosseini"
       aria-label="Manifesto and Identity"
-      className="relative w-full h-[280vh] select-none"
+      className="relative w-full h-[320vh] select-none cursor-grab active:cursor-grabbing"
       style={{ backgroundColor: "#FAF6F0" }}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
     >
       <div id="story" className="absolute top-0" />
 
-      {/* AMBIENT ORGANIC WARM HALOS (NO GRIDS, NO DOT PATTERNS) */}
+      {/* AMBIENT WARM ORGANIC BACKGROUND HALOS (NO GRIDS, NO DOTS) */}
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
         <div
-          className="absolute top-1/4 -left-40 w-[650px] sm:w-[900px] h-[650px] sm:h-[900px] rounded-full opacity-40 blur-3xl transition-transform duration-1000"
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] sm:w-[1100px] h-[700px] sm:h-[1100px] rounded-full opacity-35 blur-3xl transition-opacity duration-1000"
           style={{
             background: "radial-gradient(circle, #E87A5D33 0%, transparent 70%)",
-            transform: `translate(${tilt.x * 2}px, ${tilt.y * 2}px)`,
           }}
         />
         <div
-          className="absolute bottom-1/4 -right-40 w-[600px] sm:w-[850px] h-[600px] sm:h-[850px] rounded-full opacity-35 blur-3xl transition-transform duration-1000"
+          className="absolute bottom-1/4 right-1/4 w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] rounded-full opacity-25 blur-3xl transition-opacity duration-1000"
           style={{
-            background: "radial-gradient(circle, #D9532F24 0%, transparent 70%)",
-            transform: `translate(${-tilt.x * 2}px, ${-tilt.y * 2}px)`,
+            background: "radial-gradient(circle, #D9532F22 0%, transparent 70%)",
           }}
         />
       </div>
 
-      {/* STICKY FULL-VIEWPORT THEATRICAL STAGE */}
-      <div
-        ref={stageRef}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
-        className="sticky top-0 h-[100dvh] w-full flex flex-col justify-between items-center px-6 sm:px-12 md:px-16 lg:px-24 py-12 sm:py-16 overflow-hidden"
-      >
+      {/* STICKY 3D THEATRICAL VIEWPORT */}
+      <div className="sticky top-0 h-[100dvh] w-full flex items-center justify-center overflow-hidden">
         
-        {/* Top Minimal Stage Eyebrow */}
-        <div className="w-full max-w-[1440px] flex items-center justify-between text-xs sm:text-sm font-semibold tracking-wider text-[#63483D]">
-          <span className="flex items-center gap-2">
-            <span
-              className="w-2.5 h-2.5 rounded-full transition-colors duration-500"
-              style={{ backgroundColor: activeChapter === 1 ? "#D94B26" : "#2B1D16" }}
-            />
-            <span>THE MANIFESTO</span>
-          </span>
-          <span className="font-mono text-xs opacity-60">
-            0{activeChapter + 1} / 03
-          </span>
-        </div>
-
-        {/* ========================================================================= */}
-        {/* CENTER TRANSITION STAGE (PARALLAX TILT + SEAMLESS TRANSITIONS)            */}
-        {/* ========================================================================= */}
+        {/* 3D PERSPECTIVE STAGE */}
         <div
-          className="relative w-full max-w-[1440px] flex-1 flex items-center justify-center transition-transform duration-300 ease-out"
+          className="relative w-full max-w-[1440px] h-[400px] sm:h-[500px] flex items-center justify-center"
           style={{
-            perspective: 1000,
-            transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
+            perspective: 1400,
+            perspectiveOrigin: "50% 50%",
           }}
         >
-
-          {/* ======================================================================= */}
-          {/* CHAPTER 1: "You didn't notice anything."                                */}
-          {/* ======================================================================= */}
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center text-center transition-all duration-100 pointer-events-none"
-            style={{
-              opacity: ch1Opacity,
-              transform: `translateY(${ch1TranslateY}px) scale(${ch1Scale})`,
-              visibility: ch1Opacity <= 0 ? "hidden" : "visible",
-            }}
-          >
-            <p
-              className="font-serif italic text-[clamp(3.2rem,9.5vw,10.5rem)] leading-[0.92] tracking-[-0.03em] max-w-6xl mx-auto"
-              style={{ color: "#2B1D16" }}
-            >
-              You didn’t notice anything.
-            </p>
-          </div>
-
-          {/* ======================================================================= */}
-          {/* CHAPTER 2: "That was the job."                                          */}
-          {/* ======================================================================= */}
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center text-center transition-all duration-100 pointer-events-none"
-            style={{
-              opacity: ch2Opacity,
-              transform: `translateY(${ch2TranslateY}px) scale(${ch2Scale})`,
-              visibility: ch2Opacity <= 0 ? "hidden" : "visible",
-            }}
-          >
-            <h2
-              className="font-display font-black text-[clamp(4.2rem,12.5vw,13.5rem)] leading-[0.84] tracking-[-0.05em] uppercase max-w-6xl mx-auto"
-              style={{ color: "#1E1612" }}
-            >
-              <span>That was the </span>
-              <span
-                className="inline-block transition-transform duration-300 hover:scale-105"
-                style={{ color: "#D94B26" }}
-              >
-                job.
-              </span>
-            </h2>
-          </div>
-
-          {/* ======================================================================= */}
-          {/* CHAPTER 3: "Nima Hosseini"                                              */}
-          {/* ======================================================================= */}
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center text-center transition-all duration-100 pointer-events-none"
-            style={{
-              opacity: ch3Opacity,
-              transform: `translateY(${ch3TranslateY}px) scale(${ch3Scale})`,
-              visibility: ch3Opacity <= 0 ? "hidden" : "visible",
-            }}
-          >
-            <h2
-              className="font-display font-black text-[clamp(4.6rem,14vw,15.5rem)] leading-[0.82] tracking-[-0.05em] uppercase max-w-7xl mx-auto"
-              style={{ color: "#1E1612" }}
-            >
-              Nima Hosseini
-            </h2>
-          </div>
-
-        </div>
-
-        {/* ========================================================================= */}
-        {/* BOTTOM THEATRICAL CHAPTER NAVIGATION                                      */}
-        {/* Smooth clickable pills to scrub directly between the 3 moments            */}
-        {/* ========================================================================= */}
-        <div className="w-full max-w-[1440px] flex items-center justify-between pt-4">
           
-          <div className="text-xs font-semibold tracking-wider text-[#75574A] hidden sm:block">
-            Scroll to experience &bull; Click to jump
-          </div>
+          {/* ROTATING 3D CYLINDRICAL DRUM */}
+          <div
+            className="relative w-full h-full flex items-center justify-center"
+            style={{
+              transformStyle: "preserve-3d",
+            }}
+          >
+            {DRUM_FACES.map((face, index) => {
+              // Base angle for face index (6 faces = 60 deg each)
+              const baseAngle = index * 60;
 
-          {/* Chapter Selector Dots */}
-          <div className="flex items-center gap-3 mx-auto sm:mx-0">
-            {[
-              { label: "Silence", index: 0 },
-              { label: "Standard", index: 1 },
-              { label: "Identity", index: 2 },
-            ].map((ch) => (
-              <button
-                key={ch.label}
-                type="button"
-                onClick={() => scrollToChapter(ch.index)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer ${
-                  activeChapter === ch.index
-                    ? "bg-[#1E1612] text-white shadow-sm scale-105"
-                    : "bg-[#FFFFFF]/60 hover:bg-[#FFFFFF] text-[#63483D]"
-                }`}
-              >
-                <span
-                  className="w-2 h-2 rounded-full transition-transform duration-300"
+              // Normalized relative angle in [-180, 180]
+              const totalAngle = (baseAngle - rotationAngle) % 360;
+              const normAngle = totalAngle > 180 ? totalAngle - 360 : totalAngle < -180 ? totalAngle + 360 : totalAngle;
+
+              // Back-face culling for clean 3D look
+              const isVisible = Math.abs(normAngle) <= 85;
+
+              // Smooth opacity curve: 1 at 0 deg, falls smoothly to 0 at 80 deg
+              const opacity = Math.max(0, Math.min(1, Math.cos((normAngle * Math.PI) / 180) ** 1.6));
+
+              // Spatial depth blur as face curves away
+              const blur = Math.max(0, (Math.abs(normAngle) - 15) * 0.08);
+
+              return (
+                <div
+                  key={index}
+                  className="absolute inset-0 flex items-center justify-center text-center px-4 sm:px-8"
                   style={{
-                    backgroundColor: activeChapter === ch.index ? "#D94B26" : "#A88E82",
+                    transformStyle: "preserve-3d",
+                    transform: `rotateX(${normAngle}deg) translateZ(${drumRadius}px)`,
+                    opacity: isVisible ? opacity : 0,
+                    filter: blur > 0.5 ? `blur(${blur}px)` : "none",
+                    visibility: isVisible ? "visible" : "hidden",
+                    backfaceVisibility: "hidden",
+                    pointerEvents: Math.abs(normAngle) < 25 ? "auto" : "none",
                   }}
-                />
-                <span>{ch.label}</span>
-              </button>
-            ))}
-          </div>
+                >
+                  {/* FACE 1: "You didn't notice anything." */}
+                  {face.type === "silence" && (
+                    <p
+                      className="font-serif italic text-[clamp(2.8rem,8.5vw,9.5rem)] leading-[0.92] tracking-[-0.03em] max-w-6xl mx-auto"
+                      style={{ color: "#2B1D16" }}
+                    >
+                      You didn’t notice anything.
+                    </p>
+                  )}
 
-          <div className="text-xs font-semibold tracking-wider text-[#75574A] hidden sm:block">
-            {Math.round(progress * 100)}%
+                  {/* FACE 2: "That was the job." */}
+                  {face.type === "standard" && (
+                    <h2
+                      className="font-display font-black text-[clamp(3.8rem,11.5vw,12.5rem)] leading-[0.84] tracking-[-0.05em] uppercase max-w-6xl mx-auto"
+                      style={{ color: "#1E1612" }}
+                    >
+                      <span>That was the </span>
+                      <span style={{ color: "#D94B26" }}>job.</span>
+                    </h2>
+                  )}
+
+                  {/* FACE 3: "Nima Hosseini" */}
+                  {face.type === "identity" && (
+                    <h2
+                      className="font-display font-black text-[clamp(4.2rem,13.5vw,15rem)] leading-[0.82] tracking-[-0.05em] uppercase max-w-7xl mx-auto"
+                      style={{ color: "#1E1612" }}
+                    >
+                      Nima Hosseini
+                    </h2>
+                  )}
+                </div>
+              );
+            })}
           </div>
 
         </div>
