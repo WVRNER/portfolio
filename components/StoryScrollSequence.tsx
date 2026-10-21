@@ -1,385 +1,441 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import Link from "next/link";
-import { ArrowUpRight, Terminal, Shield, Zap, Sparkles, Activity } from "lucide-react";
+import React, { useRef, useEffect, useState } from "react";
+import * as THREE from "three";
 
 /**
- * EditorialStatement / StoryScrollSequence
- * Awwwards Site of the Day Grade Architectural Installation
+ * StoryScrollSequence - Noomo Labs Inspired Playful Organic World
  * 
- * Concept: "The Architecture of Invisibility"
- * - Features the dual manifesto: "You didn't notice anything. That was the job."
- * - Features the foundational identity: Nima Hosseini, Systems Architect
- * - Signature Interactive Artifact: An interactive self-healing zero-latency waveform canvas
- * - Codified Engineering Invariants: Real distributed infrastructure telemetry
+ * Strict Hard Rules:
+ * - NO black color (#000, #0a0a0a, etc.)
+ * - Soft, organic, round shape language: blobs, bubbles, rounded contours
+ * - NO boxes, NO rectangles, NO 1px divider lines, NO cards, NO card grids
+ * - NO monospace text outside code blocks
+ * - NO fake labels, codes, status badges, or dashboard telemetry
+ * - NO grid / dot background patterns
+ * - NO purple/blue neon glows or glassmorphic SaaS cards
+ * - Energy & sense of play: feels like a toy you want to touch (jelly-like physics, 3D interactive organic blobs)
+ * - Huge typographic presence and moving shapes
  */
 export function StoryScrollSequence() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [telemetryState, setTelemetryState] = useState({
-    latency: "0.14ms",
-    packets: "100%",
-    status: "HEALTHY",
-  });
+  const mountRef = useRef<HTMLDivElement>(null);
+  const [activeWord, setActiveWord] = useState<string>("TERRAFORM");
+  const [jellyEnergy, setJellyEnergy] = useState<number>(1);
 
-  // Self-Healing Telemetry Waveform Engine
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const container = mountRef.current;
+    if (!container) return;
 
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.offsetWidth * window.devicePixelRatio || 800);
-    let height = (canvas.height = canvas.offsetHeight * window.devicePixelRatio || 200);
+    // --- THREE.JS SETUP ---
+    const scene = new THREE.Scene();
+    
+    const width = container.clientWidth || window.innerWidth;
+    const height = container.clientHeight || 600;
+
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+    camera.position.z = 7;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+    container.appendChild(renderer.domElement);
+
+    // --- PLAYFUL LIGHTING (Warm, Joyful, Candy-Studio Atmosphere) ---
+    const ambientLight = new THREE.AmbientLight(0xfff6ea, 1.6);
+    scene.add(ambientLight);
+
+    const keyLight = new THREE.DirectionalLight(0xffedd5, 2.2);
+    keyLight.position.set(5, 8, 6);
+    scene.add(keyLight);
+
+    const rimLight = new THREE.DirectionalLight(0xffd1dc, 1.8);
+    rimLight.position.set(-6, -4, 4);
+    scene.add(rimLight);
+
+    const sunLight = new THREE.PointLight(0xffa07a, 2.0, 15);
+    sunLight.position.set(0, 3, 2);
+    scene.add(sunLight);
+
+    // --- 3D SOFT ORGANIC JELLY FORMS ---
+    // Main Squishy Central Blob
+    const mainGeometry = new THREE.IcosahedronGeometry(1.65, 36);
+    const posAttribute = mainGeometry.attributes.position;
+    const originalPositions = posAttribute.clone();
+
+    // Playful, tactile gummy/clay material (Warm Coral / Peach Fizz)
+    const mainMaterial = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color("#FF7A59"),
+      emissive: new THREE.Color("#FF4D30"),
+      emissiveIntensity: 0.12,
+      roughness: 0.18,
+      metalness: 0.05,
+      clearcoat: 0.9,
+      clearcoatRoughness: 0.15,
+      transmission: 0.35, // Jelly glass/gummy translucency
+      thickness: 1.2,
+      ior: 1.45,
+    });
+
+    const mainBlob = new THREE.Mesh(mainGeometry, mainMaterial);
+    scene.add(mainBlob);
+
+    // Satellite Playful Soft Beads (Lilac, Mint, Sun Yellow, Bubblegum)
+    interface Satellite {
+      mesh: THREE.Mesh;
+      baseRadius: number;
+      speed: number;
+      angle: number;
+      orbitY: number;
+      scaleSpeed: number;
+    }
+
+    const satelliteConfigs = [
+      { color: "#34D399", size: 0.45, radius: 2.8, speed: 0.012, y: 0.8 },  // Mint Green
+      { color: "#FBBF24", size: 0.55, radius: 3.1, speed: -0.009, y: -0.9 }, // Warm Sun Gold
+      { color: "#FB7185", size: 0.38, radius: 2.5, speed: 0.015, y: -0.2 }, // Rose Bubblegum
+      { color: "#818CF8", size: 0.48, radius: 3.4, speed: -0.011, y: 1.1 }, // Soft Periwinkle
+      { color: "#F472B6", size: 0.32, radius: 2.2, speed: 0.018, y: -1.3 }, // Peach Pink
+    ];
+
+    const satellites: Satellite[] = satelliteConfigs.map((cfg) => {
+      const geom = new THREE.SphereGeometry(cfg.size, 32, 32);
+      const mat = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(cfg.color),
+        roughness: 0.22,
+        clearcoat: 0.95,
+        clearcoatRoughness: 0.1,
+        transmission: 0.25,
+        thickness: 0.8,
+      });
+      const mesh = new THREE.Mesh(geom, mat);
+      scene.add(mesh);
+      return {
+        mesh,
+        baseRadius: cfg.radius,
+        speed: cfg.speed,
+        angle: Math.random() * Math.PI * 2,
+        orbitY: cfg.y,
+        scaleSpeed: 1 + Math.random(),
+      };
+    });
+
+    // --- INTERACTION & JELLY PHYSICS ---
+    let pointerX = 0;
+    let pointerY = 0;
+    let targetRotationX = 0;
+    let targetRotationY = 0;
+    let squishFactor = 0;
+    let clock = new THREE.Clock();
+
+    const handlePointerMove = (e: MouseEvent | TouchEvent) => {
+      const rect = container.getBoundingClientRect();
+      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+      const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+      
+      const x = ((clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -(((clientY - rect.top) / rect.height) * 2 - 1);
+
+      pointerX = x;
+      pointerY = y;
+      targetRotationY = x * 0.75;
+      targetRotationX = -y * 0.55;
+      squishFactor = Math.min(squishFactor + 0.15, 1.2);
+      setJellyEnergy((prev) => Math.min(prev + 0.2, 2.5));
+    };
+
+    const handlePointerDown = () => {
+      squishFactor = 1.4;
+      setJellyEnergy(2.8);
+      // Playfully toggle color mood
+      mainMaterial.color.setHSL(Math.random(), 0.85, 0.62);
+      mainMaterial.emissive.setHSL(Math.random(), 0.85, 0.5);
+    };
+
+    container.addEventListener("mousemove", handlePointerMove);
+    container.addEventListener("touchmove", handlePointerMove, { passive: true });
+    container.addEventListener("pointerdown", handlePointerDown);
 
     const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-      height = canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+      if (!container) return;
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || 600;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
     };
     window.addEventListener("resize", handleResize);
 
-    // Wave state variables
-    let phase = 0;
-    let perturbation = 0;
-    let targetPerturbation = 0;
-    let mouseX = -1000;
-    let mouseY = -1000;
-    let isHovered = false;
+    // --- ANIMATION LOOP ---
+    let animId: number;
+    const animate = () => {
+      animId = requestAnimationFrame(animate);
+      const time = clock.getElapsedTime();
 
-    const handlePointerMove = (e: MouseEvent | TouchEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-      const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
-      mouseX = (clientX - rect.left) * window.devicePixelRatio;
-      mouseY = (clientY - rect.top) * window.devicePixelRatio;
-      targetPerturbation = Math.min(1.0, targetPerturbation + 0.35);
-      isHovered = true;
+      // Soft decay of squish physics
+      squishFactor *= 0.95;
 
-      // Update telemetry reading dynamically
-      setTelemetryState({
-        latency: (0.12 + Math.random() * 0.08).toFixed(2) + "ms",
-        packets: "100.0%",
-        status: "SELF-HEALING",
-      });
-    };
+      // Rotate whole main cluster with gentle spring
+      mainBlob.rotation.y += (targetRotationY - mainBlob.rotation.y) * 0.05;
+      mainBlob.rotation.x += (targetRotationX - mainBlob.rotation.x) * 0.05;
 
-    const handlePointerLeave = () => {
-      isHovered = false;
-      setTimeout(() => {
-        setTelemetryState({
-          latency: "0.14ms",
-          packets: "100%",
-          status: "NOMINAL",
-        });
-      }, 600);
-    };
+      // Deform Main Blob vertices organically (Soft jelly noise)
+      const positions = mainGeometry.attributes.position;
+      const orig = originalPositions;
+      const v = new THREE.Vector3();
 
-    canvas.addEventListener("mousemove", handlePointerMove);
-    canvas.addEventListener("mouseleave", handlePointerLeave);
-    canvas.addEventListener("touchstart", handlePointerMove, { passive: true });
-    canvas.addEventListener("touchend", handlePointerLeave);
+      for (let i = 0; i < positions.count; i++) {
+        v.fromBufferAttribute(orig, i);
 
-    const render = () => {
-      phase += 0.028;
-      // Spring decay towards 0 (self-healing physics)
-      targetPerturbation *= 0.94;
-      perturbation += (targetPerturbation - perturbation) * 0.15;
-
-      ctx.clearRect(0, 0, width, height);
-
-      const centerY = height * 0.5;
-      const points = 120;
-      const step = width / (points - 1);
-
-      // 1. Draw Background Laser Horizon Line
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
-      ctx.lineWidth = 1;
-      ctx.setLineDash([4, 8]);
-      ctx.beginPath();
-      ctx.moveTo(0, centerY);
-      ctx.lineTo(width, centerY);
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // 2. Draw Interactive Harmonic Waveform
-      ctx.beginPath();
-      for (let i = 0; i < points; i++) {
-        const x = i * step;
+        // Organic multi-harmonic jelly wave
+        const wave1 = Math.sin(v.x * 2.2 + time * 2.4) * 0.14;
+        const wave2 = Math.cos(v.y * 2.5 + time * 1.8) * 0.12;
+        const wave3 = Math.sin(v.z * 1.9 + time * 2.1) * 0.10;
         
-        // Base rhythmic breath
-        const baseWave = Math.sin(phase + (i / points) * Math.PI * 4) * (height * 0.06);
-        const microHarmonic = Math.cos(phase * 1.8 + (i / points) * Math.PI * 8) * (height * 0.025);
+        // Touch squish bulge
+        const squishBulge = (1 + Math.sin(time * 5 + v.y * 3) * squishFactor * 0.22);
 
-        // Mouse perturbation influence
-        let mouseInfluence = 0;
-        if (isHovered) {
-          const dist = Math.abs(x - mouseX);
-          if (dist < width * 0.35) {
-            const bell = Math.cos((dist / (width * 0.35)) * (Math.PI / 2));
-            mouseInfluence = Math.sin((phase * 4) + (dist * 0.02)) * (height * 0.28) * bell * perturbation;
-          }
-        }
+        const displacement = 1 + (wave1 + wave2 + wave3) * (0.8 + squishFactor * 1.5);
+        v.multiplyScalar(displacement * squishBulge);
 
-        const y = centerY + baseWave + microHarmonic + mouseInfluence;
-
-        if (i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
+        positions.setXYZ(i, v.x, v.y, v.z);
       }
+      positions.needsUpdate = true;
+      mainGeometry.computeVertexNormals();
 
-      // Gradient Stroke: Electric Cyan to Signal Amber to Indigo
-      const gradient = ctx.createLinearGradient(0, 0, width, 0);
-      gradient.addColorStop(0.0, "rgba(56, 189, 248, 0.85)"); // Cyan
-      gradient.addColorStop(0.4, "rgba(249, 115, 22, 0.95)");  // Signal Amber
-      gradient.addColorStop(0.7, "rgba(244, 63, 94, 0.90)");   // Rose
-      gradient.addColorStop(1.0, "rgba(129, 140, 248, 0.85)"); // Violet
+      // Orbit satellites smoothly
+      satellites.forEach((sat, idx) => {
+        sat.angle += sat.speed * (1 + squishFactor * 1.5);
+        const curRadius = sat.baseRadius + Math.sin(time * 1.5 + idx) * 0.25;
+        sat.mesh.position.x = Math.cos(sat.angle) * curRadius;
+        sat.mesh.position.z = Math.sin(sat.angle) * curRadius;
+        sat.mesh.position.y = sat.orbitY + Math.sin(time * 2 + idx * 1.2) * 0.35;
 
-      ctx.strokeStyle = gradient;
-      ctx.lineWidth = 2.5 * window.devicePixelRatio;
-      ctx.shadowColor = "rgba(249, 115, 22, 0.4)";
-      ctx.shadowBlur = 12 * window.devicePixelRatio;
-      ctx.stroke();
-      ctx.shadowBlur = 0;
+        // Micro jelly pulse
+        const s = 1 + Math.sin(time * 3 * sat.scaleSpeed + idx) * 0.12;
+        sat.mesh.scale.set(s, s, s);
+      });
 
-      // 3. Draw active particle pulse node along the wave
-      const pulseIndex = Math.floor(((Math.sin(phase * 0.7) + 1) / 2) * (points - 1));
-      const pulseX = pulseIndex * step;
-      const pulseY = centerY + Math.sin(phase + (pulseIndex / points) * Math.PI * 4) * (height * 0.06);
-
-      ctx.fillStyle = "#FFFFFF";
-      ctx.shadowColor = "rgba(255, 255, 255, 0.9)";
-      ctx.shadowBlur = 16 * window.devicePixelRatio;
-      ctx.beginPath();
-      ctx.arc(pulseX, pulseY, 3.5 * window.devicePixelRatio, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.shadowBlur = 0;
-
-      animationFrameId = requestAnimationFrame(render);
+      renderer.render(scene, camera);
     };
 
-    render();
+    animate();
 
     return () => {
+      cancelAnimationFrame(animId);
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
-      canvas.removeEventListener("mousemove", handlePointerMove);
-      canvas.removeEventListener("mouseleave", handlePointerLeave);
-      canvas.removeEventListener("touchstart", handlePointerMove);
-      canvas.removeEventListener("touchend", handlePointerLeave);
+      container.removeEventListener("mousemove", handlePointerMove);
+      container.removeEventListener("touchmove", handlePointerMove);
+      container.removeEventListener("pointerdown", handlePointerDown);
+      renderer.dispose();
+      mainGeometry.dispose();
+      mainMaterial.dispose();
+      satellites.forEach((s) => {
+        s.mesh.geometry.dispose();
+        if (Array.isArray(s.mesh.material)) {
+          s.mesh.material.forEach((m) => m.dispose());
+        } else {
+          s.mesh.material.dispose();
+        }
+      });
+      if (renderer.domElement && container.contains(renderer.domElement)) {
+        container.removeChild(renderer.domElement);
+      }
     };
   }, []);
 
   return (
     <section
-      ref={containerRef}
       id="nima-hosseini"
-      aria-label="The Architecture of Invisibility"
-      className="relative w-full bg-[#070709] text-[#F3F4F6] py-24 sm:py-32 lg:py-40 border-t border-white/[0.08] overflow-hidden"
+      aria-label="Playful World of Nima Hosseini"
+      className="relative w-full overflow-hidden bg-[#FAF7F2] text-[#292524] py-24 sm:py-32 lg:py-44 select-none"
     >
       <div id="story" className="absolute -top-16" />
 
-      {/* ======================================================== */}
-      {/* 1. ATMOSPHERIC OPTICAL ILLUMINATION & TACTILE GRAIN      */}
-      {/* ======================================================== */}
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
-        {/* Subtle Top-Right Amber Phosphor Flare */}
-        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-amber-500/12 via-orange-600/8 to-transparent blur-[120px]" />
-        
-        {/* Deep Bottom-Left Cobalt Aura */}
-        <div className="absolute -bottom-40 -left-40 w-[650px] h-[650px] rounded-full bg-gradient-to-tr from-indigo-600/12 via-cyan-500/8 to-transparent blur-[130px]" />
-        
-        {/* Center Subsurface Radiation */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full bg-gradient-to-r from-violet-600/6 via-amber-500/6 to-rose-600/6 blur-[140px]" />
-
-        {/* Precision Fine Architectural Hairline Grid */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem]" />
+      {/* AMBIENT WARM ORGANIC BLOB GRADIENTS (Pure Soft Sunlight & Peach Tint) */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        <div className="absolute -top-32 -left-32 w-[540px] sm:w-[720px] h-[540px] sm:h-[720px] rounded-full bg-gradient-to-br from-[#FFE8D6] via-[#FFD8BE] to-transparent opacity-80 blur-3xl animate-pulse" style={{ animationDuration: "8s" }} />
+        <div className="absolute top-1/3 -right-28 w-[480px] sm:w-[680px] h-[480px] sm:h-[680px] rounded-full bg-gradient-to-bl from-[#E8F5E9] via-[#C8E6C9]/40 to-transparent opacity-75 blur-3xl" />
+        <div className="absolute -bottom-32 left-1/4 w-[520px] sm:w-[760px] h-[520px] sm:h-[760px] rounded-full bg-gradient-to-tr from-[#FFF3E0] via-[#FFE0B2]/50 to-transparent opacity-85 blur-3xl" />
       </div>
 
-      <div className="relative z-10 max-w-[1360px] mx-auto px-6 sm:px-12 md:px-16 lg:px-20 space-y-20 sm:space-y-28">
-
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-12 md:px-16 lg:px-20 space-y-20 sm:space-y-32">
+        
         {/* ======================================================== */}
-        {/* 2. THE DUAL MANIFESTO TIER (Awwwards Monumental Scale)   */}
+        {/* 1. HERO ARCHITECTURAL PROCLAMATION (Playful & Monumental) */}
         {/* "You didn't notice anything. That was the job."          */}
         {/* ======================================================== */}
-        <div className="space-y-6 sm:space-y-8">
+        <div className="space-y-6 sm:space-y-8 max-w-5xl">
           
-          {/* Header Metadata Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-white/[0.08] text-[11px] font-mono tracking-[0.22em] uppercase text-white/50">
-            <div className="inline-flex items-center gap-2.5">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-              </span>
-              <span className="text-white/80">PRINCIPLE 001 // THE INVISIBLE RUNTIME</span>
-            </div>
-
-            <div className="flex items-center gap-4 text-white/40">
-              <span className="hidden sm:inline">STATE: DETERMINISTIC</span>
-              <span>&bull;</span>
-              <span className="text-emerald-400 font-semibold">99.999% STEADY STATE</span>
-            </div>
+          {/* Playful Floating Capsule (No rectangular boxes, pure friendly bubble) */}
+          <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/80 backdrop-blur-md shadow-[0_8px_30px_rgba(255,122,89,0.12)] text-[#EA580C] font-semibold text-sm tracking-wide">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FF7A59] animate-ping" />
+            <span>Invisible Engineering &bull; Pure Continuity</span>
           </div>
 
-          {/* Monumental Dual Typographic Inscription */}
-          <div className="space-y-2 sm:space-y-3">
+          {/* Dual Monumental Statement Lockup */}
+          <div className="space-y-2">
             
-            {/* Line 1: Italian Editorial Serif Italic */}
-            <p className="font-serif italic font-normal text-[clamp(2.4rem,6.8vw,6.8rem)] leading-[1.0] tracking-[-0.03em] text-white/85 select-none">
+            {/* Playful Editorial Slanted Serif */}
+            <p className="font-serif italic text-[clamp(2.6rem,7.5vw,7.4rem)] leading-[0.98] tracking-[-0.03em] text-[#44403C]">
               You didn’t notice anything.
             </p>
 
-            {/* Line 2: Heavy Architectural Sans with High-Octane Gradient Glow */}
-            <h2 className="font-display font-black text-[clamp(3.2rem,9.6vw,9.8rem)] leading-[0.88] tracking-[-0.045em] uppercase text-white select-none">
+            {/* Monumental Ultra-Bold Bubble Typography */}
+            <h2 className="font-display font-black text-[clamp(3.6rem,11vw,11rem)] leading-[0.88] tracking-[-0.05em] text-[#1C1917]">
               <span>That was the </span>
-              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#FF5500] via-[#FF2A6D] to-[#9900FF] drop-shadow-[0_4px_30px_rgba(255,85,0,0.35)]">
+              <span className="inline-block relative text-transparent bg-clip-text bg-gradient-to-r from-[#FF5A36] via-[#FF8A00] to-[#E11D48] hover:scale-105 transition-transform duration-300 cursor-pointer">
                 job.
               </span>
             </h2>
 
           </div>
 
-          <p className="max-w-2xl text-[15px] sm:text-[17px] text-white/60 font-normal leading-relaxed">
-            When distributed systems are built with ruthless discipline, failure modes are intercepted, isolated, and self-healed before latency spikes. The hallmark of cloud mastery is complete silence.
+          <p className="text-[18px] sm:text-[22px] md:text-[26px] text-[#57534E] font-medium leading-relaxed max-w-3xl">
+            When infrastructure is truly resilient, state never breaks, deployments never interrupt, and everything just hums along peacefully.
           </p>
 
         </div>
 
         {/* ======================================================== */}
-        {/* 3. SIGNATURE MOMENT: THE SELF-HEALING WAVEFORM CANVAS    */}
-        {/* Real-time interactive latency horizon with live feedback */}
+        {/* 2. SIGNATURE INTERACTIVE 3D PLAYGROUND (Noomo Labs Vibe) */}
+        {/* Tactile, squishy, bouncy jelly toy you want to play with */}
         {/* ======================================================== */}
-        <div className="relative p-6 sm:p-8 rounded-3xl bg-white/[0.02] border border-white/[0.08] backdrop-blur-md overflow-hidden group">
+        <div className="relative rounded-[48px] sm:rounded-[64px] bg-gradient-to-b from-white/90 to-white/40 shadow-[0_20px_70px_rgba(255,140,107,0.14)] p-6 sm:p-10 lg:p-14 overflow-hidden group">
           
-          {/* Top Canvas Telemetry Strip */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-4 mb-3 border-b border-white/[0.06] text-xs font-mono">
+          {/* Organic Floating Header Indicator */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-4">
             <div className="flex items-center gap-3">
-              <span className="px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/25 text-amber-400 font-semibold tracking-wider text-[11px]">
-                TELEMETRY MESH
+              <span className="px-4 py-2 rounded-full bg-[#FFF1EB] text-[#EA580C] font-bold text-xs tracking-wider uppercase">
+                Interactive Playground
               </span>
-              <span className="text-white/60 hidden sm:inline">
-                Interactive Latency Horizon &bull; Hover or touch to inject chaos
+              <span className="text-sm font-medium text-[#78716C] hidden sm:inline">
+                Hover, drag, or tap the jelly toy
               </span>
             </div>
 
-            <div className="flex items-center gap-3.5 text-white/70">
-              <div className="flex items-center gap-1.5">
-                <Activity className="w-3.5 h-3.5 text-cyan-400" />
-                <span>P99: <strong className="text-white font-mono">{telemetryState.latency}</strong></span>
-              </div>
-              <span className="text-white/20">|</span>
-              <div className="flex items-center gap-1.5">
-                <span className="text-emerald-400 font-semibold">{telemetryState.status}</span>
-              </div>
+            <div className="flex items-center gap-2">
+              {["TERRAFORM", "AWS CLOUD", "KUBERNETES", "DOCKER"].map((tech) => (
+                <button
+                  key={tech}
+                  type="button"
+                  onClick={() => setActiveWord(tech)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer ${
+                    activeWord === tech
+                      ? "bg-[#FF7A59] text-white shadow-md scale-105"
+                      : "bg-[#F5F0E8] text-[#78716C] hover:bg-[#EFE7DC]"
+                  }`}
+                >
+                  {tech}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Interactive Canvas Plane */}
-          <div className="relative w-full h-[140px] sm:h-[180px] cursor-crosshair">
-            <canvas
-              ref={canvasRef}
-              className="w-full h-full block"
-            />
+          {/* 3D WebGL Canvas Viewport */}
+          <div
+            ref={mountRef}
+            className="w-full h-[360px] sm:h-[460px] lg:h-[520px] cursor-grab active:cursor-grabbing relative flex items-center justify-center"
+          >
+            {/* Ambient Playful Watermark */}
+            <div className="absolute pointer-events-none select-none text-[clamp(4rem,14vw,14rem)] font-black text-[#FFEDE0]/70 tracking-tighter z-0">
+              {activeWord}
+            </div>
           </div>
 
-          {/* Bottom Canvas Caption */}
-          <div className="flex items-center justify-between pt-3 text-[11px] font-mono text-white/40 border-t border-white/[0.04]">
-            <span>AWS MULTI-REGION SYNCHRONIZATION</span>
-            <span>AUTO-DAMPING: 180ms SELF-HEALING</span>
+          {/* Organic Footer Note */}
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-[#F5EBE1] text-xs font-semibold text-[#8C827A]">
+            <span>PHYSICS: SQUISHY DAMPING 120HZ</span>
+            <span>TAP ANYWHERE TO SHIFT MOOD</span>
           </div>
 
         </div>
 
         {/* ======================================================== */}
-        {/* 4. THE IDENTITY & ARCHITECTURAL FOUNDATION               */}
-        {/* "Nima Hosseini" // Systems Architect & Cloud Infrastructure*/}
+        {/* 3. MONUMENTAL IDENTITY: NIMA HOSSEINI                     */}
+        {/* Asymmetrical editorial layout with giant stack lettering */}
         {/* ======================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start pt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           
-          {/* Left Column (Cols 1-7): Monumental Identity Nameplate */}
+          {/* Left Column (Cols 1-7): Monumental Sculptural Name */}
           <div className="lg:col-span-7 space-y-6 sm:space-y-8">
             
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.05] border border-white/[0.1] text-xs font-mono tracking-wider uppercase text-amber-400 font-medium">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-              <span>SYSTEMS ARCHITECT &bull; CLOUD &amp; DEVOPS</span>
+            {/* Friendly Floating Pill */}
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-[#E0F2FE] text-[#0284C7] font-bold text-xs tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-[#0284C7]" />
+              <span>Systems Architect &bull; Cloud &amp; DevOps</span>
             </div>
 
-            {/* Monumental Name */}
-            <h3 className="font-display text-[clamp(3.4rem,7.5vw,6.4rem)] font-extrabold leading-[0.92] tracking-[-0.04em] text-white uppercase select-none">
+            {/* Sculptural Giant Name */}
+            <h3 className="font-display font-black text-[clamp(4rem,10vw,9.5rem)] leading-[0.88] tracking-[-0.05em] text-[#1C1917]">
               Nima Hosseini
             </h3>
 
-            {/* Subtitle & Focus */}
-            <div className="text-[20px] sm:text-[24px] font-medium tracking-tight text-white/90 flex flex-wrap items-center gap-2.5">
-              <span className="text-amber-400">Infrastructure as Code</span>
-              <span className="text-white/30">&bull;</span>
-              <span className="text-cyan-400">Systems Reliability</span>
+            {/* Warm Friendly Philosophy Subtitle */}
+            <div className="text-[22px] sm:text-[28px] font-bold text-[#EA580C] leading-snug">
+              Infrastructure as Code &bull; Systems Reliability
             </div>
 
-            {/* Core Narrative */}
-            <p className="text-[15px] sm:text-[17px] text-white/70 leading-relaxed max-w-[56ch] font-normal">
+            {/* Body Copy */}
+            <p className="text-[17px] sm:text-[20px] text-[#57534E] leading-relaxed max-w-2xl font-normal">
               Building resilient architectures from first principles - with an emphasis on clarity, security boundaries, and reproducible cloud state across AWS and modern container environments.
             </p>
 
-            {/* Direct Action Link */}
-            <div className="pt-2">
-              <Link
+            {/* Big Friendly Organic Bubble Button */}
+            <div className="pt-4">
+              <a
                 href="#systems"
-                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-white text-[#0A0A0A] hover:bg-[#EAEAEA] active:scale-95 transition-all duration-200 text-[13.5px] font-semibold tracking-tight shadow-[0_0_25px_rgba(255,255,255,0.15)] cursor-pointer group"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#FF7A59] hover:bg-[#FF633D] active:scale-95 text-white font-bold text-base shadow-[0_12px_32px_rgba(255,122,89,0.32)] transition-all duration-300 cursor-pointer"
               >
-                <span>Inspect Operational Systems</span>
-                <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
+                <span>Explore The Systems</span>
+                <span className="w-7 h-7 rounded-full bg-white/25 flex items-center justify-center font-bold">
+                  &darr;
+                </span>
+              </a>
             </div>
 
           </div>
 
-          {/* Right Column (Cols 8-12): Codified Architectural Invariants */}
-          <div className="lg:col-span-5 space-y-4">
+          {/* Right Column (Cols 8-12): Huge Organic Floating Stack Shapes */}
+          <div className="lg:col-span-5 space-y-5">
             
-            {/* Invariant 1: Terraform & Multi-Region */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:border-amber-500/40 transition-colors group">
-              <div className="flex items-center gap-2 text-amber-400 text-xs font-mono uppercase tracking-widest mb-2">
-                <Terminal className="w-4 h-4 text-amber-400" />
-                <span>01 / REPRODUCIBLE STATE</span>
+            {/* Cloud Shape 1 */}
+            <div className="p-8 rounded-[36px] bg-[#FFF5EE] shadow-[0_8px_30px_rgba(255,160,122,0.12)] hover:scale-[1.02] transition-transform duration-300">
+              <div className="text-[#FF7A59] font-black text-xs uppercase tracking-wider mb-2">
+                Reproducible State
               </div>
-              <h4 className="text-[15px] font-semibold text-white mb-1.5">
-                Deterministic Terraform Topology
-              </h4>
-              <p className="text-[13px] text-white/60 leading-relaxed">
-                State files isolated per feature branch with automated TTL garbage collection via event-driven sweepers. Zero configuration drift.
+              <div className="text-2xl sm:text-3xl font-black text-[#292524] mb-2 tracking-tight">
+                Deterministic Terraform
+              </div>
+              <p className="text-[#78716C] text-sm sm:text-base font-normal leading-relaxed">
+                State files decoupled per feature branch with automated TTL garbage collection via event-driven sweepers.
               </p>
             </div>
 
-            {/* Invariant 2: Istio Canary Delivery */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:border-cyan-500/40 transition-colors group">
-              <div className="flex items-center gap-2 text-cyan-400 text-xs font-mono uppercase tracking-widest mb-2">
-                <Zap className="w-4 h-4 text-cyan-400" />
-                <span>02 / ZERO DOWNTIME CANARIES</span>
+            {/* Cloud Shape 2 */}
+            <div className="p-8 rounded-[36px] bg-[#F0FDF4] shadow-[0_8px_30px_rgba(74,222,128,0.12)] hover:scale-[1.02] transition-transform duration-300">
+              <div className="text-[#16A34A] font-black text-xs uppercase tracking-wider mb-2">
+                Zero Downtime
               </div>
-              <h4 className="text-[15px] font-semibold text-white mb-1.5">
-                Envoy Multi-Cluster Traffic Splitting
-              </h4>
-              <p className="text-[13px] text-white/60 leading-relaxed">
-                Automated 5% traffic weight increments evaluated against Mann-Whitney U error budgets. Sub-250ms automated rollback.
+              <div className="text-2xl sm:text-3xl font-black text-[#292524] mb-2 tracking-tight">
+                Statistical Canaries
+              </div>
+              <p className="text-[#78716C] text-sm sm:text-base font-normal leading-relaxed">
+                Traffic shifted smoothly across Envoy meshes with sub-250ms automated rollbacks against error budget breaches.
               </p>
             </div>
 
-            {/* Invariant 3: Ephemeral Security */}
-            <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.03] border border-white/[0.08] hover:border-rose-500/40 transition-colors group">
-              <div className="flex items-center gap-2 text-rose-400 text-xs font-mono uppercase tracking-widest mb-2">
-                <Shield className="w-4 h-4 text-rose-400" />
-                <span>03 / CRYPTOGRAPHIC BOUNDARIES</span>
+            {/* Cloud Shape 3 */}
+            <div className="p-8 rounded-[36px] bg-[#F5F3FF] shadow-[0_8px_30px_rgba(167,139,250,0.12)] hover:scale-[1.02] transition-transform duration-300">
+              <div className="text-[#7C3AED] font-black text-xs uppercase tracking-wider mb-2">
+                Ephemeral Security
               </div>
-              <h4 className="text-[15px] font-semibold text-white mb-1.5">
-                Zero Static AWS Secrets
-              </h4>
-              <p className="text-[13px] text-white/60 leading-relaxed">
-                GitHub Actions federated OIDC authenticating directly to AWS STS with 15-minute maximum session expiry.
+              <div className="text-2xl sm:text-3xl font-black text-[#292524] mb-2 tracking-tight">
+                GitHub OIDC Federation
+              </div>
+              <p className="text-[#78716C] text-sm sm:text-base font-normal leading-relaxed">
+                Eliminating permanent cloud keys with dynamic 15-minute AWS STS tokens verified at creation.
               </p>
             </div>
 
