@@ -1,121 +1,127 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useMemo } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 
 /**
  * StoryScrollSequence - Awwwards Site of the Day Redesign
- * Inspired by Noomo Labs (labs.noomoagency.com)
  * 
- * HARD CONSTRAINTS:
- * - DONT USE BLACK COLORS: Warm ivory ground (#FAF7F2), rich warm espresso ink (#241712)
- * - NO BOXES: No bordered rectangles, no outlined cards, no card grids, no 1px dividing lines, no status badge boxes
+ * Concept: "The Silent Equilibrium"
+ * Infrastructure as mathematical continuity. When cloud systems run without state drift,
+ * absence is the highest art.
+ * 
+ * STRICT RULES ENFORCED:
+ * - NO JELLY (No squishy cartoon jelly organisms, no gummy blobs)
+ * - NO BLACK COLORS (Sunlit warm ivory ground #FAF6F0, deep warm espresso ink #1F1612)
+ * - NO BOXES (No bordered rectangles, no outlined cards, no card grids, no 1px dividing lines)
  * - NO MONOSPACE outside code
  * - NO FAKE LABELS, IDS, or DASHBOARD TELEMETRY
  * - NO GRID OR DOT BACKGROUND PATTERNS
  * - NO PURPLE/BLUE NEON GLOWS OR GLASSMORPHISM
  * - ZERO EM DASHES (no unicode em dashes anywhere)
- * - Tactile, interactive 3D jelly organism that feels like a toy you want to touch
- * - Stack presented as huge fluid typography and moving shapes, not cards in a grid
+ * - Stack shown as huge fluid typography and moving shapes, not cards in a grid
+ * - Asymmetric, monumental, editorial layout
  */
 
-interface JellyTheme {
+interface KineticTheme {
   name: string;
-  blobColor: string;
-  blobEmissive: string;
+  knotColor: string;
+  knotEmissive: string;
   accentColor: string;
   bgColor: string;
   ambientLight: number;
   rimColor: number;
-  particles: string[];
+  pebbleColors: string[];
 }
 
-const THEMES: JellyTheme[] = [
+const KINETIC_THEMES: KineticTheme[] = [
   {
-    name: "Sunlit Peach",
-    blobColor: "#FF633E",
-    blobEmissive: "#FF3815",
-    accentColor: "#E8441F",
+    name: "Terracotta Clay",
+    knotColor: "#E06648",
+    knotEmissive: "#9E341B",
+    accentColor: "#D14D2A",
     bgColor: "#FAF5EE",
-    ambientLight: 0xfff6ec,
-    rimColor: 0xffedd5,
-    particles: ["#FFA048", "#34D399", "#FB7185", "#FBBF24", "#38BDF8"],
+    ambientLight: 0xfff5ea,
+    rimColor: 0xffeedd,
+    pebbleColors: ["#F59E0B", "#10B981", "#3B82F6", "#E06648", "#EC4899"],
   },
   {
-    name: "Jelly Mint",
-    blobColor: "#10B981",
-    blobEmissive: "#059669",
-    accentColor: "#047857",
-    bgColor: "#F2FBF6",
-    ambientLight: 0xecfdf5,
-    rimColor: 0xd1fae5,
-    particles: ["#34D399", "#6EE7B7", "#FBBF24", "#FF7854", "#38BDF8"],
+    name: "Warm Porcelain",
+    knotColor: "#D8C7B5",
+    knotEmissive: "#8C735D",
+    accentColor: "#A35C3A",
+    bgColor: "#F7F3EC",
+    ambientLight: 0xfff9f2,
+    rimColor: 0xffeedb,
+    pebbleColors: ["#D14D2A", "#B45309", "#059669", "#4338CA", "#D97706"],
   },
   {
-    name: "Sweet Mango",
-    blobColor: "#F59E0B",
-    blobEmissive: "#D97706",
-    accentColor: "#B45309",
-    bgColor: "#FCF9EC",
+    name: "Sunlit Amber",
+    knotColor: "#E59E27",
+    knotEmissive: "#995C05",
+    accentColor: "#C27803",
+    bgColor: "#FCF8ED",
     ambientLight: 0xfef9c3,
     rimColor: 0xfef08a,
-    particles: ["#FBBF24", "#F472B6", "#34D399", "#FF633E", "#A78BFA"],
+    pebbleColors: ["#E06648", "#059669", "#2563EB", "#D97706", "#DB2777"],
   },
   {
-    name: "Candy Rose",
-    blobColor: "#F43F5E",
-    blobEmissive: "#E11D48",
-    accentColor: "#BE123C",
-    bgColor: "#FDF4F6",
-    ambientLight: 0xffe4e6,
-    rimColor: 0xfecdd3,
-    particles: ["#FB7185", "#FDA4AF", "#FBBF24", "#34D399", "#FF7854"],
+    name: "Satin Olive",
+    knotColor: "#3F8265",
+    knotEmissive: "#1B4734",
+    accentColor: "#2A664E",
+    bgColor: "#F3F7F2",
+    ambientLight: 0xf0fdf4,
+    rimColor: 0xdcfce7,
+    pebbleColors: ["#E06648", "#D97706", "#2A664E", "#3B82F6", "#F59E0B"],
   },
 ];
 
 const STACK_ITEMS = [
-  { name: "Terraform", subtitle: "Deterministic Cloud State", accent: "#FF633E" },
-  { name: "AWS Architecture", subtitle: "Resilient Multi-Region", accent: "#F59E0B" },
-  { name: "Kubernetes", subtitle: "Dynamic Elastic Scaling", accent: "#3B82F6" },
-  { name: "Docker", subtitle: "Immutable Containers", accent: "#0D9488" },
-  { name: "GitHub OIDC", subtitle: "Keyless Cloud Auth", accent: "#EC4899" },
-  { name: "Zero Downtime", subtitle: "Seamless Canaries", accent: "#10B981" },
+  { name: "Terraform", role: "Deterministic State & Ephemeral Stacks", accent: "#E06648" },
+  { name: "AWS Architecture", role: "Multi-Region Resilient Topology", accent: "#D97706" },
+  { name: "Kubernetes", role: "Dynamic Self-Healing Workloads", accent: "#2563EB" },
+  { name: "Docker", role: "Hermetic Immutable Containers", accent: "#059669" },
+  { name: "GitHub OIDC", role: "Keyless Cryptographic IAM", accent: "#DB2777" },
+  { name: "Zero Downtime", role: "Statistical Traffic Canaries", accent: "#16A34A" },
 ];
 
 export function StoryScrollSequence() {
   const mountRef = useRef<HTMLDivElement>(null);
-  const [themeIndex, setThemeIndex] = useState(0);
-  const [hoveredStack, setHoveredStack] = useState<string | null>(null);
-  const activeTheme = THEMES[themeIndex];
+  const [themeIdx, setThemeIdx] = useState(0);
+  const [activeStackIndex, setActiveStackIndex] = useState<number | null>(null);
+  const theme = KINETIC_THEMES[themeIdx];
 
-  // Dynamic state bridged to Three.js render loop
-  const runtimeRef = useRef({
-    targetColor: new THREE.Color(activeTheme.blobColor),
-    targetEmissive: new THREE.Color(activeTheme.blobEmissive),
-    triggerImpulse: 0,
-    pointerNormX: 0,
-    pointerNormY: 0,
-    isPointerDown: false,
-    dragDisplacementX: 0,
-    dragDisplacementY: 0,
-    hoverExcitement: 1,
+  // Communication bridge to the Three.js 60fps render loop
+  const sceneBridgeRef = useRef({
+    targetColor: new THREE.Color(theme.knotColor),
+    targetEmissive: new THREE.Color(theme.knotEmissive),
+    targetRim: new THREE.Color(theme.rimColor),
+    spinImpulse: 0,
+    pointerX: 0,
+    pointerY: 0,
+    isDragging: false,
+    dragVelX: 0,
+    dragVelY: 0,
+    activeScaleMultiplier: 1,
   });
 
   const handleSelectTheme = (index: number) => {
-    setThemeIndex(index);
-    const chosen = THEMES[index];
-    runtimeRef.current.targetColor = new THREE.Color(chosen.blobColor);
-    runtimeRef.current.targetEmissive = new THREE.Color(chosen.blobEmissive);
-    runtimeRef.current.triggerImpulse = 2.4;
+    setThemeIdx(index);
+    const chosen = KINETIC_THEMES[index];
+    sceneBridgeRef.current.targetColor = new THREE.Color(chosen.knotColor);
+    sceneBridgeRef.current.targetEmissive = new THREE.Color(chosen.knotEmissive);
+    sceneBridgeRef.current.targetRim = new THREE.Color(chosen.rimColor);
+    sceneBridgeRef.current.spinImpulse = 4.0;
   };
 
-  const handleStackHover = (name: string | null) => {
-    setHoveredStack(name);
-    if (name) {
-      runtimeRef.current.triggerImpulse = 1.6;
-      runtimeRef.current.hoverExcitement = 1.8;
+  const handleStackActivate = (index: number | null) => {
+    setActiveStackIndex(index);
+    if (index !== null) {
+      sceneBridgeRef.current.spinImpulse = 2.8;
+      sceneBridgeRef.current.activeScaleMultiplier = 1.08;
     } else {
-      runtimeRef.current.hoverExcitement = 1.0;
+      sceneBridgeRef.current.activeScaleMultiplier = 1.0;
     }
   };
 
@@ -129,202 +135,150 @@ export function StoryScrollSequence() {
     let width = container.clientWidth || window.innerWidth;
     let height = container.clientHeight || 650;
 
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-    camera.position.set(0, 0, 8.2);
+    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
+    camera.position.set(0, 0, 7.8);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMappingExposure = 1.25;
     container.appendChild(renderer.domElement);
 
-    // --- SUNLIT STUDIO LIGHTING (WARM & ORGANIC) ---
-    const ambientLight = new THREE.AmbientLight(activeTheme.ambientLight, 2.2);
+    // --- SUNLIT STUDIO LIGHTING ---
+    const ambientLight = new THREE.AmbientLight(theme.ambientLight, 2.2);
     scene.add(ambientLight);
 
-    const keySun = new THREE.DirectionalLight(0xfff7ed, 2.8);
-    keySun.position.set(5, 7, 6);
-    scene.add(keySun);
+    const mainSun = new THREE.DirectionalLight(0xfff7ed, 3.2);
+    mainSun.position.set(6, 8, 7);
+    scene.add(mainSun);
 
-    const softFill = new THREE.DirectionalLight(0xfef3c7, 1.2);
-    softFill.position.set(-6, -3, 4);
-    scene.add(softFill);
+    const fillSun = new THREE.DirectionalLight(0xfef3c7, 1.4);
+    fillSun.position.set(-6, -4, 5);
+    scene.add(fillSun);
 
-    const rimLight = new THREE.PointLight(activeTheme.rimColor, 3.0, 15);
-    rimLight.position.set(0, 5, 2);
+    const rimLight = new THREE.PointLight(theme.rimColor, 3.5, 14);
+    rimLight.position.set(0, 4, 3);
     scene.add(rimLight);
 
-    // --- CENTRAL SQUISHY 3D JELLY ORGANISM (NOOMO LABS STYLE) ---
-    // High-tessellation sphere deformed with compound organic fluid waves
-    const jellyGeometry = new THREE.SphereGeometry(1.9, 64, 64);
-    const originalPositions = jellyGeometry.attributes.position.clone();
+    // --- SCULPTURAL KINETIC TORUS KNOT (THE TOY CENTERPIECE - NO JELLY) ---
+    // A continuous, satin-smooth architectural sculpture with endless mathematical curvature
+    const knotGeometry = new THREE.TorusKnotGeometry(1.5, 0.38, 160, 40, 2, 3);
 
-    // Tactile squishy gummy/clay physical material
-    const jellyMaterial = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(activeTheme.blobColor),
-      emissive: new THREE.Color(activeTheme.blobEmissive),
-      emissiveIntensity: 0.22,
-      roughness: 0.14,
-      metalness: 0.02,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
-      transmission: 0.42,
-      thickness: 1.6,
-      ior: 1.38,
+    // Tactile, satin ceramic / matte polished sculpture material
+    const knotMaterial = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(theme.knotColor),
+      emissive: new THREE.Color(theme.knotEmissive),
+      emissiveIntensity: 0.16,
+      roughness: 0.22,
+      metalness: 0.05,
+      clearcoat: 0.9,
+      clearcoatRoughness: 0.12,
       reflectivity: 0.6,
+      ior: 1.45,
     });
 
-    const jellyMesh = new THREE.Mesh(jellyGeometry, jellyMaterial);
-    scene.add(jellyMesh);
+    const knotMesh = new THREE.Mesh(knotGeometry, knotMaterial);
+    scene.add(knotMesh);
 
-    // --- INNER NUCLEUS (ORGANIC GLOWING CORE) ---
-    const coreGeometry = new THREE.IcosahedronGeometry(0.95, 20);
-    const coreMaterial = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(activeTheme.blobColor),
-      emissive: new THREE.Color(activeTheme.blobEmissive),
-      emissiveIntensity: 0.6,
-      roughness: 0.3,
-      transmission: 0.2,
-      thickness: 0.5,
-    });
-    const coreMesh = new THREE.Mesh(coreGeometry, coreMaterial);
-    jellyMesh.add(coreMesh);
-
-    // --- SOFT DANCING TENDRILS (HANGING BENEATH THE ORGANISM) ---
-    const tendrilCount = 7;
-    const tendrils: { mesh: THREE.Mesh; phase: number; speed: number; baseAngle: number; length: number }[] = [];
-
-    for (let i = 0; i < tendrilCount; i++) {
-      const angle = (i / tendrilCount) * Math.PI * 2;
-      const points = [
-        new THREE.Vector3(0, 0, 0),
-        new THREE.Vector3(Math.cos(angle) * 0.2, -0.7, Math.sin(angle) * 0.2),
-        new THREE.Vector3(Math.cos(angle) * 0.4, -1.5, Math.sin(angle) * 0.4),
-        new THREE.Vector3(Math.cos(angle) * 0.15, -2.3, Math.sin(angle) * 0.15),
-      ];
-      const curve = new THREE.CatmullRomCurve3(points);
-      const tubeGeom = new THREE.TubeGeometry(curve, 28, 0.075, 12, false);
-      const tubeMat = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(activeTheme.blobColor),
-        roughness: 0.2,
-        clearcoat: 0.9,
-        transmission: 0.35,
-        thickness: 0.6,
-      });
-      const tubeMesh = new THREE.Mesh(tubeGeom, tubeMat);
-      tubeMesh.position.set(Math.cos(angle) * 0.9, -0.9, Math.sin(angle) * 0.9);
-      jellyMesh.add(tubeMesh);
-
-      tendrils.push({
-        mesh: tubeMesh,
-        phase: i * 0.9,
-        speed: 1.4 + (i % 3) * 0.35,
-        baseAngle: angle,
-        length: 2.3,
-      });
-    }
-
-    // --- ORBITING SOFT GUMMY SATELLITES (PLAYFUL FLOATING CANDY SPHERES) ---
-    interface BubbleSatellite {
+    // --- ORBITING MAGNETIC PEBBLES (TACTILE POLISHED RIVER STONES) ---
+    interface Pebble {
       mesh: THREE.Mesh;
-      orbitRadius: number;
-      orbitSpeed: number;
+      radius: number;
+      speed: number;
       angle: number;
       orbitY: number;
-      verticalPhase: number;
-      bounceVelY: number;
+      oscPhase: number;
+      velY: number;
     }
 
-    const satellites: BubbleSatellite[] = activeTheme.particles.map((hex, i) => {
-      const radius = 0.26 + (i % 3) * 0.12;
-      const geom = new THREE.SphereGeometry(radius, 32, 32);
+    const pebbles: Pebble[] = theme.pebbleColors.map((hex, i) => {
+      const stoneRadius = 0.22 + (i % 3) * 0.1;
+      const geom = new THREE.SphereGeometry(stoneRadius, 32, 32);
       const mat = new THREE.MeshPhysicalMaterial({
         color: new THREE.Color(hex),
-        roughness: 0.15,
-        clearcoat: 1.0,
-        clearcoatRoughness: 0.12,
-        transmission: 0.3,
-        thickness: 0.8,
+        roughness: 0.18,
+        clearcoat: 0.95,
+        clearcoatRoughness: 0.1,
+        reflectivity: 0.5,
       });
       const mesh = new THREE.Mesh(geom, mat);
       scene.add(mesh);
 
       return {
         mesh,
-        orbitRadius: 2.7 + i * 0.38,
-        orbitSpeed: (0.008 + (i * 0.003)) * (i % 2 === 0 ? 1 : -1),
-        angle: (i / activeTheme.particles.length) * Math.PI * 2,
-        orbitY: (i - 2) * 0.55,
-        verticalPhase: Math.random() * Math.PI * 2,
-        bounceVelY: 0,
+        radius: 2.7 + i * 0.35,
+        speed: (0.01 + i * 0.003) * (i % 2 === 0 ? 1 : -1),
+        angle: (i / theme.pebbleColors.length) * Math.PI * 2,
+        orbitY: (i - 2) * 0.5,
+        oscPhase: Math.random() * Math.PI * 2,
+        velY: 0,
       };
     });
 
-    // --- INTERACTION & TOUCH/POINTER PHYSICS ---
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetRotationX = 0;
-    let targetRotationY = 0;
-    let impulse = 0;
-    let dragStartX = 0;
-    let dragStartY = 0;
-    let dragCurrentX = 0;
-    let dragCurrentY = 0;
-    let isDragging = false;
+    // --- TOUCH, DRAG & INERTIA PHYSICS ---
+    let isPointerDown = false;
+    let prevPointerX = 0;
+    let prevPointerY = 0;
+    let angularVelX = 0.004;
+    let angularVelY = 0.008;
+    let autoRotationX = 0;
+    let autoRotationY = 0;
     const clock = new THREE.Clock();
 
-    const handlePointerMove = (e: MouseEvent | TouchEvent) => {
+    const onPointerMove = (e: MouseEvent | TouchEvent) => {
       const rect = container.getBoundingClientRect();
       const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
       const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
 
-      mouseX = ((clientX - rect.left) / rect.width) * 2 - 1;
-      mouseY = -(((clientY - rect.top) / rect.height) * 2 - 1);
+      const normX = ((clientX - rect.left) / rect.width) * 2 - 1;
+      const normY = -(((clientY - rect.top) / rect.height) * 2 - 1);
 
-      runtimeRef.current.pointerNormX = mouseX;
-      runtimeRef.current.pointerNormY = mouseY;
+      sceneBridgeRef.current.pointerX = normX;
+      sceneBridgeRef.current.pointerY = normY;
 
-      if (isDragging) {
-        dragCurrentX = clientX - dragStartX;
-        dragCurrentY = clientY - dragStartY;
-        targetRotationY += dragCurrentX * 0.0003;
-        targetRotationX += dragCurrentY * 0.0003;
-        impulse = Math.min(impulse + 0.08, 2.5);
-      } else {
-        targetRotationY = mouseX * 0.6;
-        targetRotationX = -mouseY * 0.5;
+      if (isPointerDown) {
+        const deltaX = clientX - prevPointerX;
+        const deltaY = clientY - prevPointerY;
+
+        angularVelY = deltaX * 0.009;
+        angularVelX = deltaY * 0.009;
+
+        // Scatter pebbles slightly under vigorous spin
+        pebbles.forEach((p) => {
+          p.velY += (Math.random() - 0.5) * 0.08;
+        });
       }
+
+      prevPointerX = clientX;
+      prevPointerY = clientY;
     };
 
-    const handlePointerDown = (e: MouseEvent | TouchEvent) => {
-      isDragging = true;
-      runtimeRef.current.isPointerDown = true;
+    const onPointerDown = (e: MouseEvent | TouchEvent) => {
+      isPointerDown = true;
+      sceneBridgeRef.current.isDragging = true;
       const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
       const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
-      dragStartX = clientX;
-      dragStartY = clientY;
-      impulse = 2.0;
+      prevPointerX = clientX;
+      prevPointerY = clientY;
 
-      // Jiggle orbiting satellites
-      satellites.forEach((s) => {
-        s.bounceVelY += (Math.random() - 0.5) * 0.25;
-      });
+      // Tap pulse
+      sceneBridgeRef.current.spinImpulse = 2.2;
     };
 
-    const handlePointerUp = () => {
-      isDragging = false;
-      runtimeRef.current.isPointerDown = false;
+    const onPointerUp = () => {
+      isPointerDown = false;
+      sceneBridgeRef.current.isDragging = false;
     };
 
-    container.addEventListener("mousemove", handlePointerMove);
-    container.addEventListener("mousedown", handlePointerDown);
-    window.addEventListener("mouseup", handlePointerUp);
-    container.addEventListener("touchmove", handlePointerMove, { passive: true });
-    container.addEventListener("touchstart", handlePointerDown, { passive: true });
-    window.addEventListener("touchend", handlePointerUp);
+    container.addEventListener("mousemove", onPointerMove);
+    container.addEventListener("mousedown", onPointerDown);
+    window.addEventListener("mouseup", onPointerUp);
+    container.addEventListener("touchmove", onPointerMove, { passive: true });
+    container.addEventListener("touchstart", onPointerDown, { passive: true });
+    window.addEventListener("touchend", onPointerUp);
 
-    const handleResize = () => {
+    const onResize = () => {
       if (!container) return;
       width = container.clientWidth || window.innerWidth;
       height = container.clientHeight || 650;
@@ -332,92 +286,65 @@ export function StoryScrollSequence() {
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", onResize);
 
-    // --- ANIMATION / SIMULATION LOOP (60FPS+ TACTILE PHYSICS) ---
-    let animationFrameId: number;
+    // --- 60FPS SIMULATION LOOP ---
+    let frameId: number;
 
     const animate = () => {
-      animationFrameId = requestAnimationFrame(animate);
+      frameId = requestAnimationFrame(animate);
       const time = clock.getElapsedTime();
 
-      // Smoothly interpolate material color on theme changes
-      jellyMaterial.color.lerp(runtimeRef.current.targetColor, 0.09);
-      jellyMaterial.emissive.lerp(runtimeRef.current.targetEmissive, 0.09);
-      coreMaterial.color.lerp(runtimeRef.current.targetColor, 0.09);
-      coreMaterial.emissive.lerp(runtimeRef.current.targetEmissive, 0.09);
-      tendrils.forEach((t) => {
-        (t.mesh.material as THREE.MeshPhysicalMaterial).color.lerp(runtimeRef.current.targetColor, 0.09);
-      });
+      // Smooth color interpolation on theme shift
+      knotMaterial.color.lerp(sceneBridgeRef.current.targetColor, 0.08);
+      knotMaterial.emissive.lerp(sceneBridgeRef.current.targetEmissive, 0.08);
+      rimLight.color.lerp(sceneBridgeRef.current.targetRim, 0.08);
 
-      // Handle triggered impulse
-      if (runtimeRef.current.triggerImpulse > 0) {
-        impulse = Math.max(impulse, runtimeRef.current.triggerImpulse);
-        runtimeRef.current.triggerImpulse = 0;
+      // Kinetic momentum with soft air damping
+      if (!isPointerDown) {
+        angularVelX *= 0.965;
+        angularVelY *= 0.965;
+
+        // Base continuous ambient drift
+        autoRotationX += 0.003;
+        autoRotationY += 0.005;
       }
 
-      // Smoothly dissipate impulse energy
-      impulse *= 0.945;
-
-      const excitement = runtimeRef.current.hoverExcitement;
-
-      // Smooth rotational inertia
-      jellyMesh.rotation.y += (targetRotationY - jellyMesh.rotation.y) * 0.075;
-      jellyMesh.rotation.x += (targetRotationX - jellyMesh.rotation.x) * 0.075;
-
-      // Compound Organic Wave Deformer on the Jelly Geometry
-      const pos = jellyGeometry.attributes.position;
-      const orig = originalPositions;
-      const p = new THREE.Vector3();
-
-      for (let i = 0; i < pos.count; i++) {
-        p.fromBufferAttribute(orig, i);
-
-        // Fluid 3D Harmonic squish waves
-        const wave1 = Math.sin(p.x * 2.4 + time * 3.4 * excitement) * 0.18;
-        const wave2 = Math.cos(p.y * 2.8 + time * 2.6 * excitement) * 0.15;
-        const wave3 = Math.sin(p.z * 2.0 + time * 3.0 * excitement) * 0.12;
-
-        // Interactive squish pulsation
-        const squishMultiplier = 1 + Math.sin(time * 6.5 + p.y * 3.0) * (impulse * 0.28);
-        const totalDisplacement = 1 + (wave1 + wave2 + wave3) * (0.8 + impulse * 1.5);
-
-        p.multiplyScalar(totalDisplacement * squishMultiplier);
-        pos.setXYZ(i, p.x, p.y, p.z);
+      // Handle spin impulse injection
+      if (sceneBridgeRef.current.spinImpulse > 0) {
+        angularVelY += sceneBridgeRef.current.spinImpulse * 0.015;
+        sceneBridgeRef.current.spinImpulse *= 0.9;
+        if (sceneBridgeRef.current.spinImpulse < 0.05) {
+          sceneBridgeRef.current.spinImpulse = 0;
+        }
       }
-      pos.needsUpdate = true;
-      jellyGeometry.computeVertexNormals();
 
-      // Core pulsating glow
-      const coreScale = 1 + Math.sin(time * 4) * 0.08 + impulse * 0.2;
-      coreMesh.scale.set(coreScale, coreScale, coreScale);
+      // Apply rotations
+      knotMesh.rotation.x += angularVelX + (!isPointerDown ? 0.003 : 0);
+      knotMesh.rotation.y += angularVelY + (!isPointerDown ? 0.005 : 0);
 
-      // Swimming Tendrils Motion
-      tendrils.forEach((t) => {
-        const sw = Math.sin(time * t.speed + t.phase) * (0.22 + impulse * 0.35);
-        const cw = Math.cos(time * (t.speed * 0.8) + t.phase) * (0.22 + impulse * 0.35);
-        t.mesh.rotation.z = sw;
-        t.mesh.rotation.x = cw;
-        const stretchY = 1 + Math.sin(time * 3.2 + t.phase) * 0.18;
-        t.mesh.scale.set(1, stretchY, 1);
-      });
+      // Subtle dynamic tilt tracking mouse position smoothly
+      const targetTiltZ = sceneBridgeRef.current.pointerX * 0.35;
+      knotMesh.rotation.z += (targetTiltZ - knotMesh.rotation.z) * 0.05;
 
-      // Satellite Orbits & Soft Floating Physics
-      satellites.forEach((sat, idx) => {
-        sat.angle += sat.orbitSpeed * (1 + impulse * 0.8);
-        const r = sat.orbitRadius + Math.sin(time * 1.5 + idx) * 0.2;
+      // Scale breathing
+      const targetScale = sceneBridgeRef.current.activeScaleMultiplier * (1 + Math.sin(time * 1.8) * 0.02);
+      knotMesh.scale.set(targetScale, targetScale, targetScale);
 
-        // Soft elastic spring on Y axis
-        sat.bounceVelY += Math.sin(time * 2.4 + idx * 1.2) * 0.007 - sat.mesh.position.y * 0.04;
-        sat.bounceVelY *= 0.93;
+      // Animate orbiting pebbles with spring damping
+      pebbles.forEach((pebble, idx) => {
+        pebble.angle += pebble.speed * (1 + Math.abs(angularVelY) * 20);
+        const currentR = pebble.radius + Math.sin(time * 1.6 + idx) * 0.18;
 
-        sat.mesh.position.x = Math.cos(sat.angle) * r;
-        sat.mesh.position.z = Math.sin(sat.angle) * r;
-        sat.mesh.position.y = sat.orbitY + sat.bounceVelY;
+        pebble.velY += (Math.sin(time * 2.5 + idx * 1.4) * 0.006 - pebble.velY * 0.05);
+        pebble.velY *= 0.94;
 
-        // Toy-like subtle squash
-        const squash = 1 + Math.sin(time * 3.6 + sat.verticalPhase) * 0.08;
-        sat.mesh.scale.set(squash, squash, squash);
+        pebble.mesh.position.x = Math.cos(pebble.angle) * currentR;
+        pebble.mesh.position.z = Math.sin(pebble.angle) * currentR;
+        pebble.mesh.position.y = pebble.orbitY + pebble.velY;
+
+        pebble.mesh.rotation.x += 0.01;
+        pebble.mesh.rotation.y += 0.015;
       });
 
       renderer.render(scene, camera);
@@ -426,28 +353,21 @@ export function StoryScrollSequence() {
     animate();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener("resize", handleResize);
-      container.removeEventListener("mousemove", handlePointerMove);
-      container.removeEventListener("mousedown", handlePointerDown);
-      window.removeEventListener("mouseup", handlePointerUp);
-      container.removeEventListener("touchmove", handlePointerMove);
-      container.removeEventListener("touchstart", handlePointerDown);
-      window.removeEventListener("touchend", handlePointerUp);
+      cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", onResize);
+      container.removeEventListener("mousemove", onPointerMove);
+      container.removeEventListener("mousedown", onPointerDown);
+      window.removeEventListener("mouseup", onPointerUp);
+      container.removeEventListener("touchmove", onPointerMove);
+      container.removeEventListener("touchstart", onPointerDown);
+      window.removeEventListener("touchend", onPointerUp);
       renderer.dispose();
-      jellyGeometry.dispose();
-      jellyMaterial.dispose();
-      coreGeometry.dispose();
-      coreMaterial.dispose();
-      satellites.forEach((s) => {
-        s.mesh.geometry.dispose();
-        if (Array.isArray(s.mesh.material)) s.mesh.material.forEach((m) => m.dispose());
-        else s.mesh.material.dispose();
-      });
-      tendrils.forEach((t) => {
-        t.mesh.geometry.dispose();
-        if (Array.isArray(t.mesh.material)) t.mesh.material.forEach((m) => m.dispose());
-        else t.mesh.material.dispose();
+      knotGeometry.dispose();
+      knotMaterial.dispose();
+      pebbles.forEach((p) => {
+        p.mesh.geometry.dispose();
+        if (Array.isArray(p.mesh.material)) p.mesh.material.forEach((m) => m.dispose());
+        else p.mesh.material.dispose();
       });
       if (renderer.domElement && container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
@@ -459,69 +379,68 @@ export function StoryScrollSequence() {
     <section
       id="nima-hosseini"
       aria-label="Nima Hosseini - Cloud Infrastructure & Systems Architecture"
-      className="relative w-full overflow-hidden transition-colors duration-1000 py-28 sm:py-40 lg:py-48 select-none"
-      style={{ backgroundColor: activeTheme.bgColor }}
+      className="relative w-full overflow-hidden transition-colors duration-1000 py-32 sm:py-44 lg:py-52 select-none"
+      style={{ backgroundColor: theme.bgColor }}
     >
       <div id="story" className="absolute -top-16" />
 
-      {/* AMBIENT ORGANIC ATMOSPHERE (PURE GRADIENT BLOBS - NO GRIDS, NO DOT PATTERNS) */}
+      {/* AMBIENT ORGANIC WARM GRADIENT HALOS (NO GRIDS, NO DOT PATTERNS) */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div
-          className="absolute -top-32 -left-32 w-[650px] sm:w-[900px] h-[650px] sm:h-[900px] rounded-full opacity-60 blur-3xl transition-all duration-1000"
+          className="absolute -top-40 -left-40 w-[700px] sm:w-[950px] h-[700px] sm:h-[950px] rounded-full opacity-55 blur-3xl transition-all duration-1000"
           style={{
-            background: `radial-gradient(circle, ${activeTheme.blobColor}33 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${theme.knotColor}29 0%, transparent 70%)`,
           }}
         />
         <div
-          className="absolute -bottom-32 -right-32 w-[600px] sm:w-[850px] h-[600px] sm:h-[850px] rounded-full opacity-50 blur-3xl transition-all duration-1000"
+          className="absolute -bottom-40 -right-40 w-[650px] sm:w-[900px] h-[650px] sm:h-[900px] rounded-full opacity-45 blur-3xl transition-all duration-1000"
           style={{
-            background: `radial-gradient(circle, ${activeTheme.accentColor}26 0%, transparent 70%)`,
+            background: `radial-gradient(circle, ${theme.accentColor}24 0%, transparent 70%)`,
           }}
         />
       </div>
 
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-12 md:px-16 lg:px-24">
+      <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-12 md:px-16 lg:px-24">
         
         {/* ========================================================================= */}
-        {/* 1. ASYMMETRIC SCULPTURAL MANIFESTO                                       */}
+        {/* 1. ASYMMETRIC MONUMENTAL EDITORIAL MANIFESTO                             */}
         {/* "You didn't notice anything. That was the job."                           */}
         {/* ========================================================================= */}
         <div className="max-w-5xl space-y-6 sm:space-y-8">
           
-          {/* Subtle Organic Curvature Indicator (No boxes, pure soft round flow) */}
           <div className="flex items-center gap-3">
             <span
-              className="w-3.5 h-3.5 rounded-full animate-pulse"
-              style={{ backgroundColor: activeTheme.accentColor }}
+              className="w-3.5 h-3.5 rounded-full"
+              style={{ backgroundColor: theme.accentColor }}
             />
             <span
-              className="text-sm sm:text-base font-semibold tracking-wide"
-              style={{ color: "#54382D" }}
+              className="text-sm sm:text-base font-bold tracking-wider uppercase"
+              style={{ color: "#4A3329" }}
             >
-              Silent Reliability (Invisible Infrastructure)
+              The Law of Invisible Systems
             </span>
           </div>
 
           {/* Monumental Fluid Typography Lockup */}
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-2 sm:space-y-4">
             
             {/* Fluid Italian Editorial Italic */}
             <p
-              className="font-serif italic text-[clamp(2.8rem,7.5vw,7.8rem)] leading-[0.98] tracking-[-0.03em]"
-              style={{ color: "#3B261D" }}
+              className="font-serif italic text-[clamp(2.8rem,7.8vw,8rem)] leading-[0.96] tracking-[-0.03em]"
+              style={{ color: "#2B1D16" }}
             >
               You didn’t notice anything.
             </p>
 
             {/* Monumental Oversized Display Typography */}
             <h2
-              className="font-display font-black text-[clamp(3.9rem,11.5vw,11.8rem)] leading-[0.88] tracking-[-0.05em] uppercase"
-              style={{ color: "#241712" }}
+              className="font-display font-black text-[clamp(4rem,11.8vw,12.2rem)] leading-[0.86] tracking-[-0.05em] uppercase"
+              style={{ color: "#1F1612" }}
             >
               <span>That was the </span>
               <span
                 className="inline-block transition-transform duration-300 hover:scale-105 cursor-pointer"
-                style={{ color: activeTheme.accentColor }}
+                style={{ color: theme.accentColor }}
               >
                 job.
               </span>
@@ -530,45 +449,45 @@ export function StoryScrollSequence() {
           </div>
 
           <p
-            className="text-[20px] sm:text-[25px] md:text-[29px] font-medium leading-relaxed max-w-3xl"
-            style={{ color: "#5C4236" }}
+            className="text-[20px] sm:text-[25px] md:text-[30px] font-medium leading-relaxed max-w-3xl"
+            style={{ color: "#594034" }}
           >
-            When cloud architecture is built with disciplined precision, state never drifts, traffic transitions seamlessly, and continuous availability feels entirely natural.
+            When cloud infrastructure is engineered with mathematical discipline, state never drifts, traffic shifts silently, and users experience effortless, uninterrupted continuity.
           </p>
 
         </div>
 
         {/* ========================================================================= */}
-        {/* 2. THE SIGNATURE 3D TACTILE TOY WORLD (Noomo Labs Inspired)               */}
-        {/* Borderless, organic, full-bleed interactive 3D WebGL organism             */}
+        {/* 2. THE TACTILE 3D KINETIC CENTERPIECE (NO JELLY)                          */}
+        {/* Satin ceramic Torus Knot sculpture with touch physics & momentum inertia  */}
         {/* ========================================================================= */}
-        <div className="my-14 sm:my-20 relative">
+        <div className="my-16 sm:my-24 relative">
           
-          {/* Floating Organic Tactile Mood Drops (Candy Swatches) */}
+          {/* Subtle Interaction Guide & Tactile Material Swatches */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-            <div className="text-sm font-semibold tracking-wide" style={{ color: "#6B4F43" }}>
-              Drag to stretch &bull; Click to ripple &bull; Switch toy mood:
+            <div className="text-sm font-semibold tracking-wide" style={{ color: "#6E5042" }}>
+              Drag to spin with inertia &bull; Click to pulse &bull; Switch material:
             </div>
 
-            {/* Organic Mood Drops */}
+            {/* Material Swatches (Organic round pebble pills) */}
             <div className="flex flex-wrap items-center gap-3">
-              {THEMES.map((t, idx) => (
+              {KINETIC_THEMES.map((t, idx) => (
                 <button
                   key={t.name}
                   type="button"
                   onClick={() => handleSelectTheme(idx)}
                   className={`flex items-center gap-2.5 px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${
-                    themeIndex === idx
-                      ? "bg-white shadow-[0_6px_20px_rgba(80,40,20,0.12)] scale-105"
+                    themeIdx === idx
+                      ? "bg-white shadow-[0_6px_20px_rgba(70,30,15,0.12)] scale-105"
                       : "bg-white/50 hover:bg-white/80"
                   }`}
                   style={{
-                    color: themeIndex === idx ? t.accentColor : "#5C4236",
+                    color: themeIdx === idx ? t.accentColor : "#594034",
                   }}
                 >
                   <span
                     className="w-3.5 h-3.5 rounded-full transition-transform duration-300"
-                    style={{ backgroundColor: t.blobColor }}
+                    style={{ backgroundColor: t.knotColor }}
                   />
                   <span>{t.name}</span>
                 </button>
@@ -579,14 +498,14 @@ export function StoryScrollSequence() {
           {/* 3D WebGL Canvas Viewport (Seamlessly integrated into the section ground) */}
           <div
             ref={mountRef}
-            className="w-full h-[450px] sm:h-[550px] lg:h-[650px] cursor-grab active:cursor-grabbing relative flex items-center justify-center rounded-[56px] overflow-hidden"
+            className="w-full h-[460px] sm:h-[560px] lg:h-[660px] cursor-grab active:cursor-grabbing relative flex items-center justify-center rounded-[56px] overflow-hidden"
           >
-            {/* Monumental Watermark Floating In Spatial Depth */}
+            {/* Monumental Watermark Floating In Depth */}
             <div
-              className="absolute pointer-events-none select-none text-[clamp(5rem,18vw,19rem)] font-black tracking-tighter opacity-10 transition-colors duration-700"
-              style={{ color: activeTheme.accentColor }}
+              className="absolute pointer-events-none select-none text-[clamp(5rem,18vw,20rem)] font-black tracking-tighter opacity-10 transition-colors duration-700"
+              style={{ color: theme.accentColor }}
             >
-              SILENT
+              EQUILIBRIUM
             </div>
           </div>
 
@@ -594,24 +513,23 @@ export function StoryScrollSequence() {
 
         {/* ========================================================================= */}
         {/* 3. MONUMENTAL IDENTITY: NIMA HOSSEINI                                     */}
-        {/* Colossal typography breaking across space + Organic moving stack          */}
+        {/* Colossal typography breaking across space                                 */}
         {/* ========================================================================= */}
-        <div className="space-y-10 sm:space-y-14">
+        <div className="space-y-12 sm:space-y-16">
           
           <div className="space-y-4">
             
-            {/* Role indicator */}
             <div
               className="text-sm sm:text-base font-bold tracking-wider uppercase"
-              style={{ color: activeTheme.accentColor }}
+              style={{ color: theme.accentColor }}
             >
-              Cloud &bull; DevOps &bull; Systems Architecture
+              Systems Architect &bull; Cloud &amp; DevOps
             </div>
 
             {/* Monumental Nameplate */}
             <h3
-              className="font-display font-black text-[clamp(4.2rem,13vw,13.5rem)] leading-[0.85] tracking-[-0.05em] uppercase"
-              style={{ color: "#241712" }}
+              className="font-display font-black text-[clamp(4.4rem,13.5vw,14rem)] leading-[0.84] tracking-[-0.05em] uppercase"
+              style={{ color: "#1F1612" }}
             >
               Nima Hosseini
             </h3>
@@ -621,54 +539,54 @@ export function StoryScrollSequence() {
           {/* Editorial Philosophy Statement */}
           <div className="max-w-3xl">
             <p
-              className="text-[20px] sm:text-[26px] md:text-[30px] font-medium leading-snug"
-              style={{ color: "#4A3329" }}
+              className="text-[20px] sm:text-[26px] md:text-[31px] font-medium leading-snug"
+              style={{ color: "#453026" }}
             >
-              Architecting cloud infrastructure from first principles - combining immutable infrastructure, cryptographically verifiable auth, and statistically bounded deployment strategies.
+              Building cloud architectures from first principles - combining reproducible state, cryptographically verifiable security boundaries, and automated canary deployments across AWS and Kubernetes.
             </p>
           </div>
 
           {/* ======================================================================= */}
           {/* 4. SHOW MY STACK AS HUGE TYPOGRAPHY & MOVING SHAPES (NO CARD GRIDS!)     */}
           {/* ======================================================================= */}
-          <div className="pt-4">
+          <div className="pt-6 space-y-6">
             
-            <div className="text-xs sm:text-sm font-bold uppercase tracking-widest mb-6" style={{ color: "#785A4E" }}>
-              Core Disciplines &amp; Toolchain (Hover to jiggle the 3D toy)
+            <div className="text-xs sm:text-sm font-bold uppercase tracking-widest" style={{ color: "#7A5A4C" }}>
+              Core Stack &bull; Hover or Tap To Accelerate The Kinetic Centerpiece
             </div>
 
-            {/* Organic Fluid Flow of Massive Typography Shapes */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              {STACK_ITEMS.map((item) => (
+            {/* Asymmetric Fluid Kinetic Typography Flow */}
+            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+              {STACK_ITEMS.map((item, idx) => (
                 <div
                   key={item.name}
-                  onMouseEnter={() => handleStackHover(item.name)}
-                  onMouseLeave={() => handleStackHover(null)}
+                  onMouseEnter={() => handleStackActivate(idx)}
+                  onMouseLeave={() => handleStackActivate(null)}
                   className="group relative cursor-pointer"
                 >
                   <div
-                    className="flex items-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full transition-all duration-300 shadow-[0_4px_16px_rgba(80,40,20,0.06)] hover:shadow-[0_12px_28px_rgba(80,40,20,0.12)] hover:-translate-y-1 hover:scale-105 active:scale-95"
+                    className="flex items-center gap-3 sm:gap-4 px-7 sm:px-9 py-4 sm:py-5 rounded-full transition-all duration-300 shadow-[0_4px_18px_rgba(70,30,15,0.06)] hover:shadow-[0_12px_32px_rgba(70,30,15,0.14)] hover:-translate-y-1.5 hover:scale-105 active:scale-95"
                     style={{
-                      backgroundColor: hoveredStack === item.name ? activeTheme.accentColor : "#FFFFFF",
-                      color: hoveredStack === item.name ? "#FFFFFF" : "#241712",
+                      backgroundColor: activeStackIndex === idx ? theme.accentColor : "#FFFFFF",
+                      color: activeStackIndex === idx ? "#FFFFFF" : "#1F1612",
                     }}
                   >
                     <span
-                      className="w-2.5 h-2.5 rounded-full transition-transform duration-300 group-hover:scale-125"
+                      className="w-3 h-3 rounded-full transition-transform duration-300 group-hover:scale-125"
                       style={{
-                        backgroundColor: hoveredStack === item.name ? "#FFFFFF" : item.accent,
+                        backgroundColor: activeStackIndex === idx ? "#FFFFFF" : item.accent,
                       }}
                     />
-                    <span className="font-display font-black text-lg sm:text-2xl md:text-3xl tracking-tight">
+                    <span className="font-display font-black text-xl sm:text-2xl md:text-3xl tracking-tight uppercase">
                       {item.name}
                     </span>
                     <span
-                      className="text-xs sm:text-sm font-medium transition-colors duration-300"
+                      className="text-xs sm:text-sm font-semibold transition-colors duration-300 hidden md:inline"
                       style={{
-                        color: hoveredStack === item.name ? "rgba(255,255,255,0.85)" : "#785A4E",
+                        color: activeStackIndex === idx ? "rgba(255,255,255,0.85)" : "#7A5A4C",
                       }}
                     >
-                      ({item.subtitle})
+                      ({item.role})
                     </span>
                   </div>
                 </div>
