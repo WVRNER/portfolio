@@ -1,598 +1,328 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
-import * as THREE from "three";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
 /**
- * StoryScrollSequence - Awwwards Site of the Day Redesign
+ * StoryScrollSequence - Awwwards Site of the Day Theatrical Typography Sequence
  * 
- * Concept: "The Silent Equilibrium"
- * Infrastructure as mathematical continuity. When cloud systems run without state drift,
- * absence is the highest art.
- * 
- * STRICT RULES ENFORCED:
- * - NO JELLY (No squishy cartoon jelly organisms, no gummy blobs)
- * - NO BLACK COLORS (Sunlit warm ivory ground #FAF6F0, deep warm espresso ink #1F1612)
- * - NO BOXES (No bordered rectangles, no outlined cards, no card grids, no 1px dividing lines)
- * - NO MONOSPACE outside code
- * - NO FAKE LABELS, IDS, or DASHBOARD TELEMETRY
- * - NO GRID OR DOT BACKGROUND PATTERNS
- * - NO PURPLE/BLUE NEON GLOWS OR GLASSMORPHISM
- * - ZERO EM DASHES (no unicode em dashes anywhere)
- * - Stack shown as huge fluid typography and moving shapes, not cards in a grid
- * - Asymmetric, monumental, editorial layout
+ * Strict User Requirements:
+ * - REMOVED all extra copy (Core Stack, bullet points, Law of Invisible Systems, paragraphs)
+ * - REMOVED the 3D canvas animation
+ * - ONLY the two key sentences and identity:
+ *   1. "You didn't notice anything."
+ *   2. "That was the job."
+ *   3. "Nima Hosseini"
+ * - Replaced with a theatrical, cinematic scroll-driven kinetic typography transition
+ * - DONT USE BLACK COLORS (Warm sunlit ivory ground #FAF6F0, deep warm espresso ink #1E1612)
+ * - ZERO BOXES (No bordered rectangles, no outlined cards, no card grids, no 1px divider lines)
+ * - ZERO EM DASHES (Strictly enforced)
+ * - Alive and responsive: smooth 60fps lerped scroll scrub, cursor parallax tilt, chapter navigation
  */
 
-interface KineticTheme {
-  name: string;
-  knotColor: string;
-  knotEmissive: string;
-  accentColor: string;
-  bgColor: string;
-  ambientLight: number;
-  rimColor: number;
-  pebbleColors: string[];
-}
-
-const KINETIC_THEMES: KineticTheme[] = [
-  {
-    name: "Terracotta Clay",
-    knotColor: "#E06648",
-    knotEmissive: "#9E341B",
-    accentColor: "#D14D2A",
-    bgColor: "#FAF5EE",
-    ambientLight: 0xfff5ea,
-    rimColor: 0xffeedd,
-    pebbleColors: ["#F59E0B", "#10B981", "#3B82F6", "#E06648", "#EC4899"],
-  },
-  {
-    name: "Warm Porcelain",
-    knotColor: "#D8C7B5",
-    knotEmissive: "#8C735D",
-    accentColor: "#A35C3A",
-    bgColor: "#F7F3EC",
-    ambientLight: 0xfff9f2,
-    rimColor: 0xffeedb,
-    pebbleColors: ["#D14D2A", "#B45309", "#059669", "#4338CA", "#D97706"],
-  },
-  {
-    name: "Sunlit Amber",
-    knotColor: "#E59E27",
-    knotEmissive: "#995C05",
-    accentColor: "#C27803",
-    bgColor: "#FCF8ED",
-    ambientLight: 0xfef9c3,
-    rimColor: 0xfef08a,
-    pebbleColors: ["#E06648", "#059669", "#2563EB", "#D97706", "#DB2777"],
-  },
-  {
-    name: "Satin Olive",
-    knotColor: "#3F8265",
-    knotEmissive: "#1B4734",
-    accentColor: "#2A664E",
-    bgColor: "#F3F7F2",
-    ambientLight: 0xf0fdf4,
-    rimColor: 0xdcfce7,
-    pebbleColors: ["#E06648", "#D97706", "#2A664E", "#3B82F6", "#F59E0B"],
-  },
-];
-
-const STACK_ITEMS = [
-  { name: "Terraform", role: "Deterministic State & Ephemeral Stacks", accent: "#E06648" },
-  { name: "AWS Architecture", role: "Multi-Region Resilient Topology", accent: "#D97706" },
-  { name: "Kubernetes", role: "Dynamic Self-Healing Workloads", accent: "#2563EB" },
-  { name: "Docker", role: "Hermetic Immutable Containers", accent: "#059669" },
-  { name: "GitHub OIDC", role: "Keyless Cryptographic IAM", accent: "#DB2777" },
-  { name: "Zero Downtime", role: "Statistical Traffic Canaries", accent: "#16A34A" },
-];
-
 export function StoryScrollSequence() {
-  const mountRef = useRef<HTMLDivElement>(null);
-  const [themeIdx, setThemeIdx] = useState(0);
-  const [activeStackIndex, setActiveStackIndex] = useState<number | null>(null);
-  const theme = KINETIC_THEMES[themeIdx];
+  const containerRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
 
-  // Communication bridge to the Three.js 60fps render loop
-  const sceneBridgeRef = useRef({
-    targetColor: new THREE.Color(theme.knotColor),
-    targetEmissive: new THREE.Color(theme.knotEmissive),
-    targetRim: new THREE.Color(theme.rimColor),
-    spinImpulse: 0,
-    pointerX: 0,
-    pointerY: 0,
-    isDragging: false,
-    dragVelX: 0,
-    dragVelY: 0,
-    activeScaleMultiplier: 1,
+  // Active chapter state: 0 -> "You didn't notice anything.", 1 -> "That was the job.", 2 -> "Nima Hosseini"
+  const [progress, setProgress] = useState(0);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  // Smooth lerp tracking for 60/120fps fluid transitions
+  const scrollTrackerRef = useRef({
+    currentProgress: 0,
+    targetProgress: 0,
+    rafId: 0,
   });
 
-  const handleSelectTheme = (index: number) => {
-    setThemeIdx(index);
-    const chosen = KINETIC_THEMES[index];
-    sceneBridgeRef.current.targetColor = new THREE.Color(chosen.knotColor);
-    sceneBridgeRef.current.targetEmissive = new THREE.Color(chosen.knotEmissive);
-    sceneBridgeRef.current.targetRim = new THREE.Color(chosen.rimColor);
-    sceneBridgeRef.current.spinImpulse = 4.0;
-  };
-
-  const handleStackActivate = (index: number | null) => {
-    setActiveStackIndex(index);
-    if (index !== null) {
-      sceneBridgeRef.current.spinImpulse = 2.8;
-      sceneBridgeRef.current.activeScaleMultiplier = 1.08;
-    } else {
-      sceneBridgeRef.current.activeScaleMultiplier = 1.0;
-    }
-  };
-
-  useEffect(() => {
-    const container = mountRef.current;
+  const updateScroll = useCallback(() => {
+    const container = containerRef.current;
     if (!container) return;
 
-    // --- THREE.JS SCENE SETUP ---
-    const scene = new THREE.Scene();
+    const rect = container.getBoundingClientRect();
+    const windowH = window.innerHeight;
+    const totalDistance = rect.height - windowH;
 
-    let width = container.clientWidth || window.innerWidth;
-    let height = container.clientHeight || 650;
+    if (totalDistance <= 0) return;
 
-    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-    camera.position.set(0, 0, 7.8);
+    const raw = -rect.top / totalDistance;
+    const clamped = Math.max(0, Math.min(1, raw));
+    scrollTrackerRef.current.targetProgress = clamped;
+  }, []);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
-    container.appendChild(renderer.domElement);
+  useEffect(() => {
+    const handleScroll = () => {
+      updateScroll();
+    };
 
-    // --- SUNLIT STUDIO LIGHTING ---
-    const ambientLight = new THREE.AmbientLight(theme.ambientLight, 2.2);
-    scene.add(ambientLight);
+    const handleResize = () => {
+      updateScroll();
+    };
 
-    const mainSun = new THREE.DirectionalLight(0xfff7ed, 3.2);
-    mainSun.position.set(6, 8, 7);
-    scene.add(mainSun);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
+    updateScroll();
 
-    const fillSun = new THREE.DirectionalLight(0xfef3c7, 1.4);
-    fillSun.position.set(-6, -4, 5);
-    scene.add(fillSun);
+    // 60fps Lerp Loop for organic fluid motion between scroll states
+    const loop = () => {
+      const tracker = scrollTrackerRef.current;
+      tracker.currentProgress += (tracker.targetProgress - tracker.currentProgress) * 0.12;
+      
+      // Update state when change is noticeable
+      setProgress(tracker.currentProgress);
 
-    const rimLight = new THREE.PointLight(theme.rimColor, 3.5, 14);
-    rimLight.position.set(0, 4, 3);
-    scene.add(rimLight);
+      tracker.rafId = requestAnimationFrame(loop);
+    };
 
-    // --- SCULPTURAL KINETIC TORUS KNOT (THE TOY CENTERPIECE - NO JELLY) ---
-    // A continuous, satin-smooth architectural sculpture with endless mathematical curvature
-    const knotGeometry = new THREE.TorusKnotGeometry(1.5, 0.38, 160, 40, 2, 3);
-
-    // Tactile, satin ceramic / matte polished sculpture material
-    const knotMaterial = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(theme.knotColor),
-      emissive: new THREE.Color(theme.knotEmissive),
-      emissiveIntensity: 0.16,
-      roughness: 0.22,
-      metalness: 0.05,
-      clearcoat: 0.9,
-      clearcoatRoughness: 0.12,
-      reflectivity: 0.6,
-      ior: 1.45,
-    });
-
-    const knotMesh = new THREE.Mesh(knotGeometry, knotMaterial);
-    scene.add(knotMesh);
-
-    // --- ORBITING MAGNETIC PEBBLES (TACTILE POLISHED RIVER STONES) ---
-    interface Pebble {
-      mesh: THREE.Mesh;
-      radius: number;
-      speed: number;
-      angle: number;
-      orbitY: number;
-      oscPhase: number;
-      velY: number;
+    trackerLoop: {
+      scrollTrackerRef.current.rafId = requestAnimationFrame(loop);
     }
 
-    const pebbles: Pebble[] = theme.pebbleColors.map((hex, i) => {
-      const stoneRadius = 0.22 + (i % 3) * 0.1;
-      const geom = new THREE.SphereGeometry(stoneRadius, 32, 32);
-      const mat = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(hex),
-        roughness: 0.18,
-        clearcoat: 0.95,
-        clearcoatRoughness: 0.1,
-        reflectivity: 0.5,
-      });
-      const mesh = new THREE.Mesh(geom, mat);
-      scene.add(mesh);
-
-      return {
-        mesh,
-        radius: 2.7 + i * 0.35,
-        speed: (0.01 + i * 0.003) * (i % 2 === 0 ? 1 : -1),
-        angle: (i / theme.pebbleColors.length) * Math.PI * 2,
-        orbitY: (i - 2) * 0.5,
-        oscPhase: Math.random() * Math.PI * 2,
-        velY: 0,
-      };
-    });
-
-    // --- TOUCH, DRAG & INERTIA PHYSICS ---
-    let isPointerDown = false;
-    let prevPointerX = 0;
-    let prevPointerY = 0;
-    let angularVelX = 0.004;
-    let angularVelY = 0.008;
-    let autoRotationX = 0;
-    let autoRotationY = 0;
-    const clock = new THREE.Clock();
-
-    const onPointerMove = (e: MouseEvent | TouchEvent) => {
-      const rect = container.getBoundingClientRect();
-      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-      const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
-
-      const normX = ((clientX - rect.left) / rect.width) * 2 - 1;
-      const normY = -(((clientY - rect.top) / rect.height) * 2 - 1);
-
-      sceneBridgeRef.current.pointerX = normX;
-      sceneBridgeRef.current.pointerY = normY;
-
-      if (isPointerDown) {
-        const deltaX = clientX - prevPointerX;
-        const deltaY = clientY - prevPointerY;
-
-        angularVelY = deltaX * 0.009;
-        angularVelX = deltaY * 0.009;
-
-        // Scatter pebbles slightly under vigorous spin
-        pebbles.forEach((p) => {
-          p.velY += (Math.random() - 0.5) * 0.08;
-        });
-      }
-
-      prevPointerX = clientX;
-      prevPointerY = clientY;
-    };
-
-    const onPointerDown = (e: MouseEvent | TouchEvent) => {
-      isPointerDown = true;
-      sceneBridgeRef.current.isDragging = true;
-      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-      const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
-      prevPointerX = clientX;
-      prevPointerY = clientY;
-
-      // Tap pulse
-      sceneBridgeRef.current.spinImpulse = 2.2;
-    };
-
-    const onPointerUp = () => {
-      isPointerDown = false;
-      sceneBridgeRef.current.isDragging = false;
-    };
-
-    container.addEventListener("mousemove", onPointerMove);
-    container.addEventListener("mousedown", onPointerDown);
-    window.addEventListener("mouseup", onPointerUp);
-    container.addEventListener("touchmove", onPointerMove, { passive: true });
-    container.addEventListener("touchstart", onPointerDown, { passive: true });
-    window.addEventListener("touchend", onPointerUp);
-
-    const onResize = () => {
-      if (!container) return;
-      width = container.clientWidth || window.innerWidth;
-      height = container.clientHeight || 650;
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-    };
-    window.addEventListener("resize", onResize);
-
-    // --- 60FPS SIMULATION LOOP ---
-    let frameId: number;
-
-    const animate = () => {
-      frameId = requestAnimationFrame(animate);
-      const time = clock.getElapsedTime();
-
-      // Smooth color interpolation on theme shift
-      knotMaterial.color.lerp(sceneBridgeRef.current.targetColor, 0.08);
-      knotMaterial.emissive.lerp(sceneBridgeRef.current.targetEmissive, 0.08);
-      rimLight.color.lerp(sceneBridgeRef.current.targetRim, 0.08);
-
-      // Kinetic momentum with soft air damping
-      if (!isPointerDown) {
-        angularVelX *= 0.965;
-        angularVelY *= 0.965;
-
-        // Base continuous ambient drift
-        autoRotationX += 0.003;
-        autoRotationY += 0.005;
-      }
-
-      // Handle spin impulse injection
-      if (sceneBridgeRef.current.spinImpulse > 0) {
-        angularVelY += sceneBridgeRef.current.spinImpulse * 0.015;
-        sceneBridgeRef.current.spinImpulse *= 0.9;
-        if (sceneBridgeRef.current.spinImpulse < 0.05) {
-          sceneBridgeRef.current.spinImpulse = 0;
-        }
-      }
-
-      // Apply rotations
-      knotMesh.rotation.x += angularVelX + (!isPointerDown ? 0.003 : 0);
-      knotMesh.rotation.y += angularVelY + (!isPointerDown ? 0.005 : 0);
-
-      // Subtle dynamic tilt tracking mouse position smoothly
-      const targetTiltZ = sceneBridgeRef.current.pointerX * 0.35;
-      knotMesh.rotation.z += (targetTiltZ - knotMesh.rotation.z) * 0.05;
-
-      // Scale breathing
-      const targetScale = sceneBridgeRef.current.activeScaleMultiplier * (1 + Math.sin(time * 1.8) * 0.02);
-      knotMesh.scale.set(targetScale, targetScale, targetScale);
-
-      // Animate orbiting pebbles with spring damping
-      pebbles.forEach((pebble, idx) => {
-        pebble.angle += pebble.speed * (1 + Math.abs(angularVelY) * 20);
-        const currentR = pebble.radius + Math.sin(time * 1.6 + idx) * 0.18;
-
-        pebble.velY += (Math.sin(time * 2.5 + idx * 1.4) * 0.006 - pebble.velY * 0.05);
-        pebble.velY *= 0.94;
-
-        pebble.mesh.position.x = Math.cos(pebble.angle) * currentR;
-        pebble.mesh.position.z = Math.sin(pebble.angle) * currentR;
-        pebble.mesh.position.y = pebble.orbitY + pebble.velY;
-
-        pebble.mesh.rotation.x += 0.01;
-        pebble.mesh.rotation.y += 0.015;
-      });
-
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
     return () => {
-      cancelAnimationFrame(frameId);
-      window.removeEventListener("resize", onResize);
-      container.removeEventListener("mousemove", onPointerMove);
-      container.removeEventListener("mousedown", onPointerDown);
-      window.removeEventListener("mouseup", onPointerUp);
-      container.removeEventListener("touchmove", onPointerMove);
-      container.removeEventListener("touchstart", onPointerDown);
-      window.removeEventListener("touchend", onPointerUp);
-      renderer.dispose();
-      knotGeometry.dispose();
-      knotMaterial.dispose();
-      pebbles.forEach((p) => {
-        p.mesh.geometry.dispose();
-        if (Array.isArray(p.mesh.material)) p.mesh.material.forEach((m) => m.dispose());
-        else p.mesh.material.dispose();
-      });
-      if (renderer.domElement && container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
-      }
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(scrollTrackerRef.current.rafId);
     };
-  }, []);
+  }, [updateScroll]);
+
+  // Subtle interactive pointer parallax tilt for tactile depth
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const { clientX, clientY } = e;
+    const { innerWidth, innerHeight } = window;
+    const normX = (clientX / innerWidth - 0.5) * 2;
+    const normY = (clientY / innerHeight - 0.5) * 2;
+
+    setTilt({
+      x: normX * 8, // max 8 deg tilt
+      y: -normY * 8,
+    });
+  };
+
+  const handlePointerLeave = () => {
+    setTilt({ x: 0, y: 0 });
+  };
+
+  // Clickable Chapter Navigation
+  const scrollToChapter = (chapterIndex: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+    const currentScrollY = window.scrollY;
+    const containerTop = currentScrollY + rect.top;
+    const totalDistance = rect.height - window.innerHeight;
+
+    // Targets: chapter 0 -> 0.15, chapter 1 -> 0.50, chapter 2 -> 0.85
+    const targetNormalized = chapterIndex === 0 ? 0.12 : chapterIndex === 1 ? 0.50 : 0.88;
+    const destination = containerTop + targetNormalized * totalDistance;
+
+    window.scrollTo({
+      top: destination,
+      behavior: "smooth",
+    });
+  };
+
+  // Chapter 1 Transition Dynamics: "You didn't notice anything."
+  // Prominent in 0.0 -> 0.35, fades out 0.35 -> 0.45
+  const ch1Opacity = Math.max(0, Math.min(1, 1 - (progress - 0.28) / 0.15));
+  const ch1TranslateY = progress > 0.28 ? -(progress - 0.28) * 240 : 0;
+  const ch1Scale = 1 + progress * 0.12;
+
+  // Chapter 2 Transition Dynamics: "That was the job."
+  // Enters 0.32 -> 0.44, peaks at 0.50, exits 0.62 -> 0.74
+  let ch2Opacity = 0;
+  if (progress < 0.32) {
+    ch2Opacity = 0;
+  } else if (progress <= 0.46) {
+    ch2Opacity = (progress - 0.32) / 0.14;
+  } else if (progress <= 0.62) {
+    ch2Opacity = 1;
+  } else if (progress <= 0.74) {
+    ch2Opacity = 1 - (progress - 0.62) / 0.12;
+  }
+  const ch2TranslateY = progress < 0.46
+    ? (0.46 - progress) * 160
+    : progress > 0.62
+    ? -(progress - 0.62) * 220
+    : 0;
+  const ch2Scale = progress < 0.46
+    ? 0.94 + (progress - 0.32) * 0.45
+    : 1 + (progress - 0.46) * 0.08;
+
+  // Chapter 3 Transition Dynamics: "Nima Hosseini"
+  // Enters 0.64 -> 0.78, fully present 0.78 -> 1.0
+  const ch3Opacity = Math.max(0, Math.min(1, (progress - 0.64) / 0.16));
+  const ch3TranslateY = progress < 0.78 ? (0.78 - progress) * 180 : 0;
+  const ch3Scale = 0.94 + Math.min(0.06, Math.max(0, (progress - 0.64) * 0.2));
+
+  // Determine active indicator (0, 1, or 2)
+  const activeChapter = progress < 0.38 ? 0 : progress < 0.68 ? 1 : 2;
 
   return (
     <section
+      ref={containerRef}
       id="nima-hosseini"
-      aria-label="Nima Hosseini - Cloud Infrastructure & Systems Architecture"
-      className="relative w-full overflow-hidden transition-colors duration-1000 py-32 sm:py-44 lg:py-52 select-none"
-      style={{ backgroundColor: theme.bgColor }}
+      aria-label="Manifesto and Identity"
+      className="relative w-full h-[280vh] select-none"
+      style={{ backgroundColor: "#FAF6F0" }}
     >
-      <div id="story" className="absolute -top-16" />
+      <div id="story" className="absolute top-0" />
 
-      {/* AMBIENT ORGANIC WARM GRADIENT HALOS (NO GRIDS, NO DOT PATTERNS) */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* AMBIENT ORGANIC WARM HALOS (NO GRIDS, NO DOT PATTERNS) */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
         <div
-          className="absolute -top-40 -left-40 w-[700px] sm:w-[950px] h-[700px] sm:h-[950px] rounded-full opacity-55 blur-3xl transition-all duration-1000"
+          className="absolute top-1/4 -left-40 w-[650px] sm:w-[900px] h-[650px] sm:h-[900px] rounded-full opacity-40 blur-3xl transition-transform duration-1000"
           style={{
-            background: `radial-gradient(circle, ${theme.knotColor}29 0%, transparent 70%)`,
+            background: "radial-gradient(circle, #E87A5D33 0%, transparent 70%)",
+            transform: `translate(${tilt.x * 2}px, ${tilt.y * 2}px)`,
           }}
         />
         <div
-          className="absolute -bottom-40 -right-40 w-[650px] sm:w-[900px] h-[650px] sm:h-[900px] rounded-full opacity-45 blur-3xl transition-all duration-1000"
+          className="absolute bottom-1/4 -right-40 w-[600px] sm:w-[850px] h-[600px] sm:h-[850px] rounded-full opacity-35 blur-3xl transition-transform duration-1000"
           style={{
-            background: `radial-gradient(circle, ${theme.accentColor}24 0%, transparent 70%)`,
+            background: "radial-gradient(circle, #D9532F24 0%, transparent 70%)",
+            transform: `translate(${-tilt.x * 2}px, ${-tilt.y * 2}px)`,
           }}
         />
       </div>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-12 md:px-16 lg:px-24">
+      {/* STICKY FULL-VIEWPORT THEATRICAL STAGE */}
+      <div
+        ref={stageRef}
+        onPointerMove={handlePointerMove}
+        onPointerLeave={handlePointerLeave}
+        className="sticky top-0 h-[100dvh] w-full flex flex-col justify-between items-center px-6 sm:px-12 md:px-16 lg:px-24 py-12 sm:py-16 overflow-hidden"
+      >
         
-        {/* ========================================================================= */}
-        {/* 1. ASYMMETRIC MONUMENTAL EDITORIAL MANIFESTO                             */}
-        {/* "You didn't notice anything. That was the job."                           */}
-        {/* ========================================================================= */}
-        <div className="max-w-5xl space-y-6 sm:space-y-8">
-          
-          <div className="flex items-center gap-3">
+        {/* Top Minimal Stage Eyebrow */}
+        <div className="w-full max-w-[1440px] flex items-center justify-between text-xs sm:text-sm font-semibold tracking-wider text-[#63483D]">
+          <span className="flex items-center gap-2">
             <span
-              className="w-3.5 h-3.5 rounded-full"
-              style={{ backgroundColor: theme.accentColor }}
+              className="w-2.5 h-2.5 rounded-full transition-colors duration-500"
+              style={{ backgroundColor: activeChapter === 1 ? "#D94B26" : "#2B1D16" }}
             />
-            <span
-              className="text-sm sm:text-base font-bold tracking-wider uppercase"
-              style={{ color: "#4A3329" }}
-            >
-              The Law of Invisible Systems
-            </span>
-          </div>
+            <span>THE MANIFESTO</span>
+          </span>
+          <span className="font-mono text-xs opacity-60">
+            0{activeChapter + 1} / 03
+          </span>
+        </div>
 
-          {/* Monumental Fluid Typography Lockup */}
-          <div className="space-y-2 sm:space-y-4">
-            
-            {/* Fluid Italian Editorial Italic */}
+        {/* ========================================================================= */}
+        {/* CENTER TRANSITION STAGE (PARALLAX TILT + SEAMLESS TRANSITIONS)            */}
+        {/* ========================================================================= */}
+        <div
+          className="relative w-full max-w-[1440px] flex-1 flex items-center justify-center transition-transform duration-300 ease-out"
+          style={{
+            perspective: 1000,
+            transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
+          }}
+        >
+
+          {/* ======================================================================= */}
+          {/* CHAPTER 1: "You didn't notice anything."                                */}
+          {/* ======================================================================= */}
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center text-center transition-all duration-100 pointer-events-none"
+            style={{
+              opacity: ch1Opacity,
+              transform: `translateY(${ch1TranslateY}px) scale(${ch1Scale})`,
+              visibility: ch1Opacity <= 0 ? "hidden" : "visible",
+            }}
+          >
             <p
-              className="font-serif italic text-[clamp(2.8rem,7.8vw,8rem)] leading-[0.96] tracking-[-0.03em]"
+              className="font-serif italic text-[clamp(3.2rem,9.5vw,10.5rem)] leading-[0.92] tracking-[-0.03em] max-w-6xl mx-auto"
               style={{ color: "#2B1D16" }}
             >
               You didn’t notice anything.
             </p>
+          </div>
 
-            {/* Monumental Oversized Display Typography */}
+          {/* ======================================================================= */}
+          {/* CHAPTER 2: "That was the job."                                          */}
+          {/* ======================================================================= */}
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center text-center transition-all duration-100 pointer-events-none"
+            style={{
+              opacity: ch2Opacity,
+              transform: `translateY(${ch2TranslateY}px) scale(${ch2Scale})`,
+              visibility: ch2Opacity <= 0 ? "hidden" : "visible",
+            }}
+          >
             <h2
-              className="font-display font-black text-[clamp(4rem,11.8vw,12.2rem)] leading-[0.86] tracking-[-0.05em] uppercase"
-              style={{ color: "#1F1612" }}
+              className="font-display font-black text-[clamp(4.2rem,12.5vw,13.5rem)] leading-[0.84] tracking-[-0.05em] uppercase max-w-6xl mx-auto"
+              style={{ color: "#1E1612" }}
             >
               <span>That was the </span>
               <span
-                className="inline-block transition-transform duration-300 hover:scale-105 cursor-pointer"
-                style={{ color: theme.accentColor }}
+                className="inline-block transition-transform duration-300 hover:scale-105"
+                style={{ color: "#D94B26" }}
               >
                 job.
               </span>
             </h2>
-
           </div>
 
-          <p
-            className="text-[20px] sm:text-[25px] md:text-[30px] font-medium leading-relaxed max-w-3xl"
-            style={{ color: "#594034" }}
-          >
-            When cloud infrastructure is engineered with mathematical discipline, state never drifts, traffic shifts silently, and users experience effortless, uninterrupted continuity.
-          </p>
-
-        </div>
-
-        {/* ========================================================================= */}
-        {/* 2. THE TACTILE 3D KINETIC CENTERPIECE (NO JELLY)                          */}
-        {/* Satin ceramic Torus Knot sculpture with touch physics & momentum inertia  */}
-        {/* ========================================================================= */}
-        <div className="my-16 sm:my-24 relative">
-          
-          {/* Subtle Interaction Guide & Tactile Material Swatches */}
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-            <div className="text-sm font-semibold tracking-wide" style={{ color: "#6E5042" }}>
-              Drag to spin with inertia &bull; Click to pulse &bull; Switch material:
-            </div>
-
-            {/* Material Swatches (Organic round pebble pills) */}
-            <div className="flex flex-wrap items-center gap-3">
-              {KINETIC_THEMES.map((t, idx) => (
-                <button
-                  key={t.name}
-                  type="button"
-                  onClick={() => handleSelectTheme(idx)}
-                  className={`flex items-center gap-2.5 px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${
-                    themeIdx === idx
-                      ? "bg-white shadow-[0_6px_20px_rgba(70,30,15,0.12)] scale-105"
-                      : "bg-white/50 hover:bg-white/80"
-                  }`}
-                  style={{
-                    color: themeIdx === idx ? t.accentColor : "#594034",
-                  }}
-                >
-                  <span
-                    className="w-3.5 h-3.5 rounded-full transition-transform duration-300"
-                    style={{ backgroundColor: t.knotColor }}
-                  />
-                  <span>{t.name}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* 3D WebGL Canvas Viewport (Seamlessly integrated into the section ground) */}
+          {/* ======================================================================= */}
+          {/* CHAPTER 3: "Nima Hosseini"                                              */}
+          {/* ======================================================================= */}
           <div
-            ref={mountRef}
-            className="w-full h-[460px] sm:h-[560px] lg:h-[660px] cursor-grab active:cursor-grabbing relative flex items-center justify-center rounded-[56px] overflow-hidden"
+            className="absolute inset-0 flex flex-col items-center justify-center text-center transition-all duration-100 pointer-events-none"
+            style={{
+              opacity: ch3Opacity,
+              transform: `translateY(${ch3TranslateY}px) scale(${ch3Scale})`,
+              visibility: ch3Opacity <= 0 ? "hidden" : "visible",
+            }}
           >
-            {/* Monumental Watermark Floating In Depth */}
-            <div
-              className="absolute pointer-events-none select-none text-[clamp(5rem,18vw,20rem)] font-black tracking-tighter opacity-10 transition-colors duration-700"
-              style={{ color: theme.accentColor }}
-            >
-              EQUILIBRIUM
-            </div>
-          </div>
-
-        </div>
-
-        {/* ========================================================================= */}
-        {/* 3. MONUMENTAL IDENTITY: NIMA HOSSEINI                                     */}
-        {/* Colossal typography breaking across space                                 */}
-        {/* ========================================================================= */}
-        <div className="space-y-12 sm:space-y-16">
-          
-          <div className="space-y-4">
-            
-            <div
-              className="text-sm sm:text-base font-bold tracking-wider uppercase"
-              style={{ color: theme.accentColor }}
-            >
-              Systems Architect &bull; Cloud &amp; DevOps
-            </div>
-
-            {/* Monumental Nameplate */}
-            <h3
-              className="font-display font-black text-[clamp(4.4rem,13.5vw,14rem)] leading-[0.84] tracking-[-0.05em] uppercase"
-              style={{ color: "#1F1612" }}
+            <h2
+              className="font-display font-black text-[clamp(4.6rem,14vw,15.5rem)] leading-[0.82] tracking-[-0.05em] uppercase max-w-7xl mx-auto"
+              style={{ color: "#1E1612" }}
             >
               Nima Hosseini
-            </h3>
-
+            </h2>
           </div>
 
-          {/* Editorial Philosophy Statement */}
-          <div className="max-w-3xl">
-            <p
-              className="text-[20px] sm:text-[26px] md:text-[31px] font-medium leading-snug"
-              style={{ color: "#453026" }}
-            >
-              Building cloud architectures from first principles - combining reproducible state, cryptographically verifiable security boundaries, and automated canary deployments across AWS and Kubernetes.
-            </p>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* BOTTOM THEATRICAL CHAPTER NAVIGATION                                      */}
+        {/* Smooth clickable pills to scrub directly between the 3 moments            */}
+        {/* ========================================================================= */}
+        <div className="w-full max-w-[1440px] flex items-center justify-between pt-4">
+          
+          <div className="text-xs font-semibold tracking-wider text-[#75574A] hidden sm:block">
+            Scroll to experience &bull; Click to jump
           </div>
 
-          {/* ======================================================================= */}
-          {/* 4. SHOW MY STACK AS HUGE TYPOGRAPHY & MOVING SHAPES (NO CARD GRIDS!)     */}
-          {/* ======================================================================= */}
-          <div className="pt-6 space-y-6">
-            
-            <div className="text-xs sm:text-sm font-bold uppercase tracking-widest" style={{ color: "#7A5A4C" }}>
-              Core Stack &bull; Hover or Tap To Accelerate The Kinetic Centerpiece
-            </div>
+          {/* Chapter Selector Dots */}
+          <div className="flex items-center gap-3 mx-auto sm:mx-0">
+            {[
+              { label: "Silence", index: 0 },
+              { label: "Standard", index: 1 },
+              { label: "Identity", index: 2 },
+            ].map((ch) => (
+              <button
+                key={ch.label}
+                type="button"
+                onClick={() => scrollToChapter(ch.index)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer ${
+                  activeChapter === ch.index
+                    ? "bg-[#1E1612] text-white shadow-sm scale-105"
+                    : "bg-[#FFFFFF]/60 hover:bg-[#FFFFFF] text-[#63483D]"
+                }`}
+              >
+                <span
+                  className="w-2 h-2 rounded-full transition-transform duration-300"
+                  style={{
+                    backgroundColor: activeChapter === ch.index ? "#D94B26" : "#A88E82",
+                  }}
+                />
+                <span>{ch.label}</span>
+              </button>
+            ))}
+          </div>
 
-            {/* Asymmetric Fluid Kinetic Typography Flow */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-              {STACK_ITEMS.map((item, idx) => (
-                <div
-                  key={item.name}
-                  onMouseEnter={() => handleStackActivate(idx)}
-                  onMouseLeave={() => handleStackActivate(null)}
-                  className="group relative cursor-pointer"
-                >
-                  <div
-                    className="flex items-center gap-3 sm:gap-4 px-7 sm:px-9 py-4 sm:py-5 rounded-full transition-all duration-300 shadow-[0_4px_18px_rgba(70,30,15,0.06)] hover:shadow-[0_12px_32px_rgba(70,30,15,0.14)] hover:-translate-y-1.5 hover:scale-105 active:scale-95"
-                    style={{
-                      backgroundColor: activeStackIndex === idx ? theme.accentColor : "#FFFFFF",
-                      color: activeStackIndex === idx ? "#FFFFFF" : "#1F1612",
-                    }}
-                  >
-                    <span
-                      className="w-3 h-3 rounded-full transition-transform duration-300 group-hover:scale-125"
-                      style={{
-                        backgroundColor: activeStackIndex === idx ? "#FFFFFF" : item.accent,
-                      }}
-                    />
-                    <span className="font-display font-black text-xl sm:text-2xl md:text-3xl tracking-tight uppercase">
-                      {item.name}
-                    </span>
-                    <span
-                      className="text-xs sm:text-sm font-semibold transition-colors duration-300 hidden md:inline"
-                      style={{
-                        color: activeStackIndex === idx ? "rgba(255,255,255,0.85)" : "#7A5A4C",
-                      }}
-                    >
-                      ({item.role})
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
+          <div className="text-xs font-semibold tracking-wider text-[#75574A] hidden sm:block">
+            {Math.round(progress * 100)}%
           </div>
 
         </div>
