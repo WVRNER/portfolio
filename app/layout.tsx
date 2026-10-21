@@ -83,21 +83,12 @@ export const metadata: Metadata = {
     siteName: "WVRNER",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "/hero-poster.jpg",
-        width: 1200,
-        height: 630,
-        alt: "WVRNER - Nima Hosseini - Cloud / DevOps Engineer",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "WVRNER | Nima Hosseini - Cloud / DevOps Engineer",
     description:
       "Personal Cloud / DevOps engineering portfolio of Nima Hosseini (WVRNER). AWS, Terraform, GitHub Actions, Docker & container architectures.",
-    images: ["/hero-poster.jpg"],
     creator: "@wvrner",
   },
   icons: {
@@ -105,32 +96,6 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: "/favicon.ico",
   },
-};
-
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Nima Hosseini",
-  alternateName: "WVRNER",
-  url: "https://wvrner.com",
-  jobTitle: "Cloud / DevOps Engineer",
-  description:
-    "Cloud and DevOps Engineer specializing in AWS architecture, Terraform, Kubernetes, CI/CD pipelines, and resilient cloud systems.",
-  sameAs: [
-    "https://github.com/wvrner",
-    "https://linkedin.com/in/wvrner"
-  ],
-  knowsAbout: [
-    "Cloud Architecture",
-    "DevOps",
-    "Amazon Web Services",
-    "Terraform",
-    "Kubernetes",
-    "Docker",
-    "CI/CD Pipelines",
-    "Infrastructure as Code",
-    "Site Reliability Engineering"
-  ],
 };
 
 export const viewport: Viewport = {
@@ -150,10 +115,6 @@ export default function RootLayout({
       className={`${inter.variable} ${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${sourceSerif.variable} selection:bg-[#0A0A0A] selection:text-white`}
     >
       <body className="min-h-[100dvh] bg-white text-[#0A0A0A] font-sans antialiased relative selection:bg-[#0A0A0A] selection:text-white">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-        />
         <div className="fixed inset-0 pointer-events-none bg-noise-grain opacity-40 z-50" aria-hidden="true" />
         {children}
       </body>

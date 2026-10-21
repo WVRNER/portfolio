@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowLeft,
   Share2,
   Check,
   Copy,
+  Link2,
 } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
@@ -17,36 +18,163 @@ interface ArticleClientWrapperProps {
   post: BlogPost;
 }
 
-/**
- * ArticleClientWrapper - Editorial Longform Reader (matching Medium screenshot)
- * 
- * - Super bold headline (font-extrabold / font-black)
- * - Subtitle
- * - Meta line: "X min read · Date" (e.g. 5 min read · Aug 4, 2026)
- * - Single bordered Share pill button
- * - Zero listen button, zero more button, zero follow, zero author names, zero member-only badges
- * - Feature cover image directly below Share button
- * - Pure reader typography in Source Serif 4
- */
 export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
   const [cvOpen, setCvOpen] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copiedLink, setCopiedLink] = useState(false);
 
-  // Track reading scroll progress (hairline indicator)
+  // Article body reference for scoped progress tracking and quote sharing
+  const articleRef = useRef<HTMLElement>(null);
+  const [quoteSelection, setQuoteSelection] = useState<{
+    text: string;
+    x: number;
+    y: number;
+  } | null>(null);
+  const [quoteCopied, setQuoteCopied] = useState(false);
+
+  // Track reading scroll progress through the article body only
   useEffect(() => {
-    const handleScroll = () => {
-      const totalHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        setScrollProgress(Math.min(100, Math.max(0, (window.scrollY / totalHeight) * 100)));
+    let ticking = false;
+
+    const updateArticleProgress = () => {
+      const el = articleRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+
+      // Top boundary offset (beneath navigation)
+      const topOffset = 90;
+      const startOffset = rect.top - topOffset;
+      const totalArticleDistance = rect.height - (viewportHeight - topOffset);
+
+      if (totalArticleDistance <= 0) {
+        setScrollProgress(rect.top <= topOffset ? 100 : 0);
+        return;
+      }
+
+      if (startOffset > 0) {
+        setScrollProgress(0);
+      } else if (-startOffset >= totalArticleDistance) {
+        setScrollProgress(100);
+      } else {
+        const progress = (-startOffset / totalArticleDistance) * 100;
+        setScrollProgress(Math.min(100, Math.max(0, progress)));
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateArticleProgress();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    updateArticleProgress();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
+
+  // Highlight-to-share selection listener scoped to the article body
+  useEffect(() => {
+    const handleSelection = () => {
+      if (typeof window === "undefined") return;
+      const selection = window.getSelection();
+
+      if (!selection || selection.isCollapsed) {
+        setQuoteSelection(null);
+        return;
+      }
+
+      const selectedText = selection.toString().trim();
+      // Ignore short selections under ~10 characters
+      if (selectedText.length < 10) {
+        setQuoteSelection(null);
+        return;
+      }
+
+      // Ensure selection is inside the article body
+      const articleEl = articleRef.current;
+      if (!articleEl) return;
+
+      const anchorNode = selection.anchorNode;
+      const focusNode = selection.focusNode;
+      if (
+        !anchorNode ||
+        !focusNode ||
+        !articleEl.contains(anchorNode) ||
+        !articleEl.contains(focusNode)
+      ) {
+        setQuoteSelection(null);
+        return;
+      }
+
+      try {
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        if (rect.width === 0 && rect.height === 0) {
+          setQuoteSelection(null);
+          return;
+        }
+
+        const buttonWidth = 156;
+        const x = Math.max(
+          16,
+          Math.min(window.innerWidth - buttonWidth - 16, rect.left + rect.width / 2 - buttonWidth / 2)
+        );
+        const y = rect.top < 60 ? rect.bottom + 10 : rect.top - 44;
+
+        setQuoteSelection({
+          text: selectedText,
+          x,
+          y,
+        });
+      } catch {
+        setQuoteSelection(null);
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setQuoteSelection(null);
+      }
+    };
+
+    document.addEventListener("selectionchange", handleSelection);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("selectionchange", handleSelection);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const handleCopyQuoteLink = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!quoteSelection || typeof window === "undefined") return;
+
+    const cleanText = quoteSelection.text.replace(/\s+/g, " ").trim();
+    const fragmentUrl = `${window.location.origin}${window.location.pathname}#:~:text=${encodeURIComponent(cleanText)}`;
+
+    navigator.clipboard.writeText(fragmentUrl).then(() => {
+      setQuoteCopied(true);
+      setTimeout(() => {
+        setQuoteCopied(false);
+        setQuoteSelection(null);
+      }, 2000);
+    });
+  };
 
   const handleCopyCode = (code: string, id: string) => {
     navigator.clipboard.writeText(code).then(() => {
@@ -69,12 +197,43 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
   return (
     <div className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#EAEAEA] selection:text-[#242424]">
-      {/* Top Reading Progress Indicator (Hairline) */}
+      {/* Top Reading Progress Indicator (Hairline) - Tracked strictly across article body */}
       <div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-[#161617] z-50 transition-transform duration-100 origin-left will-change-transform"
+        className="fixed top-0 left-0 right-0 h-[2.5px] bg-[#161617] z-50 origin-left will-change-transform transition-transform duration-75 motion-reduce:transition-none pointer-events-none"
         style={{ transform: `scaleX(${scrollProgress / 100})` }}
         aria-hidden="true"
       />
+
+      {/* Floating Highlight-to-Share Quote Link Button */}
+      {quoteSelection && (
+        <div
+          className="fixed z-50 transition-all duration-150 animate-in fade-in"
+          style={{
+            left: `${quoteSelection.x}px`,
+            top: `${quoteSelection.y}px`,
+          }}
+        >
+          <button
+            type="button"
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={handleCopyQuoteLink}
+            aria-label="Copy link to quote"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#161617] text-white text-[12px] font-sans font-medium shadow-[0_6px_20px_rgba(0,0,0,0.25)] border border-white/15 hover:bg-[#2A2A2D] active:scale-95 transition-all cursor-pointer select-none"
+          >
+            {quoteCopied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Link copied</span>
+              </>
+            ) : (
+              <>
+                <Link2 className="w-3.5 h-3.5 text-neutral-300" />
+                <span>Copy link to quote</span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
 
       {/* Navigation */}
       <Navigation onOpenCV={() => setCvOpen(true)} />
@@ -164,7 +323,10 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         )}
 
         {/* Article Body Content */}
-        <article className="py-4 font-[family-name:var(--font-source-serif),Charter,Georgia,serif] text-[20px] leading-[34px] text-[#242424] font-normal selection:bg-[#EAEAEA]">
+        <article
+          ref={articleRef}
+          className="py-4 font-[family-name:var(--font-source-serif),Charter,Georgia,serif] text-[20px] leading-[34px] text-[#242424] font-normal selection:bg-[#EAEAEA]"
+        >
           
           {/* Lead Abstract */}
           {post.content.lead && (

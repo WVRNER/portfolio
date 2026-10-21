@@ -35,8 +35,6 @@ export async function generateMetadata({
       slug.toLowerCase().includes("test")
   );
 
-  const ogImage = post.featureImage || "/hero-poster.jpg";
-
   return {
     title: `${post.title} | WVRNER`,
     description: post.excerpt,
@@ -55,18 +53,11 @@ export async function generateMetadata({
       url: `https://wvrner.com/blog/${slug}`,
       siteName: "WVRNER",
       type: "article",
-      images: [
-        {
-          url: ogImage,
-          alt: post.title,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${post.title} | WVRNER`,
       description: post.excerpt,
-      images: [ogImage],
       creator: "@wvrner",
     },
   };
@@ -84,7 +75,50 @@ async function ArticleContent({
     notFound();
   }
 
-  return <ArticleClientWrapper post={post} />;
+  let publishedDateIso = new Date().toISOString();
+  if (post.date) {
+    const parsed = new Date(post.date);
+    if (!isNaN(parsed.getTime())) {
+      publishedDateIso = parsed.toISOString();
+    }
+  }
+
+  const blogPostingJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: publishedDateIso,
+    dateModified: publishedDateIso,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://wvrner.com/blog/${slug}`,
+    },
+    url: `https://wvrner.com/blog/${slug}`,
+    image: post.featureImage || `https://wvrner.com/blog/${slug}/opengraph-image`,
+    author: {
+      "@type": "Person",
+      name: "Nima Hosseini",
+      alternateName: "WVRNER",
+      url: "https://wvrner.com",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Nima Hosseini",
+      alternateName: "WVRNER",
+      url: "https://wvrner.com",
+    },
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+      />
+      <ArticleClientWrapper post={post} />
+    </>
+  );
 }
 
 export default function BlogPostPage({
