@@ -109,24 +109,24 @@ html.lenis, html.lenis body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
 }
 
-/* TEXTURE HIERARCHY — FLAT 2D SURFACE GRAIN (NO 3D CURVATURE OR VOLUMETRIC LIGHTING) */
+/* TEXTURE HIERARCHY - FLAT 2D SURFACE GRAIN (NO 3D CURVATURE OR VOLUMETRIC LIGHTING) */
 
-/* Level 1: QUIET — Subtle fine monochromatic surface grain for secondary geometry */
+/* Level 1: QUIET - Subtle fine monochromatic surface grain for secondary geometry */
 .grain-level-1 {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='quietGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23quietGrain)' opacity='0.045'/%3E%3C/svg%3E");
 }
 
-/* Level 2: PRESENT — Clearly visible tactile flat printed ink grain for major shapes */
+/* Level 2: PRESENT - Clearly visible tactile flat printed ink grain for major shapes */
 .grain-level-2 {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='presentGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23presentGrain)' opacity='0.095'/%3E%3C/svg%3E");
 }
 
-/* Level 3: HERO — Richer tactile flat dither/halftone surface character */
+/* Level 3: HERO - Richer tactile flat dither/halftone surface character */
 .grain-level-3 {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='heroGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23heroGrain)' opacity='0.16'/%3E%3C/svg%3E");
 }
 
-/* RARE HERO COLOR MATERIAL (System 02: Flat 2D screen-printed pigment bands for Contact only — NO radial sphere lighting) */
+/* RARE HERO COLOR MATERIAL (System 02: Flat 2D screen-printed pigment bands for Contact only - NO radial sphere lighting) */
 .hero-material-gradient {
   background: linear-gradient(
     138deg,

@@ -147,68 +147,36 @@ export function ProjectsGallery() {
       aria-label="Projects Gallery"
       className="relative pb-24 sm:pb-32 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1720px] mx-auto bg-white"
     >
-      {/* DESKTOP LAYOUT: [ WIDE MEDIA TILE 01 ] [ SQUARE MEDIA TILE 02 ] */}
-      <div className="hidden lg:block w-full">
-        <div className="flex flex-row items-stretch gap-8 xl:gap-10 h-[420px] xl:h-[480px]">
-          {/* Wide Project 01 */}
-          <div className="flex-1 h-full min-w-0">
-            <Link
-              href="/blog/project-01"
-              className="group block w-full h-full focus:outline-none"
-              aria-label={project1.title ? `View ${project1.title}` : "View Project 01"}
-            >
-              <ProjectMediaTile project={project1} />
-            </Link>
-          </div>
-
-          {/* Square Project/Lab 02 */}
-          <div className="w-[420px] xl:w-[480px] shrink-0 h-full aspect-square">
-            <Link
-              href="/blog/project-02"
-              className="group block w-full h-full focus:outline-none"
-              aria-label={project2.title ? `View ${project2.title}` : "View Lab"}
-            >
-              <ProjectMediaTile project={project2} />
-            </Link>
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_480px] lg:gap-x-8 xl:lg:gap-x-10">
+        {/* Project 01 Media Tile */}
+        <div className="w-full h-[240px] sm:h-[300px] lg:h-[420px] xl:lg:h-[480px] lg:col-start-1 lg:row-start-1 min-w-0">
+          <Link
+            href="/blog/project-01"
+            className="group block w-full h-full focus:outline-none"
+            aria-label={project1.title ? `View ${project1.title}` : "View Project 01"}
+          >
+            <ProjectMediaTile project={project1} />
+          </Link>
         </div>
 
-        {/* Project Metadata & Action Links */}
-        <div className="flex flex-row gap-8 xl:gap-10 items-start pt-2">
-          <div className="flex-1 min-w-0">
-            <ProjectInfo project={project1} />
-          </div>
-          <div className="w-[420px] xl:w-[480px] shrink-0">
-            <ProjectInfo project={project2} />
-          </div>
-        </div>
-      </div>
-
-      {/* MOBILE / TABLET LAYOUT (< lg) */}
-      <div className="block lg:hidden w-full space-y-14">
-        {/* Project 01 */}
-        <div className="space-y-4">
-          <div className="w-full h-[240px] sm:h-[300px]">
-            <Link
-              href="/blog/project-01"
-              className="group block w-full h-full focus:outline-none"
-            >
-              <ProjectMediaTile project={project1} />
-            </Link>
-          </div>
+        {/* Project 01 Info Block */}
+        <div className="lg:col-start-1 lg:row-start-2 min-w-0 pb-10 lg:pb-0">
           <ProjectInfo project={project1} />
         </div>
 
-        {/* Project 02 */}
-        <div className="space-y-4 pt-10 border-t border-[#0A0A0A]/10">
-          <div className="w-[75%] sm:w-[65%] aspect-square">
-            <Link
-              href="/blog/project-02"
-              className="group block w-full h-full focus:outline-none"
-            >
-              <ProjectMediaTile project={project2} />
-            </Link>
-          </div>
+        {/* Project 02 Media Tile */}
+        <div className="pt-10 lg:pt-0 border-t border-[#0A0A0A]/10 lg:border-t-0 w-[75%] sm:w-[65%] lg:w-[420px] xl:lg:w-[480px] lg:h-[420px] xl:lg:h-[480px] aspect-square lg:col-start-2 lg:row-start-1 shrink-0">
+          <Link
+            href="/blog/project-02"
+            className="group block w-full h-full focus:outline-none"
+            aria-label={project2.title ? `View ${project2.title}` : "View Lab"}
+          >
+            <ProjectMediaTile project={project2} />
+          </Link>
+        </div>
+
+        {/* Project 02 Info Block */}
+        <div className="lg:col-start-2 lg:row-start-2 lg:w-[420px] xl:lg:w-[480px] shrink-0">
           <ProjectInfo project={project2} />
         </div>
       </div>

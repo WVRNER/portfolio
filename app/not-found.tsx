@@ -32,6 +32,8 @@ export default function NotFoundPage() {
 
   return (
     <div className="relative min-h-[100dvh] w-full bg-black text-[#E1E0CC] overflow-hidden select-none">
+      <title>404: Page Not Found | WVRNER</title>
+      <meta name="robots" content="noindex, follow" />
       {/* Background Video Cinemagraph */}
       <div className="absolute inset-0 h-full w-full overflow-hidden bg-black pointer-events-none">
         <video
