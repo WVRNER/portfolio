@@ -12,11 +12,28 @@ import { AboutSection } from "@/components/AboutSection";
 import { ContactSection } from "@/components/ContactSection";
 import { CVDrawer } from "@/components/CVDrawer";
 
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Nima Hosseini",
+  alternateName: "WVRNER",
+  jobTitle: "Cloud / DevOps Engineer",
+  url: "https://wvrner.com",
+  sameAs: [
+    "https://github.com/wvrner",
+    "https://linkedin.com/in/wvrner",
+  ],
+};
+
 export default function Home() {
   const [cvOpen, setCvOpen] = useState(false);
 
   return (
     <SmoothScroll>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       <div className="relative min-h-[100dvh] bg-white text-[#0A0A0A] font-sans">
         {/* Navigation */}
         <Navigation onOpenCV={() => setCvOpen(true)} />
