@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
-import { ContactSection } from "@/components/ContactSection";
+import { EditorialFooter } from "@/components/EditorialFooter";
 import { BLOG_POSTS, type BlogPost } from "@/lib/blogData";
 
 /**
@@ -359,8 +359,8 @@ export default function BlogIndexPage() {
 
       </div>
 
-      {/* Footer / Contact Section */}
-      <ContactSection onOpenCV={() => setCvOpen(true)} />
+      {/* Footer / Architectural Colophon Section */}
+      <EditorialFooter onOpenCV={() => setCvOpen(true)} />
 
       {/* CV Modal */}
       <CVDrawer isOpen={cvOpen} onClose={() => setCvOpen(false)} />

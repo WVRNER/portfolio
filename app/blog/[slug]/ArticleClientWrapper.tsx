@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
-import { ContactSection } from "@/components/ContactSection";
+import { EditorialFooter } from "@/components/EditorialFooter";
 import { BLOG_POSTS, type BlogPost } from "@/lib/blogData";
 
 interface ArticleClientWrapperProps {
@@ -435,25 +435,9 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         </article>
 
-        {/* Quiet Colophon */}
-        <section className="py-10 border-t border-b border-[#F2F2F2] mt-10">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-            <p className="text-[14.5px] text-[#6B6B6B] leading-relaxed max-w-md font-sans">
-              Engineering automated cloud systems, declarative infrastructure, and reproducible state across AWS.
-            </p>
-
-            <button
-              onClick={() => setCvOpen(true)}
-              className="px-5 py-2 rounded-full bg-[#161617] hover:bg-[#2C2C2E] text-white text-[13px] font-medium transition-all cursor-pointer font-sans shrink-0"
-            >
-              View CV
-            </button>
-          </div>
-        </section>
-
         {/* Selected Stories Recommendations */}
         {recommendedPosts.length > 0 && (
-          <section className="pt-12 space-y-6">
+          <section className="pt-12 mt-12 border-t border-[#F2F2F2] space-y-6">
             <div className="flex items-center justify-between">
               <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[20px] font-bold text-[#242424]">
                 Selected Stories
@@ -503,8 +487,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
       </main>
 
-      {/* Footer / Contact Section */}
-      <ContactSection onOpenCV={() => setCvOpen(true)} />
+      {/* Footer / Architectural Colophon Section */}
+      <EditorialFooter onOpenCV={() => setCvOpen(true)} />
 
       {/* CV Modal */}
       <CVDrawer isOpen={cvOpen} onClose={() => setCvOpen(false)} />
