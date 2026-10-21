@@ -46,7 +46,7 @@ interface ContactSectionProps {
 }
 
 /**
- * ContactSection — Apple + Notion Hybrid Redesign
+ * ContactSection - Apple + Notion Hybrid Redesign
  * Optimized for both desktop and mobile viewports with tactile ergonomics.
  */
 export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
@@ -280,9 +280,9 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
         </div>
 
         <div className="flex flex-wrap items-center justify-center sm:justify-end gap-5 sm:gap-6">
-          <a href="#about" className="hover:text-[#1D1D1F] transition-colors py-1">
+          <Link href="/#about" className="hover:text-[#1D1D1F] transition-colors py-1">
             About
-          </a>
+          </Link>
           <Link href="/blog" className="hover:text-[#1D1D1F] transition-colors py-1">
             Stories
           </Link>

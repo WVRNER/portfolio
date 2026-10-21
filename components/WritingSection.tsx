@@ -5,7 +5,7 @@ import { ArrowRight, BookOpen } from "lucide-react";
 import { BLOG_POSTS } from "@/lib/blogData";
 
 /**
- * WritingSection — Compact Medium-style Stories Stream on the Main Page
+ * WritingSection - Compact Medium-style Stories Stream on the Main Page
  * 
  * Clean, compact editorial layout:
  * - Refined, unbloated vertical stream

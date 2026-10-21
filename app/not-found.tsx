@@ -7,7 +7,7 @@ import { WordsPullUp } from "@/components/ui/prisma-hero";
 import { useRef, useEffect } from "react";
 
 /**
- * 404 Page — Based on the cinematic hero animation.
+ * 404 Page - Based on the cinematic hero animation.
  * Features:
  * - Truly imperceptible background cinemagraph loop player
  * - Dark vignette gradient overlay

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   X,
@@ -24,6 +24,29 @@ interface CVDrawerProps {
 export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
   const [copied, setCopied] = useState(false);
   const email = "wvrner@outlook.com";
+
+  // Lock background scroll and pause Lenis while CV drawer is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    const originalPaddingRight = document.body.style.paddingRight;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+
+    const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis;
+    lenis?.stop();
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.body.style.paddingRight = originalPaddingRight;
+      lenis?.start();
+    };
+  }, [isOpen]);
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -98,7 +121,8 @@ export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.97 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-[840px] max-h-[90vh] overflow-y-auto bg-[#FCFCFB] sm:bg-white/95 rounded-[28px] sm:rounded-[36px] border border-black/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.22),0_1px_1px_rgba(0,0,0,0.04)] p-6 sm:p-10 z-10 space-y-8 select-text"
+            data-lenis-prevent="true"
+            className="relative w-full max-w-[840px] max-h-[90vh] overflow-y-auto overscroll-contain bg-[#FCFCFB] sm:bg-white/95 rounded-[28px] sm:rounded-[36px] border border-black/[0.08] shadow-[0_32px_80px_rgba(0,0,0,0.22),0_1px_1px_rgba(0,0,0,0.04)] p-6 sm:p-10 z-10 space-y-8 select-text"
           >
             {/* Top Specular Sheen */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent pointer-events-none" />

@@ -5,10 +5,11 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
+import { ContactSection } from "@/components/ContactSection";
 import { BLOG_POSTS, type BlogPost } from "@/lib/blogData";
 
 /**
- * Editorial Blog Archive — Stories
+ * Editorial Blog Archive - Stories
  * 
  * - Super bold punchy titles (font-black / font-extrabold)
  * - Mobile & desktop compact side-by-side thumbnail layout (matching screenshot)
@@ -357,6 +358,9 @@ export default function BlogIndexPage() {
         </div>
 
       </div>
+
+      {/* Footer / Contact Section */}
+      <ContactSection onOpenCV={() => setCvOpen(true)} />
 
       {/* CV Modal */}
       <CVDrawer isOpen={cvOpen} onClose={() => setCvOpen(false)} />

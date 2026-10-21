@@ -264,7 +264,7 @@ const PrismaHero = ({
               </h1>
             </div>
 
-            {/* Narrative & Action Block — Apple + Notion Design */}
+            {/* Narrative & Action Block (Apple + Notion Design) */}
             <div className="col-span-12 lg:col-span-5 xl:col-span-4 flex flex-col pb-1 sm:pb-3 lg:pb-5">
               
               <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-black/45 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.25)] space-y-4">
