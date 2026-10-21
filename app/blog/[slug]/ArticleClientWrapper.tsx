@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
+import { ContactSection } from "@/components/ContactSection";
 import { BLOG_POSTS, type BlogPost } from "@/lib/blogData";
 
 interface ArticleClientWrapperProps {
@@ -17,7 +18,7 @@ interface ArticleClientWrapperProps {
 }
 
 /**
- * ArticleClientWrapper — Editorial Longform Reader (matching Medium screenshot)
+ * ArticleClientWrapper - Editorial Longform Reader (matching Medium screenshot)
  * 
  * - Super bold headline (font-extrabold / font-black)
  * - Subtitle
@@ -339,6 +340,9 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         )}
 
       </main>
+
+      {/* Footer / Contact Section */}
+      <ContactSection onOpenCV={() => setCvOpen(true)} />
 
       {/* CV Modal */}
       <CVDrawer isOpen={cvOpen} onClose={() => setCvOpen(false)} />
