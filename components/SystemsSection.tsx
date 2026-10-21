@@ -235,10 +235,10 @@ function AnimatedSystemsIntro() {
       className="relative w-full h-[220vh] md:h-[300vh] bg-[#0A0A0A]"
       aria-label="Systems and Disciplines"
     >
-      {/* Sticky Viewport Stage — 100% Pure Black Full-Viewport Enclosure */}
+      {/* Sticky Viewport Stage - 100% Pure Black Full-Viewport Enclosure */}
       <div className="sticky top-0 h-[100dvh] w-full bg-[#0A0A0A] text-white flex flex-col justify-between px-6 sm:px-12 md:px-16 lg:px-24 py-8 sm:py-10 md:py-12 overflow-hidden">
         
-        {/* Tactile printed grain on Syscore's black field — matching the preceding monolith */}
+        {/* Tactile printed grain on Syscore's black field - matching the preceding monolith */}
         <div className="absolute inset-0 grain-level-2 opacity-40 pointer-events-none z-0" aria-hidden="true" />
 
         {/* Subtle internal architectural coordinate lines */}

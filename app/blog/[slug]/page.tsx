@@ -23,12 +23,52 @@ export async function generateMetadata({
   if (!post) {
     return {
       title: "Article Not Found | WVRNER",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
+
+  const isTestPost = Boolean(
+    post.tags?.some((t) => t.trim().toLowerCase() === "test") ||
+      slug.toLowerCase().includes("test")
+  );
+
+  const ogImage = post.featureImage || "/hero-poster.jpg";
 
   return {
     title: `${post.title} | WVRNER`,
     description: post.excerpt,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
+    robots: isTestPost
+      ? {
+          index: false,
+          follow: true,
+        }
+      : undefined,
+    openGraph: {
+      title: `${post.title} | WVRNER`,
+      description: post.excerpt,
+      url: `https://wvrner.com/blog/${slug}`,
+      siteName: "WVRNER",
+      type: "article",
+      images: [
+        {
+          url: ogImage,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post.title} | WVRNER`,
+      description: post.excerpt,
+      images: [ogImage],
+      creator: "@wvrner",
+    },
   };
 }
 
