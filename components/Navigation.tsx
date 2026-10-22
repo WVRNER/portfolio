@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
-import { scrollToTarget } from "@/components/SmoothScroll";
 
 interface NavigationProps {
   onOpenCV?: () => void;
@@ -29,6 +28,8 @@ export function Navigation({ onOpenCV }: NavigationProps) {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [spawnActive, setSpawnActive] = useState(false);
+  const [writingPortalActive, setWritingPortalActive] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -48,12 +49,33 @@ export function Navigation({ onOpenCV }: NavigationProps) {
     if (typeof window === "undefined") return;
     const hash = window.location.hash;
     if (hash) {
-      const timer = setTimeout(() => {
-        scrollToTarget(hash, { offset: -80, duration: 1.15 });
-      }, 150);
-      return () => clearTimeout(timer);
+      const el = document.querySelector(hash);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: "auto" });
+      }
     }
   }, [pathname]);
+
+  /* Dreamy / Steamy Apple-Style Instant Spawn */
+  const triggerDreamySpawn = (targetTop: number) => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      window.scrollTo({ top: targetTop, behavior: "auto" });
+      return;
+    }
+
+    setSpawnActive(true);
+    // Port instantly behind the soft mist at the peak of the vapor
+    setTimeout(() => {
+      window.scrollTo({ top: targetTop, behavior: "auto" });
+    }, 160);
+
+    // Fade mist out smoothly
+    setTimeout(() => {
+      setSpawnActive(false);
+    }, 460);
+  };
 
   const handleLogoClick = () => {
     setMobileMenuOpen(false);
@@ -61,7 +83,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
       router.push("/");
       return;
     }
-    scrollToTarget(0, { duration: 1.0 });
+    triggerDreamySpawn(0);
   };
 
   const handleClick = (item: (typeof navItems)[number]) => {
@@ -70,21 +92,94 @@ export function Navigation({ onOpenCV }: NavigationProps) {
       onOpenCV?.();
       return;
     }
+
+    // Bespoke unique portal animation for Writing page
+    if (item.href === "/blog") {
+      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) {
+        router.push("/blog");
+        return;
+      }
+      setWritingPortalActive(true);
+      setTimeout(() => {
+        router.push("/blog");
+      }, 340);
+      setTimeout(() => {
+        setWritingPortalActive(false);
+      }, 620);
+      return;
+    }
+
     if (item.href) {
       router.push(item.href);
       return;
     }
+
     if (item.id) {
       if (pathname !== "/") {
         router.push(`/#${item.id}`);
         return;
       }
-      scrollToTarget(`#${item.id}`, { offset: -80, duration: 1.15 });
+      const el = document.getElementById(item.id);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        triggerDreamySpawn(top);
+      }
     }
   };
 
   return (
     <>
+      {/* Dreamy / Steamy Atmospheric Spawn Mist */}
+      <AnimatePresence>
+        {spawnActive && (
+          <motion.div
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(16px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[100] pointer-events-none bg-white/30 dark:bg-black/40 backdrop-blur-xl flex items-center justify-center overflow-hidden"
+          >
+            {/* Soft dreamy vapor cloud */}
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1.15, opacity: 0.75 }}
+              exit={{ scale: 1.3, opacity: 0 }}
+              transition={{ duration: 0.42, ease: "easeOut" }}
+              className="w-[540px] h-[360px] rounded-full bg-gradient-to-tr from-white/80 via-[#E1E0CC]/50 to-transparent blur-3xl pointer-events-none"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Unique Bespoke Celestial Iris Portal for Writing Page */}
+      <AnimatePresence>
+        {writingPortalActive && (
+          <motion.div
+            initial={{ clipPath: "circle(0% at 50% 50%)", opacity: 0.9 }}
+            animate={{ clipPath: "circle(150% at 50% 50%)", opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.44, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[100] pointer-events-none bg-[#0e0e11] flex flex-col items-center justify-center text-white"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(176,166,223,0.3)_0%,transparent_70%)] pointer-events-none" />
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 12 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              transition={{ duration: 0.24, delay: 0.06 }}
+              className="relative z-10 flex flex-col items-center gap-2 select-none"
+            >
+              <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-[#b0a6df]">
+                OPENING FIELD NOTES
+              </span>
+              <span className="font-serif italic text-[24px] text-white/95">
+                Writing &amp; Architecture
+              </span>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Invisible backdrop to dismiss mobile menu when tapping outside */}
       {mobileMenuOpen && (
         <div
@@ -101,15 +196,15 @@ export function Navigation({ onOpenCV }: NavigationProps) {
         }}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed left-1/2 top-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.75rem))] sm:top-5 md:top-6 z-50 -translate-x-1/2 pointer-events-auto flex flex-col items-center w-auto max-w-[calc(100vw-2rem)]"
+        className="fixed left-0 right-0 top-[max(1rem,calc(env(safe-area-inset-top,0px)+0.5rem))] sm:top-5 md:top-6 z-50 pointer-events-none flex flex-col items-center px-3 sm:px-0"
       >
-        <nav aria-label="Main Navigation" className="flex flex-col items-center">
+        <nav aria-label="Main Navigation" className="pointer-events-auto w-full sm:w-auto flex flex-col items-center max-w-md sm:max-w-none">
           
-          {/* MOBILE PILL: WVRNER logo + 2-line custom hamburger */}
-          <div className="flex sm:hidden items-center justify-between gap-6 rounded-full bg-black/85 backdrop-blur-2xl px-4 py-2 shadow-[0_16px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.14)] border border-white/20">
+          {/* MOBILE PILL: Full-width closed bar with WVRNER on left and 2-line hamburger on right */}
+          <div className="flex sm:hidden items-center justify-between w-full rounded-full bg-black/85 backdrop-blur-2xl px-5 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.14)] border border-white/20">
             <button
               onClick={handleLogoClick}
-              className="flex items-center text-white hover:text-white/80 font-[family-name:var(--font-plus-jakarta)] text-[13.5px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer"
+              className="flex items-center text-white hover:text-white/80 font-[family-name:var(--font-plus-jakarta)] text-[14px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer py-1"
               title="WVRNER Home"
               aria-label="WVRNER Home"
             >
@@ -122,7 +217,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-              className="w-8 h-8 rounded-full flex flex-col items-center justify-center gap-[5px] hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+              className="w-9 h-9 rounded-full flex flex-col items-center justify-center gap-[5px] hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
             >
               <span
                 className={`w-4 h-[1.5px] bg-white rounded-full transition-transform duration-250 ease-out origin-center ${
@@ -182,22 +277,22 @@ export function Navigation({ onOpenCV }: NavigationProps) {
             })}
           </div>
 
-          {/* MOBILE DROPDOWN MENU: 80% transparency with backdrop blur */}
+          {/* MOBILE DROPDOWN MENU: Full-width 85% transparency with backdrop blur */}
           <AnimatePresence>
             {mobileMenuOpen && (
               <motion.div
-                initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                initial={{ opacity: 0, y: -8, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="sm:hidden mt-2.5 w-[220px] rounded-2xl bg-black/80 backdrop-blur-2xl border border-white/20 p-2 shadow-[0_20px_50px_rgba(0,0,0,0.65)] overflow-hidden"
+                className="sm:hidden mt-2.5 w-full rounded-3xl bg-black/85 backdrop-blur-2xl border border-white/20 p-2.5 shadow-[0_25px_60px_rgba(0,0,0,0.7)] overflow-hidden"
               >
-                <div className="flex flex-col space-y-1">
+                <div className="flex flex-col space-y-1.5">
                   {navItems.map((item) => (
                     <button
                       key={item.label}
                       onClick={() => handleClick(item)}
-                      className={`w-full text-left px-3.5 py-2.5 rounded-xl text-[13.5px] font-sans font-medium transition-all active:scale-[0.98] cursor-pointer flex items-center justify-between ${
+                      className={`w-full text-left px-4 py-3 rounded-2xl text-[14.5px] font-sans font-medium transition-all active:scale-[0.98] cursor-pointer flex items-center justify-between min-h-[48px] ${
                         item.isShiny
                           ? "bg-white/[0.14] text-white border border-white/25 shadow-sm"
                           : "text-white/85 hover:text-white hover:bg-white/10"

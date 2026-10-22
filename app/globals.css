@@ -42,6 +42,10 @@ h1, h2, h3, .font-display {
   font-family: var(--font-manrope), var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+.font-wvrner {
+  font-family: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
 /* Extra punch & thickness for modern Medium-style editorial titles */
 .title-thick {
   font-weight: 900;

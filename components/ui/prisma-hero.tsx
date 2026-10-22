@@ -254,14 +254,24 @@ const PrismaHero = ({
         <div className="absolute bottom-0 left-0 right-0 z-20 px-6 pb-6 sm:px-12 sm:pb-10 md:px-16 md:pb-12 lg:px-24">
           <div className="max-w-[1400px] mx-auto grid grid-cols-12 items-end gap-3 sm:gap-6 lg:gap-8">
             
-            {/* Monumental Headline: WVRNER (Plus Jakarta Sans) */}
-            <div className="col-span-12 lg:col-span-7 xl:col-span-8">
-              <h1
-                className="font-bold leading-[0.82] tracking-[-0.095em] text-[clamp(3.2rem,8.8vw,10.2rem)] select-none whitespace-nowrap font-[family-name:var(--font-plus-jakarta)]"
-                style={{ color: "#E1E0CC" }}
+            {/* Monumental Headline: WVRNER (Plus Jakarta Sans - Bolder & Touching Glyphs) */}
+            <div className="col-span-12 lg:col-span-7 xl:col-span-8 overflow-visible">
+              <motion.h1
+                initial={{ y: 28, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                className="font-wvrner font-[800] leading-[0.82] text-[clamp(3.2rem,8.8vw,10.2rem)] select-none whitespace-nowrap pr-4 sm:pr-8 overflow-visible"
+                style={{ color: "#E1E0CC", fontFamily: "var(--font-plus-jakarta), sans-serif", fontWeight: 800 }}
               >
-                <WordsPullUp text="WVRNER" showAsterisk={false} />
-              </h1>
+                <span className="inline-flex items-baseline overflow-visible">
+                  <span>W</span>
+                  <span className="-ml-[0.08em]">V</span>
+                  <span className="-ml-[0.14em]">R</span>
+                  <span className="-ml-[0.17em]">N</span>
+                  <span className="-ml-[0.18em]">E</span>
+                  <span className="-ml-[0.15em]">R</span>
+                </span>
+              </motion.h1>
             </div>
 
             {/* Narrative & Action Block (Apple + Notion Design) */}
