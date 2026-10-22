@@ -275,6 +275,7 @@ spec:
           heading: "Zero Stored Secrets in CI",
           paragraphs: [
             "With this configuration, CI workflows request temporary credentials directly from AWS STS using standard GitHub action steps. No developer ever handles, copies, or rotates an AWS key again.",
+            "https://github.com/aws-actions/configure-aws-credentials",
           ],
         },
       ],

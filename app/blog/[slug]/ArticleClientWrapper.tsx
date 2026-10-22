@@ -15,7 +15,9 @@ import { EditorialFooter } from "@/components/EditorialFooter";
 import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
 import { InstantLink } from "@/components/InstantLink";
 import { BlurImage } from "@/components/BlurImage";
+import { GitHubCard } from "@/components/GitHubCard";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
+import { getGitHubRepoCard } from "@/lib/githubDataHelper";
 import { BLOG_POSTS, formatDisplayDate, type BlogPost } from "@/lib/blogData";
 
 interface ArticleClientWrapperProps {
@@ -524,11 +526,41 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
               )}
 
               {/* Section Paragraphs */}
-              {section.paragraphs.map((para, pIdx) => (
-                <p key={pIdx} className="mb-8 font-normal leading-[34px]">
-                  {para}
-                </p>
-              ))}
+              {section.paragraphs.map((para, pIdx) => {
+                const trimmed = para.trim();
+                const ghMatch = trimmed.match(
+                  /^(?:https?:\/\/)?github\.com\/([a-zA-Z0-9_.-]+)\/([a-zA-Z0-9_.-]+)\/?$/i
+                );
+                if (ghMatch) {
+                  const repoSlug = `${ghMatch[1]}/${ghMatch[2]}`;
+                  const cardData = getGitHubRepoCard(repoSlug);
+                  if (cardData && !cardData.failed) {
+                    return <GitHubCard key={pIdx} repo={cardData} />;
+                  }
+                  // Fallback: normal link if fetch failed or missing
+                  const url = trimmed.startsWith("http")
+                    ? trimmed
+                    : `https://${trimmed}`;
+                  return (
+                    <p key={pIdx} className="mb-8 font-normal leading-[34px]">
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline underline-offset-4 decoration-neutral-400 hover:text-black transition-colors"
+                      >
+                        {url}
+                      </a>
+                    </p>
+                  );
+                }
+
+                return (
+                  <p key={pIdx} className="mb-8 font-normal leading-[34px]">
+                    {para}
+                  </p>
+                );
+              })}
 
               {/* Code Snippet Block */}
               {section.codeBlock && (
