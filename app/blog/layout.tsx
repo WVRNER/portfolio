@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import { BlogThemeProvider } from "@/components/BlogThemeProvider";
 
 export const metadata: Metadata = {
-  title: "Stories & Engineering Field Notes | WVRNER",
+  title: "Writing & Engineering Field Notes | WVRNER",
   description:
     "Technical essays and production-grade field notes on cloud architecture, Terraform invariants, ephemeral infrastructure, and resilient systems.",
   alternates: {
     canonical: "/blog",
   },
   openGraph: {
-    title: "Stories & Engineering Field Notes | WVRNER",
+    title: "Writing & Engineering Field Notes | WVRNER",
     description:
       "Technical essays and production-grade field notes on cloud architecture, Terraform invariants, ephemeral infrastructure, and resilient systems.",
     url: "https://wvrner.com/blog",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Stories & Engineering Field Notes | WVRNER",
+    title: "Writing & Engineering Field Notes | WVRNER",
     description:
       "Technical essays and production-grade field notes on cloud architecture, Terraform invariants, ephemeral infrastructure, and resilient systems.",
     creator: "@wvrner",
@@ -30,5 +31,16 @@ export default function BlogLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      {/* Zero-flash theme initialization for blog routes */}
+      <script
+        id="blog-theme-init"
+        dangerouslySetInnerHTML={{
+          __html: `(function(){try{var t=localStorage.getItem("wvrner-blog-theme");var isDark=t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(isDark){document.documentElement.classList.add("dark");document.documentElement.setAttribute("data-blog-theme","dark");}else{document.documentElement.classList.remove("dark");document.documentElement.setAttribute("data-blog-theme","light");}}catch(e){}})();`,
+        }}
+      />
+      <BlogThemeProvider>{children}</BlogThemeProvider>
+    </>
+  );
 }
