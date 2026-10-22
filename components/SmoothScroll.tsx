@@ -55,22 +55,58 @@ export function scrollToTarget(
   options?: { duration?: number; offset?: number; easing?: (t: number) => number }
 ) {
   if (typeof window === "undefined") return;
+
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const defaultOffset = options?.offset ?? -80;
+  const defaultDuration = options?.duration ?? 1.15;
+  const defaultEasing =
+    options?.easing ??
+    ((t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)));
+
+  if (prefersReduced) {
+    if (typeof target === "number") {
+      window.scrollTo({ top: target, behavior: "auto" });
+    } else if (typeof target === "string") {
+      const el = document.querySelector(target);
+      if (el) {
+        const top =
+          el.getBoundingClientRect().top + window.scrollY + defaultOffset;
+        window.scrollTo({ top, behavior: "auto" });
+      }
+    } else if (target instanceof HTMLElement) {
+      const top =
+        target.getBoundingClientRect().top + window.scrollY + defaultOffset;
+      window.scrollTo({ top, behavior: "auto" });
+    }
+    return;
+  }
+
   const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
 
   if (lenis) {
     lenis.scrollTo(target, {
-      duration: options?.duration ?? 1.4,
-      offset: options?.offset ?? 0,
-      easing: options?.easing ?? ((t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t))),
+      duration: defaultDuration,
+      offset: defaultOffset,
+      easing: defaultEasing,
+      lock: false,
     });
   } else {
     if (typeof target === "string") {
       const el = document.querySelector(target);
-      el?.scrollIntoView({ behavior: "smooth" });
+      if (el) {
+        const top =
+          el.getBoundingClientRect().top + window.scrollY + defaultOffset;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
     } else if (typeof target === "number") {
       window.scrollTo({ top: target, behavior: "smooth" });
     } else if (target instanceof HTMLElement) {
-      target.scrollIntoView({ behavior: "smooth" });
+      const top =
+        target.getBoundingClientRect().top + window.scrollY + defaultOffset;
+      window.scrollTo({ top, behavior: "smooth" });
     }
   }
 }
