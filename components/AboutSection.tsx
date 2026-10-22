@@ -50,16 +50,16 @@ export function AboutSection() {
           </div>
 
           {/* Quick Technical Footprint */}
-          <div className="p-4 rounded-xl bg-[#F8F8F9] border border-black/[0.06] space-y-2 font-mono text-[12px] text-[#555555]">
-            <div className="flex items-center justify-between">
-              <span className="text-[#888888]">FOCUS</span>
-              <span className="text-[#161617] font-semibold">AWS / IaC / Systems</span>
+          <div className="p-4 rounded-xl bg-[#F8F8F9] border border-black/[0.06] space-y-2.5 font-mono text-[12px] text-[#555555]">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[#888888] shrink-0">FOCUS</span>
+              <span className="text-[#161617] font-semibold text-right">AWS &middot; Terraform &middot; Linux</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-[#888888]">STATE</span>
-              <span className="text-emerald-700 font-semibold flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
-                Available for Roles
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-black/[0.04]">
+              <span className="text-[#888888] shrink-0">STATE</span>
+              <span className="text-emerald-700 font-semibold flex items-center gap-1.5 text-right text-[11.5px] sm:text-[12px]">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
+                Open to junior Cloud / DevOps roles remote
               </span>
             </div>
           </div>

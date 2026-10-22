@@ -9,7 +9,12 @@ import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
 import { InstantLink } from "@/components/InstantLink";
 import { BlurImage } from "@/components/BlurImage";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
-import { BLOG_POSTS, formatDisplayDate, type BlogPost } from "@/lib/blogData";
+import {
+  BLOG_POSTS,
+  formatDisplayDate,
+  getPrimaryToolTag,
+  type BlogPost,
+} from "@/lib/blogData";
 
 /**
  * Editorial Blog Archive - Stories
@@ -28,17 +33,28 @@ export default function BlogIndexPage() {
   const [activeCategory, setActiveCategory] = useState<string>("For you");
   const POSTS_PER_PAGE = 10;
 
-  // Exact 4 tags + For you
-  const topics = ["For you", "Architecture", "Security", "DevOps", "Infrastructure"];
+  // Recruiter-optimized tool tags matching tabs
+  const topics = [
+    "For you",
+    "AWS",
+    "Terraform",
+    "CI/CD",
+    "Networking",
+    "Linux",
+    "Kubernetes",
+  ];
 
-  // Filter posts based on active category
+  // Filter posts based on active tool category
   const filteredPosts = useMemo(() => {
     let list = BLOG_POSTS;
     if (activeCategory !== "For you") {
-      list = BLOG_POSTS.filter((p) =>
-        p.category.toLowerCase().includes(activeCategory.toLowerCase()) ||
-        p.tags.some((t) => t.toLowerCase().includes(activeCategory.toLowerCase()))
-      );
+      list = BLOG_POSTS.filter((p) => {
+        const primary = getPrimaryToolTag(p);
+        return (
+          primary.toLowerCase() === activeCategory.toLowerCase() ||
+          p.tags.some((t) => t.toLowerCase() === activeCategory.toLowerCase())
+        );
+      });
     }
     // Elevate featured posts
     return [...list].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
@@ -142,19 +158,7 @@ export default function BlogIndexPage() {
                         <div className="flex items-start justify-between gap-4 sm:gap-6">
                           
                           {/* Left Text Block */}
-                          <div className="flex-1 min-w-0 space-y-1.5 sm:space-y-2">
-                            {/* Meta: Reading time · Date (matching screenshot) */}
-                            <div className="flex items-center gap-2 text-[12.5px] sm:text-[13px] text-[#6B6B6B]">
-                              {post.featured && (
-                                <span title="Featured Story" className="inline-flex items-center">
-                                  <FeaturedStarIcon className="w-3.5 h-3.5" />
-                                </span>
-                              )}
-                              <span>{post.readingTime}</span>
-                              <span>&middot;</span>
-                              <span>{formatDisplayDate(post.date)}</span>
-                            </div>
-
+                          <div className="flex-1 min-w-0 space-y-2">
                             {/* Big Bold Headline with View Transition */}
                             <h2
                               className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[27px] text-[#0A0A0A] leading-[1.2] tracking-[-0.03em] line-clamp-2"
@@ -163,10 +167,26 @@ export default function BlogIndexPage() {
                               {post.title}
                             </h2>
 
-                            {/* Subtitle / Excerpt */}
+                            {/* Subtitle / Excerpt in Serif */}
                             <p className="text-[15px] sm:text-[16px] text-[#555555] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                               {post.subtitle || post.excerpt}
                             </p>
+
+                            {/* Date before read time, then Tool Tag (one per post only) */}
+                            <div className="pt-1 flex flex-wrap items-center gap-2.5 text-[12.5px] sm:text-[13px] text-[#6B6B6B] font-sans">
+                              {post.featured && (
+                                <span title="Featured Story" className="inline-flex items-center">
+                                  <FeaturedStarIcon className="w-3.5 h-3.5" />
+                                </span>
+                              )}
+                              <span>{formatDisplayDate(post.date)}</span>
+                              <span>&middot;</span>
+                              <span>{post.readingTime}</span>
+                              <span>&middot;</span>
+                              <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] text-[#242424] font-medium text-[11px] font-mono tracking-tight">
+                                {getPrimaryToolTag(post)}
+                              </span>
+                            </div>
                           </div>
 
                           {/* Right Thumbnail Image with Blur-up & View Transition */}
