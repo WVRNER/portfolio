@@ -166,7 +166,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
 
         {/* Monumental Typographic Signature (Awwwards / Architectural Scale) */}
         <div className="pt-16 sm:pt-24 pb-8 sm:pb-12 text-center md:text-left overflow-hidden">
-          <div className="font-[family-name:var(--font-plus-jakarta)] font-black text-[clamp(3.8rem,13vw,11.5rem)] tracking-[-0.06em] leading-[0.84] text-white/90 select-none">
+          <div className="font-[family-name:var(--font-plus-jakarta)] font-black text-[clamp(3.8rem,13vw,11.5rem)] tracking-[-0.06em] leading-[0.84] bg-gradient-to-r from-[#b0a6df] via-[#dcd8f3] to-white bg-clip-text text-transparent select-none">
             WVRNER
           </div>
         </div>

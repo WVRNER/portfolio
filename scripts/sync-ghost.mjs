@@ -3,6 +3,17 @@ import path from "path";
 import http from "http";
 import https from "https";
 
+// Fallback to reading .env.local if not already in process.env
+if (!process.env.GHOST_CONTENT_API_KEY && fs.existsSync(".env.local")) {
+  const content = fs.readFileSync(".env.local", "utf8");
+  for (const line of content.split("\n")) {
+    const match = line.match(/^([^=]+)=(.*)$/);
+    if (match) {
+      process.env[match[1].trim()] = match[2].trim();
+    }
+  }
+}
+
 const GHOST_URL = process.env.GHOST_URL || "http://localhost:2368";
 const GHOST_CONTENT_API_KEY = process.env.GHOST_CONTENT_API_KEY || "";
 

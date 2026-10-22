@@ -12,7 +12,8 @@ import {
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
 import { EditorialFooter } from "@/components/EditorialFooter";
-import { BLOG_POSTS, type BlogPost } from "@/lib/blogData";
+import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
+import { BLOG_POSTS, formatDisplayDate, type BlogPost } from "@/lib/blogData";
 
 interface ArticleClientWrapperProps {
   post: BlogPost;
@@ -336,8 +337,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     }
   };
 
-  // Recommended articles (Selected Stories)
-  const recommendedPosts = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 3);
+  // Recommended articles (Selected Stories - 2x2 grid)
+  const recommendedPosts = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 4);
 
   return (
     <div className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#EAEAEA] selection:text-[#242424]">
@@ -411,11 +412,16 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             </p>
           )}
 
-          {/* Meta line: "5 min read · Aug 4, 2026" */}
-          <div className="pt-2 text-[14px] sm:text-[14.5px] text-[#6B6B6B] font-normal">
+          {/* Meta line: "5 min read · Aug 4" */}
+          <div className="pt-2 text-[14px] sm:text-[14.5px] text-[#6B6B6B] font-normal flex items-center">
+            {post.featured && (
+              <span title="Featured Story" className="inline-flex items-center mr-2">
+                <FeaturedStarIcon className="w-3.5 h-3.5" />
+              </span>
+            )}
             <span>{post.readingTime}</span>
             <span className="mx-2">&middot;</span>
-            <span>{post.date}</span>
+            <span>{formatDisplayDate(post.date)}</span>
           </div>
 
           {/* Share Pill Button (Matching screenshot bordered pill button) */}
@@ -457,9 +463,9 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </figure>
         )}
 
-        {/* Editorial Pullquote */}
+        {/* Editorial Pullquote (Highlighted with #e8f3e8) */}
         {post.pullQuote && (
-          <blockquote className="my-9 pl-6 border-l-[3px] border-[#161617]">
+          <blockquote className="my-9 pl-6 pr-5 py-4 border-l-[3px] border-[#161617] bg-[#e8f3e8] rounded-r-md">
             <p className="font-[family-name:var(--font-source-serif),Charter,Georgia,serif] italic text-[21px] sm:text-[23px] text-[#242424] leading-[1.45]">
               &ldquo;{post.pullQuote}&rdquo;
             </p>
@@ -594,12 +600,13 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* 2x2 Editorial Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {recommendedPosts.map((rec) => (
                 <Link
                   key={rec.slug}
                   href={`/blog/${rec.slug}`}
-                  className="group flex flex-col justify-between cursor-pointer space-y-3"
+                  className="group flex flex-col justify-between cursor-pointer space-y-3 p-4 rounded-xl hover:bg-neutral-50 transition-colors outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
                 >
                   <div>
                     {rec.featureImage && (
@@ -613,15 +620,16 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                         />
                       </div>
                     )}
-                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15.5px] font-extrabold sm:font-black text-[#1D1D1F] group-hover:underline transition-colors leading-snug line-clamp-2 tracking-tight">
+                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15.5px] font-extrabold text-[#1D1D1F] leading-snug line-clamp-2 tracking-tight">
                       {rec.title}
                     </h4>
-                    <p className="text-[13px] text-[#6B6B6B] line-clamp-2 mt-1.5 font-normal leading-relaxed">
+                    <p className="text-[13px] text-[#6B6B6B] line-clamp-2 mt-1.5 font-normal leading-[19px]">
                       {rec.subtitle || rec.excerpt}
                     </p>
                   </div>
-                  <div className="pt-2 text-[12px] text-[#6B6B6B] font-sans">
-                    <span>{rec.readingTime} &middot; {rec.date}</span>
+                  <div className="pt-2 text-[12px] text-[#6B6B6B] font-sans flex items-center gap-1.5">
+                    {rec.featured && <FeaturedStarIcon className="w-3 h-3" />}
+                    <span>{rec.readingTime} &middot; {formatDisplayDate(rec.date)}</span>
                   </div>
                 </Link>
               ))}

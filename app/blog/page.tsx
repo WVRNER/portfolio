@@ -6,7 +6,8 @@ import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
 import { EditorialFooter } from "@/components/EditorialFooter";
-import { BLOG_POSTS, type BlogPost } from "@/lib/blogData";
+import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
+import { BLOG_POSTS, formatDisplayDate, type BlogPost } from "@/lib/blogData";
 
 /**
  * Editorial Blog Archive - Stories
@@ -157,7 +158,7 @@ export default function BlogIndexPage() {
                     <article key={post.slug} className="py-6 sm:py-8 first:pt-2">
                       <Link
                         href={`/blog/${post.slug}`}
-                        className="group block cursor-pointer"
+                        className="group block cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
                       >
                         <div className="flex items-start justify-between gap-4 sm:gap-6">
                           
@@ -166,34 +167,24 @@ export default function BlogIndexPage() {
                             {/* Meta: Reading time · Date (matching screenshot) */}
                             <div className="flex items-center gap-2 text-[12.5px] sm:text-[13px] text-[#6B6B6B]">
                               {post.featured && (
-                                <>
-                                  <span className="text-[#1D1D1F] font-semibold uppercase tracking-wider text-[11px]">
-                                    Featured
-                                  </span>
-                                  <span>&middot;</span>
-                                </>
+                                <span title="Featured Story" className="inline-flex items-center">
+                                  <FeaturedStarIcon className="w-3.5 h-3.5" />
+                                </span>
                               )}
                               <span>{post.readingTime}</span>
                               <span>&middot;</span>
-                              <span>{post.date}</span>
+                              <span>{formatDisplayDate(post.date)}</span>
                             </div>
 
-                            {/* Super bold punchy headline (Lowered size, amplified thickness) */}
-                            <h2 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[21px] sm:text-[24px] md:text-[26px] text-[#0A0A0A] group-hover:underline transition-colors leading-[1.2] tracking-[-0.03em] line-clamp-2">
+                            {/* Headline: 16px font size, 19px line height */}
+                            <h2 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[16px] leading-[19px] text-[#0A0A0A] tracking-[-0.025em] line-clamp-2">
                               {post.title}
                             </h2>
 
-                            {/* Subtitle / Excerpt */}
-                            <p className="text-[16px] sm:text-[17.5px] text-[#555555] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                            {/* Subtitle / Excerpt: 19px line height */}
+                            <p className="text-[14px] sm:text-[14.5px] text-[#555555] leading-[19px] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                               {post.subtitle || post.excerpt}
                             </p>
-
-                            {/* Topic pill */}
-                            <div className="pt-1">
-                              <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424] font-medium text-[11px] transition-colors">
-                                {post.category}
-                              </span>
-                            </div>
                           </div>
 
                           {/* Right Thumbnail Image (Compact on mobile and desktop, exactly like screenshot) */}
@@ -306,13 +297,20 @@ export default function BlogIndexPage() {
                   <Link
                     key={pick.slug}
                     href={`/blog/${pick.slug}`}
-                    className="group block space-y-1"
+                    className="group block space-y-1 outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
                   >
-                    <h4 className="font-bold text-[14.5px] sm:text-[15px] text-[#242424] group-hover:underline line-clamp-2 leading-snug tracking-tight">
-                      {pick.title}
-                    </h4>
+                    <div className="flex items-start gap-1.5">
+                      {pick.featured && (
+                        <span className="pt-0.5 inline-flex">
+                          <FeaturedStarIcon className="w-3 h-3" />
+                        </span>
+                      )}
+                      <h4 className="font-bold text-[14px] text-[#242424] line-clamp-2 leading-[19px] tracking-tight">
+                        {pick.title}
+                      </h4>
+                    </div>
                     <span className="text-[12px] text-[#6B6B6B] block">
-                      {pick.readingTime} &middot; {pick.date}
+                      {pick.readingTime} &middot; {formatDisplayDate(pick.date)}
                     </span>
                   </Link>
                 ))}

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { ArrowRight, BookOpen } from "lucide-react";
-import { BLOG_POSTS } from "@/lib/blogData";
+import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
+import { BLOG_POSTS, formatDisplayDate } from "@/lib/blogData";
 
 /**
  * WritingSection - Compact Medium-style Stories Stream on the Main Page
@@ -58,7 +59,7 @@ export function WritingSection() {
           <article key={post.slug} className="py-6 sm:py-7 first:pt-4">
             <Link
               href={`/blog/${post.slug}`}
-              className="group block cursor-pointer"
+              className="group block cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
             >
               <div className="flex items-start justify-between gap-4 sm:gap-6">
                 
@@ -67,16 +68,13 @@ export function WritingSection() {
                   {/* Meta: Reading time · Date */}
                   <div className="flex items-center gap-2 text-[12.5px] text-[#6B6B6B]">
                     {post.featured && (
-                      <>
-                        <span className="text-[#1D1D1F] font-semibold uppercase tracking-wider text-[11px]">
-                          Featured
-                        </span>
-                        <span>&middot;</span>
-                      </>
+                      <span title="Featured Story" className="inline-flex items-center">
+                        <FeaturedStarIcon className="w-3.5 h-3.5" />
+                      </span>
                     )}
                     <span>{post.readingTime}</span>
                     <span>&middot;</span>
-                    <span>{post.date}</span>
+                    <span>{formatDisplayDate(post.date)}</span>
                   </div>
 
                   {/* Super bold punchy headline */}
@@ -120,9 +118,9 @@ export function WritingSection() {
       <div className="pt-8 sm:pt-10 flex justify-center">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F5F5F7] hover:bg-[#EBEBEB] text-[#1D1D1F] border border-black/[0.06] text-[13px] font-medium transition-all active:scale-95 cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F5F5F7] hover:bg-[#EBEBEB] text-[#1D1D1F] border border-black/[0.06] text-[13px] font-medium transition-all active:scale-95 cursor-pointer outline-none focus:outline-none"
         >
-          <span>Browse all {BLOG_POSTS.length} stories in the archive</span>
+          <span>Browse all stories in the archive</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>

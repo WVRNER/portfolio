@@ -19,7 +19,7 @@ function generatePostHtml(post) {
   }
 
   if (post.pullQuote) {
-    html += `<blockquote style="border-left: 3px solid #161617; padding-left: 20px; font-style: italic; margin: 32px 0; color: #242424; font-size: 20px; line-height: 1.45;">“${post.pullQuote}”</blockquote>`;
+    html += `<blockquote style="border-left: 3px solid #161617; background-color: #e8f3e8; padding: 16px 20px; font-style: italic; margin: 32px 0; color: #242424; font-size: 20px; line-height: 1.45; border-radius: 0 6px 6px 0;">“${post.pullQuote}”</blockquote>`;
   }
 
   if (post.content?.lead) {
