@@ -76,7 +76,7 @@ export default function NotFoundPage() {
           <div className="pt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             <Link
               href="/"
-              className="group inline-flex items-center gap-2.5 rounded-full bg-[#E1E0CC] py-2 pl-5 pr-2 text-[14px] font-medium text-black transition-all duration-300 hover:bg-white hover:gap-3.5 shadow-[0_10px_30px_rgba(0,0,0,0.5)] cursor-pointer"
+              className="group inline-flex items-center gap-2.5 rounded-full bg-[#E1E0CC] py-2 pl-5 pr-2 text-[14px] font-medium text-[#242424] transition-all duration-300 hover:bg-white hover:gap-3.5 shadow-[0_10px_30px_rgba(0,0,0,0.5)] cursor-pointer"
             >
               <span>Back to portfolio</span>
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black transition-transform duration-300 group-hover:scale-105">

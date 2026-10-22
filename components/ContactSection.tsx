@@ -105,7 +105,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
       IconComponent: GitHubIcon,
       actionLabel: "Source Repos",
       color: "hover:border-black/30",
-      accent: "text-[#1D1D1F]",
+      accent: "text-[#242424]",
       bgAccent: "bg-black/[0.06]",
     },
   ];
@@ -114,16 +114,16 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
     <footer
       id="contact"
       aria-label="Contact and Channels"
-      className="relative py-20 sm:py-28 lg:py-36 px-5 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-black/[0.08] bg-white text-[#1D1D1F]"
+      className="relative py-20 sm:py-28 lg:py-36 px-5 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-black/[0.08] bg-white text-[#242424]"
     >
       {/* Header Row */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 mb-10 sm:mb-16 border-b border-black/[0.07]">
         <div className="space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/[0.04] text-[11.5px] font-medium tracking-wide uppercase text-[#6E6E73]">
-            <Sparkles className="w-3 h-3 text-[#1D1D1F]" />
+            <Sparkles className="w-3 h-3 text-[#242424]" />
             <span>CONTACT &bull; GET IN TOUCH</span>
           </div>
-          <h2 className="font-display text-[clamp(2.2rem,5vw,4rem)] font-semibold tracking-[-0.035em] text-[#1D1D1F] leading-tight">
+          <h2 className="font-display text-[clamp(2.2rem,5vw,4rem)] font-semibold tracking-[-0.035em] text-[#242424] leading-tight">
             Let&rsquo;s connect.
           </h2>
           <p className="text-[16px] sm:text-[17px] text-[#6E6E73] font-normal leading-relaxed max-w-[52ch]">
@@ -141,7 +141,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
 
           <div className="space-y-3.5 sm:space-y-4">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white shadow-sm border border-black/[0.06] flex items-center justify-center text-[#1D1D1F]">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white shadow-sm border border-black/[0.06] flex items-center justify-center text-[#242424]">
               <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
 
@@ -149,7 +149,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
               <span className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-wider text-[#86868B]">
                 DIRECT EMAIL CHANNEL
               </span>
-              <h3 className="font-display text-[21px] sm:text-[26px] font-semibold text-[#1D1D1F] tracking-tight">
+              <h3 className="font-display text-[21px] sm:text-[26px] font-semibold text-[#242424] tracking-tight">
                 Send a direct dispatch.
               </h3>
             </div>
@@ -162,7 +162,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
           <div className="space-y-3 pt-5 sm:pt-6 border-t border-black/[0.06]">
             <a
               href={`mailto:${email}`}
-              className="text-[17px] sm:text-[22px] font-semibold text-[#1D1D1F] hover:text-[#555] transition-colors break-all block"
+              className="text-[17px] sm:text-[22px] font-semibold text-[#242424] hover:text-[#555] transition-colors break-all block"
             >
               {email}
             </a>
@@ -170,7 +170,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
             <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 pt-1">
               <a
                 href={`mailto:${email}`}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#161617] text-white text-[13px] font-medium hover:bg-[#2C2C2E] transition-all cursor-pointer shadow-sm active:scale-95 min-h-[42px]"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#242424] text-white text-[13px] font-medium hover:bg-[#333333] transition-all cursor-pointer shadow-sm active:scale-95 min-h-[42px]"
               >
                 <span>Compose Mail</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -179,11 +179,11 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
               <button
                 type="button"
                 onClick={() => handleCopy(email, "email")}
-                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-black/[0.04] text-[#1D1D1F] border border-black/[0.08] text-[13px] font-medium transition-all cursor-pointer active:scale-95 min-h-[42px]"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-black/[0.04] text-[#242424] border border-black/[0.08] text-[13px] font-medium transition-all cursor-pointer active:scale-95 min-h-[42px]"
               >
                 {copiedKey === "email" ? (
                   <>
-                    <Check className="w-3.5 h-3.5 text-[#161617]" />
+                    <Check className="w-3.5 h-3.5 text-[#242424]" />
                     <span>Copied</span>
                   </>
                 ) : (
@@ -218,7 +218,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
                       href={channel.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-8 h-8 rounded-full bg-black/[0.04] group-hover:bg-[#161617] group-hover:text-white flex items-center justify-center transition-all duration-200 cursor-pointer"
+                      className="w-8 h-8 rounded-full bg-black/[0.04] group-hover:bg-[#242424] group-hover:text-white flex items-center justify-center transition-all duration-200 cursor-pointer"
                       title={channel.actionLabel}
                     >
                       <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -229,7 +229,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
                     <div className="text-[11.5px] sm:text-[12px] font-medium uppercase tracking-wider text-[#86868B]">
                       {channel.name}
                     </div>
-                    <div className="font-display text-[17px] sm:text-[20px] font-semibold text-[#1D1D1F]">
+                    <div className="font-display text-[17px] sm:text-[20px] font-semibold text-[#242424]">
                       {channel.handle}
                     </div>
                   </div>
@@ -241,7 +241,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
                     href={channel.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-medium text-[#1D1D1F] group-hover:underline underline-offset-4 flex items-center gap-1 py-1"
+                    className="font-medium text-[#242424] group-hover:underline underline-offset-4 flex items-center gap-1 py-1"
                   >
                     <span>{channel.actionLabel}</span>
                     <ArrowUpRight className="w-3 h-3" />
@@ -250,12 +250,12 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
                   <button
                     type="button"
                     onClick={() => handleCopy(channel.value, channel.key)}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/[0.04] hover:bg-black/[0.08] text-[#6E6E73] hover:text-[#1D1D1F] transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/[0.04] hover:bg-black/[0.08] text-[#6E6E73] hover:text-[#242424] transition-colors cursor-pointer"
                   >
                     {isCopied ? (
                       <>
-                        <Check className="w-3 h-3 text-[#161617]" />
-                        <span className="text-[#161617] font-medium">Copied</span>
+                        <Check className="w-3 h-3 text-[#242424]" />
+                        <span className="text-[#242424] font-medium">Copied</span>
                       </>
                     ) : (
                       <>
@@ -275,22 +275,22 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
       {/* Clean Colophon Bottom Bar (Desktop & Mobile Optimized) */}
       <div className="pt-10 sm:pt-16 mt-10 sm:mt-16 border-t border-black/[0.07] flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-4 text-[12px] text-[#86868B] text-center sm:text-left">
         <div className="flex items-center gap-2.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#1D1D1F]" />
+          <span className="w-1.5 h-1.5 rounded-full bg-[#242424]" />
           <span>WVRNER &bull; Nima Hosseini &bull; 2026</span>
         </div>
 
         <div className="flex flex-wrap items-center justify-center sm:justify-end gap-5 sm:gap-6">
-          <Link href="/#about" className="hover:text-[#1D1D1F] transition-colors py-1">
+          <Link href="/#about" className="hover:text-[#242424] transition-colors py-1">
             About
           </Link>
-          <Link href="/blog" className="hover:text-[#1D1D1F] transition-colors py-1">
+          <Link href="/blog" className="hover:text-[#242424] transition-colors py-1">
             Writing
           </Link>
           {onOpenCV && (
             <button
               type="button"
               onClick={onOpenCV}
-              className="hover:text-[#1D1D1F] transition-colors cursor-pointer py-1 underline underline-offset-4"
+              className="hover:text-[#242424] transition-colors cursor-pointer py-1 underline underline-offset-4"
             >
               Curriculum Vitae
             </button>
@@ -298,7 +298,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="hover:text-[#1D1D1F] transition-colors cursor-pointer py-1 inline-flex items-center gap-1"
+            className="hover:text-[#242424] transition-colors cursor-pointer py-1 inline-flex items-center gap-1"
           >
             <span>Top</span>
             <ArrowUp className="w-3 h-3" />

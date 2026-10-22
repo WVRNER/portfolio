@@ -3,16 +3,16 @@
 
 :root {
   --background: #FFFFFF;
-  --foreground: #0A0A0A;
+  --foreground: #242424;
   --foreground-muted: #5A5A5A;
   --foreground-subtle: #8A8A8A;
   --border-hairline: #E5E5E5;
-  --border-strong: #0A0A0A;
+  --border-strong: #242424;
   --surface-elevated: #FFFFFF;
   --surface-recessed: #F5F5F5;
   --surface-accent: #EEEEEE;
   --primary: #E1E0CC;
-  --primary-foreground: #0A0A0A;
+  --primary-foreground: #242424;
 }
 
 @theme inline {
@@ -26,7 +26,7 @@
   --color-surface-recessed: var(--surface-recessed);
   --color-surface-accent: var(--surface-accent);
   --color-primary: #E1E0CC;
-  --color-primary-foreground: #0A0A0A;
+  --color-primary-foreground: #242424;
   --font-display: var(--font-manrope);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -73,7 +73,7 @@ body {
 
 ::selection {
   background-color: #EAEAEA;
-  color: #161617;
+  color: #242424;
 }
 
 img, svg, video, .bg-noise-grain, .noise-overlay {

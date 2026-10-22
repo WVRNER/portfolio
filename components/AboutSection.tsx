@@ -6,13 +6,13 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-[#0A0A0A]/10 bg-white"
+      className="relative py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-[#242424]/10 bg-white"
       aria-label="About Nima Hosseini"
     >
       {/* Anchor Header Row */}
       <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/[0.04] text-[11.5px] font-mono tracking-wider uppercase text-[#6E6E73] font-medium w-fit mb-8 sm:mb-12">
-        <User className="w-3.5 h-3.5 text-[#1D1D1F]" />
-        <span>ABOUT / NIMA HOSSEINI</span>
+        <User className="w-3.5 h-3.5 text-[#242424]" />
+        <span>ABOUT</span>
       </div>
 
       {/* Main Grid: Portrait Anchor (Left) + Architectural Narrative (Right) */}
@@ -35,7 +35,6 @@ export function AboutSection() {
             {/* Card Identity Details */}
             <div className="absolute bottom-5 left-5 right-5 text-white space-y-1">
               <div className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-white/70">
                   WVRNER
                 </span>
@@ -93,7 +92,7 @@ export function AboutSection() {
           
           {/* Monumental Headline Idea */}
           <div>
-            <h2 className="font-display text-[clamp(2.4rem,4.5vw,4.2rem)] font-normal text-[#0A0A0A] leading-[1.02] tracking-[-0.035em]">
+            <h2 className="font-display text-[clamp(2.4rem,4.5vw,4.2rem)] font-normal text-[#242424] leading-[1.02] tracking-[-0.035em]">
               <div>
                 <span>Good architecture is quiet.</span>
                 <br />
@@ -101,7 +100,7 @@ export function AboutSection() {
               </div>
 
               <span className="inline-flex items-baseline flex-wrap gap-x-3 sm:gap-x-5 pt-2 sm:pt-3">
-                <span className="font-serif italic font-normal text-[1.35em] text-[#0A0A0A] leading-none tracking-[-0.025em] select-none inline-block">
+                <span className="font-serif italic font-normal text-[1.35em] text-[#242424] leading-none tracking-[-0.025em] select-none inline-block">
                   invisible.
                 </span>
               </span>
@@ -109,7 +108,7 @@ export function AboutSection() {
           </div>
 
           {/* Narrative Story Progression: BACKGROUND -> NOW -> PROGRESSION */}
-          <div className="border-t border-[#0A0A0A]/10 pt-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <div className="border-t border-[#242424]/10 pt-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
             
             {/* Background: IT Ops Grounding */}
             <div className="space-y-3">
@@ -124,7 +123,7 @@ export function AboutSection() {
             {/* Now: Modern Cloud Infrastructure */}
             <div className="space-y-3">
               <div className="flex items-center gap-2.5 text-[11px] font-mono tracking-[0.24em] text-[#8A8A8A] uppercase font-semibold">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#0A0A0A]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#242424]" />
                 <span>NOW</span>
               </div>
               <p className="text-[15px] sm:text-[16px] text-[#4A4A4A] leading-relaxed">
@@ -135,13 +134,13 @@ export function AboutSection() {
           </div>
 
           {/* PROGRESSION: Systems -> Automation -> Cloud */}
-          <div className="space-y-4 pt-6 border-t border-[#0A0A0A]/10">
+          <div className="space-y-4 pt-6 border-t border-[#242424]/10">
             <div className="text-[11px] font-mono tracking-[0.24em] text-[#8A8A8A] uppercase font-semibold">
               ENGINEERING PROGRESSION
             </div>
 
             {/* Visual Vector / Growth Path */}
-            <div className="inline-flex items-center gap-2.5 sm:gap-4 font-mono text-[12px] sm:text-[13.5px] tracking-[0.16em] uppercase text-[#0A0A0A] font-semibold py-3 px-4 border border-[#0A0A0A]/12 bg-[#F9F9F9] rounded-lg">
+            <div className="inline-flex items-center gap-2.5 sm:gap-4 font-mono text-[12px] sm:text-[13.5px] tracking-[0.16em] uppercase text-[#242424] font-semibold py-3 px-4 border border-[#242424]/12 bg-[#F9F9F9] rounded-lg">
               <span>SYSTEMS</span>
               <span className="text-[#8A8A8A]">→</span>
               <span>AUTOMATION</span>

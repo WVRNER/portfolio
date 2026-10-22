@@ -127,7 +127,7 @@ function ProjectInfo({
   return (
     <div className={`space-y-2.5 pt-5 sm:pt-6 ${className}`}>
       {hasRealTitle && (
-        <h3 className="font-display text-[clamp(1.5rem,2.4vw,2.2rem)] font-medium text-[#0A0A0A] tracking-[-0.03em] leading-snug group-hover:text-[#0A0A0A]/70 transition-colors">
+        <h3 className="font-display text-[clamp(1.5rem,2.4vw,2.2rem)] font-medium text-[#242424] tracking-[-0.03em] leading-snug group-hover:text-[#242424]/70 transition-colors">
           {project.title}
         </h3>
       )}
@@ -143,13 +143,6 @@ function ProjectInfo({
           {project.technologies.join(" · ")}
         </div>
       )}
-
-      <div className="pt-1.5 inline-flex items-center gap-1.5 text-[11.5px] font-mono font-medium text-[#0A0A0A] uppercase tracking-[0.16em]">
-        <span>VIEW PROJECT · READ WRITE-UP</span>
-        <span className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">
-          ↗
-        </span>
-      </div>
     </div>
   );
 }
@@ -163,10 +156,10 @@ export function ProjectsTitle() {
     <div
       id="projects"
       aria-label="Projects and Labs"
-      className="relative pt-24 sm:pt-32 md:pt-36 pb-8 sm:pb-12 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-[#0A0A0A]/10 bg-white"
+      className="relative pt-24 sm:pt-32 md:pt-36 pb-8 sm:pb-12 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-[#242424]/10 bg-white"
     >
       <div className="w-full">
-        <h2 className="font-display text-[clamp(2.4rem,5.5vw,4.2rem)] font-medium tracking-[-0.035em] text-[#0A0A0A] leading-[1.05] select-none">
+        <h2 className="font-display text-[clamp(2.4rem,5.5vw,4.2rem)] font-medium tracking-[-0.035em] text-[#242424] leading-[1.05] select-none">
           Projects &amp; Labs
         </h2>
       </div>
@@ -211,7 +204,7 @@ export function ProjectsGallery() {
         </div>
 
         {/* Project 02: Single cohesive card & link */}
-        <div className="w-full lg:w-[420px] xl:w-[480px] min-w-0 pt-10 lg:pt-0 border-t border-[#0A0A0A]/10 lg:border-t-0">
+        <div className="w-full lg:w-[420px] xl:w-[480px] min-w-0 pt-10 lg:pt-0 border-t border-[#242424]/10 lg:border-t-0">
           <InstantLink
             href={targetUrl2}
             className="group block w-full focus:outline-none cursor-pointer"

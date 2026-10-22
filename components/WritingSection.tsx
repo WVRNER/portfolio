@@ -41,11 +41,11 @@ export function WritingSection() {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 mb-8 border-b border-[#F2F2F2]">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-black/[0.04] text-[11px] font-mono tracking-wider uppercase text-[#6E6E73] font-medium">
-            <BookOpen className="w-3.5 h-3.5 text-[#1D1D1F]" />
+            <BookOpen className="w-3.5 h-3.5 text-[#242424]" />
             <span>WRITING &amp; ARCHITECTURE</span>
           </div>
 
-          <h2 className="font-display text-[28px] sm:text-[34px] font-bold tracking-[-0.03em] text-[#0A0A0A] leading-tight">
+          <h2 className="font-display text-[28px] sm:text-[34px] font-bold tracking-[-0.03em] text-[#242424] leading-tight">
             Writing &amp; Field Notes
           </h2>
         </div>
@@ -53,7 +53,7 @@ export function WritingSection() {
         {/* View all writing action */}
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#242424] hover:text-[#0A0A0A] hover:underline underline-offset-4 cursor-pointer shrink-0 pb-1"
+          className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#242424] hover:text-[#242424] hover:underline underline-offset-4 cursor-pointer shrink-0 pb-1"
         >
           <span>See all writing</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -73,7 +73,7 @@ export function WritingSection() {
                 {/* Left Text Block */}
                 <div className="flex-1 min-w-0 space-y-2">
                   {/* Super bold punchy headline - clean hover with zero outline or underline */}
-                  <h3 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[19px] sm:text-[22px] md:text-[24px] text-[#0A0A0A] group-hover:text-black/75 transition-colors leading-[1.2] tracking-[-0.03em] line-clamp-2 no-underline">
+                  <h3 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[19px] sm:text-[22px] md:text-[24px] text-[#242424] group-hover:text-[#242424]/75 transition-colors leading-[1.2] tracking-[-0.03em] line-clamp-2 no-underline">
                     {post.title}
                   </h3>
 
@@ -122,7 +122,7 @@ export function WritingSection() {
       <div className="pt-8 sm:pt-10 flex justify-center">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F5F5F7] hover:bg-[#EBEBEB] text-[#1D1D1F] border border-black/[0.06] text-[13px] font-medium transition-all active:scale-95 cursor-pointer outline-none focus:outline-none"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F5F5F7] hover:bg-[#EBEBEB] text-[#242424] border border-black/[0.06] text-[13px] font-medium transition-all active:scale-95 cursor-pointer outline-none focus:outline-none"
         >
           <span>Browse all writing in the archive</span>
           <ArrowRight className="w-3.5 h-3.5" />

@@ -351,7 +351,7 @@ export function QuoteImageModal({
             <button
               type="button"
               onClick={handleDownload}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-black hover:bg-neutral-200 text-[13px] font-sans font-semibold transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-[#242424] hover:bg-neutral-200 text-[13px] font-sans font-semibold transition-colors cursor-pointer"
             >
               <Download className="w-4 h-4" />
               <span>Download PNG</span>
