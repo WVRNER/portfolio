@@ -93,7 +93,7 @@ export default function BlogIndexPage() {
   };
 
   return (
-    <div className="relative min-h-[100dvh] bg-[#FFFFFF] dark:bg-[#0C0C0D] text-[#242424] dark:text-[#E5E5E7] font-sans antialiased transition-colors duration-200 selection:bg-[#EAEAEA] selection:text-[#242424] dark:selection:bg-[#2C2C30] dark:selection:text-[#F5F5F7]">
+    <div className="relative min-h-[100dvh] bg-[#FFFFFF] dark:bg-[#171717] text-[#242424] dark:text-[#e5e5e5] font-sans antialiased transition-colors duration-200 selection:bg-[#EAEAEA] selection:text-[#242424] dark:selection:bg-[#2C2C30] dark:selection:text-[#e5e5e5]">
       {/* Floating Navigation Pill */}
       <Navigation onOpenCV={() => setCvOpen(true)} />
 
@@ -101,10 +101,10 @@ export default function BlogIndexPage() {
       <div className="max-w-[680px] w-full mx-auto px-6 sm:px-0 pt-28 sm:pt-36 pb-24">
         
         {/* Masthead */}
-        <header className="mb-8 pb-6 border-b border-[#F2F2F2] dark:border-[#222225]">
+        <header className="mb-8">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-2">
-              <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[34px] sm:text-[46px] font-extrabold sm:font-black tracking-[-0.035em] text-[#1D1D1F] dark:text-[#F5F5F7] leading-[1.08]">
+              <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[34px] sm:text-[46px] font-extrabold sm:font-black tracking-[-0.035em] text-[#1D1D1F] dark:text-[#e5e5e5] leading-[1.08]">
                 Writing
               </h1>
 
@@ -120,7 +120,7 @@ export default function BlogIndexPage() {
           </div>
 
           {/* Topic Tab Bar: "For you" + tool tags */}
-          <div className="flex items-center gap-6 mt-8 overflow-x-auto no-scrollbar border-b border-[#F2F2F2] dark:border-[#222225] text-[14px]">
+          <div className="flex items-center gap-6 mt-8 overflow-x-auto no-scrollbar border-b border-[#F2F2F2] dark:border-[#262626] text-[14px]">
             {topics.map((t) => (
               <button
                 key={t}
@@ -130,8 +130,8 @@ export default function BlogIndexPage() {
                 }}
                 className={`pb-3 border-b-2 font-medium transition-all whitespace-nowrap cursor-pointer ${
                   activeCategory === t
-                    ? "border-[#242424] dark:border-[#F5F5F7] text-[#242424] dark:text-[#F5F5F7]"
-                    : "border-transparent text-[#6B6B6B] dark:text-[#8E8E93] hover:text-[#242424] dark:hover:text-[#F5F5F7]"
+                    ? "border-[#242424] dark:border-[#e5e5e5] text-[#242424] dark:text-[#e5e5e5]"
+                    : "border-transparent text-[#6B6B6B] dark:text-[#8E8E93] hover:text-[#242424] dark:hover:text-[#e5e5e5]"
                 }`}
               >
                 {t}
@@ -147,7 +147,7 @@ export default function BlogIndexPage() {
               <p>No writing found for topic &ldquo;{activeCategory}&rdquo;.</p>
               <button
                 onClick={() => setActiveCategory("All")}
-                className="mt-3 text-[13px] text-[#242424] dark:text-[#F5F5F7] hover:underline font-medium cursor-pointer"
+                className="mt-3 text-[13px] text-[#242424] dark:text-[#e5e5e5] hover:underline font-medium cursor-pointer"
               >
                 View all writing
               </button>
@@ -155,7 +155,7 @@ export default function BlogIndexPage() {
           ) : (
             <div>
               {/* WRITING STREAM: Each post card 680x225 on desktop */}
-              <div className="divide-y divide-[#F2F2F2] dark:divide-[#222225]">
+              <div className="divide-y divide-[#F2F2F2] dark:divide-[#262626]">
                 {paginatedPosts.map((post, pIdx) => (
                   <article
                     key={post.slug}
@@ -171,14 +171,14 @@ export default function BlogIndexPage() {
                         <div className="flex-1 min-w-0 space-y-2">
                           {/* Big Bold Headline with View Transition */}
                           <h2
-                            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[26px] text-[#0A0A0A] dark:text-[#F5F5F7] leading-[1.2] tracking-[-0.03em] line-clamp-2"
+                            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[26px] text-[#0A0A0A] dark:text-[#e5e5e5] leading-[1.2] tracking-[-0.03em] line-clamp-2"
                             style={{ viewTransitionName: `post-title-${post.slug}` }}
                           >
                             {post.title}
                           </h2>
 
                           {/* Subtitle / Excerpt in Serif */}
-                          <p className="text-[15px] sm:text-[16px] text-[#555555] dark:text-[#A1A1A6] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                          <p className="text-[15px] sm:text-[16px] text-[#555555] dark:text-[#b3b3b3] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                             {post.subtitle || post.excerpt}
                           </p>
 
@@ -193,7 +193,7 @@ export default function BlogIndexPage() {
                             <span>&middot;</span>
                             <span>{post.readingTime}</span>
                             <span>&middot;</span>
-                            <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#1E1E22] text-[#242424] dark:text-[#D1D1D6] font-medium text-[11px] font-mono tracking-tight dark:border dark:border-white/10">
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#262626] text-[#242424] dark:text-[#e5e5e5] font-medium text-[11px] font-mono tracking-tight dark:border dark:border-white/10">
                               {getPrimaryToolTag(post)}
                             </span>
                           </div>
@@ -202,7 +202,7 @@ export default function BlogIndexPage() {
                         {/* Right Thumbnail Image with Blur-up & View Transition */}
                         {post.featureImage && (
                           <div
-                            className="w-[96px] h-[64px] sm:w-[160px] sm:h-[108px] md:w-[172px] md:h-[116px] rounded-[3px] overflow-hidden bg-neutral-100 dark:bg-neutral-900 shrink-0 self-center"
+                            className="w-[96px] h-[64px] sm:w-[160px] sm:h-[108px] md:w-[172px] md:h-[116px] rounded-[3px] overflow-hidden bg-neutral-100 dark:bg-[#262626] shrink-0 self-center"
                             style={{ viewTransitionName: `post-cover-${post.slug}` }}
                           >
                             <BlurImage
@@ -227,7 +227,7 @@ export default function BlogIndexPage() {
               {totalPages > 1 && (
                 <nav
                   aria-label="Writing pagination"
-                  className="pt-10 sm:pt-12 border-t border-[#F2F2F2] dark:border-[#222225] flex items-center justify-center gap-2 font-sans"
+                  className="pt-10 sm:pt-12 border-t border-[#F2F2F2] dark:border-[#262626] flex items-center justify-center gap-2 font-sans"
                 >
                   <button
                     type="button"
@@ -237,7 +237,7 @@ export default function BlogIndexPage() {
                     className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
                       currentPage <= 1
                         ? "text-black/25 dark:text-white/20 bg-black/[0.02] dark:bg-white/[0.03] cursor-not-allowed"
-                        : "text-[#242424] dark:text-[#D1D1D6] bg-[#F2F2F2] dark:bg-[#1E1E22] hover:bg-[#EAEAEA] dark:hover:bg-[#28282D] active:scale-95 cursor-pointer"
+                        : "text-[#242424] dark:text-[#e5e5e5] bg-[#F2F2F2] dark:bg-[#262626] hover:bg-[#EAEAEA] dark:hover:bg-[#333333] active:scale-95 cursor-pointer"
                     }`}
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
@@ -250,7 +250,7 @@ export default function BlogIndexPage() {
                         return (
                           <span
                             key={`ellipsis-${idx}`}
-                            className="w-8 h-8 flex items-center justify-center text-[#86868B] dark:text-[#666666] text-[13px] font-medium select-none"
+                            className="w-8 h-8 flex items-center justify-center text-[#86868B] dark:text-[#8E8E93] text-[13px] font-medium select-none"
                           >
                             &hellip;
                           </span>
@@ -269,8 +269,8 @@ export default function BlogIndexPage() {
                           aria-label={`Page ${pageNum}`}
                           className={`w-8 h-8 rounded-full text-[13px] font-medium transition-all cursor-pointer ${
                             isCurrent
-                              ? "bg-[#1D1D1F] dark:bg-[#F5F5F7] text-white dark:text-[#0C0C0D] shadow-sm"
-                              : "text-[#6B6B6B] dark:text-[#8E8E93] hover:text-[#242424] dark:hover:text-[#F5F5F7] hover:bg-[#F2F2F2] dark:hover:bg-[#1E1E22] active:scale-95"
+                              ? "bg-[#1D1D1F] dark:bg-[#e5e5e5] text-white dark:text-[#171717] shadow-sm"
+                              : "text-[#6B6B6B] dark:text-[#8E8E93] hover:text-[#242424] dark:hover:text-[#e5e5e5] hover:bg-[#F2F2F2] dark:hover:bg-[#262626] active:scale-95"
                           }`}
                         >
                           {pageNum}
@@ -287,7 +287,7 @@ export default function BlogIndexPage() {
                     className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
                       currentPage >= totalPages
                         ? "text-black/25 dark:text-white/20 bg-black/[0.02] dark:bg-white/[0.03] cursor-not-allowed"
-                        : "text-[#242424] dark:text-[#D1D1D6] bg-[#F2F2F2] dark:bg-[#1E1E22] hover:bg-[#EAEAEA] dark:hover:bg-[#28282D] active:scale-95 cursor-pointer"
+                        : "text-[#242424] dark:text-[#e5e5e5] bg-[#F2F2F2] dark:bg-[#262626] hover:bg-[#EAEAEA] dark:hover:bg-[#333333] active:scale-95 cursor-pointer"
                     }`}
                   >
                     <span>Next</span>

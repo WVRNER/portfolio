@@ -73,6 +73,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
   // Article body reference for scoped progress tracking and quote sharing
   const articleRef = useRef<HTMLElement>(null);
+  const postContentRef = useRef<HTMLDivElement>(null);
   const [quoteSelection, setQuoteSelection] = useState<{
     text: string;
     x: number;
@@ -151,17 +152,18 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         return;
       }
 
-      // Ensure selection is inside the article container
-      const articleEl = articleRef.current;
-      if (!articleEl) return;
+      // Ensure selection is strictly inside the post content body only
+      // (Not date, not read time, not title or subtitle, not tags or buttons, not Selected Writing)
+      const contentEl = postContentRef.current;
+      if (!contentEl) return;
 
       const anchorNode = selection.anchorNode;
       const focusNode = selection.focusNode;
       if (
         !anchorNode ||
         !focusNode ||
-        !articleEl.contains(anchorNode) ||
-        !articleEl.contains(focusNode)
+        !contentEl.contains(anchorNode) ||
+        !contentEl.contains(focusNode)
       ) {
         setQuoteSelection(null);
         return;
@@ -377,7 +379,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
   return (
     <div
-      className="relative min-h-[100dvh] bg-[#FFFFFF] dark:bg-[#0C0C0D] text-[#242424] dark:text-[#E5E5E7] font-sans antialiased transition-colors duration-200 selection:bg-[#EAEAEA] selection:text-[#242424] dark:selection:bg-[#2C2C30] dark:selection:text-[#F5F5F7]"
+      className="relative min-h-[100dvh] bg-[#FFFFFF] dark:bg-[#171717] text-[#242424] dark:text-[#e5e5e5] font-sans antialiased transition-colors duration-200 selection:bg-[#EAEAEA] selection:text-[#242424] dark:selection:bg-[#2C2C30] dark:selection:text-[#e5e5e5]"
       style={
         {
           "--post-accent-light": accentLight,
@@ -449,10 +451,10 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
       <main ref={articleRef} className="max-w-[680px] mx-auto px-6 sm:px-8 md:px-0 pt-28 sm:pt-36 pb-28">
         
         {/* Navigation Breadcrumb with Dark Mode Toggle */}
-        <div className="mb-8 pb-4 border-b border-[#F2F2F2] dark:border-[#222225] flex items-center justify-between text-[13px] text-[#6B6B6B] dark:text-[#8E8E93]">
+        <div className="mb-8 pb-4 border-b border-[#F2F2F2] dark:border-[#2a2a2a] flex items-center justify-between text-[13px] text-[#6B6B6B] dark:text-[#e5e5e5]">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-[#6B6B6B] dark:text-[#8E8E93] hover:text-[#242424] dark:hover:text-[#F5F5F7] transition-colors group cursor-pointer font-medium"
+            className="inline-flex items-center gap-2 text-[#6B6B6B] dark:text-[#e5e5e5] hover:text-[#242424] dark:hover:text-white transition-colors group cursor-pointer font-medium"
           >
             <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-1" />
             <span>Writing</span>
@@ -461,12 +463,12 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           <ThemeToggle />
         </div>
 
-        {/* Story Header (Exact hierarchy matching uploaded screenshot) */}
+        {/* Story Header */}
         <header className="space-y-4 mb-8">
           
           {/* Super bold punchy headline with View Transition */}
           <h1
-            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[34px] sm:text-[44px] md:text-[48px] text-[#0A0A0A] dark:text-[#F5F5F7] leading-[1.1] tracking-[-0.035em]"
+            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[34px] sm:text-[44px] md:text-[48px] text-[#0A0A0A] dark:text-[#e5e5e5] leading-[1.1] tracking-[-0.035em]"
             style={{ viewTransitionName: `post-title-${post.slug}` }}
           >
             {post.title}
@@ -474,13 +476,13 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
           {/* Subtitle in Serif */}
           {post.subtitle && (
-            <p className="text-[21px] sm:text-[25px] md:text-[27px] text-[#555555] dark:text-[#A1A1A6] font-normal leading-[1.38] tracking-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+            <p className="text-[21px] sm:text-[25px] md:text-[27px] text-[#555555] dark:text-[#e5e5e5] font-normal leading-[1.38] tracking-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
               {post.subtitle}
             </p>
           )}
 
           {/* Meta line: Date before read time, then Tool Tag */}
-          <div className="pt-2 text-[14px] sm:text-[14.5px] text-[#6B6B6B] dark:text-[#8E8E93] font-normal flex items-center flex-wrap gap-2">
+          <div className="pt-2 text-[14px] sm:text-[14.5px] text-[#6B6B6B] dark:text-[#e5e5e5] font-normal flex items-center flex-wrap gap-2">
             {post.featured && (
               <span title="Featured Story" className="inline-flex items-center mr-1">
                 <FeaturedStarIcon className="w-3.5 h-3.5" />
@@ -490,7 +492,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             <span>&middot;</span>
             <span>{post.readingTime}</span>
             <span>&middot;</span>
-            <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#1E1E22] text-[#242424] dark:text-[#D1D1D6] font-medium text-[11px] font-mono tracking-tight dark:border dark:border-white/10">
+            <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#262626] text-[#242424] dark:text-[#e5e5e5] font-medium text-[11px] font-mono tracking-tight dark:border dark:border-white/10">
               {getPrimaryToolTag(post)}
             </span>
           </div>
@@ -499,7 +501,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           <div className="pt-2">
             <button
               onClick={handleShare}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/15 hover:border-black/30 hover:bg-black/[0.03] text-[#242424] dark:border-white/15 dark:hover:border-white/30 dark:hover:bg-white/[0.05] dark:text-[#E5E5E7] text-[13.5px] font-medium transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-black/15 hover:border-black/30 hover:bg-black/[0.03] text-[#242424] dark:border-white/20 dark:hover:bg-white/10 dark:text-[#e5e5e5] text-[13.5px] font-medium transition-colors cursor-pointer"
               title="Share story"
             >
               {copiedLink ? (
@@ -509,7 +511,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                 </>
               ) : (
                 <>
-                  <Share2 className="w-4 h-4 text-[#242424] dark:text-[#E5E5E7]" />
+                  <Share2 className="w-4 h-4 text-[#242424] dark:text-[#e5e5e5]" />
                   <span>Share</span>
                 </>
               )}
@@ -536,170 +538,172 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           </div>
         )}
 
-        {/* Editorial Pullquote (Highlighted with #e8f3e8 in light, dark emerald in dark) */}
-        {post.pullQuote && (
-          <blockquote
-            className="my-9 pl-6 pr-5 py-4 border-l-[3px] bg-[#e8f3e8] dark:bg-[#142317] rounded-r-md"
-            style={{ borderLeftColor: accentLight }}
-          >
-            <p className="font-[family-name:var(--font-source-serif),Charter,Georgia,serif] italic text-[21px] sm:text-[23px] text-[#242424] dark:text-[#D4EBD7] leading-[1.45]">
-              &ldquo;{post.pullQuote}&rdquo;
-            </p>
-          </blockquote>
-        )}
-
-        {/* Article Body Content */}
-        <article
-          className="py-4 font-[family-name:var(--font-source-serif),Charter,Georgia,serif] text-[20px] leading-[34px] text-[#242424] dark:text-[#D6D6DC] font-normal selection:bg-[#EAEAEA] dark:selection:bg-[#2C2C30]"
-        >
-          
-          {/* Lead Abstract */}
-          {post.content.lead && (
-            <p className="mb-8 font-normal leading-[34px]">
-              {post.content.lead}
-            </p>
+        {/* Post Content Area: Only content within here triggers Quote Sharing / Share as image */}
+        <div ref={postContentRef} id="post-content">
+          {/* Editorial Pullquote */}
+          {post.pullQuote && (
+            <blockquote
+              className="my-9 pl-6 pr-5 py-4 border-l-[3px] bg-[#e8f3e8] dark:bg-[#222222] rounded-r-md"
+              style={{ borderLeftColor: accentLight }}
+            >
+              <p className="font-[family-name:var(--font-source-serif),Charter,Georgia,serif] italic text-[21px] sm:text-[23px] text-[#242424] dark:text-[#e5e5e5] leading-[1.45]">
+                &ldquo;{post.pullQuote}&rdquo;
+              </p>
+            </blockquote>
           )}
 
-          {/* Content Sections */}
-          {post.content.sections.map((section, sIdx) => (
-            <div key={sIdx} className="space-y-6 pt-4">
-              
-              {/* Section Heading */}
-              {section.heading && (
-                <h2 className="font-[family-name:var(--font-plus-jakarta)] font-extrabold text-[24px] sm:text-[28px] text-[#1D1D1F] dark:text-[#F5F5F7] tracking-[-0.025em] leading-tight pt-8 pb-2">
-                  {section.heading}
-                </h2>
-              )}
+          {/* Article Body Content */}
+          <article
+            className="py-4 font-[family-name:var(--font-source-serif),Charter,Georgia,serif] text-[20px] leading-[34px] text-[#242424] dark:text-[#e5e5e5] font-normal selection:bg-[#EAEAEA] dark:selection:bg-[#2C2C30]"
+          >
+            
+            {/* Lead Abstract */}
+            {post.content.lead && (
+              <p className="mb-8 font-normal leading-[34px]">
+                {post.content.lead}
+              </p>
+            )}
 
-              {/* Section Paragraphs */}
-              {section.paragraphs.map((para, pIdx) => {
-                const trimmed = para.trim();
-                const ghMatch = trimmed.match(
-                  /^(?:https?:\/\/)?github\.com\/([a-zA-Z0-9_.-]+)\/([a-zA-Z0-9_.-]+)\/?$/i
-                );
-                if (ghMatch) {
-                  const repoSlug = `${ghMatch[1]}/${ghMatch[2]}`;
-                  const cardData = getGitHubRepoCard(repoSlug);
-                  if (cardData && !cardData.failed) {
-                    return <GitHubCard key={pIdx} repo={cardData} />;
+            {/* Content Sections */}
+            {post.content.sections.map((section, sIdx) => (
+              <div key={sIdx} className="space-y-6 pt-4">
+                
+                {/* Section Heading */}
+                {section.heading && (
+                  <h2 className="font-[family-name:var(--font-plus-jakarta)] font-extrabold text-[24px] sm:text-[28px] text-[#1D1D1F] dark:text-[#e5e5e5] tracking-[-0.025em] leading-tight pt-8 pb-2">
+                    {section.heading}
+                  </h2>
+                )}
+
+                {/* Section Paragraphs */}
+                {section.paragraphs.map((para, pIdx) => {
+                  const trimmed = para.trim();
+                  const ghMatch = trimmed.match(
+                    /^(?:https?:\/\/)?github\.com\/([a-zA-Z0-9_.-]+)\/([a-zA-Z0-9_.-]+)\/?$/i
+                  );
+                  if (ghMatch) {
+                    const repoSlug = `${ghMatch[1]}/${ghMatch[2]}`;
+                    const cardData = getGitHubRepoCard(repoSlug);
+                    if (cardData && !cardData.failed) {
+                      return <GitHubCard key={pIdx} repo={cardData} />;
+                    }
+                    const url = trimmed.startsWith("http")
+                      ? trimmed
+                      : `https://${trimmed}`;
+                    return (
+                      <p key={pIdx} className="mb-8 font-normal leading-[34px]">
+                        <a
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline underline-offset-4 decoration-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+                        >
+                          {url}
+                        </a>
+                      </p>
+                    );
                   }
-                  // Fallback: normal link if fetch failed or missing
-                  const url = trimmed.startsWith("http")
-                    ? trimmed
-                    : `https://${trimmed}`;
+
                   return (
                     <p key={pIdx} className="mb-8 font-normal leading-[34px]">
-                      <a
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline underline-offset-4 decoration-neutral-400 hover:text-black dark:hover:text-white transition-colors"
-                      >
-                        {url}
-                      </a>
+                      {para}
                     </p>
                   );
-                }
+                })}
 
-                return (
-                  <p key={pIdx} className="mb-8 font-normal leading-[34px]">
-                    {para}
-                  </p>
-                );
-              })}
+                {/* Code Snippet Block */}
+                {section.codeBlock && (
+                  <div className="my-9 rounded-lg border border-[#2E2E2E] bg-[#161617] text-[#EDEDED] overflow-hidden font-mono">
+                    <div className="px-5 py-2.5 bg-[#1F1F21] border-b border-[#2E2E2E] flex items-center justify-between text-[12px]">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#3E3E3E]" />
+                        <span className="text-[#D4D4D4] font-medium font-sans">
+                          {section.codeBlock.filename || "manifest.tf"}
+                        </span>
+                      </div>
 
-              {/* Code Snippet Block */}
-              {section.codeBlock && (
-                <div className="my-9 rounded-lg border border-[#2E2E2E] bg-[#161617] text-[#EDEDED] overflow-hidden font-mono">
-                  <div className="px-5 py-2.5 bg-[#1F1F21] border-b border-[#2E2E2E] flex items-center justify-between text-[12px]">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#3E3E3E]" />
-                      <span className="text-[#D4D4D4] font-medium font-sans">
-                        {section.codeBlock.filename || "manifest.tf"}
-                      </span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-[#888888] uppercase tracking-wider text-[10.5px] px-2 py-0.5 rounded bg-white/5 font-sans">
+                          {section.codeBlock.language}
+                        </span>
+                        <button
+                          onClick={() =>
+                            handleCopyCode(
+                              section.codeBlock!.code,
+                              `code-${sIdx}`
+                            )
+                          }
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#2A2A2D] hover:bg-[#38383C] text-[11px] text-[#EDEDED] transition-colors cursor-pointer font-sans"
+                          title="Copy code snippet"
+                        >
+                          {copiedCode === `code-${sIdx}` ? (
+                            <>
+                              <Check className="w-3 h-3 text-white" />
+                              <span className="text-white">Copied</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3 h-3" />
+                              <span>Copy</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
-                      <span className="text-[#888888] uppercase tracking-wider text-[10.5px] px-2 py-0.5 rounded bg-white/5 font-sans">
-                        {section.codeBlock.language}
-                      </span>
-                      <button
-                        onClick={() =>
-                          handleCopyCode(
-                            section.codeBlock!.code,
-                            `code-${sIdx}`
-                          )
-                        }
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#2A2A2D] hover:bg-[#38383C] text-[11px] text-[#EDEDED] transition-colors cursor-pointer font-sans"
-                        title="Copy code snippet"
+                    <div className="p-5 sm:p-6 overflow-x-auto text-[13.5px] font-mono leading-relaxed bg-[#161617]">
+                      <pre>
+                        <code>{section.codeBlock.code}</code>
+                      </pre>
+                    </div>
+                  </div>
+                )}
+
+                {/* Architectural Rule Callout */}
+                {section.callout && (
+                  <aside className="my-9 p-6 rounded-r-lg border-l-[3px] border-[#161617] dark:border-white/30 bg-[#F9F9F9] dark:bg-[#222222] space-y-1.5 font-sans">
+                    <div className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-[#161617] dark:text-[#e5e5e5] font-bold">
+                      <span>{section.callout.title}</span>
+                    </div>
+                    <p className="text-[15px] sm:text-[16px] text-[#404040] dark:text-[#e5e5e5] leading-relaxed font-normal">
+                      {section.callout.body}
+                    </p>
+                  </aside>
+                )}
+
+                {/* Numbered Invariants */}
+                {section.list && (
+                  <div className="my-6 space-y-3 font-sans">
+                    {section.list.map((item, lIdx) => (
+                      <div
+                        key={lIdx}
+                        className="flex items-start gap-3.5 text-[16px] text-[#242424] dark:text-[#e5e5e5]"
                       >
-                        {copiedCode === `code-${sIdx}` ? (
-                          <>
-                            <Check className="w-3 h-3 text-white" />
-                            <span className="text-white">Copied</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3 h-3" />
-                            <span>Copy</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
+                        <span className="w-6 h-6 rounded-full bg-[#161617] dark:bg-[#262626] text-white text-[11px] font-mono flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">
+                          {lIdx + 1}
+                        </span>
+                        <span className="leading-relaxed">{item}</span>
+                      </div>
+                    ))}
                   </div>
+                )}
 
-                  <div className="p-5 sm:p-6 overflow-x-auto text-[13.5px] font-mono leading-relaxed bg-[#161617]">
-                    <pre>
-                      <code>{section.codeBlock.code}</code>
-                    </pre>
-                  </div>
-                </div>
-              )}
+              </div>
+            ))}
 
-              {/* Architectural Rule Callout */}
-              {section.callout && (
-                <aside className="my-9 p-6 rounded-r-lg border-l-[3px] border-[#161617] dark:border-white/30 bg-[#F9F9F9] dark:bg-[#161619] space-y-1.5 font-sans">
-                  <div className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-[#161617] dark:text-[#F5F5F7] font-bold">
-                    <span>{section.callout.title}</span>
-                  </div>
-                  <p className="text-[15px] sm:text-[16px] text-[#404040] dark:text-[#A1A1A6] leading-relaxed font-normal">
-                    {section.callout.body}
-                  </p>
-                </aside>
-              )}
-
-              {/* Numbered Invariants */}
-              {section.list && (
-                <div className="my-6 space-y-3 font-sans">
-                  {section.list.map((item, lIdx) => (
-                    <div
-                      key={lIdx}
-                      className="flex items-start gap-3.5 text-[16px] text-[#242424] dark:text-[#D6D6DC]"
-                    >
-                      <span className="w-6 h-6 rounded-full bg-[#161617] dark:bg-[#2C2C2E] text-white text-[11px] font-mono flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">
-                        {lIdx + 1}
-                      </span>
-                      <span className="leading-relaxed">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-            </div>
-          ))}
-
-        </article>
+          </article>
+        </div>
 
         {/* Selected Writing Recommendations */}
         {recommendedPosts.length > 0 && (
-          <section className="pt-12 mt-12 border-t border-[#F2F2F2] dark:border-[#222225] space-y-6">
+          <section className="pt-12 mt-12 border-t border-[#F2F2F2] dark:border-[#2a2a2a] space-y-6">
             <div className="flex items-center justify-between">
-              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[20px] font-bold text-[#242424] dark:text-[#F5F5F7]">
+              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[20px] font-bold text-[#242424] dark:text-[#e5e5e5]">
                 Selected Writing
               </h3>
               <Link
                 href="/blog"
-                className="text-[13px] text-[#242424] dark:text-[#F5F5F7] hover:underline font-medium font-sans"
+                className="text-[13px] text-[#242424] dark:text-[#e5e5e5] hover:underline font-medium font-sans"
               >
                 See all writing
               </Link>
@@ -711,7 +715,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                 <InstantLink
                   key={rec.slug}
                   href={`/blog/${rec.slug}`}
-                  className="group flex flex-col justify-between cursor-pointer space-y-3 p-4 rounded-xl hover:bg-neutral-50 dark:hover:bg-[#161619] transition-colors outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
+                  className="group flex flex-col justify-between cursor-pointer space-y-3 p-4 rounded-xl hover:bg-neutral-50 dark:hover:bg-[#222222] transition-colors outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
                 >
                   <div>
                     {rec.featureImage && (
@@ -726,18 +730,18 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                         />
                       </div>
                     )}
-                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15.5px] font-extrabold text-[#1D1D1F] dark:text-[#F5F5F7] leading-snug line-clamp-2 tracking-tight">
+                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15.5px] font-extrabold text-[#1D1D1F] dark:text-[#e5e5e5] leading-snug line-clamp-2 tracking-tight">
                       {rec.title}
                     </h4>
-                    <p className="text-[13px] text-[#6B6B6B] dark:text-[#A1A1A6] line-clamp-2 mt-1.5 font-normal leading-[19px]">
+                    <p className="text-[13px] text-[#6B6B6B] dark:text-[#e5e5e5] line-clamp-2 mt-1.5 font-normal leading-[19px]">
                       {rec.subtitle || rec.excerpt}
                     </p>
                   </div>
-                  <div className="pt-2 text-[12px] text-[#6B6B6B] dark:text-[#8E8E93] font-sans flex items-center gap-2">
+                  <div className="pt-2 text-[12px] text-[#6B6B6B] dark:text-[#e5e5e5] font-sans flex items-center gap-2">
                     {rec.featured && <FeaturedStarIcon className="w-3 h-3" />}
                     <span>{formatDisplayDate(rec.date)} &middot; {rec.readingTime}</span>
                     <span>&middot;</span>
-                    <span className="px-2 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#1E1E22] text-[#242424] dark:text-[#D1D1D6] font-medium text-[10.5px] font-mono tracking-tight dark:border dark:border-white/10">
+                    <span className="px-2 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#262626] text-[#242424] dark:text-[#e5e5e5] font-medium text-[10.5px] font-mono tracking-tight dark:border dark:border-white/10">
                       {getPrimaryToolTag(rec)}
                     </span>
                   </div>

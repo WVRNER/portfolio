@@ -28,36 +28,52 @@ function getCanShareServerSnapshot(): boolean {
   return false;
 }
 
+function normalizeQuote(s: string): string {
+  return s
+    .replace(/[\u201C\u201D\u2018\u2019"']/g, "")
+    .replace(/[.,;:!?]+$/, "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
 /**
  * Validates that the quoted text actually appears in the article body.
  * Prevents malicious or spoofed quotes from generating branded assets.
  */
 function verifyQuoteAuthenticity(quote: string, post: BlogPost): boolean {
   if (!quote || quote.trim().length === 0) return false;
-  const normalize = (s: string) => s.replace(/\s+/g, " ").trim().toLowerCase();
-  const normalizedQuote = normalize(quote);
+  const normalizedQuote = normalizeQuote(quote);
+  if (normalizedQuote.length === 0) return false;
 
-  // Search in title, subtitle, pullQuote, lead, and all section paragraphs
-  if (normalize(post.title).includes(normalizedQuote)) return true;
-  if (post.subtitle && normalize(post.subtitle).includes(normalizedQuote)) return true;
-  if (post.pullQuote && normalize(post.pullQuote).includes(normalizedQuote)) return true;
-  if (post.content.lead && normalize(post.content.lead).includes(normalizedQuote)) return true;
-
-  for (const section of post.content.sections) {
-    if (section.heading && normalize(section.heading).includes(normalizedQuote)) return true;
-    for (const p of section.paragraphs) {
-      if (normalize(p).includes(normalizedQuote)) return true;
-    }
-    if (section.callout && normalize(section.callout.body).includes(normalizedQuote)) return true;
+  // Search in pullQuote, lead, and all section content
+  if (post.pullQuote) {
+    const normPull = normalizeQuote(post.pullQuote);
+    if (normPull.includes(normalizedQuote) || normalizedQuote.includes(normPull)) return true;
+  }
+  if (post.content.lead) {
+    const normLead = normalizeQuote(post.content.lead);
+    if (normLead.includes(normalizedQuote) || normalizedQuote.includes(normLead)) return true;
   }
 
-  // Also check if the quote is a partial selection (first 4 words)
-  const words = normalizedQuote.split(" ");
-  if (words.length >= 4) {
-    const snippet = words.slice(0, 4).join(" ");
+  for (const section of post.content.sections) {
+    if (section.heading && normalizeQuote(section.heading).includes(normalizedQuote)) return true;
+    for (const p of section.paragraphs) {
+      const normP = normalizeQuote(p);
+      if (normP.includes(normalizedQuote) || normalizedQuote.includes(normP)) return true;
+    }
+    if (section.callout && normalizeQuote(section.callout.body).includes(normalizedQuote)) return true;
+  }
+
+  // Check 3 consecutive words match in pullQuote, lead, or paragraphs
+  const words = normalizedQuote.split(" ").filter((w) => w.length > 2);
+  if (words.length >= 3) {
+    const snippet = words.slice(0, 3).join(" ");
+    if (post.pullQuote && normalizeQuote(post.pullQuote).includes(snippet)) return true;
+    if (post.content.lead && normalizeQuote(post.content.lead).includes(snippet)) return true;
     for (const section of post.content.sections) {
       for (const p of section.paragraphs) {
-        if (normalize(p).includes(snippet)) return true;
+        if (normalizeQuote(p).includes(snippet)) return true;
       }
     }
   }
@@ -83,9 +99,12 @@ export function QuoteImageModal({
 
   const isValid = verifyQuoteAuthenticity(quoteText, post);
 
-  // Truncate cleanly at word boundary if very long
+  // Truncate cleanly at word boundary if very long, stripping outer quotes
   const formatQuote = useCallback((text: string): string => {
-    const clean = text.replace(/\s+/g, " ").trim();
+    const clean = text
+      .replace(/^[\u201C\u201D"']+|[\u201C\u201D"']+$/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
     const maxLength = 260;
     if (clean.length <= maxLength) return clean;
     const truncated = clean.slice(0, maxLength);
