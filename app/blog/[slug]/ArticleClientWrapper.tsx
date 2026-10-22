@@ -8,6 +8,7 @@ import {
   Check,
   Copy,
   Link2,
+  Image as ImageIcon,
 } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
@@ -16,6 +17,7 @@ import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
 import { InstantLink } from "@/components/InstantLink";
 import { BlurImage } from "@/components/BlurImage";
 import { GitHubCard } from "@/components/GitHubCard";
+import { QuoteImageModal } from "@/components/QuoteImageModal";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { getGitHubRepoCard } from "@/lib/githubDataHelper";
 import { BLOG_POSTS, formatDisplayDate, type BlogPost } from "@/lib/blogData";
@@ -71,6 +73,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     y: number;
   } | null>(null);
   const [quoteCopied, setQuoteCopied] = useState(false);
+  const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+  const [quoteModalText, setQuoteModalText] = useState("");
 
   // Track reading scroll progress through the article body only
   useEffect(() => {
@@ -165,7 +169,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           return;
         }
 
-        const buttonWidth = 156;
+        const buttonWidth = 260;
         const x = Math.max(
           16,
           Math.min(window.innerWidth - buttonWidth - 16, rect.left + rect.width / 2 - buttonWidth / 2)
@@ -326,6 +330,16 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     });
   };
 
+  const handleOpenQuoteImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!quoteSelection) return;
+    setQuoteModalText(quoteSelection.text);
+    setQuoteModalOpen(true);
+    setQuoteSelection(null);
+  };
+
   const handleCopyCode = (code: string, id: string) => {
     navigator.clipboard.writeText(code).then(() => {
       setCopiedCode(id);
@@ -371,7 +385,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         aria-hidden="true"
       />
 
-      {/* Floating Highlight-to-Share Quote Link Button */}
+      {/* Floating Highlight-to-Share Quote & Image Toolbar */}
       {quoteSelection && (
         <div
           className="fixed z-50 transition-all duration-150 animate-in fade-in"
@@ -380,25 +394,40 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             top: `${quoteSelection.y}px`,
           }}
         >
-          <button
-            type="button"
-            onMouseDown={(e) => e.preventDefault()}
-            onClick={handleCopyQuoteLink}
-            aria-label="Copy link to quote"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#161617] text-white text-[12px] font-sans font-medium shadow-[0_6px_20px_rgba(0,0,0,0.25)] border border-white/15 hover:bg-[#2A2A2D] active:scale-95 transition-all cursor-pointer select-none"
-          >
-            {quoteCopied ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Link copied</span>
-              </>
-            ) : (
-              <>
-                <Link2 className="w-3.5 h-3.5 text-neutral-300" />
-                <span>Copy link to quote</span>
-              </>
-            )}
-          </button>
+          <div className="inline-flex items-center rounded-full bg-[#161617] text-white text-[12px] font-sans font-medium shadow-[0_6px_20px_rgba(0,0,0,0.28)] border border-white/15 overflow-hidden select-none">
+            <button
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={handleCopyQuoteLink}
+              aria-label="Copy link to quote"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 hover:bg-[#2A2A2D] active:scale-95 transition-all cursor-pointer"
+            >
+              {quoteCopied ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Link copied</span>
+                </>
+              ) : (
+                <>
+                  <Link2 className="w-3.5 h-3.5 text-neutral-300" />
+                  <span>Copy link</span>
+                </>
+              )}
+            </button>
+
+            <div className="w-[1px] h-3.5 bg-white/20" />
+
+            <button
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={handleOpenQuoteImage}
+              aria-label="Share as image"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 hover:bg-[#2A2A2D] active:scale-95 transition-all cursor-pointer"
+            >
+              <ImageIcon className="w-3.5 h-3.5 text-neutral-300" />
+              <span>Share as image</span>
+            </button>
+          </div>
         </div>
       )}
 
@@ -703,6 +732,15 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
       {/* CV Modal */}
       <CVDrawer isOpen={cvOpen} onClose={() => setCvOpen(false)} />
+
+      {/* Branded Quote Image Sharing Modal */}
+      <QuoteImageModal
+        isOpen={quoteModalOpen}
+        onClose={() => setQuoteModalOpen(false)}
+        quoteText={quoteModalText}
+        post={post}
+        accentColor={accentLight}
+      />
     </div>
   );
 }
