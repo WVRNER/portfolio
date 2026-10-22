@@ -77,18 +77,28 @@ export default function BlogIndexPage() {
     }
   };
 
-  // Generate page numbers with ellipsis
+  // Generate robust sliding window page numbers with ellipsis for any scale (up to 100+ pages)
   const getPageNumbers = () => {
     if (totalPages <= 7) {
       return Array.from({ length: totalPages }, (_, i) => i + 1);
     }
-    if (currentPage <= 4) {
-      return [1, 2, 3, 4, 5, "...", totalPages];
+
+    const pages: (number | string)[] = [];
+
+    // Near start: 1, 2, 3, 4, "...", totalPages
+    if (currentPage <= 3) {
+      pages.push(1, 2, 3, 4, "...", totalPages);
     }
-    if (currentPage >= totalPages - 3) {
-      return [1, "...", totalPages - 4, totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    // Near end: 1, "...", totalPages - 3, totalPages - 2, totalPages - 1, totalPages
+    else if (currentPage >= totalPages - 2) {
+      pages.push(1, "...", totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
     }
-    return [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
+    // Middle: 1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages
+    else {
+      pages.push(1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
+    }
+
+    return pages;
   };
 
   return (
@@ -243,13 +253,13 @@ export default function BlogIndexPage() {
                     <span>Previous</span>
                   </button>
 
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-1.5 flex-wrap justify-center">
                     {getPageNumbers().map((item, idx) => {
                       if (item === "...") {
                         return (
                           <span
                             key={`ellipsis-${idx}`}
-                            className="w-8 h-8 flex items-center justify-center text-[#86868B] dark:text-[#8E8E93] text-[13px] font-medium select-none"
+                            className="min-w-[28px] h-8 flex items-center justify-center text-[#86868B] dark:text-[#8E8E93] text-[13px] font-medium select-none px-1"
                           >
                             &hellip;
                           </span>
@@ -266,9 +276,9 @@ export default function BlogIndexPage() {
                           onClick={() => handlePageChange(pageNum)}
                           aria-current={isCurrent ? "page" : undefined}
                           aria-label={`Page ${pageNum}`}
-                          className={`w-8 h-8 rounded-full text-[13px] font-medium transition-all cursor-pointer ${
+                          className={`min-w-[34px] h-8 px-2 rounded-full text-[13px] font-medium transition-all cursor-pointer inline-flex items-center justify-center ${
                             isCurrent
-                              ? "bg-[#242424] dark:bg-[#e5e5e5] text-white dark:text-[#171717] shadow-sm"
+                              ? "bg-[#242424] dark:bg-[#e5e5e5] text-white dark:text-[#171717] shadow-sm font-semibold"
                               : "text-[#6B6B6B] dark:text-[#8E8E93] hover:text-[#242424] dark:hover:text-[#e5e5e5] hover:bg-[#F2F2F2] dark:hover:bg-[#262626] active:scale-95"
                           }`}
                         >
