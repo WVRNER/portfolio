@@ -18,6 +18,39 @@ interface ArticleClientWrapperProps {
   post: BlogPost;
 }
 
+/**
+ * Percent-encode text according to W3C Scroll-to-Text-Fragment specification.
+ * Delimiters like hyphens, commas, periods, and ampersands must be encoded
+ * to prevent ambiguous parsing as prefix/suffix delimiters in browser engines.
+ */
+function encodeFragmentText(str: string): string {
+  return encodeURIComponent(str)
+    .replace(/-/g, "%2D")
+    .replace(/_/g, "%5F")
+    .replace(/\./g, "%2E")
+    .replace(/!/g, "%21")
+    .replace(/~/g, "%7E")
+    .replace(/\*/g, "%2A")
+    .replace(/'/g, "%27")
+    .replace(/\(/g, "%28")
+    .replace(/\)/g, "%29");
+}
+
+/**
+ * Builds the text directive for URL text fragments.
+ * For selections under 6 words, uses exact matching.
+ * For longer selections, uses resilient start,end boundary matching per Chromium and W3C guidelines.
+ */
+function buildTextFragmentDirective(text: string): string {
+  const words = text.split(/\s+/).filter(Boolean);
+  if (words.length <= 5) {
+    return encodeFragmentText(text);
+  }
+  const start = words.slice(0, 3).join(" ");
+  const end = words.slice(-3).join(" ");
+  return `${encodeFragmentText(start)},${encodeFragmentText(end)}`;
+}
+
 export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
   const [cvOpen, setCvOpen] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
@@ -158,6 +191,113 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     };
   }, []);
 
+  // Scroll to and highlight quote when opened via shared link
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    let quoteText: string | null = null;
+
+    // 1. Primary: Check URL search parameter (?quote=...)
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const q = urlParams.get("quote");
+      if (q) {
+        quoteText = decodeURIComponent(q).trim();
+      }
+    } catch {}
+
+    // 2. Secondary: Check performance navigation entries for raw #:~:text= directive
+    if (!quoteText) {
+      try {
+        const navEntries = performance.getEntriesByType("navigation");
+        if (navEntries && navEntries.length > 0) {
+          const navUrl = (navEntries[0] as PerformanceNavigationTiming).name;
+          const textMatch = navUrl.match(/#:~:text=([^&#]+)/);
+          if (textMatch && textMatch[1]) {
+            const rawDirective = decodeURIComponent(textMatch[1]);
+            if (rawDirective.includes(",")) {
+              quoteText = rawDirective.split(",")[0].trim();
+            } else {
+              quoteText = rawDirective.trim();
+            }
+          }
+        }
+      } catch {}
+    }
+
+    // 3. Tertiary: Check window.location.hash in case browser preserved text= directive
+    if (!quoteText && window.location.hash) {
+      try {
+        const hashMatch = window.location.hash.match(/text=([^&#]+)/);
+        if (hashMatch && hashMatch[1]) {
+          quoteText = decodeURIComponent(hashMatch[1]).split(",")[0].trim();
+        }
+      } catch {}
+    }
+
+    if (!quoteText) return;
+
+    const targetQuote = quoteText;
+    const normalize = (s: string) => s.replace(/\s+/g, " ").trim().toLowerCase();
+    const normalizedTarget = normalize(targetQuote);
+    const targetSnippet = normalizedTarget.slice(0, 32);
+
+    // Give time for layout, fonts, and hydration to stabilize
+    const timer = setTimeout(() => {
+      const article = articleRef.current;
+      if (!article) return;
+
+      const candidates = Array.from(
+        article.querySelectorAll("p, blockquote, h1, h2, h3, h4, li")
+      ) as HTMLElement[];
+
+      let matchedEl: HTMLElement | null = null;
+
+      // Match strategy 1: full normalized string
+      for (const el of candidates) {
+        const text = normalize(el.textContent || "");
+        if (text.includes(normalizedTarget)) {
+          matchedEl = el;
+          break;
+        }
+      }
+
+      // Match strategy 2: start snippet prefix
+      if (!matchedEl) {
+        for (const el of candidates) {
+          const text = normalize(el.textContent || "");
+          if (text.includes(targetSnippet)) {
+            matchedEl = el;
+            break;
+          }
+        }
+      }
+
+      if (!matchedEl) return;
+
+      // Scroll smoothly to target with sticky navigation clearance
+      const navOffset = 100;
+      const rect = matchedEl.getBoundingClientRect();
+      const targetY = Math.max(0, rect.top + window.scrollY - navOffset);
+
+      window.scrollTo({
+        top: targetY,
+        behavior: "smooth",
+      });
+
+      // Highlight target element
+      matchedEl.classList.add("quote-highlight-active");
+
+      const cleanupTimer = setTimeout(() => {
+        matchedEl?.classList.remove("quote-highlight-active");
+      }, 3200);
+
+      return () => clearTimeout(cleanupTimer);
+    }, 150);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const handleCopyQuoteLink = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -165,7 +305,11 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     if (!quoteSelection || typeof window === "undefined") return;
 
     const cleanText = quoteSelection.text.replace(/\s+/g, " ").trim();
-    const fragmentUrl = `${window.location.origin}${window.location.pathname}#:~:text=${encodeURIComponent(cleanText)}`;
+    const fragmentDirective = buildTextFragmentDirective(cleanText);
+
+    // Provide both universal query parameter (?quote=) and standard W3C text fragment (#:~:text=).
+    // This guarantees instant, reliable scrolling across Safari, Brave, Chrome, Firefox, and mobile webviews.
+    const fragmentUrl = `${window.location.origin}${window.location.pathname}?quote=${encodeURIComponent(cleanText)}#:~:text=${fragmentDirective}`;
 
     navigator.clipboard.writeText(fragmentUrl).then(() => {
       setQuoteCopied(true);
