@@ -252,7 +252,7 @@ const PrismaHero = ({
 
         {/* Hero content aligned with site container */}
         <div className="absolute bottom-0 left-0 right-0 z-20 px-6 pb-6 sm:px-12 sm:pb-10 md:px-16 md:pb-12 lg:px-24">
-          <div className="max-w-[1720px] mx-auto grid grid-cols-12 items-end gap-3 sm:gap-6 lg:gap-8">
+          <div className="max-w-[1400px] mx-auto grid grid-cols-12 items-end gap-3 sm:gap-6 lg:gap-8">
             
             {/* Monumental Headline: WVRNER (Plus Jakarta Sans) */}
             <div className="col-span-12 lg:col-span-7 xl:col-span-8">

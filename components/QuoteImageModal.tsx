@@ -105,55 +105,26 @@ export function QuoteImageModal({
     ctx.fillStyle = "#0A0A0A";
     ctx.fillRect(0, 0, width, height);
 
-    // Subtle perimeter frame
+    // Subtle hairline perimeter frame
     ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
     ctx.lineWidth = 1;
-    ctx.strokeRect(32, 32, width - 64, height - 64);
+    ctx.strokeRect(40, 40, width - 80, height - 80);
 
-    // Accent line at the top
-    ctx.fillStyle = accentColor || "#7C7C7C";
-    ctx.fillRect(32, 32, width - 64, 4);
-
-    // Top Header: WVRNER Brand + Meta
-    ctx.fillStyle = "#EDEDED";
-    ctx.font = "bold 18px -apple-system, BlinkMacSystemFont, sans-serif";
-    ctx.letterSpacing = "4px";
-    ctx.fillText("WVRNER", 72, 96);
-
-    ctx.fillStyle = "#888888";
-    ctx.font = "600 13px -apple-system, BlinkMacSystemFont, sans-serif";
-    ctx.letterSpacing = "2px";
-    const metaText = `${(post.category || "TECHNICAL ESSAY").toUpperCase()}  ·  ${(post.readingTime || "5 MIN READ").toUpperCase()}`;
-    const metaWidth = ctx.measureText(metaText).width;
-    ctx.fillText(metaText, width - 72 - metaWidth, 96);
-
-    // Divider
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
-    ctx.beginPath();
-    ctx.moveTo(72, 128);
-    ctx.lineTo(width - 72, 128);
-    ctx.stroke();
-
-    // Decorative giant quotation mark
-    ctx.fillStyle = accentColor || "#333333";
-    ctx.globalAlpha = 0.25;
-    ctx.font = 'italic 160px "Source Serif 4", Georgia, serif';
-    ctx.fillText("“", 68, 250);
-    ctx.globalAlpha = 1.0;
-
-    // Quote Body Typography
+    // Quote Body Typography - Clean, spacious, and centered
     const quote = formatQuote(quoteText);
-    let fontSize = 38;
-    if (quote.length > 200) fontSize = 32;
-    else if (quote.length > 130) fontSize = 35;
-    else if (quote.length < 80) fontSize = 44;
+    const displayText = `"${quote}"`;
 
-    ctx.fillStyle = "#F5F5F7";
+    let fontSize = 42;
+    if (quote.length > 200) fontSize = 34;
+    else if (quote.length > 130) fontSize = 38;
+    else if (quote.length < 70) fontSize = 48;
+
+    ctx.fillStyle = "#FFFFFF";
     ctx.font = `italic ${fontSize}px "Source Serif 4", Charter, Georgia, serif`;
-    ctx.letterSpacing = "-0.2px";
+    ctx.letterSpacing = "-0.25px";
 
-    const maxTextWidth = width - 180;
-    const words = quote.split(" ");
+    const maxTextWidth = width - 240;
+    const words = displayText.split(" ");
     const lines: string[] = [];
     let currentLine = "";
 
@@ -168,40 +139,25 @@ export function QuoteImageModal({
     }
     if (currentLine) lines.push(currentLine);
 
-    const lineHeight = fontSize * 1.48;
-    const totalTextHeight = lines.length * lineHeight;
-    const startY = Math.max(210, 310 - totalTextHeight / 2);
+    const lineHeight = fontSize * 1.5;
+    const totalQuoteHeight = lines.length * lineHeight;
+    
+    // Position quote so quote + author name are vertically centered as a unit
+    const authorMargin = 48;
+    const authorHeight = 24;
+    const totalBlockHeight = totalQuoteHeight + authorMargin + authorHeight;
+    const startY = (height - totalBlockHeight) / 2 + fontSize * 0.9;
 
     lines.forEach((line, index) => {
-      ctx.fillText(line, 96, startY + index * lineHeight);
+      ctx.fillText(line, 120, startY + index * lineHeight);
     });
 
-    // Footer Divider
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.08)";
-    ctx.beginPath();
-    ctx.moveTo(72, height - 120);
-    ctx.lineTo(width - 72, height - 120);
-    ctx.stroke();
-
-    // Footer: Article Title and Source
+    // Author Name Only (per instruction: "only contain my name and the quote thats all")
+    const authorY = startY + (lines.length - 1) * lineHeight + authorMargin;
     ctx.fillStyle = "#A3A3A3";
-    ctx.font = "500 15px -apple-system, BlinkMacSystemFont, sans-serif";
-    ctx.letterSpacing = "0px";
-
-    // Truncate post title if very long
-    let displayTitle = post.title;
-    if (ctx.measureText(displayTitle).width > 700) {
-      displayTitle = displayTitle.slice(0, 60) + "...";
-    }
-    ctx.fillText(displayTitle, 72, height - 76);
-
-    // Source domain badge
-    ctx.fillStyle = "#EDEDED";
-    ctx.font = "bold 13px -apple-system, BlinkMacSystemFont, sans-serif";
-    ctx.letterSpacing = "1.5px";
-    const domainText = "WVRNER.COM";
-    const domainWidth = ctx.measureText(domainText).width;
-    ctx.fillText(domainText, width - 72 - domainWidth, height - 76);
+    ctx.font = "600 18px -apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
+    ctx.letterSpacing = "0.08em";
+    ctx.fillText("Nima Hosseini", 120, authorY);
 
     try {
       setDataUrl(canvas.toDataURL("image/png"));

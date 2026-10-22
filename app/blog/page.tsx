@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
@@ -85,19 +84,6 @@ export default function BlogIndexPage() {
       {/* Main Container - Centered Column */}
       <div className="max-w-[720px] mx-auto px-6 sm:px-8 md:px-0 pt-28 sm:pt-36 pb-24">
         
-        {/* Navigation Breadcrumb */}
-        <div className="flex items-center justify-between gap-4 mb-8 pb-4 border-b border-[#F2F2F2] text-[13px] font-sans text-[#6B6B6B]">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 hover:text-[#242424] transition-colors group cursor-pointer font-medium"
-          >
-            <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-1" />
-            <span>Back to portfolio</span>
-          </Link>
-
-          <span className="text-[#242424] font-medium">Stories</span>
-        </div>
-
         {/* Masthead */}
         <header className="mb-8 pb-6 border-b border-[#F2F2F2]">
           <div className="space-y-2">

@@ -67,26 +67,26 @@ function MechanicalPlate({
       className="absolute inset-0 flex flex-col justify-center py-4 pointer-events-none"
     >
       <div className="space-y-4 sm:space-y-6">
-        {/* Dominant Discipline Title */}
-        <h3 className="font-display text-[clamp(3.4rem,10.5vw,9.5rem)] font-medium text-white leading-[0.9] tracking-[-0.04em] uppercase select-none">
-          {item.category}
-        </h3>
+        {/* Category Header */}
+        <div className="flex items-center gap-2.5 font-mono text-[12px] sm:text-[14px] text-neutral-400 tracking-[0.24em] uppercase font-semibold">
+          <span className="w-2 h-2 rounded-full bg-emerald-400" />
+          <span>{item.category}</span>
+        </div>
 
-        {/* Factual Technologies directly below */}
-        <div className="font-mono text-[13.5px] sm:text-[16px] md:text-[18px] text-white/90 tracking-wide uppercase flex flex-wrap items-center gap-x-3 gap-y-1">
-          {item.tools.map((tool, idx) => (
-            <span key={tool} className="inline-flex items-center gap-3">
-              <span>{tool}</span>
-              {idx < item.tools.length - 1 && (
-                <span className="text-white/30 font-normal">/</span>
-              )}
-            </span>
+        {/* Dominant Skills and Tools: Prominent, High-Contrast Hero Badges */}
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 pt-1">
+          {item.tools.map((tool) => (
+            <div
+              key={tool}
+              className="px-4 py-2 sm:px-6 sm:py-3.5 rounded-xl sm:rounded-2xl bg-white/[0.1] border border-white/25 text-white font-sans font-bold text-[clamp(1.5rem,4vw,3.2rem)] tracking-tight leading-none backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+            >
+              {tool}
+            </div>
           ))}
           {item.category === "OPERATIONS" && (
-            <span className="inline-flex items-center gap-3 text-white/90">
-              <span className="text-white/30">/</span>
-              <span>PYTHON</span>
-            </span>
+            <div className="px-4 py-2 sm:px-6 sm:py-3.5 rounded-xl sm:rounded-2xl bg-white/[0.1] border border-white/25 text-white font-sans font-bold text-[clamp(1.5rem,4vw,3.2rem)] tracking-tight leading-none backdrop-blur-md shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+              PYTHON
+            </div>
           )}
         </div>
       </div>
@@ -236,7 +236,7 @@ function AnimatedSystemsIntro() {
       aria-label="Systems and Disciplines"
     >
       {/* Sticky Viewport Stage - 100% Pure Black Full-Viewport Enclosure */}
-      <div className="sticky top-0 h-[100dvh] w-full bg-[#0A0A0A] text-white flex flex-col justify-between px-6 sm:px-12 md:px-16 lg:px-24 py-8 sm:py-10 md:py-12 overflow-hidden">
+      <div className="sticky top-0 h-[100dvh] w-full bg-[#0A0A0A] text-white px-6 sm:px-12 md:px-16 lg:px-24 py-8 sm:py-10 md:py-12 overflow-hidden flex flex-col justify-center">
         
         {/* Tactile printed grain on Syscore's black field - matching the preceding monolith */}
         <div className="absolute inset-0 grain-level-2 opacity-40 pointer-events-none z-0" aria-hidden="true" />
@@ -256,67 +256,81 @@ function AnimatedSystemsIntro() {
           </svg>
         </div>
 
-        {/* Section Header: Systems & Disciplines (Apple / Notion Minimalist Restraint) */}
-        <div className="relative z-10 w-full border-b border-white/10 pb-4 sm:pb-5">
-          <h2 className="font-display text-[clamp(1.9rem,4.2vw,3rem)] font-medium tracking-[-0.035em] text-white leading-tight">
-            Systems &amp; Disciplines.
-          </h2>
-        </div>
+        {/* Main Content Column Aligned to Site Container */}
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto h-full flex flex-col justify-between">
+          {/* Section Header: Systems & Disciplines */}
+          <div className="w-full border-b border-white/10 pb-4 sm:pb-5">
+            <h2 className="font-display text-[clamp(1.9rem,4.2vw,3rem)] font-medium tracking-[-0.035em] text-white leading-tight">
+              Systems &amp; Disciplines.
+            </h2>
+          </div>
 
-        {/* Central Stage: Single Mechanical Aperture transforms into Complete Assembly */}
-        <div className="relative z-10 w-full flex-1 min-h-[280px] sm:min-h-[360px] md:min-h-[420px] max-h-[640px] my-auto overflow-hidden">
-          
-          {/* Progressive Single-State Plates (CLOUD -> CONTAINERS -> DELIVERY -> SYSTEMS -> NETWORKING -> OPERATIONS) */}
-          <motion.div
-            style={{ opacity: singleStateOpacity }}
-            className="absolute inset-0"
-          >
-            {SYSTEMS_AND_TOOLS.map((item, index) => (
-              <MechanicalPlate
-                key={item.category}
-                index={index}
-                item={item}
-                progress={monotonicProgress}
-              />
-            ))}
-          </motion.div>
-
-          {/* Final Assembled Register (All 6 Assemble Together) */}
-          <motion.div
-            style={{ opacity: assemblyOpacity }}
-            className="absolute inset-0 flex flex-col justify-center py-2 pointer-events-none"
-          >
-            <div className="border-t border-white/15 divide-y divide-white/10">
-              {SYSTEMS_AND_TOOLS.map((item) => (
-                <div
+          {/* Central Stage: Single Mechanical Aperture transforms into Complete Assembly */}
+          <div className="w-full flex-1 min-h-[280px] sm:min-h-[360px] md:min-h-[420px] max-h-[640px] my-auto relative overflow-hidden">
+            
+            {/* Progressive Single-State Plates */}
+            <motion.div
+              style={{ opacity: singleStateOpacity }}
+              className="absolute inset-0"
+            >
+              {SYSTEMS_AND_TOOLS.map((item, index) => (
+                <MechanicalPlate
                   key={item.category}
-                  className="py-2.5 sm:py-3.5 grid grid-cols-12 gap-3 sm:gap-4 items-baseline"
-                >
-                  <div className="col-span-5 sm:col-span-4 font-display text-[clamp(1.25rem,2.6vw,2.2rem)] font-medium text-white leading-none">
-                    {item.category}
+                  index={index}
+                  item={item}
+                  progress={monotonicProgress}
+                />
+              ))}
+            </motion.div>
+
+            {/* Final Assembled Register (Recruiter-friendly bold skill tags) */}
+            <motion.div
+              style={{ opacity: assemblyOpacity }}
+              className="absolute inset-0 flex flex-col justify-center py-2 pointer-events-none"
+            >
+              <div className="border-t border-white/15 divide-y divide-white/10">
+                {SYSTEMS_AND_TOOLS.map((item) => (
+                  <div
+                    key={item.category}
+                    className="py-2.5 sm:py-3.5 grid grid-cols-12 gap-3 sm:gap-6 items-center"
+                  >
+                    <div className="col-span-4 sm:col-span-3 font-mono text-[11px] sm:text-[13px] font-semibold text-neutral-400 tracking-[0.2em] uppercase">
+                      {item.category}
+                    </div>
+                    <div className="col-span-8 sm:col-span-9 flex flex-wrap items-center gap-2">
+                      {item.tools.map((tool) => (
+                        <span
+                          key={tool}
+                          className="px-2.5 py-1 rounded-md bg-white/[0.08] border border-white/20 text-white font-mono text-[11.5px] sm:text-[13px] font-bold tracking-wide uppercase"
+                        >
+                          {tool}
+                        </span>
+                      ))}
+                      {item.category === "OPERATIONS" && (
+                        <span className="px-2.5 py-1 rounded-md bg-white/[0.08] border border-white/20 text-white font-mono text-[11.5px] sm:text-[13px] font-bold tracking-wide uppercase">
+                          PYTHON
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div className="col-span-7 sm:col-span-8 font-mono text-[11px] sm:text-[13px] text-white/80 uppercase tracking-wide truncate">
-                    {item.tools.join(" / ")}
-                    {item.category === "OPERATIONS" && " / PYTHON"}
-                  </div>
-                </div>
+                ))}
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* Bottom Mechanical Register Bar */}
+          <div className="w-full pt-4 sm:pt-5 border-t border-white/10">
+            <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar py-1">
+              {SYSTEMS_AND_TOOLS.map((item, index) => (
+                <MechanicalTrackItem
+                  key={item.category}
+                  index={index}
+                  item={item}
+                  progress={monotonicProgress}
+                />
               ))}
             </div>
-          </motion.div>
-
-        </div>
-
-        {/* Bottom Mechanical Register Bar */}
-        <div className="relative z-10 w-full pt-4 sm:pt-5 border-t border-white/10">
-          <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar py-1">
-            {SYSTEMS_AND_TOOLS.map((item, index) => (
-              <MechanicalTrackItem
-                key={item.category}
-                index={index}
-                item={item}
-                progress={monotonicProgress}
-              />
-            ))}
           </div>
         </div>
 

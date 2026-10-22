@@ -377,7 +377,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     >
       {/* Top Reading Progress Indicator (Hairline) - Uses Cover Image Accent */}
       <div
-        className="fixed top-0 left-0 right-0 h-[2.5px] z-50 origin-left will-change-transform transition-transform duration-75 motion-reduce:transition-none pointer-events-none"
+        className="fixed top-0 left-0 right-0 h-[2.5px] z-50 origin-left will-change-transform transition-transform duration-75 motion-reduce:transition-none pointer-events-none select-none"
         style={{
           transform: `scaleX(${scrollProgress / 100})`,
           backgroundColor: accentLight,
