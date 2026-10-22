@@ -1,6 +1,22 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useSyncExternalStore } from "react";
+
+function subscribeReducedMotion(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq.addEventListener("change", callback);
+  return () => mq.removeEventListener("change", callback);
+}
+
+function getReducedMotionSnapshot(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function getServerReducedMotionSnapshot(): boolean {
+  return false;
+}
 
 /**
  * StoryScrollSequence - Unpinned Normal Viewport Section
@@ -21,6 +37,14 @@ export function StoryScrollSequence() {
     latencyMs: number;
     location: string;
   } | null>(null);
+
+  const prefersReduced = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getServerReducedMotionSnapshot
+  );
+
+  const activeStep = prefersReduced ? 4 : step;
 
   // 1. Fetch real Navigation Timing and Cloudflare data center location
   useEffect(() => {
@@ -80,16 +104,10 @@ export function StoryScrollSequence() {
 
   // 2. Viewport entrance listener with prefers-reduced-motion check
   useEffect(() => {
+    if (prefersReduced) return;
+
     const el = sectionRef.current;
     if (!el) return;
-
-    // Check prefers-reduced-motion
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) {
-      setStep(4);
-      setHasTriggered(true);
-      return;
-    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -129,7 +147,7 @@ export function StoryScrollSequence() {
     return () => {
       observer.disconnect();
     };
-  }, [hasTriggered]);
+  }, [hasTriggered, prefersReduced]);
 
   return (
     <section
@@ -162,7 +180,7 @@ export function StoryScrollSequence() {
         {/* Line 1: "You didn't notice anything." */}
         <div
           className={`transition-all duration-700 ease-out ${
-            step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+            activeStep >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
           }`}
         >
           <p className="font-serif italic text-[clamp(2.5rem,6.8vw,6.4rem)] leading-[0.98] tracking-[-0.03em] max-w-5xl mx-auto text-[#2B1D16]">
@@ -173,12 +191,12 @@ export function StoryScrollSequence() {
         {/* Line 2: "That was the job." */}
         <div
           className={`transition-all duration-700 ease-out ${
-            step >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+            activeStep >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
           }`}
         >
           <h2 className="font-display font-black text-[clamp(3.2rem,9.2vw,9.2rem)] leading-[0.88] tracking-[-0.045em] uppercase max-w-6xl mx-auto text-[#1E1612]">
             <span>That was the </span>
-            <span style={{ color: "#D94B26" }}>job.</span>
+            <span style={{ color: "#0E7C57" }}>job.</span>
           </h2>
         </div>
 
@@ -186,7 +204,7 @@ export function StoryScrollSequence() {
         {measurement && (
           <div
             className={`transition-all duration-700 ease-out pt-2 sm:pt-4 ${
-              step >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
+              activeStep >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
             }`}
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.06] font-mono text-[12px] sm:text-[14px] tracking-wide text-[#7C6C62] uppercase">
@@ -201,7 +219,7 @@ export function StoryScrollSequence() {
         {/* Line 4: "Nima Hosseini, Cloud / DevOps engineer" */}
         <div
           className={`transition-all duration-700 ease-out pt-3 sm:pt-5 ${
-            step >= 4 || (step >= 3 && !measurement)
+            activeStep >= 4 || (activeStep >= 3 && !measurement)
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-4 pointer-events-none"
           }`}

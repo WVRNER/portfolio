@@ -18,7 +18,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { label: "Work", id: "projects" },
-  { label: "Stories", href: "/blog", isShiny: true },
+  { label: "Writing", href: "/blog", isShiny: true },
   { label: "About", id: "about" },
   { label: "CV", action: "cv" },
   { label: "Contact", id: "contact" },

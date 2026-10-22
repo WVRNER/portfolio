@@ -1,6 +1,6 @@
 "use client";
 
-import { User, Terminal } from "lucide-react";
+import { User } from "lucide-react";
 
 export function AboutSection() {
   return (
@@ -49,18 +49,41 @@ export function AboutSection() {
             </div>
           </div>
 
-          {/* Quick Technical Footprint */}
-          <div className="p-4 rounded-xl bg-[#F8F8F9] border border-black/[0.06] space-y-2.5 font-mono text-[12px] text-[#555555]">
-            <div className="flex items-center justify-between gap-2">
-              <span className="text-[#888888] shrink-0">FOCUS</span>
-              <span className="text-[#161617] font-semibold text-right">AWS &middot; Terraform &middot; Linux</span>
+          {/* Engineering Status Console */}
+          <div className="rounded-2xl bg-[#0F0F11] text-white p-5 border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.12)] space-y-4">
+            {/* FOCUS Row */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between text-[10.5px] font-mono tracking-[0.2em] text-neutral-400 uppercase">
+                <span>PRIMARY FOCUS</span>
+                <span className="text-white/30">CORE STACK</span>
+              </div>
+              <div className="flex flex-wrap items-center gap-1.5">
+                {["AWS", "Terraform", "Linux"].map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 rounded-md bg-white/[0.08] border border-white/15 text-white font-mono text-[12px] font-semibold tracking-wide"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pt-1 border-t border-black/[0.04]">
-              <span className="text-[#888888] shrink-0">STATE</span>
-              <span className="text-emerald-700 font-semibold flex items-center gap-1.5 text-right text-[11.5px] sm:text-[12px]">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0" />
-                Open to junior Cloud / DevOps roles remote
-              </span>
+
+            {/* Divider */}
+            <div className="h-px bg-white/10" />
+
+            {/* STATE Row: Beacon Status */}
+            <div className="space-y-1.5">
+              <div className="text-[10.5px] font-mono tracking-[0.2em] text-neutral-400 uppercase">
+                STATE
+              </div>
+              <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-sans text-[12px] sm:text-[12.5px] font-medium leading-normal">
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                </span>
+                <span>Open to junior Cloud / DevOps roles remote</span>
+              </div>
             </div>
           </div>
         </div>

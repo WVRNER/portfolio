@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useSyncExternalStore } from "react";
 import { Download, Copy, Share2, Check, X, ShieldAlert } from "lucide-react";
 import type { BlogPost } from "@/lib/blogData";
 
@@ -10,6 +10,22 @@ interface QuoteImageModalProps {
   quoteText: string;
   post: BlogPost;
   accentColor: string;
+}
+
+function subscribeNoop() {
+  return () => {};
+}
+
+function getCanShareSnapshot(): boolean {
+  return (
+    typeof navigator !== "undefined" &&
+    typeof navigator.share === "function" &&
+    typeof File !== "undefined"
+  );
+}
+
+function getCanShareServerSnapshot(): boolean {
+  return false;
 }
 
 /**
@@ -59,15 +75,13 @@ export function QuoteImageModal({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dataUrl, setDataUrl] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const [canShare, setCanShare] = useState(false);
-  const [isValid, setIsValid] = useState(true);
+  const canShare = useSyncExternalStore(
+    subscribeNoop,
+    getCanShareSnapshot,
+    getCanShareServerSnapshot
+  );
 
-  // Check Web Share API with file support
-  useEffect(() => {
-    if (typeof navigator !== "undefined" && typeof navigator.share === "function" && typeof File !== "undefined") {
-      setCanShare(true);
-    }
-  }, []);
+  const isValid = verifyQuoteAuthenticity(quoteText, post);
 
   // Truncate cleanly at word boundary if very long
   const formatQuote = useCallback((text: string): string => {
@@ -81,14 +95,9 @@ export function QuoteImageModal({
 
   // Render canvas card
   useEffect(() => {
-    if (!isOpen) {
-      setDataUrl(null);
+    if (!isOpen || !isValid) {
       return;
     }
-
-    const valid = verifyQuoteAuthenticity(quoteText, post);
-    setIsValid(valid);
-    if (!valid) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -110,6 +119,12 @@ export function QuoteImageModal({
     ctx.lineWidth = 1;
     ctx.strokeRect(40, 40, width - 80, height - 80);
 
+    // Top Header: WVRNER Brand
+    ctx.fillStyle = "#A1A1AA";
+    ctx.font = "700 14px -apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
+    ctx.letterSpacing = "0.28em";
+    ctx.fillText("WVRNER", 100, 88);
+
     // Quote Body Typography - Clean, spacious, and centered
     const quote = formatQuote(quoteText);
     const displayText = `"${quote}"`;
@@ -123,7 +138,7 @@ export function QuoteImageModal({
     ctx.font = `italic ${fontSize}px "Source Serif 4", Charter, Georgia, serif`;
     ctx.letterSpacing = "-0.25px";
 
-    const maxTextWidth = width - 240;
+    const maxTextWidth = width - 200;
     const words = displayText.split(" ");
     const lines: string[] = [];
     let currentLine = "";
@@ -142,29 +157,33 @@ export function QuoteImageModal({
     const lineHeight = fontSize * 1.5;
     const totalQuoteHeight = lines.length * lineHeight;
     
-    // Position quote so quote + author name are vertically centered as a unit
+    // Position quote and author in harmonious vertical balance
     const authorMargin = 48;
     const authorHeight = 24;
     const totalBlockHeight = totalQuoteHeight + authorMargin + authorHeight;
-    const startY = (height - totalBlockHeight) / 2 + fontSize * 0.9;
+    const startY = Math.max(160, (height - totalBlockHeight) / 2 + fontSize * 0.9);
 
     lines.forEach((line, index) => {
-      ctx.fillText(line, 120, startY + index * lineHeight);
+      ctx.fillText(line, 100, startY + index * lineHeight);
     });
 
-    // Author Name Only (per instruction: "only contain my name and the quote thats all")
+    // Author Name: Nima Hosseini
     const authorY = startY + (lines.length - 1) * lineHeight + authorMargin;
-    ctx.fillStyle = "#A3A3A3";
-    ctx.font = "600 18px -apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
-    ctx.letterSpacing = "0.08em";
-    ctx.fillText("Nima Hosseini", 120, authorY);
+    ctx.fillStyle = "#EDEDED";
+    ctx.font = "600 20px -apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
+    ctx.letterSpacing = "0.04em";
+    ctx.fillText("Nima Hosseini", 100, authorY);
 
     try {
-      setDataUrl(canvas.toDataURL("image/png"));
+      const url = canvas.toDataURL("image/png");
+      const handle = requestAnimationFrame(() => {
+        setDataUrl(url);
+      });
+      return () => cancelAnimationFrame(handle);
     } catch {
       // Ignore
     }
-  }, [isOpen, quoteText, post, accentColor, formatQuote]);
+  }, [isOpen, isValid, quoteText, post, accentColor, formatQuote]);
 
   if (!isOpen) return null;
 

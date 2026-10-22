@@ -449,7 +449,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             className="inline-flex items-center gap-2 text-[#6B6B6B] hover:text-[#242424] transition-colors group cursor-pointer font-medium"
           >
             <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-1" />
-            <span>Stories</span>
+            <span>Writing</span>
           </Link>
         </div>
 
@@ -687,13 +687,13 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           <section className="pt-12 mt-12 border-t border-[#F2F2F2] space-y-6">
             <div className="flex items-center justify-between">
               <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[20px] font-bold text-[#242424]">
-                Selected Stories
+                Selected Writing
               </h3>
               <Link
                 href="/blog"
                 className="text-[13px] text-[#242424] hover:underline font-medium font-sans"
               >
-                See all stories
+                See all writing
               </Link>
             </div>
 
