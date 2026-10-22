@@ -126,6 +126,29 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${sourceSerif.variable} selection:bg-[#0A0A0A] selection:text-white`}
     >
+      <head>
+        {/* Speculation Rules API for sub-5ms instant page loads across modern browsers */}
+        <script
+          type="speculationrules"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              prerender: [
+                {
+                  where: {
+                    and: [
+                      { href_matches: "/*" },
+                      { not: { href_matches: "/cdn-cgi/*" } },
+                      { not: { href_matches: "/ghost/*" } },
+                      { not: { href_matches: "/admin/*" } },
+                    ],
+                  },
+                  eagerness: "moderate",
+                },
+              ],
+            }),
+          }}
+        />
+      </head>
       <body className="min-h-[100dvh] bg-white text-[#0A0A0A] font-sans antialiased relative selection:bg-[#EAEAEA] selection:text-[#161617]">
         <PWARegistration />
         <div className="fixed inset-0 pointer-events-none select-none bg-noise-grain opacity-40 z-50" aria-hidden="true" />

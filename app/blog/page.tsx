@@ -8,6 +8,7 @@ import { EditorialFooter } from "@/components/EditorialFooter";
 import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
 import { InstantLink } from "@/components/InstantLink";
 import { BlurImage } from "@/components/BlurImage";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import {
   BLOG_POSTS,
@@ -16,15 +17,15 @@ import {
 } from "@/lib/blogData";
 
 /**
- * Editorial Blog Archive - Stories
+ * Editorial Blog Archive - Writing
  * 
+ * - Each post sized at 680x225 on desktop with responsive mobile scaling
+ * - Dark mode toggle scoped to blog surfaces with persistent user state
  * - Super bold punchy titles (font-black / font-extrabold)
- * - Mobile & desktop compact side-by-side thumbnail layout (matching screenshot)
- * - Exact topic tags: "For you" and exactly 4 tags (Architecture, Security, DevOps, Infrastructure)
- * - Meta line: "X min read · Date" (e.g. 5 min read · Aug 4, 2026)
- * - Zero "Read story" buttons anywhere
- * - Zero reactions (no claps, no likes, no reposts, no dislikes, no bookmarks)
- * - Synchronized "Selected Stories" section
+ * - Mobile & desktop compact thumbnail layout
+ * - Exact recruiter tool tags (Cloud, Terraform, CI/CD, Networking, Linux, Kubernetes)
+ * - Meta line: "Date · X min read · Tag"
+ * - Zero em dashes
  */
 export default function BlogIndexPage() {
   const [cvOpen, setCvOpen] = useState(false);
@@ -48,31 +49,31 @@ export default function BlogIndexPage() {
     let list = BLOG_POSTS;
     if (activeCategory !== "For you") {
       list = BLOG_POSTS.filter((p) => {
-        const primary = getPrimaryToolTag(p);
-        return (
-          primary.toLowerCase() === activeCategory.toLowerCase() ||
-          p.tags.some((t) => t.toLowerCase() === activeCategory.toLowerCase())
-        );
+        const primaryTag = getPrimaryToolTag(p);
+        return primaryTag.toLowerCase() === activeCategory.toLowerCase();
       });
     }
-    // Elevate featured posts
-    return [...list].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+    return list;
   }, [activeCategory]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE));
-  const paginatedPosts = useMemo(() => {
-    const validPage = Math.max(1, Math.min(currentPage, totalPages));
-    const start = (validPage - 1) * POSTS_PER_PAGE;
-    return filteredPosts.slice(start, start + POSTS_PER_PAGE);
-  }, [filteredPosts, currentPage, totalPages]);
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
-  const handlePageChange = (targetPage: number) => {
-    const next = Math.max(1, Math.min(targetPage, totalPages));
-    setCurrentPage(next);
-    if (typeof window !== "undefined") {
-      const el = document.getElementById("story-feed");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+  // Paginated subset
+  const paginatedPosts = useMemo(() => {
+    const start = (currentPage - 1) * POSTS_PER_PAGE;
+    return filteredPosts.slice(start, start + POSTS_PER_PAGE);
+  }, [filteredPosts, currentPage]);
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      if (typeof window !== "undefined") {
+        const feedElement = document.getElementById("story-feed");
+        if (feedElement) {
+          feedElement.scrollIntoView({ behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
       }
     }
   };
@@ -92,27 +93,34 @@ export default function BlogIndexPage() {
   };
 
   return (
-    <div className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#EAEAEA] selection:text-[#242424]">
+    <div className="relative min-h-[100dvh] bg-[#FFFFFF] dark:bg-[#0C0C0D] text-[#242424] dark:text-[#E5E5E7] font-sans antialiased transition-colors duration-200 selection:bg-[#EAEAEA] selection:text-[#242424] dark:selection:bg-[#2C2C30] dark:selection:text-[#F5F5F7]">
       {/* Floating Navigation Pill */}
       <Navigation onOpenCV={() => setCvOpen(true)} />
 
-      {/* Main Container - Centered Column */}
-      <div className="max-w-[720px] mx-auto px-6 sm:px-8 md:px-0 pt-28 sm:pt-36 pb-24">
+      {/* Main Container - Centered Strict 680px Column */}
+      <div className="max-w-[680px] w-full mx-auto px-6 sm:px-0 pt-28 sm:pt-36 pb-24">
         
         {/* Masthead */}
-        <header className="mb-8 pb-6 border-b border-[#F2F2F2]">
-          <div className="space-y-2">
-            <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[34px] sm:text-[46px] font-extrabold sm:font-black tracking-[-0.035em] text-[#1D1D1F] leading-[1.08]">
-              Writing
-            </h1>
+        <header className="mb-8 pb-6 border-b border-[#F2F2F2] dark:border-[#222225]">
+          <div className="flex items-start justify-between gap-4">
+            <div className="space-y-2">
+              <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[34px] sm:text-[46px] font-extrabold sm:font-black tracking-[-0.035em] text-[#1D1D1F] dark:text-[#F5F5F7] leading-[1.08]">
+                Writing
+              </h1>
 
-            <p className="text-[15.5px] sm:text-[17.5px] text-[#6B6B6B] leading-relaxed font-normal max-w-2xl">
-              Notes on distributed architecture, cloud infrastructure, and the disciplined engineering behind quiet production systems.
-            </p>
+              <p className="text-[15.5px] sm:text-[17.5px] text-[#6B6B6B] dark:text-[#9E9E9E] leading-relaxed font-normal max-w-xl">
+                Notes on distributed architecture, cloud infrastructure, and the disciplined engineering behind quiet production systems.
+              </p>
+            </div>
+
+            {/* Dark Mode Toggle */}
+            <div className="pt-2 shrink-0">
+              <ThemeToggle />
+            </div>
           </div>
 
-          {/* Topic Tab Bar: "For you" + exactly 4 tags */}
-          <div className="flex items-center gap-6 mt-8 overflow-x-auto no-scrollbar border-b border-[#F2F2F2] text-[14px]">
+          {/* Topic Tab Bar: "For you" + tool tags */}
+          <div className="flex items-center gap-6 mt-8 overflow-x-auto no-scrollbar border-b border-[#F2F2F2] dark:border-[#222225] text-[14px]">
             {topics.map((t) => (
               <button
                 key={t}
@@ -122,8 +130,8 @@ export default function BlogIndexPage() {
                 }}
                 className={`pb-3 border-b-2 font-medium transition-all whitespace-nowrap cursor-pointer ${
                   activeCategory === t
-                    ? "border-[#242424] text-[#242424]"
-                    : "border-transparent text-[#6B6B6B] hover:text-[#242424]"
+                    ? "border-[#242424] dark:border-[#F5F5F7] text-[#242424] dark:text-[#F5F5F7]"
+                    : "border-transparent text-[#6B6B6B] dark:text-[#8E8E93] hover:text-[#242424] dark:hover:text-[#F5F5F7]"
                 }`}
               >
                 {t}
@@ -134,157 +142,160 @@ export default function BlogIndexPage() {
 
         {/* CENTERED EDITORIAL MAIN STREAM */}
         <main id="story-feed" className="scroll-mt-28">
-            {filteredPosts.length === 0 ? (
-              <div className="py-16 text-center text-[#6B6B6B]">
-                <p>No writing found for topic &ldquo;{activeCategory}&rdquo;.</p>
-                <button
-                  onClick={() => setActiveCategory("For you")}
-                  className="mt-3 text-[13px] text-[#242424] hover:underline font-medium cursor-pointer"
-                >
-                  View all writing
-                </button>
-              </div>
-            ) : (
-              <div>
-                {/* STORIES STREAM (Exact layout matching screenshot on mobile and desktop) */}
-                <div className="divide-y divide-[#F2F2F2]">
-                  {paginatedPosts.map((post) => (
-                    <article key={post.slug} className="py-6 sm:py-8 first:pt-2">
-                      <InstantLink
-                        href={`/blog/${post.slug}`}
-                        className="group block cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
-                      >
-                        <div className="flex items-start justify-between gap-4 sm:gap-6">
-                          
-                          {/* Left Text Block */}
-                          <div className="flex-1 min-w-0 space-y-2">
-                            {/* Big Bold Headline with View Transition */}
-                            <h2
-                              className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[27px] text-[#0A0A0A] leading-[1.2] tracking-[-0.03em] line-clamp-2"
-                              style={{ viewTransitionName: `post-title-${post.slug}` }}
-                            >
-                              {post.title}
-                            </h2>
-
-                            {/* Subtitle / Excerpt in Serif */}
-                            <p className="text-[15px] sm:text-[16px] text-[#555555] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
-                              {post.subtitle || post.excerpt}
-                            </p>
-
-                            {/* Date before read time, then Tool Tag (one per post only) */}
-                            <div className="pt-1 flex flex-wrap items-center gap-2.5 text-[12.5px] sm:text-[13px] text-[#6B6B6B] font-sans">
-                              {post.featured && (
-                                <span title="Featured Story" className="inline-flex items-center">
-                                  <FeaturedStarIcon className="w-3.5 h-3.5" />
-                                </span>
-                              )}
-                              <span>{formatDisplayDate(post.date)}</span>
-                              <span>&middot;</span>
-                              <span>{post.readingTime}</span>
-                              <span>&middot;</span>
-                              <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] text-[#242424] font-medium text-[11px] font-mono tracking-tight">
-                                {getPrimaryToolTag(post)}
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Right Thumbnail Image with Blur-up & View Transition */}
-                          {post.featureImage && (
-                            <div
-                              className="w-[84px] h-[58px] sm:w-[120px] sm:h-[80px] md:w-[140px] md:h-[95px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-1"
-                              style={{ viewTransitionName: `post-cover-${post.slug}` }}
-                            >
-                              <BlurImage
-                                src={post.featureImage}
-                                alt={post.title}
-                                aspectRatio={getImageMetadata(post.slug)?.aspectRatio || 1.5}
-                                blurDataUrl={getImageMetadata(post.slug)?.blurDataUrl}
-                                className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                              />
-                            </div>
-                          )}
-
-                        </div>
-                      </InstantLink>
-                    </article>
-                  ))}
-                </div>
-
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <nav
-                    aria-label="Stories pagination"
-                    className="pt-10 sm:pt-12 border-t border-[#F2F2F2] flex items-center justify-center gap-2 font-sans"
+          {filteredPosts.length === 0 ? (
+            <div className="py-16 text-center text-[#6B6B6B] dark:text-[#8E8E93]">
+              <p>No writing found for topic &ldquo;{activeCategory}&rdquo;.</p>
+              <button
+                onClick={() => setActiveCategory("For you")}
+                className="mt-3 text-[13px] text-[#242424] dark:text-[#F5F5F7] hover:underline font-medium cursor-pointer"
+              >
+                View all writing
+              </button>
+            </div>
+          ) : (
+            <div>
+              {/* WRITING STREAM: Each post card 680x225 on desktop */}
+              <div className="divide-y divide-[#F2F2F2] dark:divide-[#222225]">
+                {paginatedPosts.map((post) => (
+                  <article
+                    key={post.slug}
+                    className="w-full max-w-[680px] min-h-[190px] sm:h-[225px] flex flex-col justify-center py-4 sm:py-0"
                   >
-                    <button
-                      type="button"
-                      onClick={() => handlePageChange(currentPage - 1)}
-                      disabled={currentPage <= 1}
-                      aria-label="Previous page"
-                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
-                        currentPage <= 1
-                          ? "text-black/25 bg-black/[0.02] cursor-not-allowed"
-                          : "text-[#242424] bg-[#F2F2F2] hover:bg-[#EAEAEA] active:scale-95 cursor-pointer"
-                      }`}
+                    <InstantLink
+                      href={`/blog/${post.slug}`}
+                      className="group block w-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
                     >
-                      <ArrowLeft className="w-3.5 h-3.5" />
-                      <span>Previous</span>
-                    </button>
-
-                    <div className="flex items-center gap-1.5">
-                      {getPageNumbers().map((item, idx) => {
-                        if (item === "...") {
-                          return (
-                            <span
-                              key={`ellipsis-${idx}`}
-                              className="w-8 h-8 flex items-center justify-center text-[#86868B] text-[13px] font-medium select-none"
-                            >
-                              &hellip;
-                            </span>
-                          );
-                        }
-
-                        const pageNum = item as number;
-                        const isCurrent = pageNum === currentPage;
-
-                        return (
-                          <button
-                            key={pageNum}
-                            type="button"
-                            onClick={() => handlePageChange(pageNum)}
-                            aria-label={`Page ${pageNum}`}
-                            aria-current={isCurrent ? "page" : undefined}
-                            className={`w-9 h-9 rounded-full text-[13px] font-medium transition-all cursor-pointer flex items-center justify-center ${
-                              isCurrent
-                                ? "bg-[#242424] text-white shadow-sm"
-                                : "text-[#242424] hover:bg-[#F2F2F2]"
-                            }`}
+                      <div className="flex items-center justify-between gap-4 sm:gap-6 w-full">
+                        
+                        {/* Left Text Block */}
+                        <div className="flex-1 min-w-0 space-y-2">
+                          {/* Big Bold Headline with View Transition */}
+                          <h2
+                            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[26px] text-[#0A0A0A] dark:text-[#F5F5F7] leading-[1.2] tracking-[-0.03em] line-clamp-2"
+                            style={{ viewTransitionName: `post-title-${post.slug}` }}
                           >
-                            {pageNum}
-                          </button>
-                        );
-                      })}
-                    </div>
+                            {post.title}
+                          </h2>
 
-                    <button
-                      type="button"
-                      onClick={() => handlePageChange(currentPage + 1)}
-                      disabled={currentPage >= totalPages}
-                      aria-label="Next page"
-                      className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
-                        currentPage >= totalPages
-                          ? "text-black/25 bg-black/[0.02] cursor-not-allowed"
-                          : "text-[#242424] bg-[#F2F2F2] hover:bg-[#EAEAEA] active:scale-95 cursor-pointer"
-                      }`}
-                    >
-                      <span>Next</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </nav>
-                )}
+                          {/* Subtitle / Excerpt in Serif */}
+                          <p className="text-[15px] sm:text-[16px] text-[#555555] dark:text-[#A1A1A6] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                            {post.subtitle || post.excerpt}
+                          </p>
+
+                          {/* Date before read time, then Tool Tag (one per post only) */}
+                          <div className="pt-1 flex flex-wrap items-center gap-2.5 text-[12.5px] sm:text-[13px] text-[#6B6B6B] dark:text-[#8E8E93] font-sans">
+                            {post.featured && (
+                              <span title="Featured Story" className="inline-flex items-center">
+                                <FeaturedStarIcon className="w-3.5 h-3.5" />
+                              </span>
+                            )}
+                            <span>{formatDisplayDate(post.date)}</span>
+                            <span>&middot;</span>
+                            <span>{post.readingTime}</span>
+                            <span>&middot;</span>
+                            <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#1E1E22] text-[#242424] dark:text-[#D1D1D6] font-medium text-[11px] font-mono tracking-tight dark:border dark:border-white/10">
+                              {getPrimaryToolTag(post)}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Right Thumbnail Image with Blur-up & View Transition */}
+                        {post.featureImage && (
+                          <div
+                            className="w-[96px] h-[64px] sm:w-[160px] sm:h-[108px] md:w-[172px] md:h-[116px] rounded-[3px] overflow-hidden bg-neutral-100 dark:bg-neutral-900 shrink-0 self-center"
+                            style={{ viewTransitionName: `post-cover-${post.slug}` }}
+                          >
+                            <BlurImage
+                              src={post.featureImage}
+                              alt={post.title}
+                              aspectRatio={getImageMetadata(post.slug)?.aspectRatio || 1.5}
+                              blurDataUrl={getImageMetadata(post.slug)?.blurDataUrl}
+                              className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
+                            />
+                          </div>
+                        )}
+
+                      </div>
+                    </InstantLink>
+                  </article>
+                ))}
               </div>
-            )}
-          </main>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <nav
+                  aria-label="Writing pagination"
+                  className="pt-10 sm:pt-12 border-t border-[#F2F2F2] dark:border-[#222225] flex items-center justify-center gap-2 font-sans"
+                >
+                  <button
+                    type="button"
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage <= 1}
+                    aria-label="Previous page"
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
+                      currentPage <= 1
+                        ? "text-black/25 dark:text-white/20 bg-black/[0.02] dark:bg-white/[0.03] cursor-not-allowed"
+                        : "text-[#242424] dark:text-[#D1D1D6] bg-[#F2F2F2] dark:bg-[#1E1E22] hover:bg-[#EAEAEA] dark:hover:bg-[#28282D] active:scale-95 cursor-pointer"
+                    }`}
+                  >
+                    <ArrowLeft className="w-3.5 h-3.5" />
+                    <span>Previous</span>
+                  </button>
+
+                  <div className="flex items-center gap-1.5">
+                    {getPageNumbers().map((item, idx) => {
+                      if (item === "...") {
+                        return (
+                          <span
+                            key={`ellipsis-${idx}`}
+                            className="w-8 h-8 flex items-center justify-center text-[#86868B] dark:text-[#666666] text-[13px] font-medium select-none"
+                          >
+                            &hellip;
+                          </span>
+                        );
+                      }
+
+                      const pageNum = item as number;
+                      const isCurrent = pageNum === currentPage;
+
+                      return (
+                        <button
+                          key={pageNum}
+                          type="button"
+                          onClick={() => handlePageChange(pageNum)}
+                          aria-current={isCurrent ? "page" : undefined}
+                          aria-label={`Page ${pageNum}`}
+                          className={`w-8 h-8 rounded-full text-[13px] font-medium transition-all cursor-pointer ${
+                            isCurrent
+                              ? "bg-[#1D1D1F] dark:bg-[#F5F5F7] text-white dark:text-[#0C0C0D] shadow-sm"
+                              : "text-[#6B6B6B] dark:text-[#8E8E93] hover:text-[#242424] dark:hover:text-[#F5F5F7] hover:bg-[#F2F2F2] dark:hover:bg-[#1E1E22] active:scale-95"
+                          }`}
+                        >
+                          {pageNum}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage >= totalPages}
+                    aria-label="Next page"
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-medium transition-all ${
+                      currentPage >= totalPages
+                        ? "text-black/25 dark:text-white/20 bg-black/[0.02] dark:bg-white/[0.03] cursor-not-allowed"
+                        : "text-[#242424] dark:text-[#D1D1D6] bg-[#F2F2F2] dark:bg-[#1E1E22] hover:bg-[#EAEAEA] dark:hover:bg-[#28282D] active:scale-95 cursor-pointer"
+                    }`}
+                  >
+                    <span>Next</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </nav>
+              )}
+            </div>
+          )}
+        </main>
       </div>
 
       {/* Footer / Architectural Colophon Section */}
