@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Copy, Check, ArrowUpRight, Mail, Sparkles, ArrowUp } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
+import { scrollToTarget } from "@/components/SmoothScroll";
 
 /* Clean Brand Icons */
 function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
@@ -286,9 +287,13 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
         </div>
 
         <div className="flex flex-wrap items-center justify-center sm:justify-end gap-5 sm:gap-6">
-          <Link href="/#about" className="hover:text-[#242424] transition-colors py-1">
+          <button
+            type="button"
+            onClick={() => scrollToTarget("#about", { offset: -80 })}
+            className="hover:text-[#242424] transition-colors py-1 cursor-pointer"
+          >
             About
-          </Link>
+          </button>
           <Link href="/blog" className="hover:text-[#242424] transition-colors py-1">
             Writing
           </Link>
@@ -303,7 +308,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
           )}
           <button
             type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => scrollToTarget(0, { duration: 1.0 })}
             className="hover:text-[#242424] transition-colors cursor-pointer py-1 inline-flex items-center gap-1"
           >
             <span>Top</span>

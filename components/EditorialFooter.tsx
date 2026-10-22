@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Copy, Check, ArrowUp, Mail, FileText, ArrowLeft } from "lucide-react";
+import { scrollToTarget } from "@/components/SmoothScroll";
 
 interface EditorialFooterProps {
   onOpenCV?: () => void;
@@ -30,9 +31,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
   };
 
   const scrollToTop = () => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    scrollToTarget(0, { duration: 1.0 });
   };
 
   const channels = [

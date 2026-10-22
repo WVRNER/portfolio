@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
+import { scrollToTarget } from "@/components/SmoothScroll";
 
 interface NavigationProps {
   onOpenCV?: () => void;
@@ -42,6 +43,27 @@ export function Navigation({ onOpenCV }: NavigationProps) {
     }
   });
 
+  // Handle direct hash navigation smoothly on load if present
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const hash = window.location.hash;
+    if (hash) {
+      const timer = setTimeout(() => {
+        scrollToTarget(hash, { offset: -80, duration: 1.15 });
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [pathname]);
+
+  const handleLogoClick = () => {
+    setMobileMenuOpen(false);
+    if (pathname !== "/") {
+      router.push("/");
+      return;
+    }
+    scrollToTarget(0, { duration: 1.0 });
+  };
+
   const handleClick = (item: (typeof navItems)[number]) => {
     setMobileMenuOpen(false);
     if (item.action === "cv") {
@@ -57,10 +79,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
         router.push(`/#${item.id}`);
         return;
       }
-      const el = document.getElementById(item.id);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
+      scrollToTarget(`#${item.id}`, { offset: -80, duration: 1.15 });
     }
   };
 
@@ -89,10 +108,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
           {/* MOBILE PILL: WVRNER logo + 2-line custom hamburger */}
           <div className="flex sm:hidden items-center justify-between gap-6 rounded-full bg-black/85 backdrop-blur-2xl px-4 py-2 shadow-[0_16px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.14)] border border-white/20">
             <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                router.push("/");
-              }}
+              onClick={handleLogoClick}
               className="flex items-center text-white hover:text-white/80 font-[family-name:var(--font-plus-jakarta)] text-[13.5px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer"
               title="WVRNER Home"
               aria-label="WVRNER Home"
@@ -125,7 +141,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
           <div className="hidden sm:flex items-center gap-1 sm:gap-3 md:gap-4 rounded-full bg-black/85 backdrop-blur-2xl px-2.5 py-1.5 sm:px-5 sm:py-2 md:px-6 md:py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.14)] border border-white/20">
             {/* Logo return home action */}
             <button
-              onClick={() => router.push("/")}
+              onClick={handleLogoClick}
               className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-white hover:text-white/80 font-[family-name:var(--font-plus-jakarta)] text-[13px] sm:text-[14px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer"
               title="WVRNER Home"
               aria-label="WVRNER Home"
