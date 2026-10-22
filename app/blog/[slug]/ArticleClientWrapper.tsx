@@ -13,6 +13,7 @@ import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
 import { EditorialFooter } from "@/components/EditorialFooter";
 import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
+import { InstantLink } from "@/components/InstantLink";
 import { BLOG_POSTS, formatDisplayDate, type BlogPost } from "@/lib/blogData";
 
 interface ArticleClientWrapperProps {
@@ -457,9 +458,6 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
               className="w-full h-auto max-h-[460px] object-cover bg-neutral-100"
               loading="eager"
             />
-            <figcaption className="text-center text-[13px] text-[#6B6B6B] mt-2.5 font-sans font-normal">
-              Architectural state boundaries and deployment topology &bull; Verified in production
-            </figcaption>
           </figure>
         )}
 
@@ -603,7 +601,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             {/* 2x2 Editorial Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {recommendedPosts.map((rec) => (
-                <Link
+                <InstantLink
                   key={rec.slug}
                   href={`/blog/${rec.slug}`}
                   className="group flex flex-col justify-between cursor-pointer space-y-3 p-4 rounded-xl hover:bg-neutral-50 transition-colors outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
@@ -631,7 +629,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                     {rec.featured && <FeaturedStarIcon className="w-3 h-3" />}
                     <span>{rec.readingTime} &middot; {formatDisplayDate(rec.date)}</span>
                   </div>
-                </Link>
+                </InstantLink>
               ))}
             </div>
           </section>
