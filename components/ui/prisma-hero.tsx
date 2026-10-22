@@ -257,7 +257,7 @@ const PrismaHero = ({
             {/* Monumental Headline: WVRNER (Plus Jakarta Sans) */}
             <div className="col-span-12 lg:col-span-7 xl:col-span-8">
               <h1
-                className="font-bold leading-[0.82] tracking-[-0.065em] text-[clamp(3.2rem,8.8vw,10.2rem)] select-none whitespace-nowrap font-[family-name:var(--font-plus-jakarta)]"
+                className="font-bold leading-[0.82] tracking-[-0.095em] text-[clamp(3.2rem,8.8vw,10.2rem)] select-none whitespace-nowrap font-[family-name:var(--font-plus-jakarta)]"
                 style={{ color: "#E1E0CC" }}
               >
                 <WordsPullUp text="WVRNER" showAsterisk={false} />
