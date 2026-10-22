@@ -49,19 +49,19 @@ export function AboutSection() {
             </div>
           </div>
 
-          {/* Engineering Status Console */}
-          <div className="rounded-2xl bg-[#0F0F11] text-white p-5 border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.12)] space-y-4">
-            {/* FOCUS Row */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-[10.5px] font-mono tracking-[0.2em] text-neutral-400 uppercase">
-                <span>PRIMARY FOCUS</span>
-                <span className="text-white/30">CORE STACK</span>
+          {/* Engineering Status Console (Designed per /minimalist-ui: Ultra-clean document card, warm bone surface, zero heavy shadow, 1px crisp border) */}
+          <div className="rounded-xl bg-[#FBFBFA] p-5 sm:p-6 border border-[#EAEAEA] space-y-4">
+            {/* PRIMARY FOCUS / CORE STACK Row */}
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between font-mono text-[10.5px] tracking-[0.18em] text-[#787774] uppercase">
+                <span className="font-semibold text-[#111111]">PRIMARY FOCUS</span>
+                <span>CORE STACK</span>
               </div>
-              <div className="flex flex-wrap items-center gap-1.5">
+              <div className="flex flex-wrap items-center gap-2">
                 {["AWS", "Terraform", "Linux"].map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1 rounded-md bg-white/[0.08] border border-white/15 text-white font-mono text-[12px] font-semibold tracking-wide"
+                    className="px-3 py-1.5 rounded-md bg-white border border-[#EAEAEA] text-[#111111] font-mono text-[12.5px] font-semibold tracking-wide shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
                   >
                     {tech}
                   </span>
@@ -70,17 +70,17 @@ export function AboutSection() {
             </div>
 
             {/* Divider */}
-            <div className="h-px bg-white/10" />
+            <div className="h-px bg-[#EAEAEA]" />
 
-            {/* STATE Row: Beacon Status */}
-            <div className="space-y-1.5">
-              <div className="text-[10.5px] font-mono tracking-[0.2em] text-neutral-400 uppercase">
+            {/* STATE Row: Muted Pastel Status Beacon */}
+            <div className="space-y-2">
+              <div className="font-mono text-[10.5px] tracking-[0.18em] text-[#787774] uppercase">
                 STATE
               </div>
-              <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-sans text-[12px] sm:text-[12.5px] font-medium leading-normal">
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#EDF3EC] border border-[#DCE8DB] text-[#346538] font-sans text-[12px] sm:text-[12.5px] font-medium leading-normal">
                 <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#346538] opacity-60" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#346538]" />
                 </span>
                 <span>Open to junior Cloud / DevOps roles remote</span>
               </div>

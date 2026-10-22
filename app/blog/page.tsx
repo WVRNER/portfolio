@@ -30,12 +30,12 @@ import {
 export default function BlogIndexPage() {
   const [cvOpen, setCvOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [activeCategory, setActiveCategory] = useState<string>("For you");
+  const [activeCategory, setActiveCategory] = useState<string>("All");
   const POSTS_PER_PAGE = 10;
 
   // Recruiter-optimized tool tags matching tabs
   const topics = [
-    "For you",
+    "All",
     "Cloud",
     "Terraform",
     "CI/CD",
@@ -47,7 +47,7 @@ export default function BlogIndexPage() {
   // Filter posts based on active tool category
   const filteredPosts = useMemo(() => {
     let list = BLOG_POSTS;
-    if (activeCategory !== "For you") {
+    if (activeCategory !== "All") {
       list = BLOG_POSTS.filter((p) => {
         const primaryTag = getPrimaryToolTag(p);
         return primaryTag.toLowerCase() === activeCategory.toLowerCase();
@@ -146,7 +146,7 @@ export default function BlogIndexPage() {
             <div className="py-16 text-center text-[#6B6B6B] dark:text-[#8E8E93]">
               <p>No writing found for topic &ldquo;{activeCategory}&rdquo;.</p>
               <button
-                onClick={() => setActiveCategory("For you")}
+                onClick={() => setActiveCategory("All")}
                 className="mt-3 text-[13px] text-[#242424] dark:text-[#F5F5F7] hover:underline font-medium cursor-pointer"
               >
                 View all writing
@@ -156,7 +156,7 @@ export default function BlogIndexPage() {
             <div>
               {/* WRITING STREAM: Each post card 680x225 on desktop */}
               <div className="divide-y divide-[#F2F2F2] dark:divide-[#222225]">
-                {paginatedPosts.map((post) => (
+                {paginatedPosts.map((post, pIdx) => (
                   <article
                     key={post.slug}
                     className="w-full max-w-[680px] min-h-[190px] sm:h-[225px] flex flex-col justify-center py-4 sm:py-0"
@@ -210,6 +210,8 @@ export default function BlogIndexPage() {
                               alt={post.title}
                               aspectRatio={getImageMetadata(post.slug)?.aspectRatio || 1.5}
                               blurDataUrl={getImageMetadata(post.slug)?.blurDataUrl}
+                              priority={pIdx < 2}
+                              sizes="(max-width: 640px) 96px, 172px"
                               className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
                             />
                           </div>

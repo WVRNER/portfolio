@@ -32,25 +32,25 @@ export function CompleteStaticRegister() {
           {SYSTEMS_AND_TOOLS.map((item) => (
             <div
               key={item.category}
-              className="py-7 sm:py-9 grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-8 items-baseline"
+              className="py-6 sm:py-8 flex flex-col gap-3 sm:grid sm:grid-cols-12 sm:gap-6 lg:gap-8 sm:items-baseline"
             >
-              {/* Discipline Category Label */}
-              <div className="lg:col-span-4 font-mono text-[12px] sm:text-[13px] text-white/50 tracking-[0.2em] uppercase font-medium">
+              {/* Discipline Category Label: Brighter readable grey, sitting above on mobile */}
+              <div className="sm:col-span-4 lg:col-span-3 font-mono text-[13px] sm:text-[14px] text-white/75 tracking-[0.2em] uppercase font-semibold">
                 {item.category}
               </div>
 
-              {/* Prominent, Bright Scannable Skills */}
-              <div className="lg:col-span-8 flex flex-wrap items-center gap-2.5 sm:gap-3">
+              {/* Prominent, Bright Scannable Skills: Generous span preventing awkward wrapping on laptop/tablet */}
+              <div className="sm:col-span-8 lg:col-span-9 flex flex-wrap items-center gap-2 sm:gap-3">
                 {item.tools.map((tool) => (
                   <span
                     key={tool}
-                    className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 text-white font-sans font-semibold text-[15px] sm:text-[17px] tracking-tight transition-colors shadow-sm"
+                    className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 text-white font-sans font-semibold text-[14.5px] sm:text-[16.5px] tracking-tight transition-colors shadow-sm"
                   >
                     {tool}
                   </span>
                 ))}
                 {item.category === "OPERATIONS" && (
-                  <span className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 text-white font-sans font-semibold text-[15px] sm:text-[17px] tracking-tight transition-colors shadow-sm">
+                  <span className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-lg bg-white/[0.08] hover:bg-white/[0.14] border border-white/20 text-white font-sans font-semibold text-[14.5px] sm:text-[16.5px] tracking-tight transition-colors shadow-sm">
                     PYTHON
                   </span>
                 )}

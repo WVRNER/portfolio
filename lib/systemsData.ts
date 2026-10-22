@@ -22,7 +22,7 @@ export const SYSTEMS_AND_TOOLS: SystemCategory[] = [
     number: "02",
     category: "CONTAINERS",
     description: "Application packaging, multi-stage builds, and process isolation.",
-    tools: ["Docker", "Containers"],
+    tools: ["Docker", "Docker Compose"],
   },
   {
     number: "03",

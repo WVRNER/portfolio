@@ -145,13 +145,13 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
       }
 
       const selectedText = selection.toString().trim();
-      // Ignore short selections under ~10 characters
-      if (selectedText.length < 10) {
+      // Ignore very short selections under 3 characters
+      if (selectedText.length < 3) {
         setQuoteSelection(null);
         return;
       }
 
-      // Ensure selection is inside the article body
+      // Ensure selection is inside the article container
       const articleEl = articleRef.current;
       if (!articleEl) return;
 
@@ -180,7 +180,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           16,
           Math.min(window.innerWidth - buttonWidth - 16, rect.left + rect.width / 2 - buttonWidth / 2)
         );
-        const y = rect.top < 60 ? rect.bottom + 10 : rect.top - 44;
+        // If selection is near top under navigation, place below selection with clearance
+        const y = rect.top < 110 ? rect.bottom + 12 : rect.top - 46;
 
         setQuoteSelection({
           text: selectedText,
@@ -199,10 +200,14 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     };
 
     document.addEventListener("selectionchange", handleSelection);
+    document.addEventListener("mouseup", handleSelection);
+    document.addEventListener("touchend", handleSelection);
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener("selectionchange", handleSelection);
+      document.removeEventListener("mouseup", handleSelection);
+      document.removeEventListener("touchend", handleSelection);
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
@@ -394,43 +399,43 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
       {/* Floating Highlight-to-Share Quote & Image Toolbar */}
       {quoteSelection && (
         <div
-          className="fixed z-50 transition-all duration-150 animate-in fade-in"
+          className="fixed z-[100] transition-all duration-150 animate-in fade-in pointer-events-auto"
           style={{
             left: `${quoteSelection.x}px`,
             top: `${quoteSelection.y}px`,
           }}
         >
-          <div className="inline-flex items-center rounded-full bg-[#161617] text-white text-[12px] font-sans font-medium shadow-[0_6px_20px_rgba(0,0,0,0.28)] border border-white/15 overflow-hidden select-none">
+          <div className="inline-flex items-center whitespace-nowrap shrink-0 rounded-full bg-[#161617] text-white text-[12px] font-sans font-medium shadow-[0_8px_28px_rgba(0,0,0,0.4)] border border-white/20 overflow-hidden select-none">
             <button
               type="button"
               onMouseDown={(e) => e.preventDefault()}
               onClick={handleCopyQuoteLink}
               aria-label="Copy link to quote"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 hover:bg-[#2A2A2D] active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 whitespace-nowrap shrink-0 hover:bg-[#2A2A2D] active:scale-95 transition-all cursor-pointer"
             >
               {quoteCopied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                   <span>Link copied</span>
                 </>
               ) : (
                 <>
-                  <Link2 className="w-3.5 h-3.5 text-neutral-300" />
+                  <Link2 className="w-3.5 h-3.5 text-neutral-300 shrink-0" />
                   <span>Copy link</span>
                 </>
               )}
             </button>
 
-            <div className="w-[1px] h-3.5 bg-white/20" />
+            <div className="w-[1px] h-3.5 bg-white/20 shrink-0" />
 
             <button
               type="button"
               onMouseDown={(e) => e.preventDefault()}
               onClick={handleOpenQuoteImage}
               aria-label="Share as image"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 hover:bg-[#2A2A2D] active:scale-95 transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 whitespace-nowrap shrink-0 hover:bg-[#2A2A2D] active:scale-95 transition-all cursor-pointer"
             >
-              <ImageIcon className="w-3.5 h-3.5 text-neutral-300" />
+              <ImageIcon className="w-3.5 h-3.5 text-neutral-300 shrink-0" />
               <span>Share as image</span>
             </button>
           </div>
@@ -441,7 +446,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
       <Navigation onOpenCV={() => setCvOpen(true)} />
 
       {/* Main Longform Article Wrapper (Strict 680px column) */}
-      <main className="max-w-[680px] mx-auto px-6 sm:px-8 md:px-0 pt-28 sm:pt-36 pb-28">
+      <main ref={articleRef} className="max-w-[680px] mx-auto px-6 sm:px-8 md:px-0 pt-28 sm:pt-36 pb-28">
         
         {/* Navigation Breadcrumb with Dark Mode Toggle */}
         <div className="mb-8 pb-4 border-b border-[#F2F2F2] dark:border-[#222225] flex items-center justify-between text-[13px] text-[#6B6B6B] dark:text-[#8E8E93]">
@@ -525,6 +530,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
               aspectRatio={imageMeta?.aspectRatio || 1.7778}
               blurDataUrl={imageMeta?.blurDataUrl}
               priority
+              sizes="(max-width: 768px) 100vw, 680px"
               className="w-full h-auto max-h-[460px] object-cover"
             />
           </div>
@@ -544,7 +550,6 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         {/* Article Body Content */}
         <article
-          ref={articleRef}
           className="py-4 font-[family-name:var(--font-source-serif),Charter,Georgia,serif] text-[20px] leading-[34px] text-[#242424] dark:text-[#D6D6DC] font-normal selection:bg-[#EAEAEA] dark:selection:bg-[#2C2C30]"
         >
           
@@ -716,6 +721,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                           alt={rec.title}
                           aspectRatio={getImageMetadata(rec.slug)?.aspectRatio || 1.6}
                           blurDataUrl={getImageMetadata(rec.slug)?.blurDataUrl}
+                          sizes="(max-width: 640px) 100vw, 320px"
                           className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
                         />
                       </div>

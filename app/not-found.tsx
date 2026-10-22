@@ -78,7 +78,7 @@ export default function NotFoundPage() {
               href="/"
               className="group inline-flex items-center gap-2.5 rounded-full bg-[#E1E0CC] py-2 pl-5 pr-2 text-[14px] font-medium text-black transition-all duration-300 hover:bg-white hover:gap-3.5 shadow-[0_10px_30px_rgba(0,0,0,0.5)] cursor-pointer"
             >
-              <span>Return to Portfolio</span>
+              <span>Back to portfolio</span>
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black transition-transform duration-300 group-hover:scale-105">
                 <ArrowRight className="h-3.5 w-3.5 text-[#E1E0CC]" />
               </span>
@@ -89,7 +89,7 @@ export default function NotFoundPage() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/25 text-[#E1E0CC] text-[14px] font-medium transition-all duration-300 cursor-pointer active:scale-95"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Explore Stories</span>
+              <span>Explore Writing</span>
             </Link>
           </div>
 
@@ -98,7 +98,7 @@ export default function NotFoundPage() {
 
       {/* Subtle Bottom Watermark */}
       <div className="absolute bottom-6 left-0 right-0 z-20 text-center text-[11px] font-mono tracking-widest uppercase text-[#E1E0CC]/40">
-        WVRNER &bull; DETERMINISTIC SYSTEMS
+        WVRNER
       </div>
     </div>
   );

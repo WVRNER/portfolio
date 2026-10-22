@@ -72,7 +72,19 @@ export function Navigation({ onOpenCV }: NavigationProps) {
       className="fixed left-1/2 top-[max(1.25rem,calc(env(safe-area-inset-top,0px)+0.75rem))] sm:top-5 md:top-6 z-50 -translate-x-1/2 pointer-events-auto w-auto max-w-[calc(100vw-2rem)]"
     >
       <nav aria-label="Main Navigation" className="flex items-center justify-center">
-        <div className="flex items-center gap-1 sm:gap-4 md:gap-6 rounded-full bg-black/85 backdrop-blur-2xl px-3 py-1.5 sm:px-6 sm:py-2 md:px-7 md:py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.14)] border border-white/20">
+        <div className="flex items-center gap-1 sm:gap-3 md:gap-4 rounded-full bg-black/85 backdrop-blur-2xl px-2.5 py-1.5 sm:px-5 sm:py-2 md:px-6 md:py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.14)] border border-white/20">
+          {/* Logo return home action */}
+          <button
+            onClick={() => router.push("/")}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-white/80 hover:text-white font-mono text-[11.5px] sm:text-[12px] font-bold tracking-[0.2em] uppercase transition-colors cursor-pointer"
+            title="WVRNER Home"
+            aria-label="WVRNER Home"
+          >
+            <span>WVRNER</span>
+          </button>
+
+          <span className="w-px h-3.5 bg-white/20 hidden sm:inline-block" aria-hidden="true" />
+
           {navItems.map((item) => {
             if (item.isShiny) {
               return (

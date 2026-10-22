@@ -99,7 +99,9 @@ export function BlogThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <BlogThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
-      {children}
+      <div className={theme === "dark" ? "dark" : ""}>
+        {children}
+      </div>
     </BlogThemeContext.Provider>
   );
 }

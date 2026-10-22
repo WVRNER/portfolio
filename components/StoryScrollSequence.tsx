@@ -196,7 +196,16 @@ export function StoryScrollSequence() {
         >
           <h2 className="font-display font-black text-[clamp(3.2rem,9.2vw,9.2rem)] leading-[0.88] tracking-[-0.045em] uppercase max-w-6xl mx-auto text-[#1E1612]">
             <span>That was the </span>
-            <span style={{ color: "#0E7C57" }}>job.</span>
+            <span
+              className="bg-clip-text text-transparent inline-block"
+              style={{
+                backgroundImage:
+                  "linear-gradient(135deg, #1E40AF 0%, #2563EB 42%, #38BDF8 82%, #1D4ED8 100%)",
+                textShadow: "0 2px 20px rgba(37, 99, 235, 0.22)",
+              }}
+            >
+              job.
+            </span>
           </h2>
         </div>
 
