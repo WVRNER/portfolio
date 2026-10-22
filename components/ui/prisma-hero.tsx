@@ -260,8 +260,12 @@ const PrismaHero = ({
                 initial={{ y: 28, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                className="font-wvrner font-[800] leading-[0.82] text-[clamp(3.2rem,8.8vw,10.2rem)] select-none whitespace-nowrap pr-4 sm:pr-8 overflow-visible"
-                style={{ color: "#E1E0CC", fontFamily: "var(--font-plus-jakarta), sans-serif", fontWeight: 800 }}
+                className="font-wvrner font-[800] leading-[0.82] text-[clamp(3.2rem,8.8vw,10.2rem)] select-none whitespace-nowrap pr-4 sm:pr-8 overflow-visible bg-clip-text text-transparent"
+                style={{
+                  fontFamily: "var(--font-plus-jakarta), sans-serif",
+                  fontWeight: 800,
+                  backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #0233bc 22%, #ffffff 48%, #ec178b 74%, #df556c 100%)",
+                }}
               >
                 <span className="inline-flex items-baseline overflow-visible">
                   <span>W</span>

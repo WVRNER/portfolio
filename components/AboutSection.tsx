@@ -35,7 +35,12 @@ export function AboutSection() {
             {/* Card Identity Details */}
             <div className="absolute bottom-5 left-5 right-5 text-white space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-white/70">
+                <span
+                  className="text-[11px] font-mono tracking-[0.2em] uppercase font-bold bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #0233bc 26%, #ffffff 50%, #ec178b 76%, #df556c 100%)",
+                  }}
+                >
                   WVRNER
                 </span>
               </div>

@@ -282,8 +282,18 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
       {/* Clean Colophon Bottom Bar (Desktop & Mobile Optimized) */}
       <div className="pt-10 sm:pt-16 mt-10 sm:mt-16 border-t border-black/[0.07] flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-4 text-[12px] text-[#86868B] text-center sm:text-left">
         <div className="flex items-center gap-2.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#242424]" />
-          <span>WVRNER &bull; Nima Hosseini &bull; 2026</span>
+          <span className="w-1.5 h-1.5 rounded-full bg-[#0de1ed] shadow-[0_0_8px_rgba(13,225,237,0.6)]" />
+          <span>
+            <span
+              className="font-bold bg-clip-text text-transparent"
+              style={{
+                backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #0233bc 26%, #ec178b 76%, #df556c 100%)",
+              }}
+            >
+              WVRNER
+            </span>{" "}
+            &bull; Nima Hosseini &bull; 2026
+          </span>
         </div>
 
         <div className="flex flex-wrap items-center justify-center sm:justify-end gap-5 sm:gap-6">
