@@ -6,7 +6,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-[#242424]/10 bg-white"
+      className="relative pt-24 pb-12 sm:pt-32 sm:pb-16 md:pt-36 md:pb-20 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-[#242424]/10 bg-white"
       aria-label="About Nima Hosseini"
     >
       {/* Anchor Header Row */}

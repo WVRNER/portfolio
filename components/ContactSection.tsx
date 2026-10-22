@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Copy, Check, ArrowUpRight, Mail, Sparkles, ArrowUp } from "lucide-react";
+import { motion, useReducedMotion } from "motion/react";
 
 /* Clean Brand Icons */
 function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
@@ -51,6 +52,7 @@ interface ContactSectionProps {
  */
 export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const prefersReduced = useReducedMotion();
   const email = "wvrner@outlook.com";
 
   const handleCopy = (text: string, key: string) => {
@@ -118,7 +120,13 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
     >
       {/* Header Row */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 mb-10 sm:mb-16 border-b border-black/[0.07]">
-        <div className="space-y-3">
+        <motion.div
+          initial={prefersReduced ? false : { opacity: 0, y: 20, filter: "blur(6px)" }}
+          whileInView={prefersReduced ? {} : { opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="space-y-3"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/[0.04] text-[11.5px] font-medium tracking-wide uppercase text-[#6E6E73]">
             <Sparkles className="w-3 h-3 text-[#242424]" />
             <span>CONTACT &bull; GET IN TOUCH</span>
@@ -129,14 +137,20 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
           <p className="text-[16px] sm:text-[17px] text-[#6E6E73] font-normal leading-relaxed max-w-[52ch]">
             Open for architectural consultations, DevOps advisory, and high-impact infrastructure engineering.
           </p>
-        </div>
+        </motion.div>
       </div>
 
       {/* Main Grid: Direct Line Card + Social Channels Bento */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-stretch">
         
         {/* Direct Email Card (Apple Spotlight Card) */}
-        <div className="lg:col-span-5 p-6 sm:p-9 md:p-10 rounded-3xl bg-[#F5F5F7] border border-black/[0.07] flex flex-col justify-between gap-6 sm:gap-8 relative overflow-hidden">
+        <motion.div
+          initial={prefersReduced ? false : { opacity: 0, y: 28, scale: 0.98 }}
+          whileInView={prefersReduced ? {} : { opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="lg:col-span-5 p-6 sm:p-9 md:p-10 rounded-3xl bg-[#F5F5F7] border border-black/[0.07] flex flex-col justify-between gap-6 sm:gap-8 relative overflow-hidden"
+        >
           {/* Subtle top specular sheen */}
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
 
@@ -195,18 +209,28 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Notion-Style Channels Bento Grid (Right 7 cols) */}
         <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
-          {contactChannels.map((channel) => {
+          {contactChannels.map((channel, index) => {
             const IconComponent = channel.IconComponent;
             const isCopied = copiedKey === channel.key;
 
             return (
-              <div
+              <motion.div
                 key={channel.key}
-                className={`p-5 sm:p-7 rounded-3xl bg-white border border-black/[0.07] ${channel.color} hover:shadow-[0_12px_32px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between gap-5 sm:gap-6 group`}
+                initial={prefersReduced ? false : { opacity: 0, y: 20, scale: 0.98 }}
+                whileInView={prefersReduced ? {} : { opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{
+                  duration: 0.55,
+                  delay: prefersReduced ? 0 : index * 0.06,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                whileHover={prefersReduced ? {} : { y: -3, scale: 1.01 }}
+                whileTap={prefersReduced ? {} : { scale: 0.985 }}
+                className={`p-5 sm:p-7 rounded-3xl bg-white border border-black/[0.07] ${channel.color} hover:shadow-[0_12px_32px_rgba(0,0,0,0.04)] transition-all duration-300 flex flex-col justify-between gap-5 sm:gap-6 group cursor-default`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-3.5 sm:mb-4">
@@ -265,7 +289,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
                     )}
                   </button>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

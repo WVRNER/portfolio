@@ -50,6 +50,7 @@ Static interfaces are strictly forbidden. You must write real GSAP (`@gsap/react
 - **Image Scale & Fade Scroll:** Images must start small (`scale: 0.8`). As they scroll into view, they grow to `scale: 1.0`. As they scroll out of view, they smoothly darken and fade out (`opacity: 0.2`).
 - **Scrubbing Text Reveals:** Opacity of central paragraph words starts at 0.1 and scrubs to 1.0 sequentially as the user scrolls.
 - **Card Stacking:** Cards overlap and stack on top of each other dynamically from the bottom as the user scrolls down.
+- **Satisfying Relief Transitions:** Tension-release bridges between high-density narrative/technical chapters and open contact/CTA destinations. Uses damped scroll conduits, optical de-blurring, and ambient halo bloom to release visual tension into spacious catharsis.
 
 ## 6. COMPONENT ARSENAL & CREATIVITY
 Select components from this arsenal based on your randomization:
