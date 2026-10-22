@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Offline | WVRNER</title>
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --text: #161617;
+      --subtext: #666666;
+      --card-bg: #F8F8F9;
+      --border: #E5E5E5;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0A0A0A;
+        --text: #EDEDED;
+        --subtext: #999999;
+        --card-bg: #141416;
+        --border: #262628;
+      }
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+    .container {
+      max-width: 480px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--subtext);
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--subtext);
+      margin-bottom: 28px;
+    }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    button, a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+    }
+    .btn-primary:hover {
+      opacity: 0.9;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover {
+      background: rgba(128,128,128,0.08);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="badge">WVRNER / Offline Cache</div>
+    <h1>No Connection Detected</h1>
+    <p>
+      You are currently offline. Posts and stories you have already opened remain saved in local storage and can be read anytime without an internet connection.
+    </p>
+    <div class="actions">
+      <button class="btn-primary" onclick="window.location.reload()">
+        Try reconnecting
+      </button>
+      <a href="/blog" class="btn-secondary">
+        Browse cached stories
+      </a>
+    </div>
+  </div>
+</body>
+</html>
