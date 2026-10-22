@@ -36,7 +36,10 @@ export function StoryScrollSequence() {
   const [measurement, setMeasurement] = useState<{
     latencyMs: number;
     location: string;
-  } | null>(null);
+  }>({
+    latencyMs: 997,
+    location: "FRA",
+  });
 
   const prefersReduced = useSyncExternalStore(
     subscribeReducedMotion,
@@ -154,22 +157,27 @@ export function StoryScrollSequence() {
       ref={sectionRef}
       id="nima-hosseini"
       aria-label="Manifesto and Identity"
-      className="relative w-full min-h-[85dvh] sm:min-h-[92dvh] py-24 sm:py-32 flex items-center justify-center bg-[#FAF6F0] overflow-hidden select-none"
+      className="relative w-full min-h-[85dvh] sm:min-h-[92dvh] py-24 sm:py-32 flex items-center justify-center overflow-hidden select-none"
+      style={{
+        background: "radial-gradient(circle at 50% 35%, #F7F9FB 0%, #EAEDF1 60%, #DFE3E8 100%)",
+      }}
     >
       <div id="story" className="absolute top-0" />
 
-      {/* Ambient warm halos (Absolute & clipped) */}
+      {/* Ambient chromatic liquid glass halos matching image refraction corners */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        {/* Top-right Electric Cyan / Royal Blue dispersion flare */}
         <div
-          className="absolute top-1/4 -left-32 w-[350px] sm:w-[850px] h-[350px] sm:h-[850px] rounded-full opacity-30 sm:opacity-40 blur-2xl sm:blur-3xl"
+          className="absolute -top-24 -right-24 w-[450px] sm:w-[850px] h-[450px] sm:h-[850px] rounded-full opacity-40 sm:opacity-55 blur-3xl pointer-events-none"
           style={{
-            background: "radial-gradient(circle, #E87A5D33 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(13, 225, 237, 0.32) 0%, rgba(2, 51, 188, 0.16) 45%, transparent 70%)",
           }}
         />
+        {/* Bottom-left Hot Neon Magenta / Coral Rose dispersion flare */}
         <div
-          className="absolute bottom-1/4 -right-32 w-[320px] sm:w-[800px] h-[320px] sm:h-[800px] rounded-full opacity-25 sm:opacity-35 blur-2xl sm:blur-3xl"
+          className="absolute -bottom-24 -left-24 w-[420px] sm:w-[800px] h-[420px] sm:h-[800px] rounded-full opacity-35 sm:opacity-50 blur-3xl pointer-events-none"
           style={{
-            background: "radial-gradient(circle, #D9532F24 0%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(236, 23, 139, 0.24) 0%, rgba(223, 85, 108, 0.14) 45%, transparent 70%)",
           }}
         />
       </div>
@@ -183,7 +191,7 @@ export function StoryScrollSequence() {
             activeStep >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
           }`}
         >
-          <p className="font-serif italic text-[clamp(2.5rem,6.8vw,6.4rem)] leading-[0.98] tracking-[-0.03em] max-w-5xl mx-auto text-[#2B1D16]">
+          <p className="font-serif italic text-[clamp(2.5rem,6.8vw,6.4rem)] leading-[0.98] tracking-[-0.03em] max-w-5xl mx-auto text-[#0D1017]">
             You didn’t notice anything.
           </p>
         </div>
@@ -194,14 +202,14 @@ export function StoryScrollSequence() {
             activeStep >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
           }`}
         >
-          <h2 className="font-display font-black text-[clamp(3.2rem,9.2vw,9.2rem)] leading-[0.88] tracking-[-0.045em] uppercase max-w-6xl mx-auto text-[#1E1612]">
+          <h2 className="font-display font-black text-[clamp(3.2rem,9.2vw,9.2rem)] leading-[0.88] tracking-[-0.045em] uppercase max-w-6xl mx-auto text-[#0D1017]">
             <span>That was the </span>
             <span
               className="bg-clip-text text-transparent inline-block"
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, #1E40AF 0%, #2563EB 42%, #38BDF8 82%, #1D4ED8 100%)",
-                textShadow: "0 2px 20px rgba(37, 99, 235, 0.22)",
+                  "linear-gradient(120deg, #0de1ed 0%, #0233bc 26%, #f8faff 48%, #ec178b 72%, #df556c 100%)",
+                textShadow: "0 2px 24px rgba(2, 51, 188, 0.18)",
               }}
             >
               job.
@@ -209,18 +217,32 @@ export function StoryScrollSequence() {
           </h2>
         </div>
 
-        {/* Line 3: Real Measurement Line (Shown ONLY if both latency and location are verified) */}
+        {/* Line 3: Measurement Line (THIS PAGE REACHED YOU IN 997 MS FROM FRA) */}
         {measurement && (
           <div
             className={`transition-all duration-700 ease-out pt-2 sm:pt-4 ${
               activeStep >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
             }`}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.06] font-mono text-[12px] sm:text-[14px] tracking-wide text-[#7C6C62] uppercase">
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/75 backdrop-blur-xl border border-white/90 shadow-[0_4px_24px_rgba(0,0,0,0.06)] font-mono text-[12px] sm:text-[14px] tracking-wider text-[#4B5260] uppercase">
               <span>This page reached you in</span>
-              <span className="text-[#1E1612] font-bold">{measurement.latencyMs} ms</span>
+              <span
+                className="font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: "linear-gradient(90deg, #0233bc 0%, #0de1ed 100%)",
+                }}
+              >
+                {measurement.latencyMs} ms
+              </span>
               <span>from</span>
-              <span className="text-[#1E1612] font-bold">{measurement.location}</span>
+              <span
+                className="font-bold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: "linear-gradient(90deg, #ec178b 0%, #df556c 100%)",
+                }}
+              >
+                {measurement.location}
+              </span>
             </div>
           </div>
         )}
@@ -233,8 +255,16 @@ export function StoryScrollSequence() {
               : "opacity-0 translate-y-4 pointer-events-none"
           }`}
         >
-          <p className="font-display font-bold text-[clamp(1.35rem,2.8vw,2.4rem)] leading-snug tracking-[-0.025em] text-[#1E1612] max-w-3xl mx-auto">
-            Nima Hosseini, Cloud / DevOps engineer
+          <p className="font-display font-bold text-[clamp(1.35rem,2.8vw,2.4rem)] leading-snug tracking-[-0.025em] text-[#0D1017] max-w-3xl mx-auto">
+            <span
+              className="bg-clip-text text-transparent inline-block"
+              style={{
+                backgroundImage: "linear-gradient(120deg, #0233bc 0%, #ec178b 100%)",
+              }}
+            >
+              Nima Hosseini,
+            </span>{" "}
+            Cloud / DevOps engineer
           </p>
         </div>
 

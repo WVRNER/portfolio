@@ -44,20 +44,87 @@ export function Navigation({ onOpenCV }: NavigationProps) {
     }
   });
 
-  // Handle direct hash navigation smoothly on load if present
+  // Handle direct hash navigation or cross-page dreamy spawn
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const hash = window.location.hash;
-    if (hash) {
-      const el = document.querySelector(hash);
-      if (el) {
-        const top = el.getBoundingClientRect().top + window.scrollY - 80;
-        window.scrollTo({ top, behavior: "auto" });
+
+    let targetId: string | null = null;
+    try {
+      targetId = sessionStorage.getItem("wvrner_pending_spawn");
+      if (targetId) {
+        sessionStorage.removeItem("wvrner_pending_spawn");
       }
+    } catch {
+      // Ignore
+    }
+
+    if (!targetId && window.location.hash) {
+      targetId = window.location.hash.replace("#", "");
+    }
+
+    if (targetId) {
+      const showTimer = setTimeout(() => {
+        setSpawnActive(true);
+      }, 0);
+
+      const performScroll = () => {
+        if (targetId === "top") {
+          window.scrollTo({ top: 0, behavior: "auto" });
+        } else {
+          const el = document.getElementById(targetId);
+          if (el) {
+            const top = el.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top, behavior: "auto" });
+          }
+        }
+      };
+
+      // Snap position behind mist
+      performScroll();
+      const retry1 = setTimeout(performScroll, 80);
+      const retry2 = setTimeout(performScroll, 220);
+
+      // Dissolve mist smoothly
+      const fadeTimer = setTimeout(() => {
+        setSpawnActive(false);
+      }, 750);
+
+      return () => {
+        clearTimeout(showTimer);
+        clearTimeout(retry1);
+        clearTimeout(retry2);
+        clearTimeout(fadeTimer);
+      };
     }
   }, [pathname]);
 
-  /* Dreamy / Steamy Apple-Style Instant Spawn */
+  /* Cross-Page Dreamy Spawn Transition */
+  const triggerCrossPageSpawn = (targetId: string, href: string) => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      router.push(href);
+      return;
+    }
+
+    setSpawnActive(true);
+    try {
+      sessionStorage.setItem("wvrner_pending_spawn", targetId);
+    } catch {
+      // Ignore
+    }
+
+    // Navigate at peak mist envelopment
+    setTimeout(() => {
+      router.push(href);
+    }, 320);
+
+    // Safety fallback to dissolve mist if route change is delayed
+    setTimeout(() => {
+      setSpawnActive(false);
+    }, 950);
+  };
+
+  /* Dreamy / Steamy Apple-Style Instant Spawn (Same-page) */
   const triggerDreamySpawn = (targetTop: number) => {
     const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) {
@@ -66,21 +133,21 @@ export function Navigation({ onOpenCV }: NavigationProps) {
     }
 
     setSpawnActive(true);
-    // Port instantly behind the soft mist at the peak of the vapor
+    // Port smoothly behind the soft mist at the peak of the vapor
     setTimeout(() => {
       window.scrollTo({ top: targetTop, behavior: "auto" });
-    }, 160);
+    }, 320);
 
     // Fade mist out smoothly
     setTimeout(() => {
       setSpawnActive(false);
-    }, 460);
+    }, 780);
   };
 
   const handleLogoClick = () => {
     setMobileMenuOpen(false);
     if (pathname !== "/") {
-      router.push("/");
+      triggerCrossPageSpawn("top", "/");
       return;
     }
     triggerDreamySpawn(0);
@@ -102,22 +169,26 @@ export function Navigation({ onOpenCV }: NavigationProps) {
       }
       setWritingPortalActive(true);
       setTimeout(() => {
-        router.push("/blog");
-      }, 340);
+        if (pathname === "/blog") {
+          window.scrollTo({ top: 0, behavior: "auto" });
+        } else {
+          router.push("/blog");
+        }
+      }, 420);
       setTimeout(() => {
         setWritingPortalActive(false);
-      }, 620);
+      }, 820);
       return;
     }
 
     if (item.href) {
-      router.push(item.href);
+      triggerCrossPageSpawn("top", item.href);
       return;
     }
 
     if (item.id) {
       if (pathname !== "/") {
-        router.push(`/#${item.id}`);
+        triggerCrossPageSpawn(item.id, `/#${item.id}`);
         return;
       }
       const el = document.getElementById(item.id);
@@ -135,18 +206,18 @@ export function Navigation({ onOpenCV }: NavigationProps) {
         {spawnActive && (
           <motion.div
             initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(16px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
             exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[100] pointer-events-none bg-white/30 dark:bg-black/40 backdrop-blur-xl flex items-center justify-center overflow-hidden"
+            transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[100] pointer-events-none bg-white/40 dark:bg-black/50 backdrop-blur-2xl flex items-center justify-center overflow-hidden"
           >
-            {/* Soft dreamy vapor cloud */}
+            {/* Soft dreamy vapor cloud with chromatic dispersion tint */}
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1.15, opacity: 0.75 }}
-              exit={{ scale: 1.3, opacity: 0 }}
-              transition={{ duration: 0.42, ease: "easeOut" }}
-              className="w-[540px] h-[360px] rounded-full bg-gradient-to-tr from-white/80 via-[#E1E0CC]/50 to-transparent blur-3xl pointer-events-none"
+              initial={{ scale: 0.75, opacity: 0 }}
+              animate={{ scale: 1.25, opacity: 0.8 }}
+              exit={{ scale: 1.5, opacity: 0 }}
+              transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+              className="w-[640px] h-[420px] rounded-full bg-gradient-to-tr from-[#0de1ed]/25 via-white/80 dark:via-white/30 to-[#ec178b]/25 blur-3xl pointer-events-none"
             />
           </motion.div>
         )}
@@ -156,23 +227,28 @@ export function Navigation({ onOpenCV }: NavigationProps) {
       <AnimatePresence>
         {writingPortalActive && (
           <motion.div
-            initial={{ clipPath: "circle(0% at 50% 50%)", opacity: 0.9 }}
+            initial={{ clipPath: "circle(0% at 50% 50%)", opacity: 0.95 }}
             animate={{ clipPath: "circle(150% at 50% 50%)", opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.44, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[100] pointer-events-none bg-[#0e0e11] flex flex-col items-center justify-center text-white"
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[100] pointer-events-none bg-[#090b10] flex flex-col items-center justify-center text-white"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(176,166,223,0.3)_0%,transparent_70%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(13,225,237,0.22)_0%,rgba(2,51,188,0.18)_30%,rgba(236,23,139,0.15)_60%,transparent_80%)] pointer-events-none" />
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 12 }}
+              initial={{ scale: 0.88, opacity: 0, y: 16 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              transition={{ duration: 0.24, delay: 0.06 }}
+              transition={{ duration: 0.42, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 flex flex-col items-center gap-2 select-none"
             >
-              <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-[#b0a6df]">
+              <span
+                className="font-mono text-[11px] tracking-[0.3em] uppercase bg-clip-text text-transparent font-bold"
+                style={{
+                  backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #ffffff 50%, #ec178b 100%)",
+                }}
+              >
                 OPENING FIELD NOTES
               </span>
-              <span className="font-serif italic text-[24px] text-white/95">
+              <span className="font-serif italic text-[26px] text-white/95">
                 Writing &amp; Architecture
               </span>
             </motion.div>
@@ -204,11 +280,18 @@ export function Navigation({ onOpenCV }: NavigationProps) {
           <div className="flex sm:hidden items-center justify-between w-full rounded-full bg-black/85 backdrop-blur-2xl px-5 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.14)] border border-white/20">
             <button
               onClick={handleLogoClick}
-              className="flex items-center text-white hover:text-white/80 font-[family-name:var(--font-plus-jakarta)] text-[14px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer py-1"
+              className="flex items-center font-[family-name:var(--font-plus-jakarta)] text-[14px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer py-1"
               title="WVRNER Home"
               aria-label="WVRNER Home"
             >
-              <span>WVRNER</span>
+              <span
+                className="bg-clip-text text-transparent font-black"
+                style={{
+                  backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #0233bc 26%, #ffffff 50%, #ec178b 76%, #df556c 100%)",
+                }}
+              >
+                WVRNER
+              </span>
             </button>
 
             {/* 2-line hamburger button */}
@@ -237,11 +320,18 @@ export function Navigation({ onOpenCV }: NavigationProps) {
             {/* Logo return home action */}
             <button
               onClick={handleLogoClick}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-white hover:text-white/80 font-[family-name:var(--font-plus-jakarta)] text-[13px] sm:text-[14px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full font-[family-name:var(--font-plus-jakarta)] text-[13px] sm:text-[14px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer"
               title="WVRNER Home"
               aria-label="WVRNER Home"
             >
-              <span>WVRNER</span>
+              <span
+                className="bg-clip-text text-transparent font-black"
+                style={{
+                  backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #0233bc 26%, #ffffff 50%, #ec178b 76%, #df556c 100%)",
+                }}
+              >
+                WVRNER
+              </span>
             </button>
 
             <span className="w-px h-3.5 bg-white/20 inline-block" aria-hidden="true" />
