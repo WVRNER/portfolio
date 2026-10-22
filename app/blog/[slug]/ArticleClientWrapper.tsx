@@ -14,6 +14,8 @@ import { CVDrawer } from "@/components/CVDrawer";
 import { EditorialFooter } from "@/components/EditorialFooter";
 import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
 import { InstantLink } from "@/components/InstantLink";
+import { BlurImage } from "@/components/BlurImage";
+import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { BLOG_POSTS, formatDisplayDate, type BlogPost } from "@/lib/blogData";
 
 interface ArticleClientWrapperProps {
@@ -341,12 +343,29 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
   // Recommended articles (Selected Stories - 2x2 grid)
   const recommendedPosts = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 4);
 
+  // Feature 2 & 3: Build-time image metadata & WCAG-calibrated accent color
+  const imageMeta = getImageMetadata(post.slug);
+  const accentLight = imageMeta?.accentLight || "#161617";
+  const accentDark = imageMeta?.accentDark || "#7C7C7C";
+
   return (
-    <div className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#EAEAEA] selection:text-[#242424]">
-      {/* Top Reading Progress Indicator (Hairline) - Tracked strictly across article body */}
+    <div
+      className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#EAEAEA] selection:text-[#242424]"
+      style={
+        {
+          "--post-accent-light": accentLight,
+          "--post-accent-dark": accentDark,
+          "--post-accent": accentLight,
+        } as React.CSSProperties
+      }
+    >
+      {/* Top Reading Progress Indicator (Hairline) - Uses Cover Image Accent */}
       <div
-        className="fixed top-0 left-0 right-0 h-[2.5px] bg-[#161617] z-50 origin-left will-change-transform transition-transform duration-75 motion-reduce:transition-none pointer-events-none"
-        style={{ transform: `scaleX(${scrollProgress / 100})` }}
+        className="fixed top-0 left-0 right-0 h-[2.5px] z-50 origin-left will-change-transform transition-transform duration-75 motion-reduce:transition-none pointer-events-none"
+        style={{
+          transform: `scaleX(${scrollProgress / 100})`,
+          backgroundColor: accentLight,
+        }}
         aria-hidden="true"
       />
 
@@ -401,8 +420,11 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         {/* Story Header (Exact hierarchy matching uploaded screenshot) */}
         <header className="space-y-4 mb-8">
           
-          {/* Super bold punchy headline (Lowered size, amplified thickness) */}
-          <h1 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[34px] sm:text-[44px] md:text-[48px] text-[#0A0A0A] leading-[1.1] tracking-[-0.035em]">
+          {/* Super bold punchy headline with View Transition */}
+          <h1
+            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[34px] sm:text-[44px] md:text-[48px] text-[#0A0A0A] leading-[1.1] tracking-[-0.035em]"
+            style={{ viewTransitionName: `post-title-${post.slug}` }}
+          >
             {post.title}
           </h1>
 
@@ -448,22 +470,29 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         </header>
 
-        {/* Feature / Cover Image (Sitting cleanly below Share button) */}
+        {/* Feature / Cover Image (Blur-up placeholder & View Transition) */}
         {post.featureImage && (
-          <figure className="my-8 rounded-[3px] overflow-hidden bg-neutral-100">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+          <div
+            className="my-8 rounded-[3px] overflow-hidden bg-neutral-100"
+            style={{ viewTransitionName: `post-cover-${post.slug}` }}
+          >
+            <BlurImage
               src={post.featureImage}
               alt={post.title}
-              className="w-full h-auto max-h-[460px] object-cover bg-neutral-100"
-              loading="eager"
+              aspectRatio={imageMeta?.aspectRatio || 1.7778}
+              blurDataUrl={imageMeta?.blurDataUrl}
+              priority
+              className="w-full h-auto max-h-[460px] object-cover"
             />
-          </figure>
+          </div>
         )}
 
-        {/* Editorial Pullquote (Highlighted with #e8f3e8) */}
+        {/* Editorial Pullquote (Highlighted with #e8f3e8 & Cover Accent) */}
         {post.pullQuote && (
-          <blockquote className="my-9 pl-6 pr-5 py-4 border-l-[3px] border-[#161617] bg-[#e8f3e8] rounded-r-md">
+          <blockquote
+            className="my-9 pl-6 pr-5 py-4 border-l-[3px] bg-[#e8f3e8] rounded-r-md"
+            style={{ borderLeftColor: accentLight }}
+          >
             <p className="font-[family-name:var(--font-source-serif),Charter,Georgia,serif] italic text-[21px] sm:text-[23px] text-[#242424] leading-[1.45]">
               &ldquo;{post.pullQuote}&rdquo;
             </p>
@@ -608,13 +637,13 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                 >
                   <div>
                     {rec.featureImage && (
-                      <div className="aspect-[16/10] w-full overflow-hidden rounded-[3px] mb-3 bg-neutral-100">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                      <div className="w-full overflow-hidden rounded-[3px] mb-3 bg-neutral-100">
+                        <BlurImage
                           src={rec.featureImage}
                           alt={rec.title}
+                          aspectRatio={getImageMetadata(rec.slug)?.aspectRatio || 1.6}
+                          blurDataUrl={getImageMetadata(rec.slug)?.blurDataUrl}
                           className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                          loading="lazy"
                         />
                       </div>
                     )}

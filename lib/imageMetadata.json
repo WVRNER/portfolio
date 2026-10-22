@@ -1,0 +1,178 @@
+{
+  "deterministic-terraform-ephemeral-environments": {
+    "slug": "deterministic-terraform-ephemeral-environments",
+    "src": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 673,
+    "aspectRatio": 1.7831,
+    "blurDataUrl": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACQAQCdASoQAAkABUB8JZwAApKacAAA/tBKnDTd8yZZGBaf2AbkMAAA",
+    "dominantColor": "#282828",
+    "accentLight": "#282828",
+    "accentDark": "#7c7c7c"
+  },
+  "zero-downtime-canary-verification": {
+    "slug": "zero-downtime-canary-verification",
+    "src": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 800,
+    "aspectRatio": 1.5,
+    "blurDataUrl": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAsABUB8JZwAAvd/Nb+U+OcAAMtBhJ1trAiybdXLeZ3fT/aNK/oABT/7TI9jdh7iztwKf0Dg06WAN/3U7p9ZM9wFcbDAAAA=",
+    "dominantColor": "#181818",
+    "accentLight": "#181818",
+    "accentDark": "#7c7c7c"
+  },
+  "short-lived-credentials-aws-oidc-github": {
+    "slug": "short-lived-credentials-aws-oidc-github",
+    "src": "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 800,
+    "aspectRatio": 1.5,
+    "blurDataUrl": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAQCdASoQAAsABUB8JbAC7AEWZVoc8VAA/PrvbXal6g5tbLy9uESC1WZx3yVS0SnlWzCcSwPD6SWCs0a7CWyTlDB0mssTeUldCx0D7f/cVWDxEPAAAA==",
+    "dominantColor": "#080808",
+    "accentLight": "#080808",
+    "accentDark": "#7c7c7c"
+  },
+  "telemetry-beyond-dashboards": {
+    "slug": "telemetry-beyond-dashboards",
+    "src": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 800,
+    "aspectRatio": 1.5,
+    "blurDataUrl": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADQAQCdASoQAAsABUB8JYwAAueG/i5oAAD+2rexNAAs9/ecNNQUph/AD/M71w9ExZcBV4Qs3B1G/H84T4AAAA==",
+    "dominantColor": "#080808",
+    "accentLight": "#080808",
+    "accentDark": "#7c7c7c"
+  },
+  "ebpf-runtime-security-cilium-k8s": {
+    "slug": "ebpf-runtime-security-cilium-k8s",
+    "src": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 912,
+    "aspectRatio": 1.3158,
+    "blurDataUrl": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADQAQCdASoQAAwABUB8JbACdAEHMst+sAD944mriQ0kamo/clPavtHFAFn1DwFspasK7GZmaqNqekw9EGLPRxvbGL5+v8EqTuLVwAAA",
+    "dominantColor": "#08b8e8",
+    "accentLight": "#007cac",
+    "accentDark": "#08b8e8"
+  },
+  "envoy-service-mesh-circuit-breaking": {
+    "slug": "envoy-service-mesh-circuit-breaking",
+    "src": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 800,
+    "aspectRatio": 1.5,
+    "blurDataUrl": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAADQAQCdASoQAAsABUB8JYgCdAEPBTrk4AD+6/SwjbYSGT1Cv8AAAA==",
+    "dominantColor": "#080808",
+    "accentLight": "#080808",
+    "accentDark": "#7c7c7c"
+  },
+  "immutable-distroless-docker-pipeline": {
+    "slug": "immutable-distroless-docker-pipeline",
+    "src": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 800,
+    "aspectRatio": 1.5,
+    "blurDataUrl": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAADwAQCdASoQAAsABUB8JZQCw7DHzvq6K7gA/s3EbDN8rJ0A3kullMfhAb62VknlAM/YDJbGAv/LYp4AAAA=",
+    "dominantColor": "#283838",
+    "accentLight": "#283838",
+    "accentDark": "#6c7c7c"
+  },
+  "multi-region-failover-route53-dynamo": {
+    "slug": "multi-region-failover-route53-dynamo",
+    "src": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 798,
+    "aspectRatio": 1.5038,
+    "blurDataUrl": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAACwAQCdASoQAAsABUB8JZQC7AEOhygAAP7yoN7RGWdspjDy2BmeHeLmgC2AAA==",
+    "dominantColor": "#080808",
+    "accentLight": "#080808",
+    "accentDark": "#7c7c7c"
+  },
+  "iam-least-privilege-policy-synthesis": {
+    "slug": "iam-least-privilege-policy-synthesis",
+    "src": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 800,
+    "aspectRatio": 1.5,
+    "blurDataUrl": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACwAQCdASoQAAsABUB8JbACdADEvX8AAP7jw3TybSGLU9w+Q2S/qwNbEvPf9vL+kMau6me/EeWuVUfuZgAAAA==",
+    "dominantColor": "#180808",
+    "accentLight": "#180808",
+    "accentDark": "#887878"
+  },
+  "reproducible-github-actions-runners": {
+    "slug": "reproducible-github-actions-runners",
+    "src": "https://images.unsplash.com/photo-1629654297299-c8506221ca97?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 900,
+    "aspectRatio": 1.3333,
+    "blurDataUrl": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAAAwAQCdASoQAAwABUB8JZwAA3AA/vCNSzPNSqJhhBxTaq9t1AAAAA==",
+    "dominantColor": "#080808",
+    "accentLight": "#080808",
+    "accentDark": "#7c7c7c"
+  },
+  "kafka-partition-rebalancing-internals": {
+    "slug": "kafka-partition-rebalancing-internals",
+    "src": "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 675,
+    "aspectRatio": 1.7778,
+    "blurDataUrl": "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAADQAQCdASoQAAkABUB8JYwCdADWOzRCgAD6h1wHSJ4S5VlxYG6zbtMi3MAAAA==",
+    "dominantColor": "#888888",
+    "accentLight": "#747474",
+    "accentDark": "#888888"
+  },
+  "finops-kubernetes-cluster-autoscaling": {
+    "slug": "finops-kubernetes-cluster-autoscaling",
+    "src": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 855,
+    "aspectRatio": 1.4035,
+    "blurDataUrl": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAwAgCdASoQAAsABUB8JZwC7AEQfSP8hsYkwADNxq80kUI6oKP2E8+YXjHjKIQJTCExX6Q+rRK+8opRiuot2MIk7aqaAAAA",
+    "dominantColor": "#383838",
+    "accentLight": "#383838",
+    "accentDark": "#7c7c7c"
+  },
+  "secrets-zero-persistence-vault-agent": {
+    "slug": "secrets-zero-persistence-vault-agent",
+    "src": "https://images.unsplash.com/photo-1504639725590-34d0984388bd?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 900,
+    "aspectRatio": 1.3333,
+    "blurDataUrl": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADwAQCdASoQAAwABUB8JYwCw7Dc9HI4KAAA/ujVd8H4wtC8JSTwdSQKCBzeHQh3IQcnT6BNMaeLox2D89+jQAAA",
+    "dominantColor": "#182828",
+    "accentLight": "#182828",
+    "accentDark": "#6c7c7c"
+  },
+  "chaos-engineering-synthetic-latency": {
+    "slug": "chaos-engineering-synthetic-latency",
+    "src": "https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 800,
+    "aspectRatio": 1.5,
+    "blurDataUrl": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAACwAQCdASoQAAsABUB8JZwAAudQsG+QAP7hCkzZZ4zUQ4AA",
+    "dominantColor": "#d8d8d8",
+    "accentLight": "#747474",
+    "accentDark": "#d8d8d8"
+  },
+  "project-01": {
+    "slug": "project-01",
+    "src": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 673,
+    "aspectRatio": 1.7831,
+    "blurDataUrl": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACQAQCdASoQAAkABUB8JZwAApKacAAA/tBKnDTd8yZZGBaf2AbkMAAA",
+    "dominantColor": "#282828",
+    "accentLight": "#282828",
+    "accentDark": "#7c7c7c"
+  },
+  "project-02": {
+    "slug": "project-02",
+    "src": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80",
+    "width": 1200,
+    "height": 800,
+    "aspectRatio": 1.5,
+    "blurDataUrl": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAADQAQCdASoQAAsABUB8JYgCdAEPBTrk4AD+6/SwjbYSGT1Cv8AAAA==",
+    "dominantColor": "#080808",
+    "accentLight": "#080808",
+    "accentDark": "#7c7c7c"
+  }
+}
