@@ -59,10 +59,10 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-10 md:px-14 lg:px-16 pt-24 sm:pt-32 pb-16 sm:pb-20">
+      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-10 md:px-14 lg:px-16 pt-10 sm:pt-14 pb-16 sm:pb-20">
         
         {/* Top Header: Navigation and Return Affordance */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-12 sm:pb-16 border-b border-white/[0.08]">
+        <div className="flex items-center justify-between gap-6 pb-6 sm:pb-8 border-b border-white/[0.08]">
           <Link
             href="/"
             className="group inline-flex items-center gap-2.5 text-[13px] font-sans font-medium text-neutral-400 hover:text-white transition-colors duration-150"
@@ -70,31 +70,27 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
             <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-white/[0.12] group-hover:border-white/20 transition-all duration-150 motion-reduce:transition-none">
               <ArrowLeft className="w-3.5 h-3.5 text-neutral-300 group-hover:text-white group-hover:-translate-x-0.5 transition-transform duration-150 motion-reduce:transition-none" />
             </span>
-            <span>Return to Portfolio</span>
+            <span>Back to portfolio</span>
           </Link>
-
-          <div className="flex items-center gap-2 text-[11.5px] font-mono tracking-[0.2em] uppercase text-neutral-400">
-            <span>DETERMINISTIC CLOUD SYSTEMS</span>
-          </div>
         </div>
 
         {/* Center Stage: Interactive Tactile Console */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 py-16 sm:py-20 border-b border-white/[0.08] items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 py-10 sm:py-14 border-b border-white/[0.08] items-stretch">
           
-          {/* Left Column: Transmission / Email Console (Emil Kowalski spring physics) */}
+          {/* Left Column: Email Console */}
           <div className="lg:col-span-7 flex flex-col justify-between gap-8 p-7 sm:p-9 rounded-2xl bg-white/[0.02] border border-white/[0.07] hover:border-white/[0.14] transition-all duration-200">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.22em] uppercase text-neutral-400">
                 <Mail className="w-3.5 h-3.5 text-neutral-400" />
-                <span>DIRECT DISPATCH &bull; TRANSMISSION CHANNEL</span>
+                <span>EMAIL</span>
               </div>
 
               <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[24px] sm:text-[30px] font-bold text-white tracking-[-0.03em] leading-tight">
-                Architectural consultation &amp; engineering inquiry.
+                Let&rsquo;s talk.
               </h3>
 
               <p className="text-[14.5px] sm:text-[15px] text-neutral-400 font-sans leading-relaxed max-w-[48ch]">
-                Open for high-impact cloud infrastructure, immutable container workflows, and reproducible distributed systems.
+                I’m looking for a junior Cloud / DevOps role. The fastest way to reach me is email or LinkedIn.
               </p>
             </div>
 
@@ -136,7 +132,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
           {/* Right Column: Tactile Channel Keycaps */}
           <div className="lg:col-span-5 flex flex-col justify-between gap-4">
             <div className="text-[11px] font-mono tracking-[0.22em] uppercase text-neutral-400 px-1">
-              CONNECTED CHANNELS
+              ELSEWHERE
             </div>
 
             <div className="grid grid-cols-2 gap-3 flex-1">

@@ -284,7 +284,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
             About
           </Link>
           <Link href="/blog" className="hover:text-[#1D1D1F] transition-colors py-1">
-            Stories
+            Writing
           </Link>
           {onOpenCV && (
             <button
