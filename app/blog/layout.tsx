@@ -37,7 +37,7 @@ export default function BlogLayout({
       <script
         id="blog-theme-init"
         dangerouslySetInnerHTML={{
-          __html: `(function(){try{var t=localStorage.getItem("wvrner-blog-theme");var isDark=t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(isDark){document.documentElement.classList.add("dark");document.documentElement.setAttribute("data-blog-theme","dark");}else{document.documentElement.classList.remove("dark");document.documentElement.setAttribute("data-blog-theme","light");}}catch(e){}})();`,
+          __html: `(function(){try{var t=localStorage.getItem("wvrner-blog-theme");var isSystemDark=window.matchMedia("(prefers-color-scheme: dark)").matches;var isDark=isSystemDark||t==="dark";if(isDark){document.documentElement.classList.add("dark");document.documentElement.setAttribute("data-blog-theme","dark");}else{document.documentElement.classList.remove("dark");document.documentElement.setAttribute("data-blog-theme","light");}}catch(e){}})();`,
         }}
       />
       <BlogThemeProvider>{children}</BlogThemeProvider>
