@@ -20,7 +20,12 @@ import { GitHubCard } from "@/components/GitHubCard";
 import { QuoteImageModal } from "@/components/QuoteImageModal";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { getGitHubRepoCard } from "@/lib/githubDataHelper";
-import { BLOG_POSTS, formatDisplayDate, type BlogPost } from "@/lib/blogData";
+import {
+  BLOG_POSTS,
+  formatDisplayDate,
+  getPrimaryToolTag,
+  type BlogPost,
+} from "@/lib/blogData";
 
 interface ArticleClientWrapperProps {
   post: BlogPost;
@@ -459,23 +464,27 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             {post.title}
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtitle in Serif */}
           {post.subtitle && (
-            <p className="text-[21px] sm:text-[25px] md:text-[27px] text-[#555555] font-normal leading-[1.38] tracking-normal font-sans">
+            <p className="text-[21px] sm:text-[25px] md:text-[27px] text-[#555555] font-normal leading-[1.38] tracking-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
               {post.subtitle}
             </p>
           )}
 
-          {/* Meta line: "5 min read · Aug 4" */}
-          <div className="pt-2 text-[14px] sm:text-[14.5px] text-[#6B6B6B] font-normal flex items-center">
+          {/* Meta line: Date before read time, then Tool Tag */}
+          <div className="pt-2 text-[14px] sm:text-[14.5px] text-[#6B6B6B] font-normal flex items-center flex-wrap gap-2">
             {post.featured && (
-              <span title="Featured Story" className="inline-flex items-center mr-2">
+              <span title="Featured Story" className="inline-flex items-center mr-1">
                 <FeaturedStarIcon className="w-3.5 h-3.5" />
               </span>
             )}
-            <span>{post.readingTime}</span>
-            <span className="mx-2">&middot;</span>
             <span>{formatDisplayDate(post.date)}</span>
+            <span>&middot;</span>
+            <span>{post.readingTime}</span>
+            <span>&middot;</span>
+            <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] text-[#242424] font-medium text-[11px] font-mono tracking-tight">
+              {getPrimaryToolTag(post)}
+            </span>
           </div>
 
           {/* Share Pill Button (Matching screenshot bordered pill button) */}
@@ -715,9 +724,13 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                       {rec.subtitle || rec.excerpt}
                     </p>
                   </div>
-                  <div className="pt-2 text-[12px] text-[#6B6B6B] font-sans flex items-center gap-1.5">
+                  <div className="pt-2 text-[12px] text-[#6B6B6B] font-sans flex items-center gap-2">
                     {rec.featured && <FeaturedStarIcon className="w-3 h-3" />}
-                    <span>{rec.readingTime} &middot; {formatDisplayDate(rec.date)}</span>
+                    <span>{formatDisplayDate(rec.date)} &middot; {rec.readingTime}</span>
+                    <span>&middot;</span>
+                    <span className="px-2 py-0.5 rounded-full bg-[#F2F2F2] text-[#242424] font-medium text-[10.5px] font-mono tracking-tight">
+                      {getPrimaryToolTag(rec)}
+                    </span>
                   </div>
                 </InstantLink>
               ))}

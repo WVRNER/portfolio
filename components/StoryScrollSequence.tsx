@@ -1,277 +1,214 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 /**
- * StoryScrollSequence - Awwwards Site of the Day Theatrical Typography Sequence
+ * StoryScrollSequence - Unpinned Normal Viewport Section
  * 
- * Mobile-Optimized & 120 FPS Performance:
- * - Idle-aware RAF loop: stops re-renders when scroll is settled or offscreen
- * - Absolute localized ambient halos (no fixed viewport blurs causing mobile GPU stalls)
- * - Hardware-accelerated translate3d transforms with will-change
- * - Pointer-fine only for 3D tilt (disabled on mobile touch to preserve high framerates)
- * - Zero UI clutter: pure theatrical typography
- * - Non-black warm ivory ground (#FAF6F0) with deep warm espresso ink (#1E1612)
+ * - Normal one-screen section that never blocks scrolling
+ * - Sequence reveals 4 lines in place (~0.6s apart) upon entering viewport
+ * - Real performance measurement line from Navigation Timing API + Cloudflare colo
+ *   (Skipped entirely if values are unavailable; never shows fake numbers)
+ * - Plays sequence once; stays permanently visible when scrolling
+ * - Immediate display for prefers-reduced-motion
  * - Zero em dashes
  */
-
 export function StoryScrollSequence() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [step, setStep] = useState(0);
+  const [hasTriggered, setHasTriggered] = useState(false);
+  const [measurement, setMeasurement] = useState<{
+    latencyMs: number;
+    location: string;
+  } | null>(null);
 
-  const [progress, setProgress] = useState(0);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-
-  // Smooth lerp tracking for 60/120fps fluid transitions
-  const scrollTrackerRef = useRef({
-    currentProgress: 0,
-    targetProgress: 0,
-    isVisible: false,
-    isSettled: false,
-    rafId: 0,
-  });
-
-  const updateScroll = useCallback(() => {
-    const container = containerRef.current;
-    if (!container || !scrollTrackerRef.current.isVisible) return;
-
-    const rect = container.getBoundingClientRect();
-    const windowH = window.innerHeight;
-    const totalDistance = rect.height - windowH;
-
-    if (totalDistance <= 0) return;
-
-    const raw = -rect.top / totalDistance;
-    const clamped = Math.max(0, Math.min(1, raw));
-    
-    if (Math.abs(scrollTrackerRef.current.targetProgress - clamped) > 0.0005) {
-      scrollTrackerRef.current.targetProgress = clamped;
-      scrollTrackerRef.current.isSettled = false;
-    }
-  }, []);
-
+  // 1. Fetch real Navigation Timing and Cloudflare data center location
   useEffect(() => {
-    // Detect touch capability to skip expensive 3D perspective tilts on mobile
-    const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
-    setIsTouchDevice(hasCoarsePointer);
+    if (typeof window === "undefined") return;
 
-    const container = containerRef.current;
-    if (!container) return;
-
-    // Visibility Observer to pause updates completely when section is off-screen
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        scrollTrackerRef.current.isVisible = entry.isIntersecting;
-        if (entry.isIntersecting) {
-          updateScroll();
-        }
-      },
-      { threshold: 0.02 }
-    );
-
-    observer.observe(container);
-
-    const handleScroll = () => {
-      updateScroll();
-    };
-
-    const handleResize = () => {
-      updateScroll();
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleResize);
-    updateScroll();
-
-    // High-performance Lerp Loop: only updates state when motion is actually happening
-    const loop = () => {
-      const tracker = scrollTrackerRef.current;
-
-      if (tracker.isVisible && !tracker.isSettled) {
-        const delta = tracker.targetProgress - tracker.currentProgress;
-
-        if (Math.abs(delta) > 0.0005) {
-          tracker.currentProgress += delta * 0.16;
-          setProgress(tracker.currentProgress);
-        } else if (tracker.currentProgress !== tracker.targetProgress) {
-          tracker.currentProgress = tracker.targetProgress;
-          setProgress(tracker.targetProgress);
-          tracker.isSettled = true;
+    let latency: number | null = null;
+    try {
+      if (window.performance) {
+        const navEntries = performance.getEntriesByType("navigation");
+        if (navEntries.length > 0) {
+          const nav = navEntries[0] as PerformanceNavigationTiming;
+          const t = Math.round(nav.responseEnd || nav.duration);
+          if (t > 0 && t < 10000) {
+            latency = t;
+          }
         }
       }
+    } catch {
+      // Ignore
+    }
 
-      tracker.rafId = requestAnimationFrame(loop);
-    };
+    // Check Cloudflare trace for real data center code (colo)
+    fetch("/cdn-cgi/trace")
+      .then((res) => {
+        if (!res.ok) throw new Error("Trace unavailable");
+        return res.text();
+      })
+      .then((text) => {
+        const match = text.match(/colo=([A-Z0-9]+)/);
+        if (match && match[1] && latency) {
+          setMeasurement({
+            latencyMs: latency,
+            location: match[1],
+          });
+        }
+      })
+      .catch(() => {
+        // Fallback: check HEAD response cf-ray header
+        fetch(window.location.href, { method: "HEAD" })
+          .then((res) => {
+            const ray = res.headers.get("cf-ray");
+            if (ray && ray.includes("-") && latency) {
+              const colo = ray.split("-").pop()?.trim();
+              if (colo) {
+                setMeasurement({
+                  latencyMs: latency,
+                  location: colo,
+                });
+              }
+            }
+          })
+          .catch(() => {
+            // Neither is available: line will be safely skipped
+          });
+      });
+  }, []);
 
-    scrollTrackerRef.current.rafId = requestAnimationFrame(loop);
+  // 2. Viewport entrance listener with prefers-reduced-motion check
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    // Check prefers-reduced-motion
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced) {
+      setStep(4);
+      setHasTriggered(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasTriggered) {
+          setHasTriggered(true);
+
+          // Step 1: "You didn't notice anything."
+          setStep(1);
+
+          // Step 2: "That was the job." (+0.6s)
+          const timer2 = setTimeout(() => {
+            setStep(2);
+
+            // Step 3: Measurement line (or direct jump to 4 if unavailable) (+0.6s)
+            const timer3 = setTimeout(() => {
+              setStep(3);
+
+              // Step 4: "Nima Hosseini, Cloud / DevOps engineer" (+0.6s)
+              const timer4 = setTimeout(() => {
+                setStep(4);
+              }, 600);
+
+              return () => clearTimeout(timer4);
+            }, 600);
+
+            return () => clearTimeout(timer3);
+          }, 600);
+
+          return () => clearTimeout(timer2);
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(el);
 
     return () => {
       observer.disconnect();
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(scrollTrackerRef.current.rafId);
     };
-  }, [updateScroll]);
-
-  // Pointer move: enabled only on desktop fine pointers
-  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (isTouchDevice) return;
-    const { clientX, clientY } = e;
-    const { innerWidth, innerHeight } = window;
-    const normX = (clientX / innerWidth - 0.5) * 2;
-    const normY = (clientY / innerHeight - 0.5) * 2;
-
-    setTilt({
-      x: normX * 6,
-      y: -normY * 6,
-    });
-  };
-
-  const handlePointerLeave = () => {
-    if (isTouchDevice) return;
-    setTilt({ x: 0, y: 0 });
-  };
-
-  // Chapter 1 Transition Dynamics: "You didn't notice anything."
-  // Prominent in 0.0 -> 0.35, fades out 0.35 -> 0.45
-  const ch1Opacity = Math.max(0, Math.min(1, 1 - (progress - 0.28) / 0.15));
-  const ch1TranslateY = progress > 0.28 ? -(progress - 0.28) * 200 : 0;
-  const ch1Scale = 1 + progress * 0.1;
-
-  // Chapter 2 Transition Dynamics: "That was the job."
-  // Enters 0.32 -> 0.44, peaks at 0.50, exits 0.62 -> 0.74
-  let ch2Opacity = 0;
-  if (progress < 0.32) {
-    ch2Opacity = 0;
-  } else if (progress <= 0.46) {
-    ch2Opacity = (progress - 0.32) / 0.14;
-  } else if (progress <= 0.62) {
-    ch2Opacity = 1;
-  } else if (progress <= 0.74) {
-    ch2Opacity = 1 - (progress - 0.62) / 0.12;
-  }
-  const ch2TranslateY = progress < 0.46
-    ? (0.46 - progress) * 140
-    : progress > 0.62
-    ? -(progress - 0.62) * 180
-    : 0;
-  const ch2Scale = progress < 0.46
-    ? 0.95 + (progress - 0.32) * 0.36
-    : 1 + (progress - 0.46) * 0.07;
-
-  // Chapter 3 Transition Dynamics: "Nima Hosseini"
-  // Enters 0.64 -> 0.78, fully present 0.78 -> 1.0
-  const ch3Opacity = Math.max(0, Math.min(1, (progress - 0.64) / 0.16));
-  const ch3TranslateY = progress < 0.78 ? (0.78 - progress) * 150 : 0;
-  const ch3Scale = 0.95 + Math.min(0.05, Math.max(0, (progress - 0.64) * 0.18));
+  }, [hasTriggered]);
 
   return (
     <section
-      ref={containerRef}
+      ref={sectionRef}
       id="nima-hosseini"
       aria-label="Manifesto and Identity"
-      className="relative w-full h-[240vh] sm:h-[260vh] select-none"
-      style={{ backgroundColor: "#FAF6F0" }}
+      className="relative w-full min-h-[85dvh] sm:min-h-[92dvh] py-24 sm:py-32 flex items-center justify-center bg-[#FAF6F0] overflow-hidden select-none"
     >
       <div id="story" className="absolute top-0" />
 
-      {/* AMBIENT ORGANIC WARM HALOS (ABSOLUTE & CLIPPED - NO FIXED MOBILE JANK) */}
+      {/* Ambient warm halos (Absolute & clipped) */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <div
           className="absolute top-1/4 -left-32 w-[350px] sm:w-[850px] h-[350px] sm:h-[850px] rounded-full opacity-30 sm:opacity-40 blur-2xl sm:blur-3xl"
           style={{
             background: "radial-gradient(circle, #E87A5D33 0%, transparent 70%)",
-            transform: !isTouchDevice ? `translate3d(${tilt.x * 2}px, ${tilt.y * 2}px, 0)` : undefined,
           }}
         />
         <div
           className="absolute bottom-1/4 -right-32 w-[320px] sm:w-[800px] h-[320px] sm:h-[800px] rounded-full opacity-25 sm:opacity-35 blur-2xl sm:blur-3xl"
           style={{
             background: "radial-gradient(circle, #D9532F24 0%, transparent 70%)",
-            transform: !isTouchDevice ? `translate3d(${-tilt.x * 2}px, ${-tilt.y * 2}px, 0)` : undefined,
           }}
         />
       </div>
 
-      {/* STICKY FULL-VIEWPORT THEATRICAL STAGE */}
-      <div
-        ref={stageRef}
-        onPointerMove={handlePointerMove}
-        onPointerLeave={handlePointerLeave}
-        className="sticky top-0 h-[100dvh] w-full flex items-center justify-center px-6 sm:px-12 md:px-16 lg:px-24 overflow-hidden"
-      >
-
-        {/* ========================================================================= */}
-        {/* CENTER TRANSITION STAGE                                                   */}
-        {/* ========================================================================= */}
+      {/* Main Container Aligned to 1400px Grid */}
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-12 md:px-16 lg:px-24 flex flex-col items-center justify-center text-center space-y-6 sm:space-y-8">
+        
+        {/* Line 1: "You didn't notice anything." */}
         <div
-          className="relative w-full max-w-[1400px] flex-1 flex items-center justify-center"
-          style={{
-            perspective: !isTouchDevice ? 1000 : undefined,
-            transform: !isTouchDevice ? `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)` : undefined,
-            transition: !isTouchDevice ? "transform 300ms cubic-bezier(0.16, 1, 0.3, 1)" : undefined,
-          }}
+          className={`transition-all duration-700 ease-out ${
+            step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+          }`}
         >
+          <p className="font-serif italic text-[clamp(2.5rem,6.8vw,6.4rem)] leading-[0.98] tracking-[-0.03em] max-w-5xl mx-auto text-[#2B1D16]">
+            You didn’t notice anything.
+          </p>
+        </div>
 
-          {/* ======================================================================= */}
-          {/* CHAPTER 1: "You didn't notice anything."                                */}
-          {/* ======================================================================= */}
+        {/* Line 2: "That was the job." */}
+        <div
+          className={`transition-all duration-700 ease-out ${
+            step >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
+          }`}
+        >
+          <h2 className="font-display font-black text-[clamp(3.2rem,9.2vw,9.2rem)] leading-[0.88] tracking-[-0.045em] uppercase max-w-6xl mx-auto text-[#1E1612]">
+            <span>That was the </span>
+            <span style={{ color: "#D94B26" }}>job.</span>
+          </h2>
+        </div>
+
+        {/* Line 3: Real Measurement Line (Shown ONLY if both latency and location are verified) */}
+        {measurement && (
           <div
-            className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none will-change-transform"
-            style={{
-              opacity: ch1Opacity,
-              transform: `translate3d(0, ${ch1TranslateY}px, 0) scale(${ch1Scale})`,
-              visibility: ch1Opacity <= 0.01 ? "hidden" : "visible",
-            }}
+            className={`transition-all duration-700 ease-out pt-2 sm:pt-4 ${
+              step >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
+            }`}
           >
-            <p
-              className="font-serif italic text-[clamp(2.7rem,9vw,10.5rem)] leading-[0.92] tracking-[-0.03em] max-w-6xl mx-auto"
-              style={{ color: "#2B1D16" }}
-            >
-              You didn’t notice anything.
-            </p>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/[0.04] border border-black/[0.06] font-mono text-[12px] sm:text-[14px] tracking-wide text-[#7C6C62] uppercase">
+              <span>This page reached you in</span>
+              <span className="text-[#1E1612] font-bold">{measurement.latencyMs} ms</span>
+              <span>from</span>
+              <span className="text-[#1E1612] font-bold">{measurement.location}</span>
+            </div>
           </div>
+        )}
 
-          {/* ======================================================================= */}
-          {/* CHAPTER 2: "That was the job."                                          */}
-          {/* ======================================================================= */}
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none will-change-transform"
-            style={{
-              opacity: ch2Opacity,
-              transform: `translate3d(0, ${ch2TranslateY}px, 0) scale(${ch2Scale})`,
-              visibility: ch2Opacity <= 0.01 ? "hidden" : "visible",
-            }}
-          >
-            <h2
-              className="font-display font-black text-[clamp(3.6rem,12vw,13.5rem)] leading-[0.84] tracking-[-0.05em] uppercase max-w-6xl mx-auto"
-              style={{ color: "#1E1612" }}
-            >
-              <span>That was the </span>
-              <span style={{ color: "#D94B26" }}>job.</span>
-            </h2>
-          </div>
-
-          {/* ======================================================================= */}
-          {/* CHAPTER 3: "Nima Hosseini"                                              */}
-          {/* ======================================================================= */}
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none will-change-transform"
-            style={{
-              opacity: ch3Opacity,
-              transform: `translate3d(0, ${ch3TranslateY}px, 0) scale(${ch3Scale})`,
-              visibility: ch3Opacity <= 0.01 ? "hidden" : "visible",
-            }}
-          >
-            <h2
-              className="font-display font-black text-[clamp(3.8rem,13.5vw,15.5rem)] leading-[0.82] tracking-[-0.05em] uppercase max-w-7xl mx-auto"
-              style={{ color: "#1E1612" }}
-            >
-              Nima Hosseini
-            </h2>
-          </div>
-
+        {/* Line 4: "Nima Hosseini, Cloud / DevOps engineer" */}
+        <div
+          className={`transition-all duration-700 ease-out pt-3 sm:pt-5 ${
+            step >= 4 || (step >= 3 && !measurement)
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-4 pointer-events-none"
+          }`}
+        >
+          <p className="font-display font-bold text-[clamp(1.35rem,2.8vw,2.4rem)] leading-snug tracking-[-0.025em] text-[#1E1612] max-w-3xl mx-auto">
+            Nima Hosseini, Cloud / DevOps engineer
+          </p>
         </div>
 
       </div>
