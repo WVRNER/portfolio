@@ -12,7 +12,7 @@ export function AboutSection() {
       {/* Anchor Header Row */}
       <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/[0.04] text-[11.5px] font-mono tracking-wider uppercase text-[#6E6E73] font-medium w-fit mb-8 sm:mb-12">
         <User className="w-3.5 h-3.5 text-[#242424]" />
-        <span>ABOUT</span>
+        <span>ABOUT ME</span>
       </div>
 
       {/* Main Grid: Portrait Anchor (Left) + Architectural Narrative (Right) */}
@@ -48,40 +48,51 @@ export function AboutSection() {
             </div>
           </div>
 
-          {/* Engineering Status Console (Designed per /minimalist-ui: Ultra-clean document card, warm bone surface, zero heavy shadow, 1px crisp border) */}
-          <div className="rounded-xl bg-[#FBFBFA] p-5 sm:p-6 border border-[#EAEAEA] space-y-4">
-            {/* PRIMARY FOCUS / CORE STACK Row */}
-            <div className="space-y-2.5">
-              <div className="flex items-center justify-between font-mono text-[10.5px] tracking-[0.18em] text-[#787774] uppercase">
-                <span className="font-semibold text-[#111111]">PRIMARY FOCUS</span>
-                <span>CORE STACK</span>
+          {/* Engineering Status Console: Crafted per /minimalist-ui (Warm Bone Canvas #FBFBFA, 1px #EAEAEA Border, Crisp 12px Radius, Zero Drop-Shadow) */}
+          <div className="rounded-xl bg-[#FBFBFA] border border-[#EAEAEA] p-4 sm:p-6 space-y-5">
+            {/* Top Row: Focus & Stack Header */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-[10.5px] font-mono tracking-[0.2em] uppercase text-[#787774]">
+                <span className="font-semibold text-[#242424]">PRIMARY FOCUS</span>
+                <span className="text-[#8A8A8A]">CORE STACK</span>
               </div>
-              <div className="flex flex-wrap items-center gap-2">
-                {["AWS", "Terraform", "Linux"].map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1.5 rounded-md bg-white border border-[#EAEAEA] text-[#111111] font-mono text-[12.5px] font-semibold tracking-wide shadow-[0_1px_2px_rgba(0,0,0,0.03)]"
+
+              {/* Physical Micro-Keycaps for Core Technologies */}
+              <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
+                {[
+                  { name: "AWS", detail: "Cloud Infra" },
+                  { name: "Terraform", detail: "Declarative IaC" },
+                  { name: "Linux", detail: "Kernel & Systems" },
+                ].map((item) => (
+                  <div
+                    key={item.name}
+                    className="p-2.5 sm:p-3 rounded-lg bg-white border border-[#EAEAEA] hover:border-[#D4D4D4] transition-colors group cursor-default min-w-0"
                   >
-                    {tech}
-                  </span>
+                    <div className="font-mono text-[11.5px] sm:text-[13px] font-semibold text-[#242424] tracking-tight truncate">
+                      {item.name}
+                    </div>
+                    <div className="font-sans text-[10px] sm:text-[10.5px] text-[#787774] pt-0.5 tracking-normal truncate">
+                      {item.detail}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
 
-            {/* Divider */}
+            {/* Hairline Structural Divider */}
             <div className="h-px bg-[#EAEAEA]" />
 
-            {/* STATE Row: Muted Pastel Status Beacon */}
+            {/* Bottom Row: Recruiter Availability Status Beacon */}
             <div className="space-y-2">
-              <div className="font-mono text-[10.5px] tracking-[0.18em] text-[#787774] uppercase">
+              <div className="text-[10.5px] font-mono tracking-[0.2em] uppercase text-[#787774]">
                 STATE
               </div>
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#EDF3EC] border border-[#DCE8DB] text-[#346538] font-sans text-[12px] sm:text-[12.5px] font-medium leading-normal">
-                <span className="relative flex h-2 w-2 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#346538] opacity-60" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#346538]" />
+
+              <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#EDF3EC] border border-[#DCE8DB] text-[#346538]">
+                <span className="w-2 h-2 rounded-full bg-[#346538] shrink-0" />
+                <span className="font-sans text-[12px] sm:text-[12.5px] font-medium tracking-tight leading-snug">
+                  Open to junior Cloud / DevOps roles remote
                 </span>
-                <span>Open to junior Cloud / DevOps roles remote</span>
               </div>
             </div>
           </div>

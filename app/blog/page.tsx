@@ -40,7 +40,6 @@ export default function BlogIndexPage() {
     "Terraform",
     "CI/CD",
     "Networking",
-    "Linux",
     "Kubernetes",
   ];
 

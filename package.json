@@ -2,6 +2,7 @@
   "name": "temp-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "prebuild": "node --experimental-strip-types scripts/build-image-metadata.mjs && node --experimental-strip-types scripts/build-github-cards.mjs",
