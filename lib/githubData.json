@@ -1,0 +1,26 @@
+{
+  "aws-actions/configure-aws-credentials": {
+    "fullName": "aws-actions/configure-aws-credentials",
+    "name": "configure-aws-credentials",
+    "owner": "aws-actions",
+    "description": "Configure AWS credential environment variables for use in other GitHub Actions.",
+    "stars": 3018,
+    "language": "TypeScript",
+    "languageColor": "#3178c6",
+    "url": "https://github.com/aws-actions/configure-aws-credentials",
+    "forks": 581,
+    "fetchedAt": 1792661199223
+  },
+  "hashicorp/terraform": {
+    "fullName": "hashicorp/terraform",
+    "name": "terraform",
+    "owner": "hashicorp",
+    "description": "Terraform enables you to safely and predictably create, change, and improve infrastructure. It is a source-available tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.",
+    "stars": 50013,
+    "language": "Go",
+    "languageColor": "#00ADD8",
+    "url": "https://github.com/hashicorp/terraform",
+    "forks": 10602,
+    "fetchedAt": 1792661199598
+  }
+}

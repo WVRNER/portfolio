@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node --experimental-strip-types scripts/build-image-metadata.mjs",
+    "prebuild": "node --experimental-strip-types scripts/build-image-metadata.mjs && node --experimental-strip-types scripts/build-github-cards.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
