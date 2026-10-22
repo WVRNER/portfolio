@@ -32,7 +32,7 @@ export function WritingSection() {
   return (
     <section
       id="writing"
-      aria-label="Stories & Field Notes"
+      aria-label="Writing & Technical Field Notes"
       className="relative py-20 sm:py-28 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto bg-white border-t border-[#0A0A0A]/10"
     >
       <div id="stories" className="absolute -top-12" />
@@ -46,16 +46,16 @@ export function WritingSection() {
           </div>
 
           <h2 className="font-display text-[28px] sm:text-[34px] font-bold tracking-[-0.03em] text-[#0A0A0A] leading-tight">
-            Stories &amp; Field Notes
+            Writing &amp; Field Notes
           </h2>
         </div>
 
-        {/* View all stories action */}
+        {/* View all writing action */}
         <Link
           href="/blog"
           className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#242424] hover:text-[#0A0A0A] hover:underline underline-offset-4 cursor-pointer shrink-0 pb-1"
         >
-          <span>See all stories</span>
+          <span>See all writing</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
@@ -124,7 +124,7 @@ export function WritingSection() {
           href="/blog"
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F5F5F7] hover:bg-[#EBEBEB] text-[#1D1D1F] border border-black/[0.06] text-[13px] font-medium transition-all active:scale-95 cursor-pointer outline-none focus:outline-none"
         >
-          <span>Browse all stories in the archive</span>
+          <span>Browse all writing in the archive</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>

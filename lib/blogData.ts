@@ -1,5 +1,5 @@
 export type ToolTag =
-  | "AWS"
+  | "Cloud"
   | "Terraform"
   | "CI/CD"
   | "Networking"
@@ -44,20 +44,20 @@ export interface BlogPost {
 
 /**
  * Returns a single, clear recruiter-friendly tool tag per post:
- * AWS · Terraform · CI/CD · Networking · Linux · Kubernetes
+ * Cloud · Terraform · CI/CD · Networking · Linux · Kubernetes
  */
 export function getPrimaryToolTag(post: BlogPost): ToolTag {
   if (post.toolTag) return post.toolTag;
 
   const slug = post.slug.toLowerCase();
   if (slug.includes("terraform") || slug.includes("vault")) return "Terraform";
-  if (slug.includes("aws") || slug.includes("iam") || slug.includes("route53") || slug.includes("project-01")) return "AWS";
+  if (slug.includes("aws") || slug.includes("iam") || slug.includes("route53") || slug.includes("project-01")) return "Cloud";
   if (slug.includes("canary") || slug.includes("kafka") || slug.includes("finops") || slug.includes("k8s") || slug.includes("kubernetes") || slug.includes("project-02")) return "Kubernetes";
   if (slug.includes("envoy") || slug.includes("network") || slug.includes("chaos")) return "Networking";
   if (slug.includes("ebpf") || slug.includes("telemetry") || slug.includes("cilium")) return "Linux";
   if (slug.includes("github") || slug.includes("docker") || slug.includes("pipeline") || slug.includes("runner") || slug.includes("oidc")) return "CI/CD";
 
-  return "AWS";
+  return "Cloud";
 }
 
 /**

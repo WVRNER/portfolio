@@ -13,7 +13,6 @@ import {
   BLOG_POSTS,
   formatDisplayDate,
   getPrimaryToolTag,
-  type BlogPost,
 } from "@/lib/blogData";
 
 /**
@@ -36,7 +35,7 @@ export default function BlogIndexPage() {
   // Recruiter-optimized tool tags matching tabs
   const topics = [
     "For you",
-    "AWS",
+    "Cloud",
     "Terraform",
     "CI/CD",
     "Networking",
@@ -104,7 +103,7 @@ export default function BlogIndexPage() {
         <header className="mb-8 pb-6 border-b border-[#F2F2F2]">
           <div className="space-y-2">
             <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[34px] sm:text-[46px] font-extrabold sm:font-black tracking-[-0.035em] text-[#1D1D1F] leading-[1.08]">
-              Stories
+              Writing
             </h1>
 
             <p className="text-[15.5px] sm:text-[17.5px] text-[#6B6B6B] leading-relaxed font-normal max-w-2xl">
@@ -137,12 +136,12 @@ export default function BlogIndexPage() {
         <main id="story-feed" className="scroll-mt-28">
             {filteredPosts.length === 0 ? (
               <div className="py-16 text-center text-[#6B6B6B]">
-                <p>No stories found for topic &ldquo;{activeCategory}&rdquo;.</p>
+                <p>No writing found for topic &ldquo;{activeCategory}&rdquo;.</p>
                 <button
                   onClick={() => setActiveCategory("For you")}
                   className="mt-3 text-[13px] text-[#242424] hover:underline font-medium cursor-pointer"
                 >
-                  View all stories
+                  View all writing
                 </button>
               </div>
             ) : (

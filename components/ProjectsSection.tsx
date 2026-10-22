@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { InstantLink } from "@/components/InstantLink";
 import { BlurImage } from "@/components/BlurImage";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";

@@ -182,7 +182,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
               href="/blog"
               className="hover:text-white transition-colors"
             >
-              All Stories
+              All Writing
             </Link>
 
             <button

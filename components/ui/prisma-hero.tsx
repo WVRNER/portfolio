@@ -2,7 +2,7 @@
 
 import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect, useSyncExternalStore } from "react";
 import { scrollToTarget } from "@/components/SmoothScroll";
 
 /* ---------------- WordsPullUp (Ultra-Crisp Motion) ---------------- */
@@ -21,11 +21,11 @@ export const WordsPullUp = ({
 }: WordsPullUpProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   const words = text.split(" ");
   const shouldAnimate = mounted || isInView;
@@ -205,7 +205,7 @@ interface PrismaHeroProps {
 
 const DEFAULT_NAV_ITEMS = [
   { label: "Work", id: "projects" },
-  { label: "Stories", href: "/blog" },
+  { label: "Writing", href: "/blog" },
   { label: "About", id: "about" },
   { label: "CV", action: "cv" },
   { label: "Contact", id: "contact" },
