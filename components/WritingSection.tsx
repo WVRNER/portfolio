@@ -29,12 +29,12 @@ export function WritingSection() {
     <section
       id="writing"
       aria-label="Stories & Field Notes"
-      className="relative py-16 sm:py-24 px-6 sm:px-8 max-w-[760px] mx-auto bg-white border-t border-[#0A0A0A]/10"
+      className="relative py-20 sm:py-28 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto bg-white border-t border-[#0A0A0A]/10"
     >
       <div id="stories" className="absolute -top-12" />
 
       {/* Editorial Header Row */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 mb-2 border-b border-[#F2F2F2]">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 mb-8 border-b border-[#F2F2F2]">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-black/[0.04] text-[11px] font-mono tracking-wider uppercase text-[#6E6E73] font-medium">
             <BookOpen className="w-3.5 h-3.5 text-[#1D1D1F]" />
@@ -56,10 +56,10 @@ export function WritingSection() {
         </Link>
       </div>
 
-      {/* COMPACT MEDIUM-STYLE VERTICAL STORIES STREAM */}
-      <div className="divide-y divide-[#F2F2F2]">
+      {/* BALANCED 2-COLUMN EDITORIAL STORIES GRID ALIGNED TO SITE WIDTH */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 lg:gap-x-14 gap-y-8 sm:gap-y-10">
         {displayedPosts.map((post) => (
-          <article key={post.slug} className="py-6 sm:py-7 first:pt-4">
+          <article key={post.slug} className="pt-2">
             <InstantLink
               href={`/blog/${post.slug}`}
               className="group block cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"

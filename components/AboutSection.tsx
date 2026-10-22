@@ -1,60 +1,124 @@
+"use client";
+
+import { User, Terminal } from "lucide-react";
+
 export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1720px] mx-auto border-t border-[#0A0A0A]/15 bg-white"
+      className="relative py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-[#0A0A0A]/10 bg-white"
       aria-label="About Nima Hosseini"
     >
-      {/* Opening Idea: Monumental Sans with Oversized Instrument Serif "invisible" */}
-      <div className="pb-16 sm:pb-24 lg:pb-28">
-        <h2 className="font-display text-[clamp(2.4rem,5.2vw,4.8rem)] font-normal text-[#0A0A0A] leading-[0.98] tracking-[-0.035em] max-w-[1280px]">
-          <div>
-            <span>Good architecture is quiet.</span>
-            <br />
-            <span>Great infrastructure is</span>
-          </div>
-
-          <span className="inline-flex items-baseline flex-wrap gap-x-3 sm:gap-x-5 pt-2 sm:pt-3.5">
-            <span className="font-serif italic font-normal text-[1.4em] text-[#0A0A0A] leading-none tracking-[-0.025em] select-none inline-block">
-              invisible.
-            </span>
-          </span>
-        </h2>
+      {/* Anchor Header Row */}
+      <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-black/[0.04] text-[11.5px] font-mono tracking-wider uppercase text-[#6E6E73] font-medium w-fit mb-8 sm:mb-12">
+        <User className="w-3.5 h-3.5 text-[#1D1D1F]" />
+        <span>ABOUT / NIMA HOSSEINI</span>
       </div>
 
-      {/* Narrative Canvas: WHERE I COME FROM -> NOW -> DIRECTION */}
-      <div className="border-t border-[#0A0A0A]/15 pt-12 sm:pt-16 lg:pt-20 grid grid-cols-1 lg:grid-cols-12 gap-y-12 lg:gap-y-16 gap-x-12 items-start">
-        {/* Where I Come From: Grounded Infrastructure Roots (Cols 1-5) */}
-        <div className="lg:col-span-5 space-y-3.5">
-          <div className="text-[11px] font-mono tracking-[0.24em] text-[#8A8A8A] uppercase">
-            BACKGROUND
+      {/* Main Grid: Portrait Anchor (Left) + Architectural Narrative (Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        
+        {/* Left Column: Portrait & Identity Anchor (Cols 1-4) */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#141416] border border-black/10 shadow-sm group">
+            {/* Visual Portrait Surface */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero-poster.jpg"
+              alt="Nima Hosseini"
+              className="w-full h-full object-cover grayscale contrast-110 group-hover:scale-[1.02] transition-transform duration-500 ease-out"
+            />
+
+            {/* Subtle dark gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+
+            {/* Card Identity Details */}
+            <div className="absolute bottom-5 left-5 right-5 text-white space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="text-[11px] font-mono tracking-[0.2em] uppercase text-white/70">
+                  WVRNER
+                </span>
+              </div>
+              <h3 className="font-display text-[22px] font-bold text-white tracking-tight leading-tight">
+                Nima Hosseini
+              </h3>
+              <p className="text-[13px] font-sans text-neutral-300">
+                Cloud / DevOps Engineer
+              </p>
+            </div>
           </div>
-          <p className="text-[15px] sm:text-[16px] text-[#4A4A4A] leading-relaxed max-w-[480px]">
-            My path started in hands-on IT and infrastructure operations - troubleshooting systems directly, seeing where environments break, and understanding the physical and operational reality beneath modern abstractions.
-          </p>
+
+          {/* Quick Technical Footprint */}
+          <div className="p-4 rounded-xl bg-[#F8F8F9] border border-black/[0.06] space-y-2 font-mono text-[12px] text-[#555555]">
+            <div className="flex items-center justify-between">
+              <span className="text-[#888888]">FOCUS</span>
+              <span className="text-[#161617] font-semibold">AWS / IaC / Systems</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[#888888]">STATE</span>
+              <span className="text-emerald-700 font-semibold flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+                Available for Roles
+              </span>
+            </div>
+          </div>
         </div>
 
-        {/* Where I Am Now & Direction (Cols 6-12) */}
-        <div className="lg:col-span-7 space-y-12 sm:space-y-14 lg:pl-6 xl:pl-10">
-          {/* NOW: Grounded Hands-on Reality */}
-          <div className="space-y-3.5 border-t lg:border-t-0 border-[#0A0A0A]/10 pt-8 lg:pt-0">
-            <div className="flex items-center gap-2.5 text-[11px] font-mono tracking-[0.24em] text-[#8A8A8A] uppercase">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#0A0A0A]" />
-              <span>NOW</span>
-            </div>
-            <p className="text-[14.5px] sm:text-[15.5px] text-[#4A4A4A] leading-relaxed max-w-[520px]">
-              Translating that operational foundation into Cloud and DevOps engineering. I spend my time running structured architectural labs, writing declarative infrastructure, and building reproducible deployment workflows.
-            </p>
+        {/* Right Column: Narrative Canvas & Story (Cols 5-12) */}
+        <div className="lg:col-span-8 space-y-12 sm:space-y-14">
+          
+          {/* Monumental Headline Idea */}
+          <div>
+            <h2 className="font-display text-[clamp(2.4rem,4.5vw,4.2rem)] font-normal text-[#0A0A0A] leading-[1.02] tracking-[-0.035em]">
+              <div>
+                <span>Good architecture is quiet.</span>
+                <br />
+                <span>Great infrastructure is</span>
+              </div>
+
+              <span className="inline-flex items-baseline flex-wrap gap-x-3 sm:gap-x-5 pt-2 sm:pt-3">
+                <span className="font-serif italic font-normal text-[1.35em] text-[#0A0A0A] leading-none tracking-[-0.025em] select-none inline-block">
+                  invisible.
+                </span>
+              </span>
+            </h2>
           </div>
 
-          {/* DIRECTION: Systems -> Automation -> Cloud */}
-          <div className="space-y-4 pt-4 border-t border-[#0A0A0A]/10">
-            <div className="text-[11px] font-mono tracking-[0.24em] text-[#8A8A8A] uppercase">
-              PROGRESSION
+          {/* Narrative Story Progression: BACKGROUND -> NOW -> PROGRESSION */}
+          <div className="border-t border-[#0A0A0A]/10 pt-10 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-start">
+            
+            {/* Background: IT Ops Grounding */}
+            <div className="space-y-3">
+              <div className="text-[11px] font-mono tracking-[0.24em] text-[#8A8A8A] uppercase font-semibold">
+                BACKGROUND
+              </div>
+              <p className="text-[15px] sm:text-[16px] text-[#4A4A4A] leading-relaxed">
+                My path started in hands-on IT and infrastructure operations: troubleshooting systems directly, diagnosing why environments break under load, and understanding the physical and operational reality beneath modern abstractions.
+              </p>
+            </div>
+
+            {/* Now: Modern Cloud Infrastructure */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2.5 text-[11px] font-mono tracking-[0.24em] text-[#8A8A8A] uppercase font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0A0A0A]" />
+                <span>NOW</span>
+              </div>
+              <p className="text-[15px] sm:text-[16px] text-[#4A4A4A] leading-relaxed">
+                Translating that operational foundation into Cloud and DevOps engineering. I spend my time running structured architectural labs, writing declarative infrastructure with Terraform, and engineering automated deployment workflows.
+              </p>
+            </div>
+
+          </div>
+
+          {/* PROGRESSION: Systems -> Automation -> Cloud */}
+          <div className="space-y-4 pt-6 border-t border-[#0A0A0A]/10">
+            <div className="text-[11px] font-mono tracking-[0.24em] text-[#8A8A8A] uppercase font-semibold">
+              ENGINEERING PROGRESSION
             </div>
 
             {/* Visual Vector / Growth Path */}
-            <div className="inline-flex items-center gap-2.5 sm:gap-4 font-mono text-[12.5px] sm:text-[14px] tracking-[0.16em] uppercase text-[#0A0A0A] font-medium py-3 px-4 border border-[#0A0A0A]/15 bg-[#F9F9F9]">
+            <div className="inline-flex items-center gap-2.5 sm:gap-4 font-mono text-[12px] sm:text-[13.5px] tracking-[0.16em] uppercase text-[#0A0A0A] font-semibold py-3 px-4 border border-[#0A0A0A]/12 bg-[#F9F9F9] rounded-lg">
               <span>SYSTEMS</span>
               <span className="text-[#8A8A8A]">→</span>
               <span>AUTOMATION</span>
@@ -62,11 +126,13 @@ export function AboutSection() {
               <span>CLOUD</span>
             </div>
 
-            <p className="text-[13.5px] sm:text-[14.5px] text-[#5A5A5A] leading-relaxed max-w-[500px]">
-              A deliberate progression: understanding how single machines behave, encoding that behavior into automated pipelines, and scaling it into resilient cloud infrastructure.
+            <p className="text-[14px] sm:text-[15px] text-[#5A5A5A] leading-relaxed max-w-[620px]">
+              A deliberate progression: understanding how single machines behave, encoding that behavior into automated CI/CD pipelines, and scaling it into resilient, self-healing cloud infrastructure.
             </p>
           </div>
+
         </div>
+
       </div>
     </section>
   );

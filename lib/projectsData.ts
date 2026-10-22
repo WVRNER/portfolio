@@ -52,21 +52,21 @@ export const PROJECTS_AND_LABS: ProjectOrLab[] = [
   {
     slug: "project-01",
     number: "01",
-    title: "Project 01",
+    title: "Autonomous Multi-Region State Engine",
     kind: "PROJECT",
-    shortDescription: "Cloud Infrastructure & System Architecture",
-    technologies: ["AWS", "Terraform", "Docker", "CI/CD"],
-    imageUrl: undefined, // Upload path for wide Project 01 image (e.g., "/projects/project-01.png")
-    relatedPostSlug: "project-01",
+    shortDescription: "Declarative infrastructure state reconciliation and automated drift remediation across AWS.",
+    technologies: ["AWS", "Terraform", "GitHub OIDC", "Docker"],
+    imageUrl: undefined,
+    relatedPostSlug: "deterministic-terraform-ephemeral-environments",
   },
   {
     slug: "project-02",
     number: "02",
-    title: "Project 02",
+    title: "Ephemeral Sandbox Mesh",
     kind: "LAB",
-    shortDescription: "Systems Engineering & Architectural Lab",
-    technologies: ["Kubernetes", "DevOps", "Telemetry", "Linux"],
-    imageUrl: undefined, // Upload path for square Project/Lab 02 image (e.g., "/projects/project-02.png")
-    relatedPostSlug: "project-02",
+    shortDescription: "On-demand isolated preview environments running on AWS Fargate with verified OIDC.",
+    technologies: ["AWS Fargate", "ECS", "Terraform", "Docker"],
+    imageUrl: undefined,
+    relatedPostSlug: "short-lived-credentials-aws-oidc-github",
   },
 ];

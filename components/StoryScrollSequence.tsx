@@ -199,14 +199,14 @@ export function StoryScrollSequence() {
         ref={stageRef}
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerLeave}
-        className="sticky top-0 h-[100dvh] w-full flex items-center justify-center px-5 sm:px-12 md:px-16 lg:px-24 overflow-hidden"
+        className="sticky top-0 h-[100dvh] w-full flex items-center justify-center px-6 sm:px-12 md:px-16 lg:px-24 overflow-hidden"
       >
 
         {/* ========================================================================= */}
         {/* CENTER TRANSITION STAGE                                                   */}
         {/* ========================================================================= */}
         <div
-          className="relative w-full max-w-[1440px] flex-1 flex items-center justify-center"
+          className="relative w-full max-w-[1400px] flex-1 flex items-center justify-center"
           style={{
             perspective: !isTouchDevice ? 1000 : undefined,
             transform: !isTouchDevice ? `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)` : undefined,
