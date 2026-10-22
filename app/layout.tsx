@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Geist, Geist_Mono, Instrument_Serif, Plus_Jakarta_Sans, Source_Serif_4, Inter } from "next/font/google";
 import "./globals.css";
+import { PWARegistration } from "@/components/PWARegistration";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -91,15 +92,26 @@ export const metadata: Metadata = {
       "Personal Cloud / DevOps engineering portfolio of Nima Hosseini (WVRNER). AWS, Terraform, GitHub Actions, Docker & container architectures.",
     creator: "@wvrner",
   },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "WVRNER",
+  },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
     shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FFFFFF",
+  themeColor: "#0A0A0A",
   width: "device-width",
   initialScale: 1,
 };
@@ -115,6 +127,7 @@ export default function RootLayout({
       className={`${inter.variable} ${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${sourceSerif.variable} selection:bg-[#0A0A0A] selection:text-white`}
     >
       <body className="min-h-[100dvh] bg-white text-[#0A0A0A] font-sans antialiased relative selection:bg-[#0A0A0A] selection:text-white">
+        <PWARegistration />
         <div className="fixed inset-0 pointer-events-none bg-noise-grain opacity-40 z-50" aria-hidden="true" />
         {children}
       </body>
