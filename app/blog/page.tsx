@@ -2,11 +2,12 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
 import { CVDrawer } from "@/components/CVDrawer";
 import { EditorialFooter } from "@/components/EditorialFooter";
 import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
+import { InstantLink } from "@/components/InstantLink";
 import { BLOG_POSTS, formatDisplayDate, type BlogPost } from "@/lib/blogData";
 
 /**
@@ -74,20 +75,13 @@ export default function BlogIndexPage() {
     return [1, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
   };
 
-  // Selected stories for sidebar
-  const selectedStories = useMemo(() => {
-    const featured = BLOG_POSTS.filter((p) => p.featured);
-    if (featured.length >= 3) return featured.slice(0, 4);
-    return BLOG_POSTS.slice(0, 3);
-  }, []);
-
   return (
     <div className="relative min-h-[100dvh] bg-[#FFFFFF] text-[#242424] font-sans antialiased selection:bg-[#EAEAEA] selection:text-[#242424]">
       {/* Floating Navigation Pill */}
       <Navigation onOpenCV={() => setCvOpen(true)} />
 
-      {/* Main Container */}
-      <div className="max-w-[1120px] mx-auto px-6 sm:px-8 md:px-10 pt-28 sm:pt-36 pb-24">
+      {/* Main Container - Centered Column */}
+      <div className="max-w-[720px] mx-auto px-6 sm:px-8 md:px-0 pt-28 sm:pt-36 pb-24">
         
         {/* Navigation Breadcrumb */}
         <div className="flex items-center justify-between gap-4 mb-8 pb-4 border-b border-[#F2F2F2] text-[13px] font-sans text-[#6B6B6B]">
@@ -135,11 +129,8 @@ export default function BlogIndexPage() {
           </div>
         </header>
 
-        {/* 2-COLUMN EDITORIAL LAYOUT */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          
-          {/* LEFT: MAIN STORY STREAM (Col 1-8) */}
-          <main id="story-feed" className="lg:col-span-8 scroll-mt-28">
+        {/* CENTERED EDITORIAL MAIN STREAM */}
+        <main id="story-feed" className="scroll-mt-28">
             {filteredPosts.length === 0 ? (
               <div className="py-16 text-center text-[#6B6B6B]">
                 <p>No stories found for topic &ldquo;{activeCategory}&rdquo;.</p>
@@ -156,7 +147,7 @@ export default function BlogIndexPage() {
                 <div className="divide-y divide-[#F2F2F2]">
                   {paginatedPosts.map((post) => (
                     <article key={post.slug} className="py-6 sm:py-8 first:pt-2">
-                      <Link
+                      <InstantLink
                         href={`/blog/${post.slug}`}
                         className="group block cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
                       >
@@ -176,13 +167,13 @@ export default function BlogIndexPage() {
                               <span>{formatDisplayDate(post.date)}</span>
                             </div>
 
-                            {/* Headline: 16px font size, 19px line height */}
-                            <h2 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[16px] leading-[19px] text-[#0A0A0A] tracking-[-0.025em] line-clamp-2">
+                            {/* Big Bold Headline matching screenshot */}
+                            <h2 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[27px] text-[#0A0A0A] leading-[1.2] tracking-[-0.03em] line-clamp-2">
                               {post.title}
                             </h2>
 
-                            {/* Subtitle / Excerpt: 19px line height */}
-                            <p className="text-[14px] sm:text-[14.5px] text-[#555555] leading-[19px] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                            {/* Subtitle / Excerpt */}
+                            <p className="text-[15px] sm:text-[16px] text-[#555555] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                               {post.subtitle || post.excerpt}
                             </p>
                           </div>
@@ -201,7 +192,7 @@ export default function BlogIndexPage() {
                           )}
 
                         </div>
-                      </Link>
+                      </InstantLink>
                     </article>
                   ))}
                 </div>
@@ -281,80 +272,6 @@ export default function BlogIndexPage() {
               </div>
             )}
           </main>
-
-          {/* RIGHT: SELECTED STORIES SIDEBAR (Col 9-12) */}
-          <aside className="hidden lg:block lg:col-span-4 border-l border-[#F2F2F2] pl-8 space-y-10 sticky top-28">
-            
-            {/* Selected Stories */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-[13.5px] font-bold text-[#242424]">
-                <Sparkles className="w-4 h-4 text-[#242424]" />
-                <span>Selected Stories</span>
-              </div>
-
-              <div className="space-y-4">
-                {selectedStories.map((pick) => (
-                  <Link
-                    key={pick.slug}
-                    href={`/blog/${pick.slug}`}
-                    className="group block space-y-1 outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
-                  >
-                    <div className="flex items-start gap-1.5">
-                      {pick.featured && (
-                        <span className="pt-0.5 inline-flex">
-                          <FeaturedStarIcon className="w-3 h-3" />
-                        </span>
-                      )}
-                      <h4 className="font-bold text-[14px] text-[#242424] line-clamp-2 leading-[19px] tracking-tight">
-                        {pick.title}
-                      </h4>
-                    </div>
-                    <span className="text-[12px] text-[#6B6B6B] block">
-                      {pick.readingTime} &middot; {formatDisplayDate(pick.date)}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Recommended Topics: Exactly 4 tags */}
-            <div className="pt-6 border-t border-[#F2F2F2] space-y-3">
-              <h3 className="font-bold text-[13.5px] text-[#242424]">
-                Recommended topics
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {["Architecture", "Security", "DevOps", "Infrastructure"].map((tag) => (
-                  <button
-                    key={tag}
-                    onClick={() => {
-                      setActiveCategory(tag);
-                      setCurrentPage(1);
-                    }}
-                    className={`px-3.5 py-1.5 rounded-full text-[12.5px] font-normal transition-colors cursor-pointer ${
-                      activeCategory === tag
-                        ? "bg-[#242424] text-white"
-                        : "bg-[#F2F2F2] hover:bg-[#EAEAEA] text-[#242424]"
-                    }`}
-                  >
-                    {tag}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Publication Quick Links */}
-            <div className="pt-6 border-t border-[#F2F2F2] text-[11px] text-[#6B6B6B] space-x-2.5 leading-loose">
-              <Link href="/" className="hover:text-[#242424]">Portfolio</Link>
-              <span>&middot;</span>
-              <button onClick={() => setCvOpen(true)} className="hover:text-[#242424] cursor-pointer">Curriculum Vitae</button>
-              <span>&middot;</span>
-              <Link href="/blog" className="hover:text-[#242424]">Archive</Link>
-            </div>
-
-          </aside>
-
-        </div>
-
       </div>
 
       {/* Footer / Architectural Colophon Section */}

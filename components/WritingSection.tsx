@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
+import { InstantLink } from "@/components/InstantLink";
 import { BLOG_POSTS, formatDisplayDate } from "@/lib/blogData";
 
 /**
@@ -57,7 +58,7 @@ export function WritingSection() {
       <div className="divide-y divide-[#F2F2F2]">
         {displayedPosts.map((post) => (
           <article key={post.slug} className="py-6 sm:py-7 first:pt-4">
-            <Link
+            <InstantLink
               href={`/blog/${post.slug}`}
               className="group block cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
             >
@@ -109,7 +110,7 @@ export function WritingSection() {
                 )}
 
               </div>
-            </Link>
+            </InstantLink>
           </article>
         ))}
       </div>

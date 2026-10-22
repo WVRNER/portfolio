@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { InstantLink } from "@/components/InstantLink";
 import { PROJECTS_AND_LABS, type ProjectOrLab } from "@/lib/projectsData";
 import { BLOG_POSTS } from "@/lib/blogData";
 import { MonolithSurface } from "./MonolithSurface";
@@ -70,14 +71,14 @@ function ProjectInfo({
       </div>
 
       {hasRealTitle && (
-        <Link
+        <InstantLink
           href={targetUrl}
           className="block group focus:outline-none"
         >
           <h3 className="font-display text-[clamp(1.5rem,2.6vw,2.4rem)] font-medium text-[#0A0A0A] tracking-[-0.035em] leading-snug group-hover:text-[#0A0A0A]/70 transition-colors">
             {project.title}
           </h3>
-        </Link>
+        </InstantLink>
       )}
 
       {hasRealTech && project.technologies && (
@@ -87,7 +88,7 @@ function ProjectInfo({
       )}
 
       <div className="pt-2 flex flex-wrap items-center gap-x-6 gap-y-2">
-        <Link
+        <InstantLink
           href={targetUrl}
           className="group/link inline-flex items-center gap-1.5 text-[11.5px] font-mono font-medium text-[#0A0A0A] uppercase tracking-[0.16em] hover:opacity-60 transition-opacity"
         >
@@ -95,10 +96,10 @@ function ProjectInfo({
           <span className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
             ↗
           </span>
-        </Link>
+        </InstantLink>
 
         {hasWriteUp && project.relatedPostSlug && (
-          <Link
+          <InstantLink
             href={`/blog/${project.relatedPostSlug}`}
             className="group/link inline-flex items-center gap-1.5 text-[11.5px] font-mono font-medium text-[#0A0A0A] uppercase tracking-[0.16em] hover:opacity-60 transition-opacity"
           >
@@ -106,7 +107,7 @@ function ProjectInfo({
             <span className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5">
               ↗
             </span>
-          </Link>
+          </InstantLink>
         )}
       </div>
     </div>
@@ -150,13 +151,13 @@ export function ProjectsGallery() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_480px] lg:gap-x-8 xl:lg:gap-x-10">
         {/* Project 01 Media Tile */}
         <div className="w-full h-[240px] sm:h-[300px] lg:h-[420px] xl:lg:h-[480px] lg:col-start-1 lg:row-start-1 min-w-0">
-          <Link
+          <InstantLink
             href="/blog/project-01"
             className="group block w-full h-full focus:outline-none"
             aria-label={project1.title ? `View ${project1.title}` : "View Project 01"}
           >
             <ProjectMediaTile project={project1} />
-          </Link>
+          </InstantLink>
         </div>
 
         {/* Project 01 Info Block */}
@@ -166,13 +167,13 @@ export function ProjectsGallery() {
 
         {/* Project 02 Media Tile */}
         <div className="pt-10 lg:pt-0 border-t border-[#0A0A0A]/10 lg:border-t-0 w-[75%] sm:w-[65%] lg:w-[420px] xl:lg:w-[480px] lg:h-[420px] xl:lg:h-[480px] aspect-square lg:col-start-2 lg:row-start-1 shrink-0">
-          <Link
+          <InstantLink
             href="/blog/project-02"
             className="group block w-full h-full focus:outline-none"
             aria-label={project2.title ? `View ${project2.title}` : "View Lab"}
           >
             <ProjectMediaTile project={project2} />
-          </Link>
+          </InstantLink>
         </div>
 
         {/* Project 02 Info Block */}
