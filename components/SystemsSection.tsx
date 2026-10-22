@@ -17,7 +17,7 @@ export function CompleteStaticRegister() {
     >
       <div className="max-w-[1720px] mx-auto space-y-12 sm:space-y-16">
         {/* Section Header */}
-        <header className="space-y-4 pb-8 sm:pb-10 border-b border-white/10">
+        <header className="space-y-4">
           <h2 className="font-display text-[clamp(2.4rem,5.5vw,4.2rem)] font-medium leading-[1.05] tracking-[-0.035em] text-white select-none">
             Systems &amp; Disciplines.
           </h2>

@@ -101,7 +101,7 @@ export default function BlogIndexPage() {
       <div className="max-w-[680px] w-full mx-auto px-6 sm:px-0 pt-28 sm:pt-36 pb-24">
         
         {/* Masthead */}
-        <header className="mb-8">
+        <header className="mb-0">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-2">
               <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[34px] sm:text-[46px] font-extrabold sm:font-black tracking-[-0.035em] text-[#1D1D1F] dark:text-[#e5e5e5] leading-[1.08]">
