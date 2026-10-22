@@ -34,6 +34,33 @@ export interface BlogPost {
 }
 
 /**
+ * Format a blog date dynamically:
+ * Shows Month and Day (e.g. "Oct 14", "Aug 4") if within the current year,
+ * or includes the year (e.g. "Dec 12, 2025") if the post is a year old or older.
+ */
+export function formatDisplayDate(dateStr: string): string {
+  if (!dateStr) return "";
+  const parsed = new Date(dateStr);
+  if (isNaN(parsed.getTime())) return dateStr;
+
+  const currentYear = new Date().getFullYear();
+  const postYear = parsed.getFullYear();
+
+  if (postYear >= currentYear) {
+    return parsed.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
+  }
+
+  return parsed.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+/**
  * TECHNICAL WRITING REPOSITORY - NIMA HOSSEINI
  * Real, production-grade cloud & DevOps essays and field documentation.
  */

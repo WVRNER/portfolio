@@ -297,15 +297,22 @@ html.lenis, html.lenis body {
   }
 }
 
-/* Quote Sharing Highlight Animation */
+/* Quote Sharing and Article Quotes Highlight */
+article blockquote {
+  background-color: #e8f3e8;
+  border-left: 3px solid #161617;
+  padding: 1rem 1.25rem;
+  border-radius: 0 4px 4px 0;
+}
+
 @keyframes quoteTargetGlow {
   0% {
-    background-color: rgba(254, 240, 138, 0.55);
-    box-shadow: 0 0 0 4px rgba(254, 240, 138, 0.35);
+    background-color: #e8f3e8;
+    box-shadow: 0 0 0 4px #e8f3e8;
   }
   60% {
-    background-color: rgba(254, 240, 138, 0.45);
-    box-shadow: 0 0 0 3px rgba(254, 240, 138, 0.25);
+    background-color: #e8f3e8;
+    box-shadow: 0 0 0 3px #e8f3e8;
   }
   100% {
     background-color: transparent;
