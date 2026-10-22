@@ -9,7 +9,6 @@ import { ProjectsTitle, ProjectsGallery } from "@/components/ProjectsSection";
 import { SystemsSection } from "@/components/SystemsSection";
 import { WritingSection } from "@/components/WritingSection";
 import { AboutSection } from "@/components/AboutSection";
-import { ReliefTransition } from "@/components/ReliefTransition";
 import { ContactSection } from "@/components/ContactSection";
 import { CVDrawer } from "@/components/CVDrawer";
 
@@ -57,9 +56,6 @@ export default function Home() {
 
         {/* 7. Profile / About */}
         <AboutSection />
-
-        {/* Tactile Relief Transition */}
-        <ReliefTransition />
 
         {/* 8. Contact & Footer */}
         <ContactSection onOpenCV={() => setCvOpen(true)} />
