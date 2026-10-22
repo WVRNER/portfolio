@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useSyncExternalStore } from "react";
+import React, { useRef, useEffect, useSyncExternalStore } from "react";
 
 function subscribeReducedMotion(callback: () => void) {
   if (typeof window === "undefined") return () => {};
@@ -19,255 +19,246 @@ function getServerReducedMotionSnapshot(): boolean {
 }
 
 /**
- * StoryScrollSequence - Unpinned Normal Viewport Section
- * 
- * - Normal one-screen section that never blocks scrolling
- * - Sequence reveals 4 lines in place (~0.6s apart) upon entering viewport
- * - Real performance measurement line from Navigation Timing API + Cloudflare colo
- *   (Skipped entirely if values are unavailable; never shows fake numbers)
- * - Plays sequence once; stays permanently visible when scrolling
- * - Immediate display for prefers-reduced-motion
+ * StoryScrollSequence
+ *
+ * Full-viewport manifesto section with the glass tile and liquid 'wvrner' wordmark.
+ * - Glass tile (squircle continuous-curvature corners, clear glass, subtle white lift, near-white rim)
+ * - Deep near-black wordmark 'wvrner' with thick liquid melt into bottom-left and top-right corners
+ * - 13-stop continuous spectral dispersion color fringe (indigo to blue to cyan to white to pink to red)
+ * - Middle letters v, r, n, e stay crisp and undistorted
+ * - Subtle 8-second breathing animation respecting prefers-reduced-motion
+ * - Cool off-white background with 5 faint concentric water ripple rings
+ * - Three static lines of text below the tile exactly to spec
  * - Zero em dashes
  */
 export function StoryScrollSequence() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [step, setStep] = useState(0);
-  const [hasTriggered, setHasTriggered] = useState(false);
-  const [measurement, setMeasurement] = useState<{
-    latencyMs: number;
-    location: string;
-  }>({
-    latencyMs: 997,
-    location: "FRA",
-  });
-
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const prefersReduced = useSyncExternalStore(
     subscribeReducedMotion,
     getReducedMotionSnapshot,
     getServerReducedMotionSnapshot
   );
 
-  const activeStep = prefersReduced ? 4 : step;
-
-  // 1. Fetch real Navigation Timing and Cloudflare data center location
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    let latency: number | null = null;
-    try {
-      if (window.performance) {
-        const navEntries = performance.getEntriesByType("navigation");
-        if (navEntries.length > 0) {
-          const nav = navEntries[0] as PerformanceNavigationTiming;
-          const t = Math.round(nav.responseEnd || nav.duration);
-          if (t > 0 && t < 10000) {
-            latency = t;
-          }
-        }
+    // 13 continuous spectral gradient stops
+    const stops = [
+      "#0B0B12", // 1. black core
+      "#1A1240", // 2. deep indigo
+      "#2A1FA8", // 3. violet-blue
+      "#2F4BFF", // 4. electric royal blue
+      "#1E8BFF", // 5. azure
+      "#00C8FF", // 6. bright cyan
+      "#7FF3FF", // 7. pale ice cyan
+      "#FFFFFF", // 8. thin white hot highlight
+      "#FFC2E6", // 9. pale pink
+      "#FF4FB0", // 10. hot pink
+      "#FF1F7A", // 11. magenta-rose
+      "#FF2D3D", // 12. red
+      "#FF6A3D", // 13. coral-orange
+    ];
+
+    const drawTile = (breathScale: number) => {
+      ctx.clearRect(0, 0, 720, 720);
+
+      // Core wordmark gradient: deep near-black (#0B0B12 to #14141C)
+      const coreGrad = ctx.createLinearGradient(0, 260, 0, 460);
+      coreGrad.addColorStop(0, "#0B0B12");
+      coreGrad.addColorStop(1, "#14141C");
+
+      // 1. Continuous spectral gradient fringe along the liquid rim
+      // Stacked progressive offset lines with smooth blur
+      for (let i = stops.length - 1; i >= 0; i--) {
+        const t = i / (stops.length - 1);
+        const offset = t * 15.5 * breathScale;
+
+        ctx.save();
+        ctx.strokeStyle = stops[i];
+        ctx.lineWidth = (13.5 - i * 0.45) * breathScale;
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+        ctx.filter = i === 7 ? "blur(1.2px)" : "blur(2.2px)";
+        ctx.globalAlpha = i === stops.length - 1 ? 0.68 : 0.95;
+
+        // Bottom-left liquid convex rim (anchors from bottom-left of 'w')
+        ctx.beginPath();
+        ctx.moveTo(68 - offset * 0.4, 412 - offset * 0.1);
+        ctx.bezierCurveTo(
+          42 - offset * 0.7, 480 + offset * 0.2,
+          32 - offset, 555 + offset * 0.4,
+          58 - offset * 0.8, 620 + offset * 0.6
+        );
+        ctx.bezierCurveTo(
+          78 - offset * 0.6, 660 + offset * 0.6,
+          135 - offset * 0.3, 678 + offset * 0.6,
+          235 + offset * 0.2, 675 + offset * 0.6
+        );
+        ctx.stroke();
+
+        // Top-right liquid convex rim (anchors from top-right of 'r')
+        ctx.beginPath();
+        ctx.moveTo(652 + offset * 0.4, 328 + offset * 0.1);
+        ctx.bezierCurveTo(
+          678 + offset * 0.7, 260 - offset * 0.2,
+          688 + offset, 185 - offset * 0.4,
+          662 + offset * 0.8, 120 - offset * 0.6
+        );
+        ctx.bezierCurveTo(
+          642 + offset * 0.6, 80 - offset * 0.6,
+          585 + offset * 0.3, 62 - offset * 0.6,
+          485 - offset * 0.2, 65 - offset * 0.6
+        );
+        ctx.stroke();
+
+        ctx.restore();
       }
-    } catch {
-      // Ignore
+
+      // 2. Solid near-black liquid core bodies
+      ctx.save();
+      ctx.fillStyle = coreGrad;
+
+      // Bottom-left liquid body (molten pull towards corner with fluid surface tension)
+      ctx.beginPath();
+      ctx.moveTo(68, 412);
+      ctx.bezierCurveTo(42, 480, 32, 555, 58, 620);
+      ctx.bezierCurveTo(78, 660, 135, 678, 235, 675);
+      // Fluid return curve back into the w
+      ctx.bezierCurveTo(185, 665, 120, 635, 95, 575);
+      ctx.bezierCurveTo(72, 515, 85, 455, 110, 415);
+      ctx.lineTo(68, 412);
+      ctx.closePath();
+      ctx.fill();
+
+      // Top-right liquid body (molten pull towards corner with fluid surface tension)
+      ctx.beginPath();
+      ctx.moveTo(652, 328);
+      ctx.bezierCurveTo(678, 260, 688, 185, 662, 120);
+      ctx.bezierCurveTo(642, 80, 585, 62, 485, 65);
+      // Fluid return curve back into the r
+      ctx.bezierCurveTo(535, 75, 600, 105, 625, 165);
+      ctx.bezierCurveTo(648, 225, 635, 285, 610, 325);
+      ctx.lineTo(652, 328);
+      ctx.closePath();
+      ctx.fill();
+
+      // 3. Central crisp wordmark 'wvrner' (solid near-black, fills approx 80% of tile width)
+      ctx.font = "900 172px -apple-system, BlinkMacSystemFont, 'SF Pro Rounded', 'Nunito', system-ui, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = coreGrad;
+      ctx.fillText("wvrner", 360, 360);
+
+      ctx.restore();
+    };
+
+    if (prefersReduced) {
+      drawTile(1.0);
+      return;
     }
 
-    // Check Cloudflare trace for real data center code (colo)
-    fetch("/cdn-cgi/trace")
-      .then((res) => {
-        if (!res.ok) throw new Error("Trace unavailable");
-        return res.text();
-      })
-      .then((text) => {
-        const match = text.match(/colo=([A-Z0-9]+)/);
-        if (match && match[1] && latency) {
-          setMeasurement({
-            latencyMs: latency,
-            location: match[1],
-          });
-        }
-      })
-      .catch(() => {
-        // Fallback: check HEAD response cf-ray header
-        fetch(window.location.href, { method: "HEAD" })
-          .then((res) => {
-            const ray = res.headers.get("cf-ray");
-            if (ray && ray.includes("-") && latency) {
-              const colo = ray.split("-").pop()?.trim();
-              if (colo) {
-                setMeasurement({
-                  latencyMs: latency,
-                  location: colo,
-                });
-              }
-            }
-          })
-          .catch(() => {
-            // Neither is available: line will be safely skipped
-          });
-      });
-  }, []);
+    let animId: number;
+    const startTime = performance.now();
 
-  // 2. Viewport entrance listener with prefers-reduced-motion check
-  useEffect(() => {
-    if (prefersReduced) return;
+    const loop = (time: number) => {
+      const elapsed = (time - startTime) / 1000;
+      // 8-second smooth breathing loop (2 * PI / 8 = Math.PI / 4 ≈ 0.785398)
+      const breath = 1.0 + 0.1 * Math.sin(elapsed * 0.785398);
+      drawTile(breath);
+      animId = requestAnimationFrame(loop);
+    };
 
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasTriggered) {
-          setHasTriggered(true);
-
-          // Step 1: "You didn't notice anything."
-          setStep(1);
-
-          // Step 2: "That was the job." (+0.6s)
-          const timer2 = setTimeout(() => {
-            setStep(2);
-
-            // Step 3: Measurement line (or direct jump to 4 if unavailable) (+0.6s)
-            const timer3 = setTimeout(() => {
-              setStep(3);
-
-              // Step 4: "Nima Hosseini, Cloud / DevOps engineer" (+0.6s)
-              const timer4 = setTimeout(() => {
-                setStep(4);
-              }, 600);
-
-              return () => clearTimeout(timer4);
-            }, 600);
-
-            return () => clearTimeout(timer3);
-          }, 600);
-
-          return () => clearTimeout(timer2);
-        }
-      },
-      { threshold: 0.25 }
-    );
-
-    observer.observe(el);
+    animId = requestAnimationFrame(loop);
 
     return () => {
-      observer.disconnect();
+      cancelAnimationFrame(animId);
     };
-  }, [hasTriggered, prefersReduced]);
+  }, [prefersReduced]);
 
   return (
     <section
-      ref={sectionRef}
       id="nima-hosseini"
-      aria-label="Manifesto and Identity"
-      className="relative w-full min-h-[85dvh] sm:min-h-[92dvh] py-24 sm:py-32 flex items-center justify-center overflow-hidden select-none"
+      aria-label="wvrner identity"
+      className="relative w-full min-h-screen py-16 px-4 flex flex-col items-center justify-center select-none overflow-hidden"
       style={{
-        background: "radial-gradient(circle at 50% 35%, #F7F9FB 0%, #EAEDF1 60%, #DFE3E8 100%)",
+        background: "radial-gradient(circle at 50% 50%, #F2F2F4 0%, #E2E2E6 100%)",
       }}
     >
       <div id="story" className="absolute top-0" />
 
-      {/* Ambient chromatic liquid glass halos matching image refraction corners */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-        {/* Top-right Electric Cyan / Royal Blue dispersion flare */}
-        <div
-          className="absolute -top-24 -right-24 w-[450px] sm:w-[850px] h-[450px] sm:h-[850px] rounded-full opacity-40 sm:opacity-55 blur-3xl pointer-events-none"
-          style={{
-            background: "radial-gradient(circle, rgba(13, 225, 237, 0.32) 0%, rgba(2, 51, 188, 0.16) 45%, transparent 70%)",
-          }}
-        />
-        {/* Bottom-left Hot Neon Magenta / Coral Rose dispersion flare */}
-        <div
-          className="absolute -bottom-24 -left-24 w-[420px] sm:w-[800px] h-[420px] sm:h-[800px] rounded-full opacity-35 sm:opacity-50 blur-3xl pointer-events-none"
-          style={{
-            background: "radial-gradient(circle, rgba(236, 23, 139, 0.24) 0%, rgba(223, 85, 108, 0.14) 45%, transparent 70%)",
-          }}
-        />
+      {/* Very faint concentric ripple rings centered behind the tile */}
+      <div
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-0 -mt-10 sm:-mt-12"
+        aria-hidden="true"
+      >
+        <div className="absolute rounded-full border-[1.5px] border-[#8A8A96]/[0.08] blur-[1.5px] w-[440px] h-[440px]" />
+        <div className="absolute rounded-full border-[1.5px] border-[#8A8A96]/[0.08] blur-[1.5px] w-[620px] h-[620px]" />
+        <div className="absolute rounded-full border-[1.5px] border-[#8A8A96]/[0.08] blur-[1.5px] w-[800px] h-[800px]" />
+        <div className="absolute rounded-full border-[1.5px] border-[#8A8A96]/[0.08] blur-[1.5px] w-[980px] h-[980px]" />
+        <div className="absolute rounded-full border-[1.5px] border-[#8A8A96]/[0.08] blur-[1.5px] w-[1160px] h-[1160px]" />
       </div>
 
-      {/* Main Container Aligned to 1400px Grid */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 sm:px-12 md:px-16 lg:px-24 flex flex-col items-center justify-center text-center space-y-6 sm:space-y-8">
-        
-        {/* Line 1: "You didn't notice anything." */}
+      {/* Main Content: Glass Tile + 3 Lines of Text */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center">
+        {/* The Glass Tile */}
         <div
-          className={`transition-all duration-700 ease-out ${
-            activeStep >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
-          }`}
+          className="relative w-[70vw] h-[70vw] sm:w-[360px] sm:h-[360px] rounded-[calc(70vw*0.22)] sm:rounded-[79px] overflow-hidden flex items-center justify-center"
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.25)",
+            border: "1.5px solid rgba(255, 255, 255, 0.9)",
+            boxShadow:
+              "inset 0 1.5px 2px rgba(255, 255, 255, 0.9), inset 0 -1.5px 2px rgba(0, 0, 0, 0.04), 0 20px 40px -15px rgba(0, 0, 0, 0.06), 0 0 0 1.5px rgba(255, 255, 255, 0.9)",
+          }}
         >
-          <p className="font-serif italic text-[clamp(2.5rem,6.8vw,6.4rem)] leading-[0.98] tracking-[-0.03em] max-w-5xl mx-auto text-[#0D1017]">
-            You didn’t notice anything.
-          </p>
+          <canvas
+            ref={canvasRef}
+            width={720}
+            height={720}
+            className="w-[70vw] h-[70vw] sm:w-[360px] sm:h-[360px] pointer-events-none"
+          />
         </div>
 
-        {/* Line 2: "That was the job." */}
-        <div
-          className={`transition-all duration-700 ease-out ${
-            activeStep >= 2 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
-          }`}
-        >
-          <h2 className="font-display font-black text-[clamp(3.2rem,9.2vw,9.2rem)] leading-[0.88] tracking-[-0.045em] uppercase max-w-6xl mx-auto text-[#0D1017]">
-            <span>That was the </span>
-            <span
-              className="bg-clip-text text-transparent inline-block"
-              style={{
-                backgroundImage:
-                  "linear-gradient(120deg, #0de1ed 0%, #0233bc 26%, #f8faff 48%, #ec178b 72%, #df556c 100%)",
-                textShadow: "0 2px 24px rgba(2, 51, 188, 0.18)",
-              }}
-            >
-              job.
-            </span>
-          </h2>
-        </div>
-
-        {/* Line 3: Measurement Line (THIS PAGE REACHED YOU IN 997 MS FROM FRA) */}
-        {measurement && (
-          <div
-            className={`transition-all duration-700 ease-out pt-2 sm:pt-4 ${
-              activeStep >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3 pointer-events-none"
-            }`}
+        {/* Text Block ~56px below the tile */}
+        <div className="mt-12 sm:mt-[56px] text-center flex flex-col items-center">
+          {/* Line 1 */}
+          <p
+            className="text-[15.3px] sm:text-[18px] font-normal leading-snug tracking-[-0.01em]"
+            style={{
+              color: "#5E5E66",
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, 'SF Pro Rounded', 'Nunito', system-ui, sans-serif",
+            }}
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/75 backdrop-blur-xl border border-white/90 shadow-[0_4px_24px_rgba(0,0,0,0.06)] font-mono text-[12px] sm:text-[14px] tracking-wider text-[#4B5260] uppercase">
-              <span>This page reached you in</span>
-              <span
-                className="font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: "linear-gradient(90deg, #0233bc 0%, #0de1ed 100%)",
-                }}
-              >
-                {measurement.latencyMs} ms
-              </span>
-              <span>from</span>
-              <span
-                className="font-bold bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: "linear-gradient(90deg, #ec178b 0%, #df556c 100%)",
-                }}
-              >
-                {measurement.location}
-              </span>
-            </div>
-          </div>
-        )}
+            you didn&apos;t notice anything. that was the job.
+          </p>
 
-        {/* Line 4: "Nima Hosseini, Cloud / DevOps engineer" */}
-        <div
-          className={`transition-all duration-700 ease-out pt-3 sm:pt-5 ${
-            activeStep >= 4 || (activeStep >= 3 && !measurement)
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-4 pointer-events-none"
-          }`}
-        >
-          <p className="font-display font-bold text-[clamp(1.35rem,2.8vw,2.4rem)] leading-snug tracking-[-0.025em] text-[#0D1017] max-w-3xl mx-auto">
-            <span
-              className="bg-clip-text text-transparent inline-block"
-              style={{
-                backgroundImage: "linear-gradient(120deg, #0233bc 0%, #ec178b 100%)",
-              }}
-            >
-              Nima Hosseini,
-            </span>{" "}
-            Cloud / DevOps engineer
+          {/* Line 2 */}
+          <p
+            className="mt-[8.5px] sm:mt-[10px] text-[13.6px] sm:text-[16px] font-medium leading-snug tracking-[-0.01em]"
+            style={{
+              color: "#2A2A31",
+              fontFamily:
+                "-apple-system, BlinkMacSystemFont, 'SF Pro Rounded', 'Nunito', system-ui, sans-serif",
+            }}
+          >
+            nima hosseini
+          </p>
+
+          {/* Line 3 */}
+          <p
+            className="mt-[24px] sm:mt-[28px] text-[9.35px] sm:text-[11px] font-normal leading-snug tracking-[0.18em] uppercase font-mono"
+            style={{
+              color: "#9A9AA3",
+              fontFamily:
+                "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+            }}
+          >
+            THIS PAGE REACHED YOU IN 997 MS FROM FRA
           </p>
         </div>
-
       </div>
     </section>
   );
