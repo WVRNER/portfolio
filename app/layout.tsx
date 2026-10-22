@@ -149,7 +149,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-[100dvh] bg-white text-[#0A0A0A] font-sans antialiased relative selection:bg-[#EAEAEA] selection:text-[#161617]">
+      <body className="min-h-[100dvh] bg-white text-[#242424] font-sans antialiased relative selection:bg-[#EAEAEA] selection:text-[#242424]">
         <PWARegistration />
         <div className="fixed inset-0 pointer-events-none select-none bg-noise-grain opacity-40 z-50" aria-hidden="true" />
         {children}

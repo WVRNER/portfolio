@@ -133,11 +133,11 @@ export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
                 <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-black/[0.04] text-[10.5px] font-medium tracking-wider uppercase text-[#6E6E73]">
                   <span>CURRICULUM VITAE</span>
                 </div>
-                <h2 className="font-display text-[26px] sm:text-[32px] font-semibold text-[#1D1D1F] tracking-tight">
+                <h2 className="font-display text-[26px] sm:text-[32px] font-semibold text-[#242424] tracking-tight">
                   Nima Hosseini
                 </h2>
                 <div className="flex items-center gap-2 text-[13.5px] text-[#6E6E73]">
-                  <span className="font-medium text-[#1D1D1F]">Cloud &amp; DevOps Engineer</span>
+                  <span className="font-medium text-[#242424]">Cloud &amp; DevOps Engineer</span>
                   <span>&middot;</span>
                   <span>Systems Architecture</span>
                 </div>
@@ -148,7 +148,7 @@ export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#161617] text-white hover:bg-[#2C2C2E] active:scale-95 text-[12.5px] font-medium transition-all duration-200 cursor-pointer shadow-sm"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#242424] text-white hover:bg-[#333333] active:scale-95 text-[12.5px] font-medium transition-all duration-200 cursor-pointer shadow-sm"
                   title="Print or Save PDF"
                 >
                   <Printer className="w-3.5 h-3.5" />
@@ -158,7 +158,7 @@ export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
                 <button
                   type="button"
                   onClick={onClose}
-                  className="w-9 h-9 rounded-full bg-black/[0.05] hover:bg-black/[0.1] active:scale-90 transition-all duration-200 flex items-center justify-center text-[#1D1D1F] cursor-pointer"
+                  className="w-9 h-9 rounded-full bg-black/[0.05] hover:bg-black/[0.1] active:scale-90 transition-all duration-200 flex items-center justify-center text-[#242424] cursor-pointer"
                   aria-label="Close CV"
                 >
                   <X className="w-4 h-4" />
@@ -193,11 +193,11 @@ export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
                       key={comp.title}
                       className="p-4 rounded-2xl bg-[#F5F5F7] hover:bg-[#EFEFEF] border border-black/[0.04] transition-colors space-y-2 group"
                     >
-                      <div className="w-8 h-8 rounded-xl bg-white shadow-xs flex items-center justify-center text-[#1D1D1F]">
-                        <Icon className="w-4 h-4 text-[#1D1D1F]" />
+                      <div className="w-8 h-8 rounded-xl bg-white shadow-xs flex items-center justify-center text-[#242424]">
+                        <Icon className="w-4 h-4 text-[#242424]" />
                       </div>
                       <div>
-                        <div className="text-[13px] font-semibold text-[#1D1D1F] leading-snug">
+                        <div className="text-[13px] font-semibold text-[#242424] leading-snug">
                           {comp.title}
                         </div>
                         <div className="text-[12px] text-[#6E6E73] pt-0.5 font-normal">
@@ -222,7 +222,7 @@ export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
                     key={idx}
                     className="p-4 sm:p-5 rounded-2xl bg-[#F5F5F7] border border-black/[0.04] space-y-1"
                   >
-                    <div className="text-[14px] font-semibold text-[#1D1D1F]">
+                    <div className="text-[14px] font-semibold text-[#242424]">
                       {item.title}
                     </div>
                     <p className="text-[13.5px] text-[#6E6E73] leading-relaxed font-normal">
@@ -236,19 +236,19 @@ export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
             {/* Apple Card Footer / Direct Channels */}
             <div className="pt-4 border-t border-black/[0.07] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[12.5px] text-[#6E6E73]">
               <div className="flex items-center gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#161617] shrink-0" />
-                <span className="text-[#1D1D1F] font-medium">Available for Infrastructure Engagements</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#242424] shrink-0" />
+                <span className="text-[#242424] font-medium">Available for Infrastructure Engagements</span>
               </div>
 
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/[0.04] hover:bg-black/[0.08] text-[#1D1D1F] transition-colors cursor-pointer text-[12px] font-medium"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/[0.04] hover:bg-black/[0.08] text-[#242424] transition-colors cursor-pointer text-[12px] font-medium"
                 >
                   {copied ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-[#161617]" />
+                      <Check className="w-3.5 h-3.5 text-[#242424]" />
                       <span>Copied email</span>
                     </>
                   ) : (
@@ -261,7 +261,7 @@ export function CVDrawer({ isOpen, onClose }: CVDrawerProps) {
 
                 <a
                   href={`mailto:${email}`}
-                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#161617] text-white hover:bg-[#2C2C2E] transition-colors text-[12px] font-medium"
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#242424] text-white hover:bg-[#333333] transition-colors text-[12px] font-medium"
                 >
                   <span>Connect</span>
                   <ArrowUpRight className="w-3 h-3" />

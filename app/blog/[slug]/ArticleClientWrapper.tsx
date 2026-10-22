@@ -468,7 +468,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
           
           {/* Super bold punchy headline with View Transition */}
           <h1
-            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[34px] sm:text-[44px] md:text-[48px] text-[#0A0A0A] dark:text-[#e5e5e5] leading-[1.1] tracking-[-0.035em]"
+            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[34px] sm:text-[44px] md:text-[48px] text-[#242424] dark:text-[#e5e5e5] leading-[1.1] tracking-[-0.035em]"
             style={{ viewTransitionName: `post-title-${post.slug}` }}
           >
             {post.title}
@@ -506,7 +506,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             >
               {copiedLink ? (
                 <>
-                  <Check className="w-4 h-4 text-[#161617] dark:text-white" />
+                  <Check className="w-4 h-4 text-[#242424] dark:text-white" />
                   <span>Copied</span>
                 </>
               ) : (
@@ -570,7 +570,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                 
                 {/* Section Heading */}
                 {section.heading && (
-                  <h2 className="font-[family-name:var(--font-plus-jakarta)] font-extrabold text-[24px] sm:text-[28px] text-[#1D1D1F] dark:text-[#e5e5e5] tracking-[-0.025em] leading-tight pt-8 pb-2">
+                  <h2 className="font-[family-name:var(--font-plus-jakarta)] font-extrabold text-[24px] sm:text-[28px] text-[#242424] dark:text-[#e5e5e5] tracking-[-0.025em] leading-tight pt-8 pb-2">
                     {section.heading}
                   </h2>
                 )}
@@ -596,7 +596,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                           href={url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="underline underline-offset-4 decoration-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+                          className="underline underline-offset-4 decoration-neutral-400 hover:text-[#242424] dark:hover:text-white transition-colors"
                         >
                           {url}
                         </a>
@@ -661,8 +661,8 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
                 {/* Architectural Rule Callout */}
                 {section.callout && (
-                  <aside className="my-9 p-6 rounded-r-lg border-l-[3px] border-[#161617] dark:border-white/30 bg-[#F9F9F9] dark:bg-[#222222] space-y-1.5 font-sans">
-                    <div className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-[#161617] dark:text-[#e5e5e5] font-bold">
+                  <aside className="my-9 p-6 rounded-r-lg border-l-[3px] border-[#242424] dark:border-white/30 bg-[#F9F9F9] dark:bg-[#222222] space-y-1.5 font-sans">
+                    <div className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-[#242424] dark:text-[#e5e5e5] font-bold">
                       <span>{section.callout.title}</span>
                     </div>
                     <p className="text-[15px] sm:text-[16px] text-[#404040] dark:text-[#e5e5e5] leading-relaxed font-normal">
@@ -679,7 +679,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                         key={lIdx}
                         className="flex items-start gap-3.5 text-[16px] text-[#242424] dark:text-[#e5e5e5]"
                       >
-                        <span className="w-6 h-6 rounded-full bg-[#161617] dark:bg-[#262626] text-white text-[11px] font-mono flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">
+                        <span className="w-6 h-6 rounded-full bg-[#242424] dark:bg-[#262626] text-white text-[11px] font-mono flex items-center justify-center flex-shrink-0 mt-0.5 font-bold">
                           {lIdx + 1}
                         </span>
                         <span className="leading-relaxed">{item}</span>
@@ -730,7 +730,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                         />
                       </div>
                     )}
-                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15.5px] font-extrabold text-[#1D1D1F] dark:text-[#e5e5e5] leading-snug line-clamp-2 tracking-tight">
+                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15.5px] font-extrabold text-[#242424] dark:text-[#e5e5e5] leading-snug line-clamp-2 tracking-tight">
                       {rec.title}
                     </h4>
                     <p className="text-[13px] text-[#6B6B6B] dark:text-[#e5e5e5] line-clamp-2 mt-1.5 font-normal leading-[19px]">

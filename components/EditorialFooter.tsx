@@ -45,15 +45,9 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
   return (
     <footer
       aria-label="Editorial Footer"
-      className="relative bg-[#0A0A0A] text-[#EDEDED] border-t border-white/[0.08] overflow-hidden select-none"
+      className="relative bg-[#0d0d0f] text-[#EDEDED] border-t border-white/[0.08] overflow-hidden select-none"
     >
-      {/* Tactile printed grain on dark obsidian field matching Syscore */}
-      <div
-        className="absolute inset-0 grain-level-2 opacity-30 pointer-events-none z-0"
-        aria-hidden="true"
-      />
-
-      {/* Subtle top spotlight vignette */}
+      {/* Smooth soft ambient highlight for depth without pixel noise */}
       <div
         className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[260px] bg-white/[0.03] rounded-full blur-3xl pointer-events-none z-0"
         aria-hidden="true"
@@ -120,9 +114,9 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
                 <button
                   type="button"
                   onClick={onOpenCV}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-[#0A0A0A] hover:bg-neutral-200 active:scale-[0.98] text-[13px] font-sans font-semibold transition-all duration-150 cursor-pointer shadow-sm motion-reduce:transition-none shrink-0"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-[#242424] hover:bg-neutral-200 active:scale-[0.98] text-[13px] font-sans font-semibold transition-all duration-150 cursor-pointer shadow-sm motion-reduce:transition-none shrink-0"
                 >
-                  <FileText className="w-4 h-4 text-[#0A0A0A]" />
+                  <FileText className="w-4 h-4 text-[#242424]" />
                   <span>View CV</span>
                 </button>
               )}

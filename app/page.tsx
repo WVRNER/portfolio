@@ -34,7 +34,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
-      <div className="relative min-h-[100dvh] bg-white text-[#0A0A0A] font-sans">
+      <div className="relative min-h-[100dvh] bg-white text-[#242424] font-sans">
         {/* Navigation */}
         <Navigation onOpenCV={() => setCvOpen(true)} />
 

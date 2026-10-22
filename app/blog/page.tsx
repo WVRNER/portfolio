@@ -104,7 +104,7 @@ export default function BlogIndexPage() {
         <header className="mb-0">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-2">
-              <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[34px] sm:text-[46px] font-extrabold sm:font-black tracking-[-0.035em] text-[#1D1D1F] dark:text-[#e5e5e5] leading-[1.08]">
+              <h1 className="font-[family-name:var(--font-plus-jakarta)] text-[34px] sm:text-[46px] font-extrabold sm:font-black tracking-[-0.035em] text-[#242424] dark:text-[#e5e5e5] leading-[1.08]">
                 Writing
               </h1>
 
@@ -171,7 +171,7 @@ export default function BlogIndexPage() {
                         <div className="flex-1 min-w-0 space-y-2">
                           {/* Big Bold Headline with View Transition */}
                           <h2
-                            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[26px] text-[#0A0A0A] dark:text-[#e5e5e5] leading-[1.2] tracking-[-0.03em] line-clamp-2"
+                            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[26px] text-[#242424] dark:text-[#e5e5e5] leading-[1.2] tracking-[-0.03em] line-clamp-2"
                             style={{ viewTransitionName: `post-title-${post.slug}` }}
                           >
                             {post.title}
@@ -269,7 +269,7 @@ export default function BlogIndexPage() {
                           aria-label={`Page ${pageNum}`}
                           className={`w-8 h-8 rounded-full text-[13px] font-medium transition-all cursor-pointer ${
                             isCurrent
-                              ? "bg-[#1D1D1F] dark:bg-[#e5e5e5] text-white dark:text-[#171717] shadow-sm"
+                              ? "bg-[#242424] dark:bg-[#e5e5e5] text-white dark:text-[#171717] shadow-sm"
                               : "text-[#6B6B6B] dark:text-[#8E8E93] hover:text-[#242424] dark:hover:text-[#e5e5e5] hover:bg-[#F2F2F2] dark:hover:bg-[#262626] active:scale-95"
                           }`}
                         >

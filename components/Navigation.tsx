@@ -76,7 +76,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
           {/* Logo return home action */}
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-white/80 hover:text-white font-mono text-[11.5px] sm:text-[12px] font-bold tracking-[0.2em] uppercase transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-white hover:text-white/80 font-[family-name:var(--font-plus-jakarta)] text-[13px] sm:text-[14px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer"
             title="WVRNER Home"
             aria-label="WVRNER Home"
           >
