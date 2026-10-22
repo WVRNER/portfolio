@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { InstantLink } from "@/components/InstantLink";
+import { BlurImage } from "@/components/BlurImage";
+import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { PROJECTS_AND_LABS, type ProjectOrLab } from "@/lib/projectsData";
 import { BLOG_POSTS } from "@/lib/blogData";
 import { MonolithSurface } from "./MonolithSurface";
@@ -23,10 +25,11 @@ function ProjectMediaTile({
   return (
     <MonolithSurface className={`w-full h-full ${className}`}>
       {project.imageUrl && (
-        /* eslint-disable-next-line @next/next/no-img-element */
-        <img
+        <BlurImage
           src={project.imageUrl}
           alt={hasRealTitle ? project.title : `Project ${project.number}`}
+          aspectRatio={getImageMetadata(project.slug)?.aspectRatio || 1.777}
+          blurDataUrl={getImageMetadata(project.slug)?.blurDataUrl}
           className="w-full h-full object-cover group-hover:scale-[1.015] transition-transform duration-500 ease-out relative z-10"
         />
       )}

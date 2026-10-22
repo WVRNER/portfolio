@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ArrowRight, BookOpen } from "lucide-react";
 import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
 import { InstantLink } from "@/components/InstantLink";
+import { BlurImage } from "@/components/BlurImage";
+import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { BLOG_POSTS, formatDisplayDate } from "@/lib/blogData";
 
 /**
@@ -96,15 +98,15 @@ export function WritingSection() {
                   </div>
                 </div>
 
-                {/* Right Compact Thumbnail Image */}
+                {/* Right Compact Thumbnail Image with Blur-up */}
                 {post.featureImage && (
                   <div className="w-[84px] h-[58px] sm:w-[120px] sm:h-[80px] md:w-[136px] md:h-[90px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-1">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <BlurImage
                       src={post.featureImage}
                       alt={post.title}
+                      aspectRatio={getImageMetadata(post.slug)?.aspectRatio || 1.5}
+                      blurDataUrl={getImageMetadata(post.slug)?.blurDataUrl}
                       className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                      loading="lazy"
                     />
                   </div>
                 )}

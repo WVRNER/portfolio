@@ -8,6 +8,8 @@ import { CVDrawer } from "@/components/CVDrawer";
 import { EditorialFooter } from "@/components/EditorialFooter";
 import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
 import { InstantLink } from "@/components/InstantLink";
+import { BlurImage } from "@/components/BlurImage";
+import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { BLOG_POSTS, formatDisplayDate, type BlogPost } from "@/lib/blogData";
 
 /**
@@ -167,8 +169,11 @@ export default function BlogIndexPage() {
                               <span>{formatDisplayDate(post.date)}</span>
                             </div>
 
-                            {/* Big Bold Headline matching screenshot */}
-                            <h2 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[27px] text-[#0A0A0A] leading-[1.2] tracking-[-0.03em] line-clamp-2">
+                            {/* Big Bold Headline with View Transition */}
+                            <h2
+                              className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[27px] text-[#0A0A0A] leading-[1.2] tracking-[-0.03em] line-clamp-2"
+                              style={{ viewTransitionName: `post-title-${post.slug}` }}
+                            >
                               {post.title}
                             </h2>
 
@@ -178,15 +183,18 @@ export default function BlogIndexPage() {
                             </p>
                           </div>
 
-                          {/* Right Thumbnail Image (Compact on mobile and desktop, exactly like screenshot) */}
+                          {/* Right Thumbnail Image with Blur-up & View Transition */}
                           {post.featureImage && (
-                            <div className="w-[84px] h-[58px] sm:w-[120px] sm:h-[80px] md:w-[140px] md:h-[95px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-1">
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
+                            <div
+                              className="w-[84px] h-[58px] sm:w-[120px] sm:h-[80px] md:w-[140px] md:h-[95px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-1"
+                              style={{ viewTransitionName: `post-cover-${post.slug}` }}
+                            >
+                              <BlurImage
                                 src={post.featureImage}
                                 alt={post.title}
+                                aspectRatio={getImageMetadata(post.slug)?.aspectRatio || 1.5}
+                                blurDataUrl={getImageMetadata(post.slug)?.blurDataUrl}
                                 className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
-                                loading="lazy"
                               />
                             </div>
                           )}

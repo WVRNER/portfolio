@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node --experimental-strip-types scripts/build-image-metadata.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -30,6 +31,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

@@ -20,6 +20,7 @@ export type InstantLinkProps = Omit<ComponentPropsWithoutRef<"a">, keyof LinkPro
  */
 export function InstantLink({
   href,
+  onClick,
   onMouseEnter,
   onTouchStart,
   children,
@@ -34,10 +35,41 @@ export function InstantLink({
     }
   }, [href, router]);
 
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      onClick?.(e);
+      if (
+        e.defaultPrevented ||
+        e.button !== 0 ||
+        e.metaKey ||
+        e.ctrlKey ||
+        e.altKey ||
+        e.shiftKey
+      ) {
+        return;
+      }
+
+      const target = typeof href === "string" ? href : href.pathname;
+      if (
+        target &&
+        typeof document !== "undefined" &&
+        "startViewTransition" in document &&
+        typeof (document as unknown as { startViewTransition?: (cb: () => void) => void }).startViewTransition === "function"
+      ) {
+        e.preventDefault();
+        (document as unknown as { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {
+          router.push(target);
+        });
+      }
+    },
+    [href, onClick, router]
+  );
+
   return (
     <Link
       href={href}
       prefetch={false}
+      onClick={handleClick}
       onMouseEnter={(e) => {
         handleWarmup();
         onMouseEnter?.(e);
