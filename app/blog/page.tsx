@@ -177,7 +177,7 @@ export default function BlogIndexPage() {
                 {paginatedPosts.map((post, pIdx) => (
                   <article
                     key={post.slug}
-                    className="w-full max-w-[680px] min-h-[190px] sm:h-[225px] flex flex-col justify-center py-4 sm:py-0"
+                    className="w-full max-w-[680px] min-h-[190px] sm:min-h-[225px] flex flex-col justify-center py-4 sm:py-0"
                   >
                     <InstantLink
                       href={`/blog/${post.slug}`}
@@ -196,8 +196,8 @@ export default function BlogIndexPage() {
                             {post.title}
                           </h2>
 
-                          {/* Subtitle / Excerpt in Serif */}
-                          <p className="text-[15px] sm:text-[16px] text-[#555555] dark:text-[#b3b3b3] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                          {/* Subtitle / Excerpt in Serif with relaxed line-height */}
+                          <p className="text-[15px] sm:text-[16px] text-[#555555] dark:text-[#b3b3b3] leading-[1.6] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                             {post.subtitle || post.excerpt}
                           </p>
 

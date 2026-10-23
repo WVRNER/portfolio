@@ -491,9 +491,9 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             {post.title}
           </h1>
 
-          {/* Subtitle in Serif */}
+          {/* Subtitle in Serif with relaxed line-height */}
           {post.subtitle && (
-            <p className="text-[21px] sm:text-[25px] md:text-[27px] text-[#555555] dark:text-[#e5e5e5] font-normal leading-[1.38] tracking-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+            <p className="text-[21px] sm:text-[25px] md:text-[27px] text-[#555555] dark:text-[#e5e5e5] font-normal leading-[1.5] tracking-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
               {post.subtitle}
             </p>
           )}

@@ -221,12 +221,13 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
           margin-bottom: -0.06em;
           user-select: none;
           background-image:
-            radial-gradient(ellipse var(--wv-tr-w, 20%) var(--wv-tr-h, 70%) at var(--wv-tr-x, 100%) var(--wv-tr-y, 0%), #FF6A3D 0%, #FF2D3D 16%, #FF1F7A 32%, #FF4FB0 48%, #2A1FA8 66%, transparent 84%),
-            radial-gradient(ellipse var(--wv-bl-w, 20%) var(--wv-bl-h, 70%) at var(--wv-bl-x, 0%) var(--wv-bl-y, 100%), #7FF3FF 0%, #00C8FF 14%, #1E8BFF 30%, #2F4BFF 46%, #0A1440 66%, transparent 84%),
+            radial-gradient(ellipse var(--wv-tr-w, 20%) var(--wv-tr-h, 70%) at var(--wv-tr-x, 100%) var(--wv-tr-y, 0%), #020d15 0%, #1A1240 20%, #2F4BFF 38%, #00C8FF 56%, #7FF3FF 70%, transparent 84%),
+            radial-gradient(ellipse var(--wv-bl-w, 20%) var(--wv-bl-h, 70%) at var(--wv-bl-x, 0%) var(--wv-bl-y, 100%), #020d15 0%, #1A1240 20%, #2F4BFF 38%, #00C8FF 56%, #7FF3FF 70%, transparent 84%),
             linear-gradient(var(--ink), var(--ink));
           -webkit-background-clip: text;
           background-clip: text;
-          color: transparent;
+          color: transparent !important;
+          -webkit-text-fill-color: transparent !important;
         }
         .ct-base {
           position: relative;
@@ -275,7 +276,6 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
 
         <div className="ct-grid">
           <section aria-labelledby="ct-title">
-            <span className="ct-eyebrow mono">Email</span>
             <h2 className="ct-title" id="ct-title">
               Let&rsquo;s talk.
             </h2>
@@ -377,7 +377,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
       </div>
       <div className="ct-wrap">
         <div className="ct-base mono">
-          <span>&copy; 2026 Nima Hosseini</span>
+          <span>&copy; Nima Hosseini</span>
           <a href="#top" onClick={handleScrollTop}>
             Back to top &uarr;
           </a>
