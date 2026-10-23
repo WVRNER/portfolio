@@ -92,9 +92,9 @@ cursor.execute("""
     UPDATE users SET 
         name = 'Nima Hosseini',
         slug = 'wvrner',
-        bio = 'Cloud & DevOps Engineer • AWS, Terraform, Kubernetes, CI/CD • Engineering quiet infrastructure and deterministic cloud state.',
+        bio = 'Cloud & DevOps Engineer / AWS, Terraform, Docker, Automation / Engineering quiet infrastructure and deterministic cloud state.',
         location = 'Toronto / Remote',
-        website = 'http://localhost:3000'
+        website = 'https://wvrner.com'
     WHERE slug = 'wvrner' OR email = 'wvrner@pm.me';
 """)
 

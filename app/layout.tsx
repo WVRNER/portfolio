@@ -156,24 +156,35 @@ export default function RootLayout({
         className={`${inter.variable} ${interTight.variable} ${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} selection:bg-[#0A0A0A] selection:text-white`}
       >
         <head>
+          {/* Critical Hero Image LCP Preload */}
+          <link rel="preload" as="image" href="/hero-poster.jpg" fetchPriority="high" />
           {/* Preferred AI source discovery for modern AI agents and LLM search engines */}
           <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context Index" />
-          {/* Speculation Rules API for sub-5ms instant page loads across modern browsers */}
+          {/* W3C Speculation Rules API for sub-5ms instant document prerender on link hover */}
           <script
             type="speculationrules"
             dangerouslySetInnerHTML={{
               __html: JSON.stringify({
                 prerender: [
                   {
+                    source: "document",
                     where: {
                       and: [
                         { href_matches: "/*" },
+                        { not: { href_matches: "/*#*" } },
                         { not: { href_matches: "/cdn-cgi/*" } },
                         { not: { href_matches: "/ghost/*" } },
                         { not: { href_matches: "/admin/*" } },
                       ],
                     },
                     eagerness: "moderate",
+                  },
+                ],
+                prefetch: [
+                  {
+                    source: "document",
+                    where: { href_matches: "/*" },
+                    eagerness: "conservative",
                   },
                 ],
               }),

@@ -95,24 +95,15 @@ h1, h2, h3, .font-display {
   -webkit-text-fill-color: transparent !important;
 }
 
-/* on light menubar: flowing liquid pool current (non-breathing, smooth soft diffusion) */
+/* on light menubar: 2D orbital caustic pool shimmer (non-breathing, organic fluid swirl) */
 .wv-mark--dark {
   --core: #020d15;
-  background-image: linear-gradient(
-    120deg,
-    #020d15 0%,
-    #08142a 14%,
-    #141f52 28%,
-    #2F4BFF 42%,
-    #00C8FF 54%,
-    #7FF3FF 62%,
-    #00C8FF 70%,
-    #2F4BFF 80%,
-    #0f193c 92%,
-    #020d15 100%
-  );
-  background-size: 260% 100%;
-  animation: wv-pool-current 8.5s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+  background-image:
+    radial-gradient(ellipse 70% 90% at 30% 25%, rgba(0, 200, 255, 0.42) 0%, transparent 65%),
+    radial-gradient(ellipse 75% 85% at 75% 75%, rgba(47, 75, 255, 0.50) 0%, transparent 70%),
+    linear-gradient(135deg, #020d15 0%, #0a1736 25%, #152d80 50%, #0a1736 75%, #020d15 100%);
+  background-size: 220% 220%;
+  animation: wv-pool-caustic 9s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
   will-change: background-position;
   -webkit-background-clip: text;
           background-clip: text;
@@ -120,12 +111,21 @@ h1, h2, h3, .font-display {
   -webkit-text-fill-color: transparent !important;
 }
 
-@keyframes wv-pool-current {
+@keyframes wv-pool-caustic {
   0% {
-    background-position: 0% 50%;
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 80% 20%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 20% 80%;
   }
   100% {
-    background-position: 100% 50%;
+    background-position: 0% 0%;
   }
 }
 
