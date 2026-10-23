@@ -187,13 +187,19 @@ export function StoryScrollSequence() {
       animId = requestAnimationFrame(loop);
     }
 
-    // Tagline Entrance Animation
-    (async function initTaglineAnimation() {
+    // Tagline Entrance Animation (plays once only when user scrolls to this section)
+    let played = false;
+
+    async function initTaglineAnimation() {
       const l1 = l1Ref.current;
       const l2 = l2Ref.current;
       if (!l1 || !l2) return;
 
-      if (still) return;
+      if (still) {
+        l1.style.opacity = "1";
+        l2.classList.add("is-visible");
+        return;
+      }
 
       // Split line 1 into <span> per word at runtime
       const originalText = "you didn't notice anything,";
@@ -223,11 +229,27 @@ export function StoryScrollSequence() {
       setTimeout(() => {
         l2.classList.add("is-visible");
       }, line2StartTime);
-    })();
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !played) {
+            played = true;
+            initTaglineAnimation();
+          }
+        }
+      },
+      {
+        threshold: 0.25,
+      }
+    );
+    observer.observe(section);
 
     return () => {
       if (animId) cancelAnimationFrame(animId);
       ro.disconnect();
+      observer.disconnect();
       gl.deleteBuffer(buf);
       gl.deleteProgram(prog);
       gl.deleteShader(vertShader);

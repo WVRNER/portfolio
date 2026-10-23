@@ -28,8 +28,16 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  compress: true,
   experimental: {
     agentUpgrade: "security",
+    optimizePackageImports: [
+      "lucide-react",
+      "framer-motion",
+      "motion",
+      "three",
+      "@phosphor-icons/react",
+    ],
   },
   poweredByHeader: false,
   output: "export",

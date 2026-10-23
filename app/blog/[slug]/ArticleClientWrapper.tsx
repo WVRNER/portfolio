@@ -717,7 +717,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         {/* Selected Writing Recommendations */}
         {recommendedPosts.length > 0 && (
           <section className="pt-12 mt-12 border-t border-[#F2F2F2] dark:border-[#2a2a2a] space-y-6">
-            <div className="flex items-baseline justify-between pb-3 border-b border-[#F2F2F2] dark:border-[#262626]">
+            <div className="flex items-baseline justify-between pb-1">
               <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[20px] font-bold text-[#242424] dark:text-[#e5e5e5] tracking-tight">
                 Selected Writing
               </h3>
@@ -770,7 +770,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                   </div>
 
                   {/* Bottom Meta Bar anchored to bottom */}
-                  <div className="pt-3 mt-3 border-t border-black/[0.04] dark:border-white/5 text-[12px] text-[#6B6B6B] dark:text-[#8E8E93] font-sans flex items-center justify-between">
+                  <div className="pt-2 mt-2 text-[12px] text-[#6B6B6B] dark:text-[#8E8E93] font-sans flex items-center justify-between">
                     <div className="flex items-center gap-1.5 truncate">
                       {rec.featured && <FeaturedStarIcon className="w-3 h-3 shrink-0" />}
                       <span className="truncate">{formatDisplayDate(rec.date)}</span>
