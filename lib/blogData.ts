@@ -5,11 +5,14 @@ export type ToolTag =
   | "Networking"
   | "Kubernetes";
 
+export type BlogPostKind = "writing" | "project";
+
 export interface BlogPost {
   slug: string;
   title: string;
   date: string;
   category: string;
+  kind?: BlogPostKind;
   toolTag?: ToolTag;
   readingTime: string;
   excerpt: string;
@@ -42,8 +45,30 @@ export interface BlogPost {
   };
 }
 
+/**
+ * Returns only published posts (drafts are strictly excluded).
+ */
+export function getPublishedPosts(): BlogPost[] {
+  return BLOG_POSTS.filter((post) => post.isDraft !== true);
+}
+
+/**
+ * Returns published general writings (excluding project case studies).
+ * Displayed in the homepage Writing & Field Notes section.
+ */
+export function getPublishedWritings(): BlogPost[] {
+  return BLOG_POSTS.filter((post) => post.isDraft !== true && post.kind !== "project");
+}
+
+/**
+ * Returns published project case studies.
+ */
+export function getPublishedProjectPosts(): BlogPost[] {
+  return BLOG_POSTS.filter((post) => post.isDraft !== true && post.kind === "project");
+}
+
 export function isPostDraft(post: BlogPost): boolean {
-  return post.isDraft !== false;
+  return post.isDraft === true;
 }
 
 /**
@@ -650,6 +675,7 @@ spec:
     slug: "project-01",
     title: "Project 01: Cloud Infrastructure & System Architecture",
     issueNo: "15",
+    kind: "project",
     subtitle: "Production cloud platform architecture, declarative IaC, and automated deployment pipelines.",
     date: "Oct 21, 2026",
     category: "Projects",
@@ -717,6 +743,7 @@ spec:
     slug: "project-02",
     title: "Project 02: Systems Engineering & Architectural Lab",
     issueNo: "16",
+    kind: "project",
     subtitle: "Experimental systems, failure mode testing, and high-cardinality telemetry lab.",
     date: "Oct 21, 2026",
     category: "Labs",

@@ -8,10 +8,9 @@ import { BlurImage } from "@/components/BlurImage";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { getPostTransitionName } from "@/lib/viewTransitions";
 import {
-  BLOG_POSTS,
   formatDisplayDate,
   getPrimaryToolTag,
-  isPostDraft,
+  getPublishedWritings,
 } from "@/lib/blogData";
 
 /**
@@ -24,12 +23,13 @@ import {
  * - Direct seamless link to full archive
  */
 export function WritingSection() {
-  if (!BLOG_POSTS || BLOG_POSTS.length === 0) {
+  const publishedWritings = getPublishedWritings();
+  if (!publishedWritings || publishedWritings.length === 0) {
     return null;
   }
 
-  // Display top 4 stories in a clean vertical stream
-  const displayedPosts = BLOG_POSTS.slice(0, 4);
+  // Display top 4 published stories in a clean vertical stream
+  const displayedPosts = publishedWritings.slice(0, 4);
 
   return (
     <section
@@ -107,11 +107,6 @@ export function WritingSection() {
                     <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] text-[#242424] font-medium text-[11px] font-mono tracking-tight shrink-0">
                       {getPrimaryToolTag(post)}
                     </span>
-                    {isPostDraft(post) && (
-                      <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 font-mono text-[10.5px] font-semibold tracking-wider uppercase shrink-0">
-                        DRAFT
-                      </span>
-                    )}
                   </div>
                 </div>
 
