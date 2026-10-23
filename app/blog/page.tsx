@@ -12,10 +12,9 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { getPostTransitionName } from "@/lib/viewTransitions";
 import {
-  BLOG_POSTS,
   formatDisplayDate,
   getPrimaryToolTag,
-  isPostDraft,
+  getPublishedPosts,
 } from "@/lib/blogData";
 
 /**
@@ -35,9 +34,11 @@ export default function BlogIndexPage() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const POSTS_PER_PAGE = 10;
 
-  // Recruiter-optimized tool tags matching tabs
+  // Topics and stream categories
   const topics = [
     "All",
+    "Field Notes",
+    "Projects & Labs",
     "Cloud",
     "Terraform",
     "CI/CD",
@@ -45,17 +46,23 @@ export default function BlogIndexPage() {
     "Kubernetes",
   ];
 
-  // Filter posts based on active tool category
+  const published = useMemo(() => getPublishedPosts(), []);
+
+  // Filter posts based on active tool category or kind
   const filteredPosts = useMemo(() => {
-    let list = BLOG_POSTS;
-    if (activeCategory !== "All") {
-      list = BLOG_POSTS.filter((p) => {
+    let list = published;
+    if (activeCategory === "Field Notes") {
+      list = published.filter((p) => p.kind !== "project");
+    } else if (activeCategory === "Projects & Labs") {
+      list = published.filter((p) => p.kind === "project");
+    } else if (activeCategory !== "All") {
+      list = published.filter((p) => {
         const primaryTag = getPrimaryToolTag(p);
         return primaryTag.toLowerCase() === activeCategory.toLowerCase();
       });
     }
     return list;
-  }, [activeCategory]);
+  }, [published, activeCategory]);
 
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
 
@@ -208,11 +215,6 @@ export default function BlogIndexPage() {
                             <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#262626] text-[#242424] dark:text-[#e5e5e5] font-medium text-[11px] font-mono tracking-tight dark:border dark:border-white/10">
                               {getPrimaryToolTag(post)}
                             </span>
-                            {isPostDraft(post) && (
-                              <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 font-mono text-[10.5px] font-semibold tracking-wider uppercase">
-                                DRAFT
-                              </span>
-                            )}
                           </div>
                         </div>
 

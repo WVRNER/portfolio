@@ -43,21 +43,15 @@ function ProjectMediaTile({
         aria-hidden="true"
       />
 
-      {/* Top Meta: Live Status Badge */}
+      {/* Top Meta: Status Badge */}
       <div className="relative z-10 flex items-center justify-between gap-3 font-mono text-[11px] sm:text-[12px]">
-        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full font-medium ${
-          project.isDraft
-            ? "bg-amber-400/10 border border-amber-400/25 text-amber-300"
-            : "bg-emerald-400/10 border border-emerald-400/25 text-emerald-300"
-        }`}>
-          <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${
-            project.isDraft ? "bg-amber-400" : "bg-emerald-400"
-          }`} />
-          <span>{project.isDraft ? "DRAFT // IN LAB" : "VERIFIED PRODUCTION"}</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full font-medium bg-white/10 border border-white/20 text-white/90">
+          <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
+          <span>VERIFIED ARCHITECTURE</span>
         </div>
 
         {project.relatedPostSlug && (
-          <span className="text-[10.5px] text-white/50 font-mono tracking-wider uppercase">
+          <span className="text-[10.5px] text-white/60 font-mono tracking-wider uppercase">
             NOTE ATTACHED
           </span>
         )}
@@ -153,11 +147,6 @@ function ProjectInfo({
       {hasRealTech && project.technologies && (
         <div className="text-[13px] sm:text-[13.5px] font-sans text-[#6B6B6B] font-normal tracking-normal flex flex-wrap items-center gap-x-2 gap-y-1">
           <span>{project.technologies.join(" · ")}</span>
-          {project.isDraft && (
-            <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 font-mono text-[10px] font-semibold tracking-wider uppercase">
-              DRAFT
-            </span>
-          )}
         </div>
       )}
     </div>

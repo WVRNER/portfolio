@@ -1,13 +1,14 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { BLOG_POSTS } from "@/lib/blogData";
+import { getPublishedPosts } from "@/lib/blogData";
 import { ArticleClientWrapper } from "./ArticleClientWrapper";
 
 export async function generateStaticParams() {
-  if (BLOG_POSTS.length === 0) {
+  const posts = getPublishedPosts();
+  if (posts.length === 0) {
     return [{ slug: "placeholder" }];
   }
-  return BLOG_POSTS.map((post) => ({
+  return posts.map((post) => ({
     slug: post.slug,
   }));
 }
@@ -18,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const post = getPublishedPosts().find((p) => p.slug === slug);
 
   if (!post) {
     return {
@@ -69,7 +70,7 @@ async function ArticleContent({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = BLOG_POSTS.find((p) => p.slug === slug);
+  const post = getPublishedPosts().find((p) => p.slug === slug);
 
   if (!post) {
     notFound();
