@@ -70,25 +70,15 @@ export function StoryScrollSequence() {
 
       float t = uTime;
       float T = max(pool(px, vec2(S.x, 0.), S, t, 0.), pool(px, vec2(0., S.y), S, t, 3.14159));
-      vec3 ink = hex(5.,12.,26.);
+      vec3 ink = hex(1., 12., 20.); // #010c14
 
-      if(edge < 0.){
-        float g = smoothstep(0., 14., -edge);
-        vec3  c = mix(hex(255.,45.,61.), hex(255.,106.,61.), g);
-        float a = (1. - g*0.85) * smoothstep(3., 10., T);
-        gl_FragColor = vec4(c*a, a); return;
-      }
+      // TEST: Sharp corners & removed red gradient.
+      // REVERSIBLE NOTE: To restore original pool:
+      // 1) Restore if(edge < 0.) red rim glow with mix(hex(255.,45.,61.), hex(255.,106.,61.), g)
+      // 2) Restore rimCol gradient
+      // 3) Restore col = (edge < rimW) ? rimCol : ink
+      if(edge < 0.){ gl_FragColor = vec4(0.); return; }
       if(T < 0.5){ gl_FragColor = vec4(0.); return; }
-
-      float rimW = clamp(T*0.22, 3., 16.);
-      float rimT = edge / rimW;
-      vec3 rimCol = grad(rimT,
-        hex(255.,106.,61.),
-        hex(255.,45.,61.),
-        hex(255.,31.,122.),
-        hex(255.,79.,176.),
-        hex(42.,31.,168.),
-        ink);
 
       float fw = clamp(T*0.55, 10., 46.);
       float x  = (depth - T) / fw;
@@ -103,7 +93,7 @@ export function StoryScrollSequence() {
       vec3 col;
       float alpha;
       if(depth <= T){
-        col   = (edge < rimW) ? rimCol : ink;
+        col   = ink; // Sharp solid core, no red gradient
         alpha = 1.;
         alpha *= smoothstep(0.5, 6., T);
       } else {
@@ -155,7 +145,8 @@ export function StoryScrollSequence() {
     const uRad = U("uRad");
     const uTime = U("uTime");
 
-    const radius = 28.0;
+    // TEST: Sharp corners (0.0). REVERSIBLE: set to 28.0 to restore rounded corner
+    const radius = 0.0;
     let dpr = 1;
 
     function resize() {
@@ -287,7 +278,7 @@ export function StoryScrollSequence() {
       aria-label="Nima Hosseini identity"
       className="relative w-full h-[100vh] min-h-[560px] overflow-hidden flex flex-col items-center justify-center select-none bg-[#E2E2E6]"
       style={{
-        borderRadius: "28px 0 28px 0",
+        borderRadius: "0", // TEST: Sharp corners. REVERSIBLE: set to "28px 0 28px 0"
       }}
     >
       {/* WebGL corner pools canvas */}
@@ -298,13 +289,14 @@ export function StoryScrollSequence() {
         className="absolute inset-0 w-full h-full pointer-events-none"
       />
 
-      {/* Title: Nima Hosseini in bold Plus Jakarta Sans */}
+      {/* Title: Nima Hosseini in bold Inter Tight */}
       <h1
-        className="relative font-extrabold text-[#050c1a] leading-[0.9] tracking-[-0.03em] whitespace-nowrap z-10 select-none"
+        className="relative font-black text-[#010c14] leading-[0.9] tracking-[-0.03em] whitespace-nowrap z-10 select-none"
         style={{
-          color: "#050c1a",
-          fontFamily: "var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, sans-serif",
+          color: "#010c14",
+          fontFamily: "var(--font-inter-tight), 'Inter Tight', var(--font-inter), sans-serif",
           fontSize: "clamp(40px, 11.5vw, 220px)",
+          fontWeight: 900,
         }}
       >
         Nima Hosseini
