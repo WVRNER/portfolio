@@ -1,7 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Geist, Geist_Mono, Instrument_Serif, Plus_Jakarta_Sans, Source_Serif_4, Inter, Nunito, JetBrains_Mono } from "next/font/google";
+import { Manrope, Geist, Geist_Mono, Instrument_Serif, Plus_Jakarta_Sans, Source_Serif_4, Inter, Nunito, JetBrains_Mono, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import { PWARegistration } from "@/components/PWARegistration";
+
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["800", "900"],
+});
 
 const nunito = Nunito({
   variable: "--font-nunito",
@@ -138,7 +145,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${sourceSerif.variable} ${nunito.variable} ${jetbrainsMono.variable} selection:bg-[#0A0A0A] selection:text-white`}
+      className={`${inter.variable} ${interTight.variable} ${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${sourceSerif.variable} ${nunito.variable} ${jetbrainsMono.variable} selection:bg-[#0A0A0A] selection:text-white`}
     >
       <head>
         {/* Speculation Rules API for sub-5ms instant page loads across modern browsers */}

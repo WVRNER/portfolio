@@ -284,12 +284,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
               title="WVRNER Home"
               aria-label="WVRNER Home"
             >
-              <span
-                className="bg-clip-text text-transparent font-black"
-                style={{
-                  backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #0233bc 26%, #ffffff 50%, #ec178b 76%, #df556c 100%)",
-                }}
-              >
+              <span className="font-black wv-mark wv-mark--light">
                 WVRNER
               </span>
             </button>
@@ -324,12 +319,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
               title="WVRNER Home"
               aria-label="WVRNER Home"
             >
-              <span
-                className="bg-clip-text text-transparent font-black"
-                style={{
-                  backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #0233bc 26%, #ffffff 50%, #ec178b 76%, #df556c 100%)",
-                }}
-              >
+              <span className="font-black wv-mark wv-mark--light">
                 WVRNER
               </span>
             </button>
