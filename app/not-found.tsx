@@ -98,7 +98,12 @@ export default function NotFoundPage() {
 
       {/* Subtle Bottom Watermark */}
       <div className="absolute bottom-6 left-0 right-0 z-20 text-center text-[11px] font-mono tracking-widest uppercase">
-        <span className="font-bold wv-mark wv-mark--light">
+        <span
+          className="font-bold bg-clip-text text-transparent"
+          style={{
+            backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #0233bc 26%, #ffffff 50%, #ec178b 76%, #df556c 100%)",
+          }}
+        >
           WVRNER
         </span>
       </div>

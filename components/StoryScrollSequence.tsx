@@ -5,77 +5,11 @@ import React, { useEffect, useRef } from "react";
 export function StoryScrollSequence() {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const line1Ref = useRef<HTMLSpanElement>(null);
-  const numRef = useRef<HTMLSpanElement>(null);
-  const linesRef = useRef<HTMLDivElement>(null);
+  const l1Ref = useRef<HTMLParagraphElement>(null);
+  const l2Ref = useRef<HTMLParagraphElement>(null);
+  const l3Ref = useRef<HTMLParagraphElement>(null);
+  const countRef = useRef<HTMLSpanElement>(null);
 
-  // Entrance animation for tagline
-  useEffect(() => {
-    const isReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (isReduced) {
-      if (numRef.current) numRef.current.textContent = "997";
-      if (linesRef.current) linesRef.current.classList.add("wv-animate");
-      return;
-    }
-
-    if (numRef.current) numRef.current.textContent = "0";
-
-    // Split Line 1 into words
-    if (line1Ref.current) {
-      const originalText = line1Ref.current.textContent || "you didn't notice anything,";
-      const words = originalText.trim().split(/\s+/);
-      line1Ref.current.innerHTML = words
-        .map((w, i) => {
-          const delay = 0.15 + i * 0.06;
-          return `<span class="wv-word" style="transition-delay: ${delay}s">${w}</span>`;
-        })
-        .join(" ");
-    }
-
-    // Wait for fonts ready then trigger animation
-    let countTimeout: NodeJS.Timeout;
-    let animFrame: number;
-
-    const startAnimation = () => {
-      if (linesRef.current) linesRef.current.classList.add("wv-animate");
-
-      // Count up from 0 to 997 starting 0.2s after line 2 starts (at 0.88s)
-      countTimeout = setTimeout(() => {
-        const start = performance.now();
-        const duration = 1000;
-        function tick(now: number) {
-          const p = Math.min(1, (now - start) / duration);
-          // Ease-out cubic
-          const ease = 1 - Math.pow(1 - p, 3);
-          if (numRef.current) {
-            numRef.current.textContent = String(Math.round(997 * ease));
-          }
-          if (p < 1) {
-            animFrame = requestAnimationFrame(tick);
-          } else if (numRef.current) {
-            numRef.current.textContent = "997";
-          }
-        }
-        animFrame = requestAnimationFrame(tick);
-      }, 880);
-    };
-
-    if (typeof document !== "undefined" && document.fonts) {
-      document.fonts.ready.then(startAnimation);
-    } else {
-      startAnimation();
-    }
-
-    return () => {
-      clearTimeout(countTimeout);
-      if (animFrame) cancelAnimationFrame(animFrame);
-    };
-  }, []);
-
-  // WebGL Corner Pools Shader
   useEffect(() => {
     const section = sectionRef.current;
     const canvas = canvasRef.current;
@@ -96,7 +30,6 @@ export function StoryScrollSequence() {
     uniform float uDpr;
     uniform float uRad;
     uniform float uTime;
-    uniform vec3  uPageDark;
 
     float sdRoundRect(vec2 p, vec2 b, float r){
       vec2 q = abs(p) - b + r;
@@ -118,86 +51,28 @@ export function StoryScrollSequence() {
       float w = 6.2831853 / LOOP;
       float breathe = 1. + 0.28*sin(w*t + ph);
       float spread  = 1. + 0.14*sin(w*t + ph + 1.2);
-      // Responsive pool scaling for desktop and mobile
-      vec2  L = vec2(max(0.30*S.x, 0.40*S.x), min(0.42*S.y, 0.54*S.x)) * spread;
+      vec2  L = vec2(max(0.30*S.x, 0.42*min(S.x, S.y)), min(0.42*S.y, 0.54*S.x)) * spread;
       vec2  d = (p - c) / L;
       float r2 = dot(d,d);
       float s = (abs(p.x-c.x) - abs(p.y-c.y)) * 0.012;
       float wob = 1. + 0.13*sin(s*1.1 - 2.*w*t + ph) + 0.05*sin(s*2.3 + 3.*w*t);
-      float Tmax = clamp(max(0.135*min(S.x,S.y), 0.16*S.x), 48., 145.);
+      float minDim = min(S.x, S.y);
+      float Tmax = clamp(0.135*minDim + (S.y > S.x ? 18. : 0.), 48., 145.);
       return Tmax * breathe * wob * exp(-r2*1.85);
-    }
-
-    // Polynomial smooth minimum (Quilez)
-    float smin(float a, float b, float k){
-      float h = max(k - abs(a - b), 0.0) / k;
-      return min(a, b) - h * h * k * 0.25;
     }
 
     void main(){
       vec2 S  = uRes / uDpr;
       vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;
-      float edge = min(min(px.x, S.x - px.x), min(px.y, S.y - px.y));
-
-      float bigR = 0.28*min(S.x,S.y);
+      float edge  = -sdRoundRect(px - S*0.5, S*0.5, uRad);
+      float bigR  = 0.28*min(S.x,S.y);
       float depth = -sdRoundRect(px - S*0.5, S*0.5, bigR);
 
       float t = uTime;
-      float w = 6.2831853 / LOOP;
+      float T = max(pool(px, vec2(S.x, 0.), S, t, 0.), pool(px, vec2(0., S.y), S, t, 3.14159));
+      vec3 ink = hex(5.,12.,26.);
 
-      // 1. Top-right corner pool (untouched)
-      float poolTR = pool(px, vec2(S.x, 0.), S, t, 0.);
-
-      // 2. Bottom-left corner pool
-      float poolBL = pool(px, vec2(0., S.y), S, t, 3.14159);
-
-      // 3. Liquid floor band along entire bottom edge
-      // 2 gentle sine waves: wavelength ~40-60% of width, amplitude ~2-3% of section height
-      float k1 = 6.2831853 / (0.50 * S.x);
-      float k2 = 6.2831853 / (0.36 * S.x);
-      float w1 = sin(k1 * px.x + w * t);
-      float w2 = sin(k2 * px.x - 2.0 * w * t + 1.2);
-      float waveNorm = 0.55 * (w1 * 0.5 + 0.5) + 0.45 * (w2 * 0.5 + 0.5);
-
-      float floorAmp  = clamp(0.025 * S.y, 10., 26.);
-      float floorBase = clamp(0.08 * S.y, 44., 88.);
-      float floorH    = floorBase + waveNorm * floorAmp;
-
-      // Distance from bottom edge
-      float pxBottom = S.y - px.y;
-      float dFloor   = pxBottom - floorH;
-      float dBL      = depth - poolBL;
-
-      // Merge bottom-left pool and floor smoothly with smin
-      float kBlend = clamp(0.06 * S.y, 28., 58.);
-      float dBottom = smin(dBL, dFloor, kBlend);
-
-      // Top-right pool distance
-      float dTR = depth - poolTR;
-
-      // Full screen liquid distance: smooth union of TR pool and bottom liquid
-      float dLiquid = min(dTR, dBottom);
-
-      // Liquid thickness T at this pixel
-      float floorWeight = smoothstep(floorH + 70.0, floorH - 10.0, pxBottom);
-      float localFloorH = floorH * floorWeight;
-      float T = max(poolTR, max(poolBL, localFloorH));
-
-      // Red rim: ONLY left edge of bottom-left pool and top/right edges of top-right pool
-      // Strictly NO red rim along the bottom edge
-      float rimDist = 9999.0;
-      if(px.x > S.x * 0.4 && px.y < S.y * 0.6){
-        rimDist = min(px.y, S.x - px.x);
-      }
-      if(px.x < S.x * 0.4 && px.y > S.y * 0.35){
-        rimDist = px.x;
-      }
-
-      vec3 ink = uPageDark;
-
-      // Outside section boundary: strictly no corner glow on the bottom
       if(edge < 0.){
-        if(px.y >= S.y || px.y > S.y * 0.5) { gl_FragColor = vec4(0.); return; }
         float g = smoothstep(0., 14., -edge);
         vec3  c = mix(hex(255.,45.,61.), hex(255.,106.,61.), g);
         float a = (1. - g*0.85) * smoothstep(3., 10., T);
@@ -206,7 +81,7 @@ export function StoryScrollSequence() {
       if(T < 0.5){ gl_FragColor = vec4(0.); return; }
 
       float rimW = clamp(T*0.22, 3., 16.);
-      float rimT = rimDist / rimW;
+      float rimT = edge / rimW;
       vec3 rimCol = grad(rimT,
         hex(255.,106.,61.),
         hex(255.,45.,61.),
@@ -215,9 +90,8 @@ export function StoryScrollSequence() {
         hex(42.,31.,168.),
         ink);
 
-      // Inner rainbow fringe on liquid wave surface
       float fw = clamp(T*0.55, 10., 46.);
-      float x  = dLiquid / fw;
+      float x  = (depth - T) / fw;
       vec3 inCol = grad(x,
         hex(26.,18.,64.),
         hex(47.,75.,255.),
@@ -228,9 +102,8 @@ export function StoryScrollSequence() {
 
       vec3 col;
       float alpha;
-      if(dLiquid <= 0.){
-        bool isRim = (rimDist < rimW);
-        col   = isRim ? rimCol : ink;
+      if(depth <= T){
+        col   = (edge < rimW) ? rimCol : ink;
         alpha = 1.;
         alpha *= smoothstep(0.5, 6., T);
       } else {
@@ -281,27 +154,8 @@ export function StoryScrollSequence() {
     const uDpr = U("uDpr");
     const uRad = U("uRad");
     const uTime = U("uTime");
-    const uPageDark = U("uPageDark");
 
-    function getPageDarkRgb(): [number, number, number] {
-      if (typeof window !== "undefined") {
-        const val = getComputedStyle(document.documentElement)
-          .getPropertyValue("--page-dark")
-          .trim();
-        const m = val.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
-        if (m) {
-          return [
-            parseInt(m[1], 16) / 255,
-            parseInt(m[2], 16) / 255,
-            parseInt(m[3], 16) / 255,
-          ];
-        }
-      }
-      return [11 / 255, 11 / 255, 18 / 255];
-    }
-
-    // Sharp rectangular corners
-    const radius = 0.0;
+    const radius = 28.0;
     let dpr = 1;
 
     function resize() {
@@ -315,12 +169,10 @@ export function StoryScrollSequence() {
 
     function draw(t: number) {
       if (!canvas || !gl) return;
-      const [r, g, b] = getPageDarkRgb();
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uDpr, dpr);
       gl.uniform1f(uRad, radius);
       gl.uniform1f(uTime, t);
-      if (uPageDark) gl.uniform3f(uPageDark, r, g, b);
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -346,6 +198,78 @@ export function StoryScrollSequence() {
       animId = requestAnimationFrame(loop);
     }
 
+    // Tagline Entrance Animation
+    (async function initTaglineAnimation() {
+      const l1 = l1Ref.current;
+      const l2 = l2Ref.current;
+      const l3 = l3Ref.current;
+      const countEl = countRef.current;
+      if (!l1 || !l2 || !l3 || !countEl) return;
+
+      if (still) {
+        countEl.textContent = "997";
+        return;
+      }
+
+      // Split line 1 into <span> per word at runtime
+      const originalText = "you didn't notice anything,";
+      const words = originalText.split(/\s+/);
+      l1.innerHTML = words
+        .map((w, i) => `<span class="wv-word">${w}</span>${i < words.length - 1 ? " " : ""}`)
+        .join("");
+
+      countEl.textContent = "0";
+
+      if (typeof document !== "undefined" && document.fonts) {
+        await document.fonts.ready;
+      }
+
+      const wordSpans = l1.querySelectorAll<HTMLSpanElement>(".wv-word");
+
+      // 1. t = 0.15s: Line 1 appears word by word (0.7s duration, 0.06s stagger)
+      wordSpans.forEach((span, i) => {
+        setTimeout(() => {
+          span.classList.add("is-visible");
+        }, 150 + i * 60);
+      });
+
+      // 2. Pause about 0.35s after last word of line 1 starts
+      const lastWordStartTime = 150 + Math.max(0, words.length - 1) * 60;
+      const line2StartTime = lastWordStartTime + 350;
+
+      // 3. Line 2 appears as one unit (slower 0.9s, smaller blur 4px)
+      setTimeout(() => {
+        l2.classList.add("is-visible");
+      }, line2StartTime);
+
+      const numEl = countEl;
+
+      // 4. 0.2s after line 2 starts: line 3 fades in (0.6s) and count-up from 0 to 997 over 1.0s
+      const line3StartTime = line2StartTime + 200;
+      setTimeout(() => {
+        l3.classList.add("is-visible");
+
+        const duration = 1000;
+        const target = 997;
+        const countStart = performance.now();
+
+        function countStep(now: number) {
+          const elapsed = now - countStart;
+          const progress = Math.min(1, elapsed / duration);
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          const current = Math.round(easeOut * target);
+          numEl.textContent = String(current);
+
+          if (progress < 1) {
+            requestAnimationFrame(countStep);
+          } else {
+            numEl.textContent = "997";
+          }
+        }
+        requestAnimationFrame(countStep);
+      }, line3StartTime);
+    })();
+
     return () => {
       if (animId) cancelAnimationFrame(animId);
       ro.disconnect();
@@ -361,10 +285,9 @@ export function StoryScrollSequence() {
       id="story"
       ref={sectionRef}
       aria-label="Nima Hosseini identity"
-      className="relative w-full h-[100vh] min-h-[560px] overflow-hidden flex flex-col items-center justify-center select-none"
+      className="relative w-full h-[100vh] min-h-[560px] overflow-hidden flex flex-col items-center justify-center select-none bg-[#E2E2E6]"
       style={{
-        borderRadius: "0px",
-        background: "#E2E2E6",
+        borderRadius: "28px 0 28px 0",
       }}
     >
       {/* WebGL corner pools canvas */}
@@ -387,46 +310,38 @@ export function StoryScrollSequence() {
         Nima Hosseini
       </h1>
 
-      {/* Tagline lines: Line 1 & Line 2 on separate lines */}
-      <div
-        ref={linesRef}
-        className="relative text-center z-10 px-4 mt-[clamp(36px,6vh,72px)] transition-none"
-      >
-        {/* Line 1: Word by word entrance */}
-        <p className="wv-l1 text-[15px] sm:text-[18px] font-normal text-[#5E5E66] leading-[1.4]" aria-label="you didn't notice anything,">
-          <span ref={line1Ref} className="wv-l1-text">
-            you didn&apos;t notice anything,
-          </span>
-        </p>
-
-        {/* Line 2: Single unit quiet conclusion */}
+      {/* Tagline lines with subtle entrance animation */}
+      <div className="relative text-center z-10 px-4 mt-[clamp(36px,6vh,72px)]">
         <p
-          className="wv-l2 text-[15px] sm:text-[18px] font-normal text-[#5E5E66] leading-[1.4] mt-[4px]"
-          aria-label="that was the job."
-          style={{ transitionDelay: "0.68s" }}
+          ref={l1Ref}
+          aria-label="you didn't notice anything,"
+          className="text-[15px] sm:text-[18px] font-normal text-[#5E5E66] tracking-[-0.01em] leading-[1.35]"
+        >
+          you didn&apos;t notice anything,
+        </p>
+        <p
+          ref={l2Ref}
+          className="wv-tagline-l2 text-[15px] sm:text-[18px] font-normal text-[#5E5E66] tracking-[-0.01em] leading-[1.35] mt-[4px]"
         >
           that was the job.
         </p>
-
-        {/* Line 3: Fades in and counts up 0 to 997 with tabular-nums */}
         <p
-          className="wv-l3 font-mono text-[9.5px] sm:text-[11px] font-normal text-[#9A9AA3] tracking-[0.18em] uppercase mt-[28px]"
-          style={{
-            fontVariantNumeric: "tabular-nums",
-            transitionDelay: "0.88s",
-          }}
+          ref={l3Ref}
+          className="wv-tagline-l3 font-mono text-[9.5px] sm:text-[11px] font-normal text-[#9A9AA3] tracking-[0.18em] uppercase mt-[28px]"
         >
-          THIS PAGE REACHED YOU IN <span ref={numRef} className="wv-num">997</span> MS FROM FRA
+          THIS PAGE REACHED YOU IN{" "}
+          <span
+            ref={countRef}
+            className="inline-block min-w-[3ch]"
+            style={{ fontVariantNumeric: "tabular-nums" }}
+          >
+            997
+          </span>{" "}
+          MS FROM FRA
         </p>
       </div>
 
       <style jsx global>{`
-        .wv-num {
-          font-variant-numeric: tabular-nums;
-          display: inline-block;
-        }
-
-        /* Initial state before entrance animation */
         .wv-word {
           display: inline-block;
           opacity: 0;
@@ -435,46 +350,37 @@ export function StoryScrollSequence() {
           transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
                       filter 0.7s cubic-bezier(0.22, 1, 0.36, 1),
                       transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-          will-change: opacity, filter, transform;
         }
-
-        .wv-l2 {
+        .wv-word.is-visible {
+          opacity: 1;
+          filter: blur(0);
+          transform: translateY(0);
+        }
+        .wv-tagline-l2 {
           opacity: 0;
           filter: blur(4px);
           transform: translateY(0.25em);
           transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
                       filter 0.9s cubic-bezier(0.22, 1, 0.36, 1),
                       transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
-          will-change: opacity, filter, transform;
         }
-
-        .wv-l3 {
+        .wv-tagline-l2.is-visible {
+          opacity: 1;
+          filter: blur(0);
+          transform: translateY(0);
+        }
+        .wv-tagline-l3 {
           opacity: 0;
-          transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-          will-change: opacity;
+          transition: opacity 0.6s ease-out;
         }
-
-        /* Active entrance state */
-        .wv-animate .wv-word {
-          opacity: 1;
-          filter: blur(0);
-          transform: translateY(0);
-        }
-
-        .wv-animate .wv-l2 {
-          opacity: 1;
-          filter: blur(0);
-          transform: translateY(0);
-        }
-
-        .wv-animate .wv-l3 {
+        .wv-tagline-l3.is-visible {
           opacity: 1;
         }
 
         @media (prefers-reduced-motion: reduce) {
           .wv-word,
-          .wv-l2,
-          .wv-l3 {
+          .wv-tagline-l2,
+          .wv-tagline-l3 {
             opacity: 1 !important;
             filter: none !important;
             transform: none !important;
