@@ -28,7 +28,7 @@ const navItems: NavItem[] = [
     label: "Writing",
     href: "/blog",
     isShiny: true,
-    subtitle: "systems, cloud infrastructure, and technical field notes",
+    subtitle: "systems, cloud infrastructure, and architecture notes",
   },
   {
     label: "About",
@@ -267,7 +267,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
                       <span>{item.label}</span>
                       {item.isShiny && (
                         <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#030e16]/10 text-[#030e16]/75">
-                          Field Notes
+                          Articles
                         </span>
                       )}
                     </button>

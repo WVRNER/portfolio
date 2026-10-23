@@ -1,13 +1,13 @@
 import type { MetadataRoute } from "next";
-import { BLOG_POSTS } from "@/lib/blogData";
+import { getPublishedPosts } from "@/lib/blogData";
 
 export const dynamic = "force-static";
 
 const BASE_URL = "https://wvrner.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Filter out any placeholder, draft, or test posts
-  const validPosts = BLOG_POSTS.filter((post) => {
+  // Only include verified published posts
+  const validPosts = getPublishedPosts().filter((post) => {
     if (!post.slug || post.slug === "placeholder") return false;
     const hasTestTag = post.tags?.some(
       (t) => t.trim().toLowerCase() === "test"

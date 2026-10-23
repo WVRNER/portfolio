@@ -34,7 +34,7 @@ export function WritingSection() {
   return (
     <section
       id="writing"
-      aria-label="Writing & Technical Field Notes"
+      aria-label="Writing & Architecture"
       className="relative py-20 sm:py-28 px-6 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto bg-white border-t border-[#242424]/10"
     >
       <div id="stories" className="absolute -top-12" />
@@ -48,18 +48,20 @@ export function WritingSection() {
           </div>
 
           <h2 className="font-display text-[28px] sm:text-[34px] font-bold tracking-[-0.03em] text-[#242424] leading-tight">
-            Writing &amp; Field Notes
+            Writing
           </h2>
         </div>
 
         {/* View all writing action: Apple Liquid Glass */}
-        <Link
+        <InstantLink
           href="/blog"
+          transitionTitle="Writing"
+          transitionSubtitle="systems, cloud infrastructure, and technical notes"
           className="relative group inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-sans font-semibold text-[#030e16] bg-white/75 hover:bg-white/95 backdrop-blur-md border border-white/80 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.95),0_2px_8px_rgba(3,14,22,0.06)] hover:shadow-[inset_0_1px_1.5px_rgba(255,255,255,1),0_4px_12px_rgba(3,14,22,0.1)] transition-all active:scale-95 shrink-0 pb-1"
         >
           <span>See all writing</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-        </Link>
+        </InstantLink>
       </div>
 
       {/* BALANCED 2-COLUMN EDITORIAL STORIES GRID ALIGNED TO SITE WIDTH */}
@@ -132,15 +134,17 @@ export function WritingSection() {
         ))}
       </div>
 
-      {/* Bottom Archive Action: Apple Liquid Glass Button */}
+      {/* Bottom Archive Action: Apple Liquid Glass Button with Smooth Routing Animation */}
       <div className="pt-8 sm:pt-10 flex justify-center">
-        <Link
+        <InstantLink
           href="/blog"
+          transitionTitle="Writing"
+          transitionSubtitle="systems, cloud infrastructure, and technical notes"
           className="relative group inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-[13.5px] sm:text-[14px] font-sans font-semibold text-[#030e16] bg-white/80 hover:bg-white/95 backdrop-blur-xl border border-white/90 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),0_6px_20px_rgba(0,0,0,0.06)] hover:shadow-[inset_0_1.5px_2px_rgba(255,255,255,1),0_8px_24px_rgba(0,0,0,0.1)] transition-all active:scale-95 cursor-pointer outline-none focus:outline-none before:absolute before:inset-x-0 before:top-0 before:h-[45%] before:rounded-t-full before:bg-gradient-to-b before:from-white/70 before:to-transparent before:pointer-events-none"
         >
           <span className="relative z-10">Browse all writing in the archive</span>
           <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-        </Link>
+        </InstantLink>
       </div>
     </section>
   );

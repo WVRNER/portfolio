@@ -37,11 +37,11 @@ export default function BlogIndexPage() {
   // Topics and stream categories
   const topics = [
     "All",
-    "Field Notes",
+    "Articles",
     "Projects & Labs",
     "Cloud",
     "Terraform",
-    "CI/CD",
+    "Automation",
     "Networking",
     "Kubernetes",
   ];
@@ -51,7 +51,7 @@ export default function BlogIndexPage() {
   // Filter posts based on active tool category or kind
   const filteredPosts = useMemo(() => {
     let list = published;
-    if (activeCategory === "Field Notes") {
+    if (activeCategory === "Articles") {
       list = published.filter((p) => p.kind !== "project");
     } else if (activeCategory === "Projects & Labs") {
       list = published.filter((p) => p.kind === "project");

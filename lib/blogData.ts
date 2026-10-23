@@ -1,7 +1,7 @@
 export type ToolTag =
   | "Cloud"
   | "Terraform"
-  | "CI/CD"
+  | "Automation"
   | "Networking"
   | "Kubernetes";
 
@@ -84,7 +84,7 @@ export function getPrimaryToolTag(post: BlogPost): ToolTag {
   if (slug.includes("canary") || slug.includes("kafka") || slug.includes("finops") || slug.includes("k8s") || slug.includes("kubernetes") || slug.includes("project-02")) return "Kubernetes";
   if (slug.includes("envoy") || slug.includes("network") || slug.includes("chaos")) return "Networking";
   if (slug.includes("ebpf") || slug.includes("telemetry") || slug.includes("cilium")) return "Networking";
-  if (slug.includes("github") || slug.includes("docker") || slug.includes("pipeline") || slug.includes("runner") || slug.includes("oidc")) return "CI/CD";
+  if (slug.includes("github") || slug.includes("docker") || slug.includes("pipeline") || slug.includes("runner") || slug.includes("oidc")) return "Automation";
 
   return "Cloud";
 }

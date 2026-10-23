@@ -104,14 +104,14 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[120] pointer-events-none bg-[#e1e1e5] flex flex-col items-center justify-center text-[#010c14] select-none overflow-hidden"
+            className="fixed inset-0 z-[120] pointer-events-none bg-[#e2e2e6] flex flex-col items-center justify-center text-[#020d15] select-none overflow-hidden"
           >
-            {/* Subtle liquid corner pools with blue inner spectral fringe */}
+            {/* Liquid corner pools using verified pool spectrum */}
             <div
               className="absolute inset-0 pointer-events-none transition-opacity duration-300"
               style={{
                 background:
-                  "radial-gradient(ellipse 55% 50% at 100% 0%, #010c14 0%, #1A1240 25%, rgba(47,75,255,0.22) 45%, rgba(0,200,255,0.12) 65%, transparent 80%), radial-gradient(ellipse 55% 50% at 0% 100%, #010c14 0%, #1A1240 25%, rgba(47,75,255,0.22) 45%, rgba(127,243,255,0.14) 65%, transparent 80%)",
+                  "radial-gradient(ellipse 55% 50% at 100% 0%, #020d15 0%, rgba(47,75,255,0.32) 30%, rgba(0,200,255,0.20) 55%, transparent 75%), radial-gradient(ellipse 55% 50% at 0% 100%, #020d15 0%, rgba(47,75,255,0.32) 30%, rgba(0,200,255,0.20) 55%, transparent 75%)",
               }}
             />
 
@@ -123,14 +123,14 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
               className="relative z-10 flex flex-col items-center gap-3 text-center px-6"
             >
               <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#6B7280]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#030e16]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#020d15]" />
                 <span>
-                  {transitionState.title.length > 25 ? "FIELD NOTE" : transitionState.title} &bull; ROUTING
+                  {transitionState.title} &bull; ROUTING
                 </span>
               </div>
 
               <h2
-                className={`font-[900] tracking-[-0.04em] text-[#010c14] select-none text-center ${
+                className={`font-[900] tracking-[-0.04em] text-[#020d15] select-none text-center ${
                   transitionState.title.length > 25
                     ? "text-[clamp(26px,5.5vw,52px)] leading-[1.08] max-w-[24ch]"
                     : "text-[clamp(48px,11vw,110px)] leading-[0.92]"

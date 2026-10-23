@@ -48,50 +48,21 @@ export function AboutSection() {
             </div>
           </div>
 
-          {/* Engineering Status Console: Clean Minimal White Console (Cursor / Basecamp Aesthetic) */}
+          {/* Engineering Capability & Status: Base44 Minimal Aesthetic */}
           <div className="rounded-xl bg-white border border-[#E5E5E5] p-5 sm:p-6 space-y-4 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
-            {/* Top Row: Focus & Stack Header */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between text-[11px] font-mono tracking-[0.16em] uppercase text-[#737373] pb-2.5 border-b border-[#F0F0F0]">
-                <span>PRIMARY FOCUS</span>
-                <span>CORE STACK</span>
-              </div>
-
-              {/* Minimal Clean Keycards for Core Technologies */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                {[
-                  { name: "AWS", category: "TOPOLOGY", detail: "Cloud Infra" },
-                  { name: "Terraform", category: "STATE", detail: "Declarative IaC" },
-                  { name: "Linux", category: "RUNTIME", detail: "Kernel & Systems" },
-                ].map((item) => (
-                  <div
-                    key={item.name}
-                    className="p-3 rounded-lg bg-[#FAFAFA] border border-[#EAEAEA] hover:border-[#D4D4D4] transition-colors group cursor-default min-w-0"
-                  >
-                    <div className="flex items-center justify-between gap-1 mb-0.5">
-                      <span className="font-mono text-[13px] font-semibold text-[#171717] tracking-tight">
-                        {item.name}
-                      </span>
-                      <span className="font-mono text-[9.5px] text-[#737373] uppercase tracking-wider">
-                        {item.category}
-                      </span>
-                    </div>
-                    <div className="font-sans text-[11px] text-[#525252] tracking-normal truncate">
-                      {item.detail}
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="flex flex-wrap items-center gap-2">
+              {["AWS", "Terraform", "Docker", "Automation"].map((tech) => (
+                <span
+                  key={tech}
+                  className="px-3.5 py-1.5 rounded-lg bg-[#F5F5F7] border border-[#E5E5E5] font-mono text-[13px] font-semibold text-[#171717] tracking-tight"
+                >
+                  {tech}
+                </span>
+              ))}
             </div>
 
-            {/* Bottom Row: State & Active Pipeline */}
-            <div className="pt-3 border-t border-[#F0F0F0] space-y-1.5">
-              <div className="flex items-center justify-between font-mono text-[10.5px] tracking-[0.16em] uppercase text-[#737373]">
-                <span>STATE</span>
-                <span>ACTIVE PIPELINE</span>
-              </div>
-
-              <div className="px-3 py-2.5 rounded-lg bg-[#F7F7F7] border border-[#EAEAEA] text-[12.5px] font-medium text-[#171717] font-sans">
+            <div className="pt-3 border-t border-[#F0F0F0]">
+              <div className="text-[12.5px] text-[#525252] font-medium leading-relaxed font-sans">
                 Open to junior Cloud / DevOps roles remote
               </div>
             </div>
