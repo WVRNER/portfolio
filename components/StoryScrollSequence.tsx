@@ -3,347 +3,280 @@
 import React, { useEffect, useRef } from "react";
 
 export function StoryScrollSequence() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
+    const section = sectionRef.current;
     const canvas = canvasRef.current;
-    if (!container || !canvas) return;
+    if (!section || !canvas) return;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const gl = canvas.getContext("webgl", {
+      premultipliedAlpha: true,
+      antialias: false,
+      alpha: true,
+    });
+    if (!gl) return;
 
-    // 12 spectral color stops in order from tail outward:
-    const stopsHex = [
-      "#1A1240", // indigo
-      "#2A1FA8", // violet-blue
-      "#2F4BFF", // blue
-      "#1E8BFF", // azure
-      "#00C8FF", // cyan
-      "#7FF3FF", // ice
-      "#FFFFFF", // white (narrow)
-      "#FFC2E6", // pale pink
-      "#FF4FB0", // hot pink
-      "#FF1F7A", // magenta
-      "#FF2D3D", // red
-      "#FF6A3D", // coral
-    ];
+    const VERT = `attribute vec2 p; void main(){ gl_Position = vec4(p,0.,1.); }`;
 
-    function hexToRgb(h: string): [number, number, number] {
-      return [
-        parseInt(h.slice(1, 3), 16),
-        parseInt(h.slice(3, 5), 16),
-        parseInt(h.slice(5, 7), 16),
-      ];
+    const FRAG = `
+    precision highp float;
+    uniform vec2  uRes;
+    uniform float uDpr;
+    uniform float uRad;
+    uniform float uTime;
+
+    float sdRoundRect(vec2 p, vec2 b, float r){
+      vec2 q = abs(p) - b + r;
+      return length(max(q,0.)) + min(max(q.x,q.y),0.) - r;
     }
 
-    const stopsRgb = stopsHex.map(hexToRgb);
+    vec3 grad(float t, vec3 a, vec3 b, vec3 c, vec3 d, vec3 e, vec3 f){
+      t = clamp(t,0.,1.)*5.;
+      if(t<1.) return mix(a,b,t);
+      if(t<2.) return mix(b,c,t-1.);
+      if(t<3.) return mix(c,d,t-2.);
+      if(t<4.) return mix(d,e,t-3.);
+      return mix(e,f,t-4.);
+    }
+    vec3 hex(float r,float g,float b){ return vec3(r,g,b)/255.; }
 
-    // Interpolate to 32 continuous saturated colors
-    const palette32: string[] = [];
-    for (let i = 0; i < 32; i++) {
-      const t = (i / 31.0) * 11.0;
-      const idx = Math.min(10, Math.floor(t));
-      const f = t - idx;
-      const c0 = stopsRgb[idx];
-      const c1 = stopsRgb[idx + 1];
-      const r = Math.round(c0[0] + (c1[0] - c0[0]) * f);
-      const g = Math.round(c0[1] + (c1[1] - c0[1]) * f);
-      const b = Math.round(c0[2] + (c1[2] - c0[2]) * f);
-      palette32.push(`rgb(${r},${g},${b})`);
+    const float LOOP = 10.0;
+    float pool(vec2 p, vec2 c, vec2 S, float t, float ph){
+      float w = 6.2831853 / LOOP;
+      float breathe = 1. + 0.28*sin(w*t + ph);
+      float spread  = 1. + 0.14*sin(w*t + ph + 1.2);
+      vec2  L = vec2(0.24*S.x, min(0.34*S.y, 0.45*S.x)) * spread;
+      vec2  d = (p - c) / L;
+      float r2 = dot(d,d);
+      float s = (abs(p.x-c.x) - abs(p.y-c.y)) * 0.012;
+      float wob = 1. + 0.13*sin(s*1.1 - 2.*w*t + ph) + 0.05*sin(s*2.3 + 3.*w*t);
+      float Tmax = clamp(0.10*min(S.x,S.y), 36., 110.);
+      return Tmax * breathe * wob * exp(-r2*2.2);
     }
 
-    let width = 0;
-    let height = 0;
+    void main(){
+      vec2 S  = uRes / uDpr;
+      vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;
+      float edge  = -sdRoundRect(px - S*0.5, S*0.5, uRad);
+      float bigR  = 0.22*min(S.x,S.y);
+      float depth = -sdRoundRect(px - S*0.5, S*0.5, bigR);
+
+      float t = uTime;
+      float T = max(pool(px, vec2(S.x, 0.), S, t, 0.), pool(px, vec2(0., S.y), S, t, 3.14159));
+      vec3 ink = hex(11.,11.,18.);
+
+      if(edge < 0.){
+        float g = smoothstep(0., 14., -edge);
+        vec3  c = mix(hex(255.,45.,61.), hex(255.,106.,61.), g);
+        float a = (1. - g*0.85) * smoothstep(3., 10., T);
+        gl_FragColor = vec4(c*a, a); return;
+      }
+      if(T < 0.5){ gl_FragColor = vec4(0.); return; }
+
+      float rimW = clamp(T*0.22, 3., 16.);
+      float rimT = edge / rimW;
+      vec3 rimCol = grad(rimT,
+        hex(255.,106.,61.),
+        hex(255.,45.,61.),
+        hex(255.,31.,122.),
+        hex(255.,79.,176.),
+        hex(42.,31.,168.),
+        ink);
+
+      float fw = clamp(T*0.55, 10., 46.);
+      float x  = (depth - T) / fw;
+      vec3 inCol = grad(x,
+        hex(26.,18.,64.),
+        hex(47.,75.,255.),
+        hex(30.,139.,255.),
+        hex(0.,200.,255.),
+        hex(127.,243.,255.),
+        hex(255.,255.,255.));
+
+      vec3 col;
+      float alpha;
+      if(depth <= T){
+        col   = (edge < rimW) ? rimCol : ink;
+        alpha = 1.;
+        alpha *= smoothstep(0.5, 6., T);
+      } else {
+        col   = inCol;
+        float fade = 1. - smoothstep(0.55, 1.0, x);
+        alpha = fade * smoothstep(2., 14., T);
+      }
+      gl_FragColor = vec4(col*alpha, alpha);
+    }`;
+
+    const glCtx = gl;
+
+    function createShader(type: number, src: string) {
+      const s = glCtx.createShader(type);
+      if (!s) return null;
+      glCtx.shaderSource(s, src);
+      glCtx.compileShader(s);
+      if (!glCtx.getShaderParameter(s, glCtx.COMPILE_STATUS)) {
+        console.error(glCtx.getShaderInfoLog(s));
+      }
+      return s;
+    }
+
+    const vertShader = createShader(gl.VERTEX_SHADER, VERT);
+    const fragShader = createShader(gl.FRAGMENT_SHADER, FRAG);
+    if (!vertShader || !fragShader) return;
+
+    const prog = gl.createProgram();
+    if (!prog) return;
+    gl.attachShader(prog, vertShader);
+    gl.attachShader(prog, fragShader);
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(
+      gl.ARRAY_BUFFER,
+      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+      gl.STATIC_DRAW
+    );
+    const loc = gl.getAttribLocation(prog, "p");
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+    const U = (name: string) => gl.getUniformLocation(prog, name);
+    const uRes = U("uRes");
+    const uDpr = U("uDpr");
+    const uRad = U("uRad");
+    const uTime = U("uTime");
+
+    const radius = 28.0;
     let dpr = 1;
 
     function resize() {
-      if (!container || !canvas || !ctx) return;
-      width = container.clientWidth;
-      height = container.clientHeight;
+      if (!section || !canvas || !gl) return;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
+      const r = section.getBoundingClientRect();
+      canvas.width = Math.round(r.width * dpr);
+      canvas.height = Math.round(r.height * dpr);
+      gl.viewport(0, 0, canvas.width, canvas.height);
     }
 
+    function draw(t: number) {
+      if (!canvas || !gl) return;
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+      gl.uniform1f(uDpr, dpr);
+      gl.uniform1f(uRad, radius);
+      gl.uniform1f(uTime, t);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    }
+
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const ro = new ResizeObserver(() => {
+      resize();
+      if (still) draw(0);
+    });
+    ro.observe(section);
     resize();
 
-    function renderFrame(breath = 0) {
-      if (!ctx || width === 0 || height === 0) return;
-
-      ctx.save();
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, width, height);
-
-      const centerX = width * 0.5;
-      const centerY = height * 0.48;
-      const targetRatio = width < 600 ? 0.80 : 0.58;
-      const targetWidth = width * targetRatio;
-
-      let fontSize = Math.round(width * 0.16);
-      ctx.font = `900 ${fontSize}px "Nunito", "SF Pro Rounded", -apple-system, sans-serif`;
-      const measured = ctx.measureText("wvrner");
-      fontSize = Math.round(fontSize * (targetWidth / measured.width));
-      const fontStr = `900 ${fontSize}px "Nunito", "SF Pro Rounded", -apple-system, sans-serif`;
-      ctx.font = fontStr;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-
-      const wordWidth = ctx.measureText("wvrner").width;
-      const leftX = centerX - wordWidth * 0.5;
-      const rightX = centerX + wordWidth * 0.5;
-
-      const strokeW = fontSize * 0.175;
-      const startHalfW = strokeW * 0.5;
-
-      // Tail A: starts INSIDE the bottom of the first stroke of 'w'
-      // Overlap by ~15px so there is no visible join
-      const w_apex_x = leftX + wordWidth * 0.072;
-      const w_apex_y = centerY + fontSize * 0.285;
-      const p0_A = {
-        x: w_apex_x - 5.0,
-        y: w_apex_y - 14.0,
-      };
-      // Ends exactly at bottom-left corner of the section
-      const p2_A = { x: 0, y: height };
-
-      // Control point A: bow slightly toward center (offset ~12% height, animated ±8px)
-      const mid_A = { x: (p0_A.x + p2_A.x) * 0.5, y: (p0_A.y + p2_A.y) * 0.5 };
-      const chord_A = { x: p2_A.x - p0_A.x, y: p2_A.y - p0_A.y };
-      const chord_A_len = Math.hypot(chord_A.x, chord_A.y) || 1.0;
-      const n_chord_A = { x: -chord_A.y / chord_A_len, y: chord_A.x / chord_A_len };
-      if (n_chord_A.x * (centerX - mid_A.x) + n_chord_A.y * (centerY - mid_A.y) < 0) {
-        n_chord_A.x = -n_chord_A.x;
-        n_chord_A.y = -n_chord_A.y;
-      }
-      const offset_A = height * 0.12 + breath * 8.0;
-      const p1_A = {
-        x: mid_A.x + n_chord_A.x * offset_A,
-        y: mid_A.y + n_chord_A.y * offset_A,
-      };
-
-      // Tail B: starts INSIDE the arm of the last 'r'
-      // Overlap by ~15px inside arm
-      const r_arm_x = rightX - 2.0;
-      const r_arm_y = centerY - fontSize * 0.20;
-      const p0_B = {
-        x: r_arm_x - 14.0,
-        y: r_arm_y + 4.0,
-      };
-      // Ends exactly at top-right corner of the section
-      const p2_B = { x: width, y: 0 };
-
-      // Control point B: bow slightly toward center
-      const mid_B = { x: (p0_B.x + p2_B.x) * 0.5, y: (p0_B.y + p2_B.y) * 0.5 };
-      const chord_B = { x: p2_B.x - p0_B.x, y: p2_B.y - p0_B.y };
-      const chord_B_len = Math.hypot(chord_B.x, chord_B.y) || 1.0;
-      const n_chord_B = { x: -chord_B.y / chord_B_len, y: chord_B.x / chord_B_len };
-      if (n_chord_B.x * (centerX - mid_B.x) + n_chord_B.y * (centerY - mid_B.y) < 0) {
-        n_chord_B.x = -n_chord_B.x;
-        n_chord_B.y = -n_chord_B.y;
-      }
-      const offset_B = height * 0.12 + breath * 8.0;
-      const p1_B = {
-        x: mid_B.x + n_chord_B.x * offset_B,
-        y: mid_B.y + n_chord_B.y * offset_B,
-      };
-
-      // Helper to build 120 sampled points along quadratic Bezier curve
-      function buildTailData(
-        p0: { x: number; y: number },
-        p1: { x: number; y: number },
-        p2: { x: number; y: number },
-        startW: number
-      ) {
-        const outerPoints: { x: number; y: number }[] = [];
-        const innerPoints: { x: number; y: number }[] = [];
-        const normalsOut: { x: number; y: number }[] = [];
-
-        for (let k = 0; k < 120; k++) {
-          const t = k / 119.0;
-          const inv = 1.0 - t;
-          const bx = inv * inv * p0.x + 2 * inv * t * p1.x + t * t * p2.x;
-          const by = inv * inv * p0.y + 2 * inv * t * p1.y + t * t * p2.y;
-
-          const tx = 2 * inv * (p1.x - p0.x) + 2 * t * (p2.x - p1.x);
-          const ty = 2 * inv * (p1.y - p0.y) + 2 * t * (p2.y - p1.y);
-          const tLen = Math.hypot(tx, ty) || 1.0;
-          const ux = tx / tLen;
-          const uy = ty / tLen;
-
-          let nx = -uy;
-          let ny = ux;
-          // Outward normal points away from section center
-          if (nx * (bx - centerX) + ny * (by - centerY) < 0) {
-            nx = -nx;
-            ny = -ny;
-          }
-
-          // Width: w(t) = startHalfWidth * (1 - t)^1.6 + 0.5px
-          const w = startW * Math.pow(1.0 - t, 1.6) + 0.5;
-
-          outerPoints.push({ x: bx + nx * w, y: by + ny * w });
-          innerPoints.push({ x: bx - nx * w, y: by - ny * w });
-          normalsOut.push({ x: nx, y: ny });
-        }
-        return { outerPoints, innerPoints, normalsOut };
-      }
-
-      const tailA = buildTailData(p0_A, p1_A, p2_A, startHalfW);
-      const tailB = buildTailData(p0_B, p1_B, p2_B, startHalfW * 0.9);
-
-      const fringeScale = 1.0 + breath * 0.10;
-
-      // STEP 1: Fringe lines (spectrum on the outer side of each tail's curve)
-      ctx.save();
-      ctx.filter = "blur(0.6px)";
-      ctx.globalAlpha = 0.9;
-      ctx.lineWidth = 1.4;
-
-      const tails = [tailA, tailB];
-      for (const tail of tails) {
-        for (let i = 0; i < 32; i++) {
-          const d_i = i * 0.55 * fringeScale;
-          ctx.strokeStyle = palette32[i];
-          ctx.beginPath();
-          for (let k = 0; k < 120; k++) {
-            const t = k / 119.0;
-            const envelope = Math.sin(Math.PI * t);
-            const px = tail.outerPoints[k].x + tail.normalsOut[k].x * (d_i * envelope);
-            const py = tail.outerPoints[k].y + tail.normalsOut[k].y * (d_i * envelope);
-            if (k === 0) ctx.moveTo(px, py);
-            else ctx.lineTo(px, py);
-          }
-          ctx.stroke();
-        }
-      }
-      ctx.restore();
-
-      // STEP 2: Tails (filled black #0B0B12 polygons, no rectangles or flat zones)
-      ctx.fillStyle = "#0B0B12";
-      for (const tail of tails) {
-        ctx.beginPath();
-        ctx.moveTo(tail.outerPoints[0].x, tail.outerPoints[0].y);
-        for (let k = 1; k < 120; k++) {
-          ctx.lineTo(tail.outerPoints[k].x, tail.outerPoints[k].y);
-        }
-        for (let k = 119; k >= 0; k--) {
-          ctx.lineTo(tail.innerPoints[k].x, tail.innerPoints[k].y);
-        }
-        ctx.closePath();
-        ctx.fill();
-      }
-
-      // STEP 3: Wordmark text "wvrner" (filled black #0B0B12, fusing seamlessly)
-      ctx.font = fontStr;
-      ctx.fillStyle = "#0B0B12";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText("wvrner", centerX, centerY);
-
-      ctx.restore();
-    }
-
-    if (typeof document !== "undefined" && document.fonts) {
-      document.fonts.ready.then(() => {
-        renderFrame(0);
-      });
-    }
-
-    const isReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     let animId: number;
-    const startTime = performance.now();
-
-    function loop(time: number) {
-      if (!isReduced) {
-        const elapsed = (time - startTime) / 1000;
-        // 8-second smooth ease-in-out breathing loop
-        const breath = Math.sin((elapsed * 2 * Math.PI) / 8);
-        renderFrame(breath);
-        animId = requestAnimationFrame(loop);
-      } else {
-        renderFrame(0);
-      }
-    }
-
-    if (!isReduced) {
-      animId = requestAnimationFrame(loop);
+    if (still) {
+      draw(0);
     } else {
-      renderFrame(0);
+      const t0 = performance.now();
+      const loop = () => {
+        draw((performance.now() - t0) / 1000);
+        animId = requestAnimationFrame(loop);
+      };
+      animId = requestAnimationFrame(loop);
     }
-
-    function handleResize() {
-      resize();
-      renderFrame(0);
-    }
-
-    window.addEventListener("resize", handleResize);
 
     return () => {
       if (animId) cancelAnimationFrame(animId);
-      window.removeEventListener("resize", handleResize);
+      ro.disconnect();
+      gl.deleteBuffer(buf);
+      gl.deleteProgram(prog);
+      gl.deleteShader(vertShader);
+      gl.deleteShader(fragShader);
     };
   }, []);
 
   return (
     <section
       id="story"
-      ref={containerRef}
-      aria-label="wvrner wordmark identity"
-      className="relative w-full min-h-[100vh] h-[100vh] overflow-hidden select-none"
+      ref={sectionRef}
+      aria-label="Nima Hosseini identity"
+      className="relative w-full h-[100vh] min-h-[560px] overflow-hidden flex flex-col items-center justify-center select-none"
       style={{
-        background: "radial-gradient(circle at 50% 50%, #F2F2F4 0%, #E2E2E6 100%)",
+        borderRadius: "28px 0 28px 0",
+        background: "radial-gradient(ellipse at 50% 48%, #F2F2F4 0%, #E2E2E6 100%)",
       }}
     >
-      {/* 5 Faint Concentric Ripple Rings behind wordmark */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div
-          className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[rgba(135,135,145,0.08)] blur-[1.5px]"
-          style={{ width: "500px", height: "500px" }}
-        />
-        <div
-          className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[rgba(135,135,145,0.08)] blur-[1.5px]"
-          style={{ width: "720px", height: "720px" }}
-        />
-        <div
-          className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[rgba(135,135,145,0.08)] blur-[1.5px]"
-          style={{ width: "940px", height: "940px" }}
-        />
-        <div
-          className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[rgba(135,135,145,0.08)] blur-[1.5px]"
-          style={{ width: "1160px", height: "1160px" }}
-        />
-        <div
-          className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[rgba(135,135,145,0.08)] blur-[1.5px]"
-          style={{ width: "1380px", height: "1380px" }}
-        />
-      </div>
-
-      {/* 2D Canvas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full z-[1] pointer-events-none"
+      {/* Faint repeating ripple rings with radial mask */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "repeating-radial-gradient(circle at 50% 46%, transparent 0 96px, rgba(0,0,0,0.016) 97px 98.5px, transparent 100px 190px)",
+          WebkitMaskImage: "radial-gradient(circle at 50% 46%, #000 0 55%, transparent 80%)",
+          maskImage: "radial-gradient(circle at 50% 46%, #000 0 55%, transparent 80%)",
+        }}
       />
 
-      {/* HTML Overlay Text (Centered cleanly below wordmark, no background box, no pill) */}
-      <div className="absolute bottom-[8vh] sm:bottom-[12vh] left-0 right-0 z-[2] text-center flex flex-col items-center pointer-events-auto px-4">
-        <p className="font-['Nunito',sans-serif] font-normal text-[15.3px] sm:text-[18px] text-[#5E5E66] tracking-[-0.01em] leading-[1.3]">
-          you didn&apos;t notice anything. that was the job.
+      {/* WebGL corner pools canvas */}
+      <canvas
+        ref={canvasRef}
+        id="wv-pools"
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full pointer-events-none"
+      />
+
+      {/* Title: Nima Hosseini in bold Plus Jakarta Sans */}
+      <h1
+        className="relative font-extrabold text-[#0B0B12] leading-[0.9] tracking-[-0.03em] whitespace-nowrap z-10 select-none"
+        style={{
+          fontFamily: "var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, sans-serif",
+          fontSize: "clamp(40px, 11.5vw, 220px)",
+        }}
+      >
+        Nima Hosseini
+      </h1>
+
+      {/* Text lines with sequential show up */}
+      <div className="relative text-center z-10 px-4 mt-[clamp(36px,6vh,72px)]">
+        <p className="text-[15px] sm:text-[18px] font-normal text-[#5E5E66] tracking-[-0.01em]">
+          <span
+            className="inline-block opacity-0 translate-y-[6px] mr-[0.3em] motion-reduce:opacity-100 motion-reduce:translate-y-0 motion-reduce:animate-none"
+            style={{
+              animation: "wvFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards",
+            }}
+          >
+            you didn&apos;t notice anything.
+          </span>
+          <span
+            className="inline-block opacity-0 translate-y-[6px] motion-reduce:opacity-100 motion-reduce:translate-y-0 motion-reduce:animate-none"
+            style={{
+              animation: "wvFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards",
+            }}
+          >
+            that was the job.
+          </span>
         </p>
-        <p className="font-['Nunito',sans-serif] font-semibold text-[13.6px] sm:text-[16px] text-[#2A2A31] mt-[8.5px] sm:mt-[10px] tracking-[-0.01em] leading-[1.3]">
-          nima hosseini
-        </p>
-        <p className="font-mono text-[9.35px] sm:text-[11px] font-normal text-[#9A9AA3] tracking-[0.18em] uppercase mt-[24px] sm:mt-[28px] leading-[1.3]">
+        <p className="font-mono text-[9.5px] sm:text-[11px] font-normal text-[#9A9AA3] tracking-[0.18em] uppercase mt-[28px]">
           THIS PAGE REACHED YOU IN 997 MS FROM FRA
         </p>
       </div>
+
+      <style jsx>{`
+        @keyframes wvFadeIn {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </section>
   );
 }
