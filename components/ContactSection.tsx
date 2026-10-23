@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Copy, Check, ArrowUpRight, Mail, ArrowUp } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion, useInView, useReducedMotion } from "motion/react";
 import { scrollToTarget } from "@/components/SmoothScroll";
 
 /* Clean Brand Icons */
@@ -55,6 +55,23 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const prefersReduced = useReducedMotion();
   const email = "wvrner@outlook.com";
+
+  const headingRef = useRef<HTMLDivElement>(null);
+  const isHeadingInView = useInView(headingRef, {
+    once: true,
+    amount: 0.5,
+  });
+  const [hasStartedDrop, setHasStartedDrop] = useState(false);
+
+  useEffect(() => {
+    if (isHeadingInView) {
+      // Delay just a bit so the user arrives and sees "Let's Talk.." resting first
+      const timer = setTimeout(() => {
+        setHasStartedDrop(true);
+      }, 750);
+      return () => clearTimeout(timer);
+    }
+  }, [isHeadingInView]);
 
   const handleCopy = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -120,7 +137,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
       className="relative py-20 sm:py-28 lg:py-36 px-5 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-black/[0.08] bg-white text-[#242424]"
     >
       {/* Header: Pure "Let's Talk.." with dropping second dot */}
-      <div className="overflow-visible pb-4 sm:pb-8 mb-8 sm:mb-14 relative">
+      <div ref={headingRef} className="overflow-visible pb-4 sm:pb-8 mb-8 sm:mb-14 relative">
         <h2
           className="select-none text-[#01030E] inline-flex items-baseline"
           style={{
@@ -138,18 +155,19 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
           <motion.span
             className="inline-block origin-center text-[#01030E]"
             initial={prefersReduced ? false : { y: 0, x: 0, opacity: 1, scale: 1 }}
-            whileInView={
+            animate={
               prefersReduced
                 ? {}
-                : {
+                : hasStartedDrop
+                ? {
                     y: [0, 8, 42, 88, 120],
                     x: [0, 2, 8, 18, 26],
                     scale: [1, 1.05, 1.3, 1.6, 2.4],
                     scaleY: [1, 1.25, 1.35, 1.1, 0.6],
                     opacity: [1, 1, 0.95, 0.7, 0],
                   }
+                : { y: 0, x: 0, opacity: 1, scale: 1 }
             }
-            viewport={{ once: true, margin: "-60px" }}
             transition={
               prefersReduced
                 ? { duration: 0 }
@@ -172,11 +190,14 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
         {!prefersReduced && (
           <motion.div
             initial={{ opacity: 0, scale: 0.2 }}
-            whileInView={{
-              opacity: [0, 0.4, 0.18, 0],
-              scale: [0.2, 1.0, 1.9, 2.6],
-            }}
-            viewport={{ once: true, margin: "-60px" }}
+            animate={
+              hasStartedDrop
+                ? {
+                    opacity: [0, 0.4, 0.18, 0],
+                    scale: [0.2, 1.0, 1.9, 2.6],
+                  }
+                : { opacity: 0, scale: 0.2 }
+            }
             transition={{
               duration: 1.3,
               delay: 0.72,
@@ -189,8 +210,11 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
         {/* Direct Email Card (Smooth, relaxing materialization from the droplet) */}
         <motion.div
           initial={prefersReduced ? false : { opacity: 0, scale: 0.95, y: 24, filter: "blur(12px)" }}
-          whileInView={prefersReduced ? {} : { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, margin: "-40px" }}
+          animate={
+            prefersReduced || hasStartedDrop
+              ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }
+              : { opacity: 0, scale: 0.95, y: 24, filter: "blur(12px)" }
+          }
           transition={{ duration: 0.95, delay: 0.68, ease: [0.16, 1, 0.3, 1] }}
           whileHover={prefersReduced ? {} : { y: -4, transition: { duration: 0.3, ease: "easeOut" } }}
           className="lg:col-span-5 p-6 sm:p-9 md:p-10 rounded-3xl bg-[#F5F5F7] border border-black/[0.07] flex flex-col justify-between gap-6 sm:gap-8 relative overflow-hidden group hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:border-black/15 transition-colors duration-300 z-10"
