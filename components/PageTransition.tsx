@@ -106,12 +106,12 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-[120] pointer-events-none bg-[#e2e2e6] flex flex-col items-center justify-center text-[#020d15] select-none overflow-hidden"
           >
-            {/* Liquid corner pools using verified pool spectrum */}
+            {/* Liquid corner pools using verified Nima Hosseini pool spectrum */}
             <div
               className="absolute inset-0 pointer-events-none transition-opacity duration-300"
               style={{
                 background:
-                  "radial-gradient(ellipse 55% 50% at 100% 0%, #020d15 0%, rgba(47,75,255,0.32) 30%, rgba(0,200,255,0.20) 55%, transparent 75%), radial-gradient(ellipse 55% 50% at 0% 100%, #020d15 0%, rgba(47,75,255,0.32) 30%, rgba(0,200,255,0.20) 55%, transparent 75%)",
+                  "radial-gradient(ellipse 65% 55% at 100% 0%, #020d15 0%, #1A1240 22%, rgba(47,75,255,0.45) 42%, rgba(0,200,255,0.35) 60%, rgba(127,243,255,0.20) 72%, transparent 85%), radial-gradient(ellipse 65% 55% at 0% 100%, #020d15 0%, #1A1240 22%, rgba(47,75,255,0.45) 42%, rgba(0,200,255,0.35) 60%, rgba(127,243,255,0.20) 72%, transparent 85%)",
               }}
             />
 
@@ -120,15 +120,8 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
               animate={{ scale: 1, opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ scale: 1.04, opacity: 0, y: -6, filter: "blur(20px)" }}
               transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 flex flex-col items-center gap-3 text-center px-6"
+              className="relative z-10 flex flex-col items-center justify-center text-center px-6"
             >
-              <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#6B7280]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#020d15]" />
-                <span>
-                  {transitionState.title} &bull; ROUTING
-                </span>
-              </div>
-
               <h2
                 className={`font-[900] tracking-[-0.04em] text-[#020d15] select-none text-center ${
                   transitionState.title.length > 25
@@ -141,10 +134,6 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
               >
                 {transitionState.title}
               </h2>
-
-              <p className="text-[13px] sm:text-[15px] text-[#4B5563] font-normal tracking-[-0.01em] max-w-[42ch]">
-                {transitionState.subtitle}
-              </p>
             </motion.div>
           </motion.div>
         )}
