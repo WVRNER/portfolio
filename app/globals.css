@@ -79,12 +79,20 @@ h1, h2, h3, .font-display {
           background-clip: text;
   color: transparent;
 }
-/* on dark backgrounds (hero): light core #e2e2e6 and deep #020d15 wave tints */
+/* on dark backgrounds (hero): light core #e2e2e6 with liquid pool inside */
 .wv-mark--light {
   --core: #e2e2e6;
   --wave-dark: #020d15;
-  --blue-in: #BFF8FF;
-  --red-in: #FFD6EC;
+  background-image:
+    radial-gradient(ellipse var(--wv-tr-w) var(--wv-tr-h) at var(--wv-tr-x) var(--wv-tr-y),
+      #020d15 0%, #1A1240 20%, #2F4BFF 38%, #00C8FF 56%, #7FF3FF 70%, transparent 84%),
+    radial-gradient(ellipse var(--wv-bl-w) var(--wv-bl-h) at var(--wv-bl-x) var(--wv-bl-y),
+      #020d15 0%, #1A1240 20%, #2F4BFF 38%, #00C8FF 56%, #7FF3FF 70%, transparent 84%),
+    linear-gradient(135deg, #e2e2e6 0%, #e2e2e6 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
 /* on light backgrounds: dark core and deep tints */

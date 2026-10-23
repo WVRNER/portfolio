@@ -33,24 +33,22 @@ export function CompleteStaticRegister() {
         <div className="border-t border-white/15 divide-y divide-white/10">
           {SYSTEMS_AND_TOOLS.map((item) => {
             const allTools = item.category === "OPERATIONS" ? [...item.tools, "Python"] : item.tools;
+            const categoryTitle = item.category.charAt(0) + item.category.slice(1).toLowerCase();
 
             return (
               <div
                 key={item.category}
-                className="group py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-start hover:bg-white/[0.02] transition-colors -mx-4 sm:-mx-6 px-4 sm:px-6 rounded-2xl"
+                className="group py-7 sm:py-8 lg:py-9 grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-8 items-start lg:items-center hover:bg-white/[0.02] transition-colors -mx-4 sm:-mx-6 px-4 sm:px-6 rounded-2xl"
               >
-                {/* Left Index Column: Number & Domain */}
-                <div className="lg:col-span-4 flex items-center gap-3">
-                  <span className="font-mono text-[13px] sm:text-[14px] font-semibold text-white/45 tracking-wider">
-                    {item.number}
-                  </span>
-                  <h3 className="font-mono text-[14.5px] sm:text-[15.5px] font-semibold text-white tracking-[0.14em] uppercase">
-                    {item.category}
+                {/* Left Domain Column */}
+                <div className="lg:col-span-4 flex items-center">
+                  <h3 className="font-[family-name:var(--font-plus-jakarta),var(--font-inter-tight),sans-serif] text-[18px] sm:text-[20px] md:text-[22px] font-bold text-white/80 tracking-tight">
+                    {categoryTitle}
                   </h3>
                 </div>
 
                 {/* Right Stack Column: Bold, Large, Legible Tools */}
-                <div className="lg:col-span-8 flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-3 pt-1 lg:pt-0">
+                <div className="lg:col-span-8 flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-3">
                   {allTools.map((tool, idx) => (
                     <span
                       key={tool}
