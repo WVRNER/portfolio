@@ -14,22 +14,49 @@ interface NavItem {
   action?: string;
   href?: string;
   isShiny?: boolean;
+  subtitle: string;
 }
 
 const navItems: NavItem[] = [
-  { label: "Work", id: "projects" },
-  { label: "Writing", href: "/blog", isShiny: true },
-  { label: "About", id: "about" },
-  { label: "CV", action: "cv" },
-  { label: "Contact", id: "contact" },
+  {
+    label: "Work",
+    id: "projects",
+    subtitle: "architectural labs, projects, and cloud systems",
+  },
+  {
+    label: "Writing",
+    href: "/blog",
+    isShiny: true,
+    subtitle: "systems, cloud infrastructure, and technical field notes",
+  },
+  {
+    label: "About",
+    id: "about",
+    subtitle: "operational background, architecture, and principles",
+  },
+  {
+    label: "CV",
+    action: "cv",
+    subtitle: "verified credentials, history, and engineering experience",
+  },
+  {
+    label: "Contact",
+    id: "contact",
+    subtitle: "direct lines, consultations, and channels",
+  },
 ];
+
+interface NavOverlayState {
+  active: boolean;
+  title: string;
+  subtitle: string;
+}
 
 export function Navigation({ onOpenCV }: NavigationProps) {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [spawnActive, setSpawnActive] = useState(false);
-  const [writingPortalActive, setWritingPortalActive] = useState(false);
+  const [navOverlay, setNavOverlay] = useState<NavOverlayState | null>(null);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -63,9 +90,21 @@ export function Navigation({ onOpenCV }: NavigationProps) {
     }
 
     if (targetId) {
-      const showTimer = setTimeout(() => {
-        setSpawnActive(true);
-      }, 0);
+      const getDetails = (id: string) => {
+        switch (id) {
+          case "projects":
+            return { title: "Work", subtitle: "architectural labs, projects, and cloud systems" };
+          case "about":
+            return { title: "About", subtitle: "operational background, architecture, and principles" };
+          case "contact":
+            return { title: "Contact", subtitle: "direct lines, consultations, and channels" };
+          default:
+            return { title: "WVRNER", subtitle: "returning to home surface" };
+        }
+      };
+
+      const { title, subtitle } = getDetails(targetId);
+      setNavOverlay({ active: true, title, subtitle });
 
       const performScroll = () => {
         if (targetId === "top") {
@@ -79,18 +118,15 @@ export function Navigation({ onOpenCV }: NavigationProps) {
         }
       };
 
-      // Snap position behind mist
       performScroll();
       const retry1 = setTimeout(performScroll, 80);
       const retry2 = setTimeout(performScroll, 220);
 
-      // Dissolve mist smoothly
       const fadeTimer = setTimeout(() => {
-        setSpawnActive(false);
+        setNavOverlay(null);
       }, 750);
 
       return () => {
-        clearTimeout(showTimer);
         clearTimeout(retry1);
         clearTimeout(retry2);
         clearTimeout(fadeTimer);
@@ -98,139 +134,97 @@ export function Navigation({ onOpenCV }: NavigationProps) {
     }
   }, [pathname]);
 
-  /* Cross-Page Dreamy Spawn Transition */
-  const triggerCrossPageSpawn = (targetId: string, href: string) => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  /* Liquid Corner Pools Loading Screen with Blurred Big Text */
+  const showNavLoading = (title: string, subtitle: string, onExecute: () => void) => {
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     if (prefersReduced) {
-      router.push(href);
+      onExecute();
       return;
     }
 
-    setSpawnActive(true);
-    try {
-      sessionStorage.setItem("wvrner_pending_spawn", targetId);
-    } catch {
-      // Ignore
-    }
+    setNavOverlay({ active: true, title, subtitle });
 
-    // Navigate at peak mist envelopment
+    // Execute navigation at peak blur and coverage
     setTimeout(() => {
-      router.push(href);
-    }, 320);
+      onExecute();
+    }, 420);
 
-    // Safety fallback to dissolve mist if route change is delayed
+    // Dissolve smoothly once destination is rendered
     setTimeout(() => {
-      setSpawnActive(false);
-    }, 950);
-  };
-
-  /* Dreamy / Steamy Apple-Style Instant Spawn (Same-page) */
-  const triggerDreamySpawn = (targetTop: number) => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReduced) {
-      window.scrollTo({ top: targetTop, behavior: "auto" });
-      return;
-    }
-
-    setSpawnActive(true);
-    // Port smoothly behind the soft mist at the peak of the vapor
-    setTimeout(() => {
-      window.scrollTo({ top: targetTop, behavior: "auto" });
-    }, 320);
-
-    // Fade mist out smoothly
-    setTimeout(() => {
-      setSpawnActive(false);
-    }, 780);
+      setNavOverlay(null);
+    }, 850);
   };
 
   const handleLogoClick = () => {
     setMobileMenuOpen(false);
-    if (pathname !== "/") {
-      triggerCrossPageSpawn("top", "/");
-      return;
-    }
-    triggerDreamySpawn(0);
+    showNavLoading("WVRNER", "returning to home surface", () => {
+      if (pathname !== "/") {
+        try {
+          sessionStorage.setItem("wvrner_pending_spawn", "top");
+        } catch {
+          // Ignore
+        }
+        router.push("/");
+      } else {
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+    });
   };
 
   const handleClick = (item: (typeof navItems)[number]) => {
     setMobileMenuOpen(false);
-    if (item.action === "cv") {
-      onOpenCV?.();
-      return;
-    }
 
-    // Bespoke unique portal animation for Writing page
-    if (item.href === "/blog") {
-      const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (prefersReduced) {
-        router.push("/blog");
-        return;
-      }
-      setWritingPortalActive(true);
-      setTimeout(() => {
-        if (pathname === "/blog") {
-          window.scrollTo({ top: 0, behavior: "auto" });
-        } else {
-          router.push("/blog");
-        }
-      }, 420);
-      setTimeout(() => {
-        setWritingPortalActive(false);
-      }, 820);
+    if (item.action === "cv") {
+      showNavLoading("CV", item.subtitle, () => {
+        onOpenCV?.();
+      });
       return;
     }
 
     if (item.href) {
-      triggerCrossPageSpawn("top", item.href);
+      showNavLoading(item.label, item.subtitle, () => {
+        if (pathname === item.href) {
+          window.scrollTo({ top: 0, behavior: "auto" });
+        } else {
+          router.push(item.href!);
+        }
+      });
       return;
     }
 
     if (item.id) {
-      if (pathname !== "/") {
-        triggerCrossPageSpawn(item.id, `/#${item.id}`);
-        return;
-      }
-      const el = document.getElementById(item.id);
-      if (el) {
-        const top = el.getBoundingClientRect().top + window.scrollY - 80;
-        triggerDreamySpawn(top);
-      }
+      showNavLoading(item.label, item.subtitle, () => {
+        if (pathname !== "/") {
+          try {
+            sessionStorage.setItem("wvrner_pending_spawn", item.id!);
+          } catch {
+            // Ignore
+          }
+          router.push(`/#${item.id}`);
+        } else {
+          const el = document.getElementById(item.id!);
+          if (el) {
+            const top = el.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top, behavior: "auto" });
+          }
+        }
+      });
     }
   };
 
   return (
     <>
-      {/* Dreamy / Steamy Atmospheric Spawn Mist */}
+      {/* Liquid Corner Pools Loading Screen with Big Blurred Text */}
       <AnimatePresence>
-        {spawnActive && (
-          <motion.div
-            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            animate={{ opacity: 1, backdropFilter: "blur(24px)" }}
-            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-            transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[100] pointer-events-none bg-white/40 dark:bg-black/50 backdrop-blur-2xl flex items-center justify-center overflow-hidden"
-          >
-            {/* Soft dreamy vapor cloud with chromatic dispersion tint */}
-            <motion.div
-              initial={{ scale: 0.75, opacity: 0 }}
-              animate={{ scale: 1.25, opacity: 0.8 }}
-              exit={{ scale: 1.5, opacity: 0 }}
-              transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
-              className="w-[640px] h-[420px] rounded-full bg-gradient-to-tr from-[#0de1ed]/25 via-white/80 dark:via-white/30 to-[#ec178b]/25 blur-3xl pointer-events-none"
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Portal Transition for Writing Page (Nima Hosseini Section Vibe) */}
-      <AnimatePresence>
-        {writingPortalActive && (
+        {navOverlay?.active && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-[100] pointer-events-none bg-[#E2E2E6] flex flex-col items-center justify-center text-[#010c14] select-none"
           >
             {/* Liquid corner pools with blue inner spectral fringe */}
@@ -242,24 +236,26 @@ export function Navigation({ onOpenCV }: NavigationProps) {
               }}
             />
             <motion.div
-              initial={{ scale: 0.94, opacity: 0, y: 12, filter: "blur(6px)" }}
+              initial={{ scale: 0.88, opacity: 0, y: 16, filter: "blur(28px)" }}
               animate={{ scale: 1, opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 0.45, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ scale: 1.05, opacity: 0, y: -8, filter: "blur(24px)" }}
+              transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 flex flex-col items-center gap-3 text-center px-6"
             >
-              <span className="font-mono text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#9A9AA3]">
-                OPENING FIELD NOTES
-              </span>
+              <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#71717A]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00C8FF] animate-ping" />
+                <span>LOADING &bull; {navOverlay.title}</span>
+              </div>
               <span
-                className="text-[clamp(32px,6vw,64px)] font-[900] tracking-[-0.035em] text-[#010c14] leading-[0.95]"
+                className="text-[clamp(48px,11vw,110px)] font-[900] tracking-[-0.04em] text-[#010c14] leading-[0.92]"
                 style={{
                   fontFamily: "var(--font-inter-tight), 'Inter Tight', var(--font-inter), sans-serif",
                 }}
               >
-                Writing &amp; Architecture
+                {navOverlay.title}
               </span>
-              <p className="text-[14px] sm:text-[16px] text-[#5E5E66] font-normal tracking-[-0.01em]">
-                systems, cloud infrastructure, and technical field notes
+              <p className="text-[14px] sm:text-[16px] text-[#5E5E66] font-normal tracking-[-0.01em] max-w-[42ch]">
+                {navOverlay.subtitle}
               </p>
             </motion.div>
           </motion.div>

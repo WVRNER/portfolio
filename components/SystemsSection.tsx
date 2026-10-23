@@ -19,7 +19,7 @@ export function CompleteStaticRegister() {
         {/* Section Header */}
         <header className="space-y-4">
           <h2 className="font-display text-[clamp(2.4rem,5.5vw,4.2rem)] font-medium leading-[1.05] tracking-[-0.035em] text-white select-none">
-            Systems &amp; Disciplines.
+            Systems &amp; Disciplines<span className="text-[#00C8FF]">.</span>
           </h2>
 
           <p className="text-[15px] sm:text-[17px] text-white/60 leading-relaxed font-normal max-w-[58ch]">
