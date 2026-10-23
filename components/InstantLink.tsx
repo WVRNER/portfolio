@@ -4,7 +4,6 @@ import Link, { type LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, type ComponentPropsWithoutRef } from "react";
 import { shouldPrefetch } from "@/lib/prefetch";
-import { usePageTransition } from "@/components/PageTransition";
 
 export type InstantLinkProps = Omit<ComponentPropsWithoutRef<"a">, keyof LinkProps> &
   LinkProps & {
@@ -28,7 +27,6 @@ export function InstantLink({
   ...props
 }: InstantLinkProps) {
   const router = useRouter();
-  const { triggerTransition } = usePageTransition();
 
   const handleWarmup = useCallback(() => {
     const target = typeof href === "string" ? href : href.pathname;
@@ -52,20 +50,19 @@ export function InstantLink({
       }
 
       const target = typeof href === "string" ? href : href.pathname;
-      if (target && target.startsWith("/")) {
+      if (
+        target &&
+        typeof document !== "undefined" &&
+        "startViewTransition" in document &&
+        typeof (document as unknown as { startViewTransition?: (cb: () => void) => void }).startViewTransition === "function"
+      ) {
         e.preventDefault();
-        const displayTitle =
-          (typeof props["aria-label"] === "string" && props["aria-label"]) ||
-          (typeof props.title === "string" && props.title) ||
-          (target.startsWith("/blog/")
-            ? "Field Note"
-            : target === "/blog"
-            ? "Writing"
-            : "WVRNER");
-        triggerTransition(displayTitle, "routing to destination", target);
+        (document as unknown as { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {
+          router.push(target);
+        });
       }
     },
-    [href, onClick, props, triggerTransition]
+    [href, onClick, router]
   );
 
   return (
