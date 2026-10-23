@@ -26,61 +26,61 @@ const navItems: NavItem[] = [
     label: "Work",
     id: "projects",
     subtitle: "architectural labs, projects, and cloud systems",
-    color: "#0047BA",
-    hoverBg: "rgba(0, 71, 186, 0.08)",
+    color: "#00C8FF",
+    hoverBg: "rgba(0, 0, 0, 0.05)",
     accentPing: "#00C8FF",
     poolGradient:
-      "radial-gradient(ellipse 50% 50% at 100% 0%, #001f54 0%, #003087 28%, rgba(0,71,186,0.32) 48%, rgba(0,200,255,0.18) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #001f54 0%, #003087 28%, rgba(0,71,186,0.32) 48%, rgba(127,243,255,0.18) 68%, transparent 84%)",
+      "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(0, 200, 255, 0.12) 0%, rgba(2, 14, 38, 0.6) 45%, transparent 75%), radial-gradient(ellipse 55% 55% at 100% 100%, rgba(0, 140, 255, 0.10) 0%, transparent 70%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(2, 10, 25, 0.8) 0%, transparent 60%)",
   },
   {
     label: "Writing",
     href: "/blog",
     isShiny: true,
     subtitle: "systems, cloud infrastructure, and technical field notes",
-    color: "#A2125E",
-    hoverBg: "rgba(162, 18, 94, 0.12)",
+    color: "#FF1F7A",
+    hoverBg: "rgba(0, 0, 0, 0.05)",
     accentPing: "#FF1F7A",
     poolGradient:
-      "radial-gradient(ellipse 50% 50% at 100% 0%, #3b0520 0%, #610b37 28%, rgba(162,18,94,0.32) 48%, rgba(255,31,122,0.18) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #3b0520 0%, #610b37 28%, rgba(162,18,94,0.32) 48%, rgba(255,106,176,0.18) 68%, transparent 84%)",
+      "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(255, 31, 122, 0.12) 0%, rgba(35, 6, 22, 0.6) 45%, transparent 75%), radial-gradient(ellipse 55% 55% at 100% 100%, rgba(217, 27, 116, 0.10) 0%, transparent 70%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(25, 3, 15, 0.8) 0%, transparent 60%)",
   },
   {
     label: "About",
     id: "about",
     subtitle: "operational background, architecture, and principles",
-    color: "#0A6B4A",
-    hoverBg: "rgba(10, 107, 74, 0.08)",
+    color: "#10B981",
+    hoverBg: "rgba(0, 0, 0, 0.05)",
     accentPing: "#10B981",
     poolGradient:
-      "radial-gradient(ellipse 50% 50% at 100% 0%, #022c1e 0%, #064e3b 28%, rgba(10,107,74,0.32) 48%, rgba(16,185,129,0.18) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #022c1e 0%, #064e3b 28%, rgba(10,107,74,0.32) 48%, rgba(52,211,153,0.18) 68%, transparent 84%)",
+      "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(16, 185, 129, 0.10) 0%, rgba(4, 30, 20, 0.6) 45%, transparent 75%), radial-gradient(ellipse 55% 55% at 100% 100%, rgba(5, 120, 85, 0.08) 0%, transparent 70%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(2, 20, 14, 0.8) 0%, transparent 60%)",
   },
   {
     label: "CV",
     action: "cv",
     subtitle: "verified credentials, history, and engineering experience",
-    color: "#5E27B6",
-    hoverBg: "rgba(94, 39, 182, 0.08)",
-    accentPing: "#8B5CF6",
+    color: "#A78BFA",
+    hoverBg: "rgba(0, 0, 0, 0.05)",
+    accentPing: "#A78BFA",
     poolGradient: "",
   },
   {
     label: "Contact",
     id: "contact",
     subtitle: "direct lines, consultations, and channels",
-    color: "#B83800",
-    hoverBg: "rgba(184, 56, 0, 0.08)",
-    accentPing: "#FF6A3D",
+    color: "#F97316",
+    hoverBg: "rgba(0, 0, 0, 0.05)",
+    accentPing: "#F97316",
     poolGradient:
-      "radial-gradient(ellipse 50% 50% at 100% 0%, #431407 0%, #7c2d12 28%, rgba(184,56,0,0.32) 48%, rgba(255,106,61,0.18) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #431407 0%, #7c2d12 28%, rgba(184,56,0,0.32) 48%, rgba(251,146,60,0.18) 68%, transparent 84%)",
+      "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(249, 115, 22, 0.10) 0%, rgba(45, 18, 5, 0.6) 45%, transparent 75%), radial-gradient(ellipse 55% 55% at 100% 100%, rgba(194, 65, 12, 0.08) 0%, transparent 70%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(25, 10, 2, 0.8) 0%, transparent 60%)",
   },
 ];
 
 const WVRNER_OVERLAY = {
   title: "WVRNER",
   subtitle: "returning to home surface",
-  color: "#030e16",
+  color: "#FFFFFF",
   accentPing: "#00C8FF",
   poolGradient:
-    "radial-gradient(ellipse 50% 50% at 100% 0%, #010c14 0%, #1A1240 28%, rgba(47,75,255,0.32) 48%, rgba(0,200,255,0.16) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #010c14 0%, #1A1240 28%, rgba(47,75,255,0.32) 48%, rgba(127,243,255,0.18) 68%, transparent 84%)",
+    "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(255, 255, 255, 0.06) 0%, rgba(15, 20, 30, 0.6) 45%, transparent 75%), radial-gradient(ellipse 55% 55% at 100% 100%, rgba(0, 200, 255, 0.08) 0%, transparent 70%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(10, 12, 18, 0.8) 0%, transparent 60%)",
 };
 
 interface NavOverlayState {
@@ -305,47 +305,53 @@ export function Navigation({ onOpenCV }: NavigationProps) {
 
   return (
     <>
-      {/* Liquid Corner Pools Loading Screen with Big Blurred Text */}
+      {/* Dark Cinematic Loading Screen with Monumental Blurred Typography */}
       <AnimatePresence>
         {navOverlay?.active && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[100] pointer-events-none bg-[#E2E2E6] flex flex-col items-center justify-center text-[#010c14] select-none"
+            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[100] pointer-events-none bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center text-white select-none overflow-hidden"
           >
-            {/* Liquid corner pools with signature button color spectrum */}
+            {/* Subtle atmospheric ambient lighting */}
             <div
-              className="absolute inset-0 pointer-events-none transition-opacity duration-300"
+              className="absolute inset-0 pointer-events-none transition-opacity duration-500"
               style={{
                 background: navOverlay.poolGradient,
               }}
             />
+
+            {/* Depth vignette */}
+            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
+
             <motion.div
-              initial={{ scale: 0.88, opacity: 0, y: 16, filter: "blur(28px)" }}
+              initial={{ scale: 0.92, opacity: 0, y: 14, filter: "blur(32px)" }}
               animate={{ scale: 1, opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ scale: 1.05, opacity: 0, y: -8, filter: "blur(24px)" }}
-              transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ scale: 1.04, opacity: 0, y: -8, filter: "blur(24px)" }}
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 flex flex-col items-center gap-3 text-center px-6"
             >
-              <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#71717A]">
+              <div className="flex items-center gap-2.5 font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-white/40">
                 <span
-                  className="w-1.5 h-1.5 rounded-full animate-ping"
-                  style={{ backgroundColor: navOverlay.pingColor }}
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{
+                    backgroundColor: navOverlay.pingColor,
+                    boxShadow: `0 0 10px ${navOverlay.pingColor}`,
+                  }}
                 />
-                <span>LOADING &bull; {navOverlay.title}</span>
+                <span>{navOverlay.title} &bull; ROUTING</span>
               </div>
-              <span
-                className="text-[clamp(48px,11vw,110px)] font-[900] tracking-[-0.04em] leading-[0.92]"
+              <h2
+                className="text-[clamp(52px,11vw,116px)] font-[900] tracking-[-0.045em] text-white leading-[0.9] select-none drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]"
                 style={{
                   fontFamily: "var(--font-inter-tight), 'Inter Tight', var(--font-inter), sans-serif",
-                  color: navOverlay.accentColor,
                 }}
               >
                 {navOverlay.title}
-              </span>
-              <p className="text-[14px] sm:text-[16px] text-[#5E5E66] font-normal tracking-[-0.01em] max-w-[42ch]">
+              </h2>
+              <p className="text-[13px] sm:text-[15px] text-white/50 font-normal tracking-[-0.01em] max-w-[42ch]">
                 {navOverlay.subtitle}
               </p>
             </motion.div>
