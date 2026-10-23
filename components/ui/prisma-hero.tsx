@@ -116,9 +116,11 @@ export const WordsPullUpMultiStyle = ({
 /* ---------------- Truly Imperceptible Cinemagraph Loop Player ---------------- */
 function ImperceptibleHeroVideo({
   src = "/hero-master-endless.mp4",
+  webmSrc = "/hero-master-endless.webm",
   poster = "/hero-poster.jpg",
 }: {
   src?: string;
+  webmSrc?: string;
   poster?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -168,7 +170,7 @@ function ImperceptibleHeroVideo({
     return () => {
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, [src]);
+  }, [src, webmSrc]);
 
   return (
     <div className="absolute inset-0 h-full w-full overflow-hidden bg-black select-none pointer-events-none">
@@ -179,9 +181,8 @@ function ImperceptibleHeroVideo({
         muted
         playsInline
         {...({ "webkit-playsinline": "true" } as Record<string, string>)}
-        preload="auto"
+        preload="metadata"
         poster={poster}
-        src={src}
         disablePictureInPicture
         disableRemotePlayback
         className="absolute inset-0 h-full w-full object-cover will-change-transform"
@@ -192,7 +193,10 @@ function ImperceptibleHeroVideo({
           backfaceVisibility: "hidden",
           WebkitBackfaceVisibility: "hidden",
         }}
-      />
+      >
+        <source src={webmSrc} type="video/webm" />
+        <source src={src} type="video/mp4" />
+      </video>
     </div>
   );
 }
