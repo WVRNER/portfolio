@@ -69,6 +69,7 @@ export function WritingSection() {
           >
             <InstantLink
               href={`/blog/${post.slug}`}
+              transitionTitle={post.title}
               className="group flex flex-col justify-between h-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none no-underline ring-0"
             >
               <div className="flex items-start justify-between gap-4 sm:gap-6 flex-1 min-h-0">

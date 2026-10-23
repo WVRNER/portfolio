@@ -4,11 +4,14 @@ import Link, { type LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, type ComponentPropsWithoutRef } from "react";
 import { shouldPrefetch } from "@/lib/prefetch";
+import { usePageTransition } from "@/components/PageTransition";
 
 export type InstantLinkProps = Omit<ComponentPropsWithoutRef<"a">, keyof LinkProps> &
   LinkProps & {
     children: React.ReactNode;
     className?: string;
+    transitionTitle?: string;
+    transitionSubtitle?: string;
   };
 
 /**
@@ -23,10 +26,13 @@ export function InstantLink({
   onClick,
   onMouseEnter,
   onTouchStart,
+  transitionTitle,
+  transitionSubtitle,
   children,
   ...props
 }: InstantLinkProps) {
   const router = useRouter();
+  const { triggerTransition } = usePageTransition();
 
   const handleWarmup = useCallback(() => {
     const target = typeof href === "string" ? href : href.pathname;
@@ -50,19 +56,24 @@ export function InstantLink({
       }
 
       const target = typeof href === "string" ? href : href.pathname;
-      if (
-        target &&
-        typeof document !== "undefined" &&
-        "startViewTransition" in document &&
-        typeof (document as unknown as { startViewTransition?: (cb: () => void) => void }).startViewTransition === "function"
-      ) {
+      if (target && target.startsWith("/")) {
         e.preventDefault();
-        (document as unknown as { startViewTransition: (cb: () => void) => void }).startViewTransition(() => {
-          router.push(target);
-        });
+        const displayTitle =
+          transitionTitle ||
+          (typeof props["aria-label"] === "string" && props["aria-label"]) ||
+          (typeof props.title === "string" && props.title) ||
+          (target.startsWith("/blog/")
+            ? "Writing"
+            : target === "/blog"
+            ? "Writing"
+            : "WVRNER");
+        const displaySubtitle =
+          transitionSubtitle || "systems, cloud infrastructure, and technical field notes";
+
+        triggerTransition(displayTitle, displaySubtitle, target);
       }
     },
-    [href, onClick, router]
+    [href, onClick, props, transitionTitle, transitionSubtitle, triggerTransition]
   );
 
   return (

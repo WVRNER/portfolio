@@ -466,10 +466,9 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         {/* Story Header */}
         <header className="space-y-4 mb-8">
           
-          {/* Super bold punchy headline with View Transition */}
+          {/* Super bold punchy headline */}
           <h1
             className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[34px] sm:text-[44px] md:text-[48px] text-[#242424] dark:text-[#e5e5e5] leading-[1.1] tracking-[-0.035em]"
-            style={{ viewTransitionName: `post-title-${post.slug}` }}
           >
             {post.title}
           </h1>
@@ -520,11 +519,10 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         </header>
 
-        {/* Feature / Cover Image (Blur-up placeholder & View Transition) */}
+        {/* Feature / Cover Image (Blur-up placeholder) */}
         {post.featureImage && (
           <div
             className="my-8 rounded-[3px] overflow-hidden bg-neutral-100 dark:bg-neutral-900"
-            style={{ viewTransitionName: `post-cover-${post.slug}` }}
           >
             <BlurImage
               src={post.featureImage}
@@ -715,6 +713,7 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
                 <InstantLink
                   key={rec.slug}
                   href={`/blog/${rec.slug}`}
+                  transitionTitle={rec.title}
                   className="group flex flex-col justify-between cursor-pointer space-y-3 p-4 rounded-xl hover:bg-neutral-50 dark:hover:bg-[#222222] transition-colors outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
                 >
                   <div>
