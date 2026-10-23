@@ -95,17 +95,45 @@ h1, h2, h3, .font-display {
   -webkit-text-fill-color: transparent !important;
 }
 
-/* on light menubar/surfaces: static crisp dark wordmark with Nima Hosseini pool colors inside */
+/* on light menubar: flowing liquid pool current (non-breathing, smooth soft diffusion) */
 .wv-mark--dark {
   --core: #020d15;
-  background-image:
-    radial-gradient(ellipse 42% 95% at 100% 0%, #020d15 0%, #1A1240 22%, #2F4BFF 45%, #00C8FF 68%, #7FF3FF 80%, transparent 95%),
-    radial-gradient(ellipse 42% 95% at 0% 100%, #020d15 0%, #1A1240 22%, #2F4BFF 45%, #00C8FF 68%, #7FF3FF 80%, transparent 95%),
-    linear-gradient(135deg, #020d15 0%, #081426 50%, #020d15 100%);
+  background-image: linear-gradient(
+    120deg,
+    #020d15 0%,
+    #08142a 14%,
+    #141f52 28%,
+    #2F4BFF 42%,
+    #00C8FF 54%,
+    #7FF3FF 62%,
+    #00C8FF 70%,
+    #2F4BFF 80%,
+    #0f193c 92%,
+    #020d15 100%
+  );
+  background-size: 260% 100%;
+  animation: wv-pool-current 8.5s cubic-bezier(0.42, 0, 0.58, 1) infinite alternate;
+  will-change: background-position;
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent !important;
   -webkit-text-fill-color: transparent !important;
+}
+
+@keyframes wv-pool-current {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wv-mark--dark {
+    animation: none !important;
+    background-position: 50% 50%;
+  }
 }
 
 /* Liquid wave animation inside letters (smooth undulation matching Nima Hosseini section) */
