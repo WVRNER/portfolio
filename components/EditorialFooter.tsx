@@ -2,201 +2,386 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Copy, Check, ArrowUp, Mail, FileText, ArrowLeft } from "lucide-react";
 import { scrollToTarget } from "@/components/SmoothScroll";
 
 interface EditorialFooterProps {
   onOpenCV?: () => void;
 }
 
-/**
- * EditorialFooter - Monumental Dark Architectural Footer for Blog & Article surfaces
- *
- * Designed using:
- * - /design-taste-frontend: Bold monumental typography, tactile dark stage, anti-generic layout
- * - emilkowalski/skills: Spring-physics hover lifts, tactile active presses, reduced-motion gates
- * - impeccable: Distilled interaction hubs, calibrated type roles, optical alignment
- */
 export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
-  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copied, setCopied] = useState(false);
   const email = "wvrner@outlook.com";
 
-  const handleCopyEmail = () => {
+  const handleCopy = async () => {
     if (typeof window !== "undefined") {
-      navigator.clipboard.writeText(email).then(() => {
-        setCopiedEmail(true);
-        setTimeout(() => setCopiedEmail(false), 2200);
-      });
+      try {
+        await navigator.clipboard.writeText(email);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1800);
+      } catch (e) {}
     }
   };
 
-  const scrollToTop = () => {
-    scrollToTarget(0, { duration: 1.0 });
+  const handleScrollTop = (e: React.MouseEvent) => {
+    e.preventDefault();
+    scrollToTarget(0, { duration: 0.9 });
   };
 
-  const channels = [
-    { label: "GitHub", href: "https://github.com/wvrner", detail: "wvrner" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/wvrner", detail: "in/wvrner" },
-    { label: "Telegram", href: "https://t.me/wvrner", detail: "@wvrner" },
-    { label: "WhatsApp", href: "https://wa.me/wvrner", detail: "+ Direct" },
-  ];
-
   return (
-    <footer
-      aria-label="Editorial Footer"
-      className="relative bg-[#0d0d0f] text-[#EDEDED] border-t border-white/[0.08] overflow-hidden select-none"
-    >
-      {/* Smooth soft ambient highlight for depth without pixel noise */}
-      <div
-        className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[260px] bg-white/[0.03] rounded-full blur-3xl pointer-events-none z-0"
-        aria-hidden="true"
-      />
+    <footer className="ct" aria-label="Contact and Colophon">
+      <style jsx>{`
+        .ct {
+          --bg: #E3E5EA;
+          --ink: #01030E;
+          --ink-2: rgba(1, 3, 14, 0.62);
+          --ink-3: rgba(1, 3, 14, 0.42);
+          --rule: rgba(1, 3, 14, 0.14);
+          background: var(--bg);
+          color: var(--ink);
+          overflow: hidden;
+          font-family: var(--font-inter-tight), "Inter Tight", -apple-system, BlinkMacSystemFont, sans-serif;
+          padding: clamp(40px, 6vh, 64px) clamp(16px, 6vw, 96px) 0;
+        }
+        .ct-wrap {
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+        .mono {
+          font-family: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, monospace;
+        }
+        .ct-back {
+          display: inline-flex;
+          align-items: center;
+          gap: 14px;
+          color: var(--ink-2);
+          text-decoration: none;
+          font-size: 15px;
+          transition: color 0.3s;
+        }
+        .ct-back-icon {
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          border: 1px solid var(--rule);
+          display: grid;
+          place-items: center;
+          transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+        .ct-back:hover {
+          color: var(--ink);
+        }
+        .ct-back:hover .ct-back-icon {
+          background: var(--ink);
+          border-color: var(--ink);
+          color: var(--bg);
+        }
+        .ct-grid {
+          margin-top: clamp(56px, 10vh, 110px);
+          display: grid;
+          grid-template-columns: 1.3fr 1fr;
+          gap: clamp(40px, 6vw, 96px);
+          align-items: end;
+        }
+        @media (max-width: 900px) {
+          .ct-grid {
+            grid-template-columns: 1fr;
+            align-items: start;
+          }
+        }
+        .ct-eyebrow {
+          font-size: 11px;
+          letter-spacing: 0.22em;
+          color: var(--ink-3);
+          text-transform: uppercase;
+        }
+        .ct-title {
+          margin-top: 14px;
+          font-weight: 500;
+          font-size: clamp(64px, 9.5vw, 148px);
+          letter-spacing: -0.055em;
+          line-height: 0.88;
+        }
+        .ct-lede {
+          margin-top: 24px;
+          max-width: 42ch;
+          color: var(--ink-2);
+          font-size: clamp(16px, 1.25vw, 18px);
+          line-height: 1.6;
+        }
+        .ct-email {
+          margin-top: clamp(32px, 5vh, 52px);
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          flex-wrap: wrap;
+        }
+        .ct-email a {
+          color: var(--ink);
+          text-decoration: none;
+          font-size: clamp(20px, 2.3vw, 32px);
+          letter-spacing: -0.01em;
+          background: linear-gradient(var(--ink), var(--ink)) 0 100% / 100% 1.5px no-repeat;
+          padding-bottom: 4px;
+          transition: background-size 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .ct-email a:hover {
+          background-size: 0 1.5px;
+          background-position: 100% 100%;
+        }
+        .ct-copy {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          border: 1px solid var(--rule);
+          background: transparent;
+          color: var(--ink-2);
+          border-radius: 999px;
+          padding: 9px 14px;
+          font: 500 11px/1 var(--font-jetbrains-mono), "JetBrains Mono", monospace;
+          letter-spacing: 0.16em;
+          transition: all 0.3s;
+        }
+        .ct-copy:hover {
+          color: var(--ink);
+          border-color: var(--ink);
+        }
+        .ct-copy.done {
+          background: var(--ink);
+          color: var(--bg);
+          border-color: var(--ink);
+        }
+        .ct-cv {
+          margin-top: 22px;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 0 24px;
+          min-height: 52px;
+          border-radius: 999px;
+          background: var(--ink);
+          color: var(--bg);
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 16px;
+          transition: transform 0.3s;
+          cursor: pointer;
+        }
+        .ct-cv:hover {
+          transform: translateY(-1px);
+        }
+        .ct-links {
+          list-style: none;
+          margin: 16px 0 0;
+          padding: 0;
+          border-top: 1px solid var(--ink);
+        }
+        .ct-links li {
+          border-bottom: 1px solid var(--rule);
+        }
+        .ct-links a {
+          display: grid;
+          grid-template-columns: 1fr auto 24px;
+          align-items: center;
+          gap: 16px;
+          min-height: 76px;
+          padding: 0 4px;
+          color: var(--ink);
+          text-decoration: none;
+          transition: padding 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .ct-links a:hover {
+          padding-left: 14px;
+        }
+        .ct-name {
+          font-size: clamp(22px, 2vw, 28px);
+          font-weight: 500;
+          letter-spacing: -0.025em;
+        }
+        .ct-handle {
+          font-size: 13px;
+          color: var(--ink-3);
+        }
+        .ct-arrow {
+          color: var(--ink-3);
+          transition: color 0.3s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .ct-links a:hover .ct-arrow {
+          color: var(--ink);
+          transform: translate(3px, -3px);
+        }
+        .ct-mark {
+          margin-top: clamp(72px, 12vh, 140px);
+          font-weight: 900;
+          font-size: 17.6vw;
+          line-height: 0.74;
+          letter-spacing: -0.045em;
+          text-align: center;
+          white-space: nowrap;
+          margin-bottom: -0.06em;
+          user-select: none;
+          background-image:
+            radial-gradient(ellipse var(--wv-tr-w, 20%) var(--wv-tr-h, 70%) at var(--wv-tr-x, 100%) var(--wv-tr-y, 0%), #FF6A3D 0%, #FF2D3D 16%, #FF1F7A 32%, #FF4FB0 48%, #2A1FA8 66%, transparent 84%),
+            radial-gradient(ellipse var(--wv-bl-w, 20%) var(--wv-bl-h, 70%) at var(--wv-bl-x, 0%) var(--wv-bl-y, 100%), #7FF3FF 0%, #00C8FF 14%, #1E8BFF 30%, #2F4BFF 46%, #0A1440 66%, transparent 84%),
+            linear-gradient(var(--ink), var(--ink));
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+        }
+        .ct-base {
+          position: relative;
+          background: var(--bg);
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+          flex-wrap: wrap;
+          padding: 22px 0 26px;
+          border-top: 1px solid var(--ink);
+          font-size: 11px;
+          letter-spacing: 0.18em;
+          color: var(--ink-3);
+          text-transform: uppercase;
+        }
+        .ct-base a {
+          color: var(--ink-3);
+          text-decoration: none;
+        }
+        .ct-base a:hover {
+          color: var(--ink);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .ct-links a,
+          .ct-email a {
+            transition: none;
+          }
+        }
+      `}</style>
 
-      <div className="relative z-10 max-w-[1280px] mx-auto px-6 sm:px-10 md:px-14 lg:px-16 pt-10 sm:pt-14 pb-16 sm:pb-20">
-        
-        {/* Top Header: Navigation and Return Affordance */}
-        <div className="flex items-center justify-between gap-6 pb-6 sm:pb-8 border-b border-white/[0.08]">
-          <Link
-            href="/"
-            className="group inline-flex items-center gap-2.5 text-[13px] font-sans font-medium text-neutral-400 hover:text-white transition-colors duration-150"
-          >
-            <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white/[0.06] border border-white/10 group-hover:bg-white/[0.12] group-hover:border-white/20 transition-all duration-150 motion-reduce:transition-none">
-              <ArrowLeft className="w-3.5 h-3.5 text-neutral-300 group-hover:text-white group-hover:-translate-x-0.5 transition-transform duration-150 motion-reduce:transition-none" />
-            </span>
-            <span>Back to portfolio</span>
-          </Link>
-        </div>
+      <div className="ct-wrap">
+        <Link href="/" className="ct-back">
+          <span className="ct-back-icon" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M13 8H3M7 4L3 8l4 4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+          <span>Back to portfolio</span>
+        </Link>
 
-        {/* Center Stage: Interactive Tactile Console */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 py-10 sm:py-14 border-b border-white/[0.08] items-stretch">
-          
-          {/* Left Column: Email Console */}
-          <div className="lg:col-span-7 flex flex-col justify-between gap-8 p-7 sm:p-9 rounded-2xl bg-white/[0.02] border border-white/[0.07] hover:border-white/[0.14] transition-all duration-200">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.22em] uppercase text-neutral-400">
-                <Mail className="w-3.5 h-3.5 text-neutral-400" />
-                <span>EMAIL</span>
-              </div>
-
-              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[24px] sm:text-[30px] font-bold text-white tracking-[-0.03em] leading-tight">
-                Let&rsquo;s talk.
-              </h3>
-
-              <p className="text-[14.5px] sm:text-[15px] text-neutral-400 font-sans leading-relaxed max-w-[48ch]">
-                I’m looking for a junior Cloud / DevOps role. The fastest way to reach me is email or LinkedIn.
-              </p>
+        <div className="ct-grid">
+          <section aria-labelledby="ct-title">
+            <span className="ct-eyebrow mono">Email</span>
+            <h2 className="ct-title" id="ct-title">
+              Let&rsquo;s talk.
+            </h2>
+            <p className="ct-lede">
+              I&rsquo;m looking for a junior Cloud / DevOps role. The fastest way to reach me is email or LinkedIn.
+            </p>
+            <div className="ct-email">
+              <a className="mono" href={`mailto:${email}`}>
+                {email}
+              </a>
+              <button
+                className={`ct-copy ${copied ? "done" : ""}`}
+                type="button"
+                onClick={handleCopy}
+                aria-label="Copy email address"
+              >
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <rect x="5" y="5" width="9" height="9" rx="2" stroke="currentColor" strokeWidth="1.4" />
+                  <path
+                    d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2h-6A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                  />
+                </svg>
+                <span>{copied ? "COPIED" : "COPY"}</span>
+              </button>
             </div>
 
-            {/* Interactive Action Hub */}
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-3 pt-2">
+            {onOpenCV ? (
               <button
                 type="button"
-                onClick={handleCopyEmail}
-                className="flex-1 inline-flex items-center justify-between gap-3 px-5 py-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] active:scale-[0.98] border border-white/10 hover:border-white/25 text-[13px] font-mono font-medium text-white transition-all duration-150 cursor-pointer shadow-sm motion-reduce:transition-none"
-                title="Click to copy email address"
+                onClick={onOpenCV}
+                className="ct-cv border-none"
+                aria-label="View Curriculum Vitae"
               >
-                <span className="truncate">{email}</span>
-                {copiedEmail ? (
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-sans font-semibold text-emerald-400 uppercase tracking-wider">
-                    <Check className="w-3.5 h-3.5" />
-                    <span>Copied</span>
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-sans font-medium text-neutral-400 uppercase tracking-wider group-hover:text-white">
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>Copy</span>
-                  </span>
-                )}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M4 1.5h5.5L13 5v9.5H4z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+                  <path d="M9 1.5V5h4M6.5 8.5h4M6.5 11h4" stroke="currentColor" strokeWidth="1.4" />
+                </svg>
+                View CV
               </button>
+            ) : (
+              <a className="ct-cv" href="/cv.pdf" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M4 1.5h5.5L13 5v9.5H4z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+                  <path d="M9 1.5V5h4M6.5 8.5h4M6.5 11h4" stroke="currentColor" strokeWidth="1.4" />
+                </svg>
+                View CV
+              </a>
+            )}
+          </section>
 
-              {onOpenCV && (
-                <button
-                  type="button"
-                  onClick={onOpenCV}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-[#242424] hover:bg-neutral-200 active:scale-[0.98] text-[13px] font-sans font-semibold transition-all duration-150 cursor-pointer shadow-sm motion-reduce:transition-none shrink-0"
-                >
-                  <FileText className="w-4 h-4 text-[#242424]" />
-                  <span>View CV</span>
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Right Column: Tactile Channel Keycaps */}
-          <div className="lg:col-span-5 flex flex-col justify-between gap-4">
-            <div className="text-[11px] font-mono tracking-[0.22em] uppercase text-neutral-400 px-1">
-              ELSEWHERE
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 flex-1">
-              {channels.map((ch, idx) => (
-                <a
-                  key={idx}
-                  href={ch.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex flex-col justify-between p-5 rounded-2xl bg-white/[0.02] hover:bg-white/[0.06] active:scale-[0.97] border border-white/[0.07] hover:border-white/20 transition-all duration-150 cursor-pointer motion-reduce:transition-none"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-[14px] font-semibold text-white tracking-tight">
-                      {ch.label}
-                    </span>
-                    <ArrowUpRight className="w-3.5 h-3.5 text-neutral-500 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-150 motion-reduce:transition-none" />
-                  </div>
-                  <span className="text-[12px] font-mono text-neutral-400 pt-3">
-                    {ch.detail}
+          <nav aria-label="Elsewhere">
+            <span className="ct-eyebrow mono">Elsewhere</span>
+            <ul className="ct-links">
+              <li>
+                <a href="https://github.com/wvrner" target="_blank" rel="noopener">
+                  <span className="ct-name">GitHub</span>
+                  <span className="ct-handle mono">wvrner</span>
+                  <span className="ct-arrow" aria-hidden="true">
+                    ↗
                   </span>
                 </a>
-              ))}
-            </div>
-          </div>
-
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/wvrner" target="_blank" rel="noopener">
+                  <span className="ct-name">LinkedIn</span>
+                  <span className="ct-handle mono">in/wvrner</span>
+                  <span className="ct-arrow" aria-hidden="true">
+                    ↗
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://t.me/wvrner" target="_blank" rel="noopener">
+                  <span className="ct-name">Telegram</span>
+                  <span className="ct-handle mono">@wvrner</span>
+                  <span className="ct-arrow" aria-hidden="true">
+                    ↗
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://wa.me/wvrner" target="_blank" rel="noopener">
+                  <span className="ct-name">WhatsApp</span>
+                  <span className="ct-handle mono">+ Direct</span>
+                  <span className="ct-arrow" aria-hidden="true">
+                    ↗
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
+      </div>
 
-        {/* Monumental Typographic Signature (Awwwards / Architectural Scale) */}
-        <div className="pt-16 sm:pt-24 pb-8 sm:pb-12 flex justify-center text-center overflow-visible px-4 sm:px-8">
-          <div
-            className="font-wvrner font-black text-[clamp(3.8rem,13vw,11.5rem)] leading-[0.84] select-none text-center inline-flex items-baseline justify-center overflow-visible pr-4 sm:pr-8 wv-mark wv-mark--light wv-mark--wave"
-            style={{
-              fontFamily: "var(--font-plus-jakarta), sans-serif",
-              fontWeight: 900,
-            }}
-          >
-            <span>W</span>
-            <span className="-ml-[0.08em]">V</span>
-            <span className="-ml-[0.14em]">R</span>
-            <span className="-ml-[0.17em]">N</span>
-            <span className="-ml-[0.18em]">E</span>
-            <span className="-ml-[0.15em]">R</span>
-          </div>
+      <div className="ct-mark wv-mark--wave" aria-hidden="true">
+        WVRNER
+      </div>
+      <div className="ct-wrap">
+        <div className="ct-base mono">
+          <span>&copy; 2026 Nima Hosseini</span>
+          <a href="#top" onClick={handleScrollTop}>
+            Back to top &uarr;
+          </a>
         </div>
-
-        {/* Baseline Bar */}
-        <div className="pt-8 sm:pt-10 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-6 text-[12px] font-sans text-neutral-400">
-          <div>
-            &copy; {new Date().getFullYear()} Nima Hosseini &bull; Cloud &amp; DevOps Engineering
-          </div>
-
-          <div className="flex items-center gap-6">
-            <Link
-              href="/blog"
-              className="hover:text-white transition-colors"
-            >
-              All Writing
-            </Link>
-
-            <button
-              type="button"
-              onClick={scrollToTop}
-              className="group inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.09] active:scale-[0.97] border border-white/10 text-neutral-300 hover:text-white transition-all duration-150 cursor-pointer motion-reduce:transition-none"
-              aria-label="Back to top"
-            >
-              <span className="font-mono text-[11px] uppercase tracking-wider">Top</span>
-              <ArrowUp className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white group-hover:-translate-y-0.5 transition-transform duration-150 motion-reduce:transition-none" />
-            </button>
-          </div>
-        </div>
-
       </div>
     </footer>
   );
