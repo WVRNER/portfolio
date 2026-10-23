@@ -96,6 +96,7 @@ export function StoryScrollSequence() {
     uniform float uDpr;
     uniform float uRad;
     uniform float uTime;
+    uniform vec3  uPageDark;
 
     float sdRoundRect(vec2 p, vec2 b, float r){
       vec2 q = abs(p) - b + r;
@@ -127,18 +128,76 @@ export function StoryScrollSequence() {
       return Tmax * breathe * wob * exp(-r2*1.85);
     }
 
+    // Polynomial smooth minimum (Quilez)
+    float smin(float a, float b, float k){
+      float h = max(k - abs(a - b), 0.0) / k;
+      return min(a, b) - h * h * k * 0.25;
+    }
+
     void main(){
       vec2 S  = uRes / uDpr;
       vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;
-      float edge  = -sdRoundRect(px - S*0.5, S*0.5, uRad);
-      float bigR  = 0.28*min(S.x,S.y);
+      float edge = min(min(px.x, S.x - px.x), min(px.y, S.y - px.y));
+
+      float bigR = 0.28*min(S.x,S.y);
       float depth = -sdRoundRect(px - S*0.5, S*0.5, bigR);
 
       float t = uTime;
-      float T = max(pool(px, vec2(S.x, 0.), S, t, 0.), pool(px, vec2(0., S.y), S, t, 3.14159));
-      vec3 ink = hex(5.,12.,26.);
+      float w = 6.2831853 / LOOP;
 
+      // 1. Top-right corner pool (untouched)
+      float poolTR = pool(px, vec2(S.x, 0.), S, t, 0.);
+
+      // 2. Bottom-left corner pool
+      float poolBL = pool(px, vec2(0., S.y), S, t, 3.14159);
+
+      // 3. Liquid floor band along entire bottom edge
+      // 2 gentle sine waves: wavelength ~40-60% of width, amplitude ~2-3% of section height
+      float k1 = 6.2831853 / (0.50 * S.x);
+      float k2 = 6.2831853 / (0.36 * S.x);
+      float w1 = sin(k1 * px.x + w * t);
+      float w2 = sin(k2 * px.x - 2.0 * w * t + 1.2);
+      float waveNorm = 0.55 * (w1 * 0.5 + 0.5) + 0.45 * (w2 * 0.5 + 0.5);
+
+      float floorAmp  = clamp(0.025 * S.y, 10., 26.);
+      float floorBase = clamp(0.08 * S.y, 44., 88.);
+      float floorH    = floorBase + waveNorm * floorAmp;
+
+      // Distance from bottom edge
+      float pxBottom = S.y - px.y;
+      float dFloor   = pxBottom - floorH;
+      float dBL      = depth - poolBL;
+
+      // Merge bottom-left pool and floor smoothly with smin
+      float kBlend = clamp(0.06 * S.y, 28., 58.);
+      float dBottom = smin(dBL, dFloor, kBlend);
+
+      // Top-right pool distance
+      float dTR = depth - poolTR;
+
+      // Full screen liquid distance: smooth union of TR pool and bottom liquid
+      float dLiquid = min(dTR, dBottom);
+
+      // Liquid thickness T at this pixel
+      float floorWeight = smoothstep(floorH + 70.0, floorH - 10.0, pxBottom);
+      float localFloorH = floorH * floorWeight;
+      float T = max(poolTR, max(poolBL, localFloorH));
+
+      // Red rim: ONLY left edge of bottom-left pool and top/right edges of top-right pool
+      // Strictly NO red rim along the bottom edge
+      float rimDist = 9999.0;
+      if(px.x > S.x * 0.4 && px.y < S.y * 0.6){
+        rimDist = min(px.y, S.x - px.x);
+      }
+      if(px.x < S.x * 0.4 && px.y > S.y * 0.35){
+        rimDist = px.x;
+      }
+
+      vec3 ink = uPageDark;
+
+      // Outside section boundary: strictly no corner glow on the bottom
       if(edge < 0.){
+        if(px.y >= S.y || px.y > S.y * 0.5) { gl_FragColor = vec4(0.); return; }
         float g = smoothstep(0., 14., -edge);
         vec3  c = mix(hex(255.,45.,61.), hex(255.,106.,61.), g);
         float a = (1. - g*0.85) * smoothstep(3., 10., T);
@@ -147,7 +206,7 @@ export function StoryScrollSequence() {
       if(T < 0.5){ gl_FragColor = vec4(0.); return; }
 
       float rimW = clamp(T*0.22, 3., 16.);
-      float rimT = edge / rimW;
+      float rimT = rimDist / rimW;
       vec3 rimCol = grad(rimT,
         hex(255.,106.,61.),
         hex(255.,45.,61.),
@@ -156,8 +215,9 @@ export function StoryScrollSequence() {
         hex(42.,31.,168.),
         ink);
 
+      // Inner rainbow fringe on liquid wave surface
       float fw = clamp(T*0.55, 10., 46.);
-      float x  = (depth - T) / fw;
+      float x  = dLiquid / fw;
       vec3 inCol = grad(x,
         hex(26.,18.,64.),
         hex(47.,75.,255.),
@@ -168,8 +228,9 @@ export function StoryScrollSequence() {
 
       vec3 col;
       float alpha;
-      if(depth <= T){
-        col   = (edge < rimW) ? rimCol : ink;
+      if(dLiquid <= 0.){
+        bool isRim = (rimDist < rimW);
+        col   = isRim ? rimCol : ink;
         alpha = 1.;
         alpha *= smoothstep(0.5, 6., T);
       } else {
@@ -220,6 +281,24 @@ export function StoryScrollSequence() {
     const uDpr = U("uDpr");
     const uRad = U("uRad");
     const uTime = U("uTime");
+    const uPageDark = U("uPageDark");
+
+    function getPageDarkRgb(): [number, number, number] {
+      if (typeof window !== "undefined") {
+        const val = getComputedStyle(document.documentElement)
+          .getPropertyValue("--page-dark")
+          .trim();
+        const m = val.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+        if (m) {
+          return [
+            parseInt(m[1], 16) / 255,
+            parseInt(m[2], 16) / 255,
+            parseInt(m[3], 16) / 255,
+          ];
+        }
+      }
+      return [11 / 255, 11 / 255, 18 / 255];
+    }
 
     // Sharp rectangular corners
     const radius = 0.0;
@@ -236,10 +315,12 @@ export function StoryScrollSequence() {
 
     function draw(t: number) {
       if (!canvas || !gl) return;
+      const [r, g, b] = getPageDarkRgb();
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uDpr, dpr);
       gl.uniform1f(uRad, radius);
       gl.uniform1f(uTime, t);
+      if (uPageDark) gl.uniform3f(uPageDark, r, g, b);
       gl.clearColor(0, 0, 0, 0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);

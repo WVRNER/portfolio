@@ -12,8 +12,12 @@ export function CompleteStaticRegister() {
   return (
     <section
       id="systems"
-      className="relative w-full bg-[#0A0A0A] text-white py-20 sm:py-28 px-6 sm:px-12 md:px-16 lg:px-24"
+      className="relative w-full text-white py-20 sm:py-28 px-6 sm:px-12 md:px-16 lg:px-24"
       aria-label="Systems and Disciplines"
+      style={{
+        backgroundColor: "var(--page-dark, #0B0B12)",
+        marginTop: "-1px",
+      }}
     >
       <div className="max-w-[1720px] mx-auto space-y-12 sm:space-y-16">
         {/* Section Header */}

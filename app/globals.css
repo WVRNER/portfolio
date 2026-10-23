@@ -2,6 +2,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
+  --page-dark: #0B0B12;
   --background: #FFFFFF;
   --foreground: #242424;
   --foreground-muted: #5A5A5A;
@@ -44,6 +45,28 @@ h1, h2, h3, .font-display {
 
 .font-wvrner {
   font-family: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, sans-serif !important;
+}
+
+/* wvrner wordmark (same idea and colors as the hero pools) */
+.wv-mark {
+  --core: #020917;
+  --blue-in: #0A1440;
+  --red-in:  #2A1FA8;
+  background:
+    radial-gradient(ellipse 20% 70% at 100% 0%,
+      #FF6A3D 0%, #FF2D3D 16%, #FF1F7A 32%, #FF4FB0 48%, var(--red-in) 66%, transparent 82%),
+    radial-gradient(ellipse 20% 70% at 0% 100%,
+      #7FF3FF 0%, #00C8FF 14%, #1E8BFF 30%, #2F4BFF 46%, var(--blue-in) 66%, transparent 82%),
+    linear-gradient(var(--core), var(--core));
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
+/* on a dark background: light core, and the corners melt in through light tints */
+.wv-mark--light {
+  --core: #F2F2F4;
+  --blue-in: #BFF8FF;
+  --red-in: #FFD6EC;
 }
 
 /* Extra punch & thickness for modern Medium-style editorial titles */
