@@ -46,16 +46,33 @@ h1, h2, h3, .font-display {
   font-family: var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
 
+@property --wv-tr-x { syntax: '<percentage>'; inherits: false; initial-value: 100%; }
+@property --wv-tr-y { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+@property --wv-bl-x { syntax: '<percentage>'; inherits: false; initial-value: 0%; }
+@property --wv-bl-y { syntax: '<percentage>'; inherits: false; initial-value: 100%; }
+@property --wv-tr-w { syntax: '<percentage>'; inherits: false; initial-value: 20%; }
+@property --wv-tr-h { syntax: '<percentage>'; inherits: false; initial-value: 70%; }
+@property --wv-bl-w { syntax: '<percentage>'; inherits: false; initial-value: 20%; }
+@property --wv-bl-h { syntax: '<percentage>'; inherits: false; initial-value: 70%; }
+
 /* wvrner wordmark (colors and spectrum from wvrner-wordmark.html) */
 .wv-mark {
   --core: #020917;
   --blue-in: #0A1440;
   --red-in:  #2A1FA8;
-  background:
-    radial-gradient(ellipse 20% 70% at 100% 0%,
-      #FF6A3D 0%, #FF2D3D 16%, #FF1F7A 32%, #FF4FB0 48%, var(--red-in) 66%, transparent 82%),
-    radial-gradient(ellipse 20% 70% at 0% 100%,
-      #7FF3FF 0%, #00C8FF 14%, #1E8BFF 30%, #2F4BFF 46%, var(--blue-in) 66%, transparent 82%),
+  --wv-tr-x: 100%;
+  --wv-tr-y: 0%;
+  --wv-bl-x: 0%;
+  --wv-bl-y: 100%;
+  --wv-tr-w: 20%;
+  --wv-tr-h: 70%;
+  --wv-bl-w: 20%;
+  --wv-bl-h: 70%;
+  background-image:
+    radial-gradient(ellipse var(--wv-tr-w) var(--wv-tr-h) at var(--wv-tr-x) var(--wv-tr-y),
+      #FF6A3D 0%, #FF2D3D 16%, #FF1F7A 32%, #FF4FB0 48%, var(--red-in) 66%, transparent 84%),
+    radial-gradient(ellipse var(--wv-bl-w) var(--wv-bl-h) at var(--wv-bl-x) var(--wv-bl-y),
+      #7FF3FF 0%, #00C8FF 14%, #1E8BFF 30%, #2F4BFF 46%, var(--blue-in) 66%, transparent 84%),
     linear-gradient(var(--core), var(--core));
   -webkit-background-clip: text;
           background-clip: text;
@@ -66,6 +83,71 @@ h1, h2, h3, .font-display {
   --core: #F2F2F4;
   --blue-in: #BFF8FF;
   --red-in: #FFD6EC;
+}
+
+/* Liquid wave animation inside letters (smooth undulation matching Nima Hosseini section) */
+.wv-mark--wave {
+  animation: wv-liquid-wave 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: --wv-tr-x, --wv-tr-y, --wv-bl-x, --wv-bl-y, --wv-tr-w, --wv-tr-h, --wv-bl-w, --wv-bl-h;
+}
+
+@keyframes wv-liquid-wave {
+  0% {
+    --wv-tr-x: 100%;
+    --wv-tr-y: 0%;
+    --wv-tr-w: 20%;
+    --wv-tr-h: 70%;
+    --wv-bl-x: 0%;
+    --wv-bl-y: 100%;
+    --wv-bl-w: 20%;
+    --wv-bl-h: 70%;
+  }
+  25% {
+    --wv-tr-x: 90%;
+    --wv-tr-y: 10%;
+    --wv-tr-w: 36%;
+    --wv-tr-h: 82%;
+    --wv-bl-x: 6%;
+    --wv-bl-y: 92%;
+    --wv-bl-w: 26%;
+    --wv-bl-h: 76%;
+  }
+  50% {
+    --wv-tr-x: 78%;
+    --wv-tr-y: 18%;
+    --wv-tr-w: 48%;
+    --wv-tr-h: 96%;
+    --wv-bl-x: 22%;
+    --wv-bl-y: 80%;
+    --wv-bl-w: 48%;
+    --wv-bl-h: 96%;
+  }
+  75% {
+    --wv-tr-x: 94%;
+    --wv-tr-y: 6%;
+    --wv-tr-w: 28%;
+    --wv-tr-h: 78%;
+    --wv-bl-x: 12%;
+    --wv-bl-y: 88%;
+    --wv-bl-w: 38%;
+    --wv-bl-h: 86%;
+  }
+  100% {
+    --wv-tr-x: 100%;
+    --wv-tr-y: 0%;
+    --wv-tr-w: 20%;
+    --wv-tr-h: 70%;
+    --wv-bl-x: 0%;
+    --wv-bl-y: 100%;
+    --wv-bl-w: 20%;
+    --wv-bl-h: 70%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wv-mark--wave {
+    animation: none !important;
+  }
 }
 
 /* Extra punch & thickness for modern Medium-style editorial titles */

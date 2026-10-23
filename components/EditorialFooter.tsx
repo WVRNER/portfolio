@@ -156,7 +156,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
         {/* Monumental Typographic Signature (Awwwards / Architectural Scale) */}
         <div className="pt-16 sm:pt-24 pb-8 sm:pb-12 flex justify-center text-center overflow-visible px-4 sm:px-8">
           <div
-            className="font-wvrner font-black text-[clamp(3.8rem,13vw,11.5rem)] leading-[0.84] select-none text-center inline-flex items-baseline justify-center overflow-visible pr-4 sm:pr-8 wv-mark wv-mark--light"
+            className="font-wvrner font-black text-[clamp(3.8rem,13vw,11.5rem)] leading-[0.84] select-none text-center inline-flex items-baseline justify-center overflow-visible pr-4 sm:pr-8 wv-mark wv-mark--light wv-mark--wave"
             style={{
               fontFamily: "var(--font-plus-jakarta), sans-serif",
               fontWeight: 900,
