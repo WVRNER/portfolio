@@ -279,9 +279,6 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
             <h2 className="ct-title" id="ct-title">
               Let&rsquo;s talk.
             </h2>
-            <p className="ct-lede">
-              I&rsquo;m looking for a junior Cloud / DevOps role. The fastest way to reach me is email or LinkedIn.
-            </p>
             <div className="ct-email">
               <a className="mono" href={`mailto:${email}`}>
                 {email}

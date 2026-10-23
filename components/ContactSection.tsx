@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Copy, Check, ArrowUpRight, Mail, ArrowUp } from "lucide-react";
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import { scrollToTarget } from "@/components/SmoothScroll";
 
 /* Clean Brand Icons */
@@ -113,72 +113,52 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
     },
   ];
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: prefersReduced
-        ? { duration: 0 }
-        : {
-            staggerChildren: 0.08,
-            delayChildren: 0.18,
-          },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.65,
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    },
-  };
-
   return (
     <footer
       id="contact"
       aria-label="Contact and Channels"
       className="relative py-20 sm:py-28 lg:py-36 px-5 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-black/[0.08] bg-white text-[#242424]"
     >
-      {/* Header Row: Bigger, Bolder "Let's talk." with Crisp Upward Motion */}
-      <motion.div
-        initial={prefersReduced ? false : { opacity: 0, y: 32 }}
-        whileInView={prefersReduced ? {} : { opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-        className="pb-6 mb-8 sm:mb-12 border-b border-black/[0.07]"
-      >
-        <h2
-          className="font-[800] text-[clamp(2.8rem,7.5vw,5.5rem)] tracking-[-0.04em] text-[#171717] leading-[0.94] select-none"
-          style={{ fontFamily: "var(--font-plus-jakarta), var(--font-manrope), sans-serif" }}
+      {/* Header: Pure "Let's talk." matching the writing footer */}
+      <div className="overflow-hidden pb-4 sm:pb-8 mb-8 sm:mb-14">
+        <motion.h2
+          initial={prefersReduced ? false : { y: "105%", opacity: 0 }}
+          whileInView={prefersReduced ? {} : { y: "0%", opacity: 1 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="select-none text-[#01030E]"
+          style={{
+            fontFamily: 'var(--font-inter-tight), "Inter Tight", -apple-system, BlinkMacSystemFont, sans-serif',
+            fontWeight: 500,
+            fontSize: "clamp(64px, 9.5vw, 148px)",
+            lineHeight: 0.88,
+            letterSpacing: "-0.055em",
+          }}
         >
           Let&rsquo;s talk.
-        </h2>
-      </motion.div>
+        </motion.h2>
+      </div>
 
-      {/* Main Grid: Direct Line Card + Social Channels Bento with Staggered Motion */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-40px" }}
-        className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-stretch"
-      >
+      {/* Main Grid: Direct Line Card + Social Channels Bento with Tactile Entrance */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-stretch">
         
-        {/* Direct Email Card */}
+        {/* Direct Email Card (Elastic Aperture & Spatial Focus) */}
         <motion.div
-          variants={itemVariants}
-          className="lg:col-span-5 p-6 sm:p-9 md:p-10 rounded-3xl bg-[#F5F5F7] border border-black/[0.07] flex flex-col justify-between gap-6 sm:gap-8 relative overflow-hidden group hover:shadow-[0_12px_32px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300"
+          initial={prefersReduced ? false : { opacity: 0, scale: 0.94, y: 32, filter: "blur(10px)" }}
+          whileInView={prefersReduced ? {} : { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          whileHover={prefersReduced ? {} : { y: -4, transition: { duration: 0.3, ease: "easeOut" } }}
+          className="lg:col-span-5 p-6 sm:p-9 md:p-10 rounded-3xl bg-[#F5F5F7] border border-black/[0.07] flex flex-col justify-between gap-6 sm:gap-8 relative overflow-hidden group hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:border-black/15 transition-colors duration-300"
         >
           {/* Subtle top specular sheen */}
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
 
-          <div className="space-y-4">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white shadow-sm border border-black/[0.06] flex items-center justify-center text-[#171717]">
+          {/* Interactive hover sweep sheen */}
+          <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
+
+          <div className="space-y-4 relative z-10">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white shadow-sm border border-black/[0.06] flex items-center justify-center text-[#171717] group-hover:scale-105 transition-transform duration-300">
               <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
 
@@ -193,7 +173,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
             </p>
           </div>
 
-          <div className="space-y-3 pt-5 sm:pt-6 border-t border-black/[0.06]">
+          <div className="space-y-3 pt-5 sm:pt-6 border-t border-black/[0.06] relative z-10">
             <a
               href={`mailto:${email}`}
               className="text-[17px] sm:text-[22px] font-semibold text-[#171717] hover:text-[#555] transition-colors break-all block"
@@ -231,21 +211,32 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
           </div>
         </motion.div>
 
-        {/* 4 Social Channels Grid (Right 7 cols) */}
+        {/* 4 Social Channels Grid (Cascading Tactile Snap) */}
         <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
-          {contactChannels.map((channel) => {
+          {contactChannels.map((channel, i) => {
             const IconComponent = channel.IconComponent;
             const isCopied = copiedKey === channel.key;
 
             return (
               <motion.div
                 key={channel.key}
-                variants={itemVariants}
-                className={`p-5 sm:p-7 rounded-3xl bg-white border border-black/[0.07] ${channel.color} hover:shadow-[0_12px_32px_rgba(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between gap-5 sm:gap-6 group cursor-default`}
+                initial={prefersReduced ? false : { opacity: 0, scale: 0.92, y: 28, filter: "blur(8px)" }}
+                whileInView={prefersReduced ? {} : { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.75,
+                  delay: 0.22 + i * 0.08,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                whileHover={prefersReduced ? {} : { y: -4, scale: 1.01, transition: { duration: 0.25, ease: "easeOut" } }}
+                className={`p-5 sm:p-7 rounded-3xl bg-white border border-black/[0.07] ${channel.color} hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)] hover:border-black/20 transition-colors duration-300 flex flex-col justify-between gap-5 sm:gap-6 group cursor-default relative overflow-hidden`}
               >
-                <div>
+                {/* Micro specular sheen sweep on hover */}
+                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-900 ease-out bg-gradient-to-r from-transparent via-black/[0.02] to-transparent pointer-events-none" />
+
+                <div className="relative z-10">
                   <div className="flex items-center justify-between mb-3.5 sm:mb-4">
-                    <div className={`w-10 h-10 rounded-2xl ${channel.bgAccent} ${channel.accent} flex items-center justify-center`}>
+                    <div className={`w-10 h-10 rounded-2xl ${channel.bgAccent} ${channel.accent} flex items-center justify-center group-hover:scale-105 transition-transform duration-300`}>
                       <IconComponent className="w-5 h-5" />
                     </div>
 
@@ -271,7 +262,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
                 </div>
 
                 {/* Bottom Action Row */}
-                <div className="pt-3.5 sm:pt-4 border-t border-black/[0.06] flex items-center justify-between text-[12px]">
+                <div className="pt-3.5 sm:pt-4 border-t border-black/[0.06] flex items-center justify-between text-[12px] relative z-10">
                   <a
                     href={channel.href}
                     target="_blank"
@@ -305,7 +296,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
           })}
         </div>
 
-      </motion.div>
+      </div>
 
       {/* Clean Colophon Bottom Bar (Desktop & Mobile Optimized) */}
       <div className="pt-10 sm:pt-16 mt-10 sm:mt-16 border-t border-black/[0.07] flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-4 text-[12px] text-[#86868B] text-center sm:text-left">
