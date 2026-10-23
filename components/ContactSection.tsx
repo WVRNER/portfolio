@@ -284,7 +284,12 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
         <div className="flex items-center gap-2.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[#0de1ed] shadow-[0_0_8px_rgba(13,225,237,0.6)]" />
           <span>
-            <span className="font-bold wv-mark wv-mark--light">
+            <span
+              className="font-bold bg-clip-text text-transparent"
+              style={{
+                backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #0233bc 26%, #ec178b 76%, #df556c 100%)",
+              }}
+            >
               WVRNER
             </span>{" "}
             &bull; Nima Hosseini &bull; 2026
