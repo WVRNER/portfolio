@@ -25,6 +25,7 @@ import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { getGitHubRepoCard } from "@/lib/githubDataHelper";
 import {
   BLOG_POSTS,
+  getPublishedPosts,
   formatDisplayDate,
   getPrimaryToolTag,
   type BlogPost,
@@ -372,8 +373,10 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
     }
   };
 
-  // Recommended articles (Selected Stories - 2x2 grid)
-  const recommendedPosts = BLOG_POSTS.filter((p) => p.slug !== post.slug).slice(0, 4);
+  // Recommended articles (Selected Stories: guaranteed even, balanced grid of published posts)
+  const eligiblePosts = getPublishedPosts().filter((p) => p.slug !== post.slug);
+  const recCount = eligiblePosts.length >= 4 ? 4 : eligiblePosts.length >= 2 ? 2 : eligiblePosts.length;
+  const recommendedPosts = eligiblePosts.slice(0, recCount);
 
   // Feature 2 & 3: Build-time image metadata & WCAG-calibrated accent color
   const imageMeta = getImageMetadata(post.slug);
@@ -714,52 +717,67 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         {/* Selected Writing Recommendations */}
         {recommendedPosts.length > 0 && (
           <section className="pt-12 mt-12 border-t border-[#F2F2F2] dark:border-[#2a2a2a] space-y-6">
-            <div className="flex items-center justify-between">
-              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[20px] font-bold text-[#242424] dark:text-[#e5e5e5]">
+            <div className="flex items-baseline justify-between pb-3 border-b border-[#F2F2F2] dark:border-[#262626]">
+              <h3 className="font-[family-name:var(--font-plus-jakarta)] text-[20px] font-bold text-[#242424] dark:text-[#e5e5e5] tracking-tight">
                 Selected Writing
               </h3>
-              <Link
+              <InstantLink
                 href="/blog"
-                className="text-[13px] text-[#242424] dark:text-[#e5e5e5] hover:underline font-medium font-sans"
+                transitionTitle="Writing"
+                className="text-[13px] text-[#242424] dark:text-[#e5e5e5] hover:opacity-75 transition-opacity font-medium font-sans"
               >
-                See all writing
-              </Link>
+                See all writing &rarr;
+              </InstantLink>
             </div>
 
-            {/* 2x2 Editorial Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/* Balanced 2-Column Editorial Grid (Pixel-aligned to header) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 -mx-3 sm:-mx-4">
               {recommendedPosts.map((rec) => (
                 <InstantLink
                   key={rec.slug}
                   href={`/blog/${rec.slug}`}
                   transitionTitle={rec.title}
-                  className="group flex flex-col justify-between cursor-pointer space-y-3 p-4 rounded-xl hover:bg-neutral-50 dark:hover:bg-[#222222] transition-colors outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
+                  className="group flex flex-col justify-between cursor-pointer p-3 sm:p-4 rounded-xl hover:bg-neutral-50 dark:hover:bg-[#222222] transition-colors outline-none focus:outline-none focus-visible:outline-none hover:outline-none h-full"
                 >
-                  <div>
-                    {rec.featureImage && (
-                      <div className="w-full overflow-hidden rounded-[3px] mb-3 bg-neutral-100 dark:bg-neutral-900">
+                  <div className="flex flex-col flex-1">
+                    {/* Fixed aspect-ratio image container: identical 16:10 geometry for all cards now and in the future */}
+                    {rec.featureImage ? (
+                      <div className="w-full aspect-[16/10] overflow-hidden rounded-[4px] mb-3 bg-neutral-100 dark:bg-neutral-900 shrink-0">
                         <BlurImage
                           src={rec.featureImage}
                           alt={rec.title}
-                          aspectRatio={getImageMetadata(rec.slug)?.aspectRatio || 1.6}
+                          aspectRatio={1.6}
                           blurDataUrl={getImageMetadata(rec.slug)?.blurDataUrl}
-                          sizes="(max-width: 640px) 100vw, 320px"
+                          sizes="(max-width: 640px) 100vw, 360px"
                           className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
                         />
                       </div>
+                    ) : (
+                      <div className="w-full aspect-[16/10] overflow-hidden rounded-[4px] mb-3 bg-neutral-100 dark:bg-neutral-900 flex items-center justify-center shrink-0">
+                        <span className="text-[12px] font-mono text-neutral-400">ARCHITECTURAL SYSTEM</span>
+                      </div>
                     )}
-                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[15.5px] font-extrabold text-[#242424] dark:text-[#e5e5e5] leading-snug line-clamp-2 tracking-tight">
+
+                    {/* Fixed 2-line title container so baselines always match */}
+                    <h4 className="font-[family-name:var(--font-plus-jakarta)] text-[16px] font-bold text-[#242424] dark:text-[#e5e5e5] leading-[1.3] line-clamp-2 h-[2.6em] tracking-tight">
                       {rec.title}
                     </h4>
-                    <p className="text-[13px] text-[#6B6B6B] dark:text-[#e5e5e5] line-clamp-2 mt-1.5 font-normal leading-[19px]">
+
+                    {/* Fixed 2-line subtitle container so card heights never diverge */}
+                    <p className="text-[13px] text-[#6B6B6B] dark:text-[#a0a0a0] line-clamp-2 h-[2.8em] mt-1.5 font-normal leading-[1.4] font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                       {rec.subtitle || rec.excerpt}
                     </p>
                   </div>
-                  <div className="pt-2 text-[12px] text-[#6B6B6B] dark:text-[#e5e5e5] font-sans flex items-center gap-2">
-                    {rec.featured && <FeaturedStarIcon className="w-3 h-3" />}
-                    <span>{formatDisplayDate(rec.date)} &middot; {rec.readingTime}</span>
-                    <span>&middot;</span>
-                    <span className="px-2 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#262626] text-[#242424] dark:text-[#e5e5e5] font-medium text-[10.5px] font-mono tracking-tight dark:border dark:border-white/10">
+
+                  {/* Bottom Meta Bar anchored to bottom */}
+                  <div className="pt-3 mt-3 border-t border-black/[0.04] dark:border-white/5 text-[12px] text-[#6B6B6B] dark:text-[#8E8E93] font-sans flex items-center justify-between">
+                    <div className="flex items-center gap-1.5 truncate">
+                      {rec.featured && <FeaturedStarIcon className="w-3 h-3 shrink-0" />}
+                      <span className="truncate">{formatDisplayDate(rec.date)}</span>
+                      <span>&middot;</span>
+                      <span className="shrink-0">{rec.readingTime}</span>
+                    </div>
+                    <span className="px-2 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#262626] text-[#242424] dark:text-[#e5e5e5] font-medium text-[10.5px] font-mono tracking-tight dark:border dark:border-white/10 shrink-0">
                       {getPrimaryToolTag(rec)}
                     </span>
                   </div>
