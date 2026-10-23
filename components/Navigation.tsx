@@ -231,24 +231,26 @@ export function Navigation({ onOpenCV }: NavigationProps) {
             animate={{ clipPath: "circle(150% at 50% 50%)", opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[100] pointer-events-none bg-[#090b10] flex flex-col items-center justify-center text-white"
+            className="fixed inset-0 z-[100] pointer-events-none bg-[#E2E2E6] flex flex-col items-center justify-center text-[#050c1a]"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(13,225,237,0.22)_0%,rgba(2,51,188,0.18)_30%,rgba(236,23,139,0.15)_60%,transparent_80%)] pointer-events-none" />
+            {/* Nima Hosseini corner liquid chromatic dispersion ambient pools */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse 45% 45% at 100% 0%, rgba(255,45,61,0.18) 0%, rgba(42,31,168,0.12) 40%, transparent 75%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(0,200,255,0.2) 0%, rgba(47,75,255,0.14) 40%, rgba(26,18,64,0.08) 65%, transparent 80%)",
+              }}
+            />
             <motion.div
               initial={{ scale: 0.88, opacity: 0, y: 16 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               transition={{ duration: 0.42, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 flex flex-col items-center gap-2 select-none"
             >
-              <span
-                className="font-mono text-[11px] tracking-[0.3em] uppercase bg-clip-text text-transparent font-bold"
-                style={{
-                  backgroundImage: "linear-gradient(120deg, #0de1ed 0%, #ffffff 50%, #ec178b 100%)",
-                }}
-              >
+              <span className="font-mono text-[11px] tracking-[0.3em] uppercase font-bold text-[#5E5E66]">
                 OPENING FIELD NOTES
               </span>
-              <span className="font-serif italic text-[26px] text-white/95">
+              <span className="font-display font-extrabold text-[28px] text-[#050c1a] tracking-tight">
                 Writing &amp; Architecture
               </span>
             </motion.div>
