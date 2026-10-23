@@ -77,7 +77,7 @@ const navItems: NavItem[] = [
 const WVRNER_OVERLAY = {
   title: "WVRNER",
   subtitle: "returning to home surface",
-  color: "#020d15",
+  color: "#030e16",
   accentPing: "#00C8FF",
   poolGradient:
     "radial-gradient(ellipse 50% 50% at 100% 0%, #010c14 0%, #1A1240 28%, rgba(47,75,255,0.32) 48%, rgba(0,200,255,0.16) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #010c14 0%, #1A1240 28%, rgba(47,75,255,0.32) 48%, rgba(127,243,255,0.18) 68%, transparent 84%)",
@@ -373,8 +373,8 @@ export function Navigation({ onOpenCV }: NavigationProps) {
       >
         <nav aria-label="Main Navigation" className="pointer-events-auto w-full sm:w-auto flex flex-col items-center max-w-md sm:max-w-none">
           
-          {/* MOBILE PILL: Platinum container #e1e2e5 with dark #020d15 contents */}
-          <div className="flex sm:hidden items-center justify-between w-full rounded-full bg-[#e1e2e5]/90 backdrop-blur-2xl px-5 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.12),0_0_0_1px_rgba(2,13,21,0.06)] border border-[#020d15]/15">
+          {/* MOBILE PILL: Platinum container #e1e2e5 with dark #030e16 contents */}
+          <div className="flex sm:hidden items-center justify-between w-full rounded-full bg-[#e1e2e5]/90 backdrop-blur-2xl px-5 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.12),0_0_0_1px_rgba(3,14,22,0.06)] border border-[#030e16]/15">
             <button
               onClick={handleLogoClick}
               className="flex items-center font-[family-name:var(--font-plus-jakarta)] text-[14px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer py-1"
@@ -386,29 +386,29 @@ export function Navigation({ onOpenCV }: NavigationProps) {
               </span>
             </button>
 
-            {/* 2-line hamburger button in #020d15 */}
+            {/* 2-line hamburger button in #030e16 */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-              className="w-9 h-9 rounded-full flex flex-col items-center justify-center gap-[5px] hover:bg-[#020d15]/10 active:scale-95 transition-all cursor-pointer"
+              className="w-9 h-9 rounded-full flex flex-col items-center justify-center gap-[5px] hover:bg-[#030e16]/10 active:scale-95 transition-all cursor-pointer"
             >
               <span
-                className={`w-4 h-[1.5px] bg-[#020d15] rounded-full transition-transform duration-250 ease-out origin-center ${
+                className={`w-4 h-[1.5px] bg-[#030e16] rounded-full transition-transform duration-250 ease-out origin-center ${
                   mobileMenuOpen ? "rotate-45 translate-y-[3.25px]" : ""
                 }`}
               />
               <span
-                className={`w-4 h-[1.5px] bg-[#020d15] rounded-full transition-transform duration-250 ease-out origin-center ${
+                className={`w-4 h-[1.5px] bg-[#030e16] rounded-full transition-transform duration-250 ease-out origin-center ${
                   mobileMenuOpen ? "-rotate-45 -translate-y-[3.25px]" : ""
                 }`}
               />
             </button>
           </div>
 
-          {/* DESKTOP PILL: Platinum container #e1e2e5 with dark #020d15 contents and colored buttons */}
-          <div className="hidden sm:flex items-center gap-1 sm:gap-2 md:gap-2.5 rounded-full bg-[#e1e2e5]/90 backdrop-blur-2xl px-2.5 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2 shadow-[0_16px_40px_rgba(0,0,0,0.12),0_0_0_1px_rgba(2,13,21,0.06)] border border-[#020d15]/15">
+          {/* DESKTOP PILL: Platinum container #e1e2e5 with #030e16 contents */}
+          <div className="hidden sm:flex items-center gap-1 sm:gap-2 md:gap-2.5 rounded-full bg-[#e1e2e5]/90 backdrop-blur-2xl px-2.5 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2 shadow-[0_16px_40px_rgba(0,0,0,0.12),0_0_0_1px_rgba(3,14,22,0.06)] border border-[#030e16]/15">
             {/* Logo return home action (dark wordmark) */}
             <button
               onClick={handleLogoClick}
@@ -421,7 +421,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
               </span>
             </button>
 
-            <span className="w-px h-3.5 bg-[#020d15]/20 inline-block" aria-hidden="true" />
+            <span className="w-px h-3.5 bg-[#030e16]/20 inline-block" aria-hidden="true" />
 
             {navItems.map((item) => {
               if (item.isShiny) {
@@ -429,14 +429,10 @@ export function Navigation({ onOpenCV }: NavigationProps) {
                   <button
                     key={item.label}
                     onClick={() => handleClick(item)}
-                    className="relative group text-[13.5px] sm:text-[14.5px] md:text-[15px] font-sans font-semibold tracking-tight cursor-pointer whitespace-nowrap px-3.5 sm:px-4 py-1.5 rounded-full active:scale-95 min-h-[36px] sm:min-h-[38px] flex items-center justify-center overflow-hidden transition-all duration-300 shadow-[0_2px_8px_rgba(162,18,94,0.12)] border border-[#A2125E]/25"
-                    style={{
-                      backgroundColor: "rgba(162, 18, 94, 0.08)",
-                      color: item.color,
-                    }}
+                    className="relative group text-[13.5px] sm:text-[14.5px] md:text-[15px] font-sans font-semibold tracking-tight cursor-pointer whitespace-nowrap px-3.5 sm:px-4 py-1.5 rounded-full active:scale-95 min-h-[36px] sm:min-h-[38px] flex items-center justify-center overflow-hidden transition-all duration-300 text-[#030e16] bg-[#030e16]/[0.06] hover:bg-[#030e16]/[0.10] border border-[#030e16]/15 shadow-[0_2px_8px_rgba(3,14,22,0.06)]"
                   >
                     <span className="relative z-10 tracking-[-0.01em]">{item.label}</span>
-                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-[#A2125E]/20 to-transparent pointer-events-none" />
+                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-[#030e16]/12 to-transparent pointer-events-none" />
                   </button>
                 );
               }
@@ -445,14 +441,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
                 <button
                   key={item.label}
                   onClick={() => handleClick(item)}
-                  className="text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-sans font-semibold tracking-tight transition-all duration-200 cursor-pointer whitespace-nowrap px-2.5 sm:px-3.5 py-1.5 rounded-full active:scale-95 min-h-[38px] flex items-center justify-center"
-                  style={{ color: item.color }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = item.hoverBg;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "transparent";
-                  }}
+                  className="text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-sans font-semibold tracking-tight transition-all duration-200 cursor-pointer whitespace-nowrap px-2.5 sm:px-3.5 py-1.5 rounded-full active:scale-95 min-h-[38px] flex items-center justify-center text-[#030e16] hover:bg-[#030e16]/[0.08]"
                 >
                   {item.label}
                 </button>
@@ -460,7 +449,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
             })}
           </div>
 
-          {/* MOBILE DROPDOWN MENU: Platinum container #e1e2e5 with dark contents */}
+          {/* MOBILE DROPDOWN MENU: Platinum container #e1e2e5 with #030e16 contents */}
           <AnimatePresence>
             {mobileMenuOpen && (
               <motion.div
@@ -468,26 +457,22 @@ export function Navigation({ onOpenCV }: NavigationProps) {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.98 }}
                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="sm:hidden mt-2.5 w-full rounded-3xl bg-[#e1e2e5]/95 backdrop-blur-2xl border border-[#020d15]/15 p-2.5 shadow-[0_25px_60px_rgba(0,0,0,0.22)] overflow-hidden"
+                className="sm:hidden mt-2.5 w-full rounded-3xl bg-[#e1e2e5]/95 backdrop-blur-2xl border border-[#030e16]/15 p-2.5 shadow-[0_25px_60px_rgba(0,0,0,0.22)] overflow-hidden"
               >
                 <div className="flex flex-col space-y-1.5">
                   {navItems.map((item) => (
                     <button
                       key={item.label}
                       onClick={() => handleClick(item)}
-                      className="w-full text-left px-4 py-3 rounded-2xl text-[14.5px] font-sans font-semibold transition-all active:scale-[0.98] cursor-pointer flex items-center justify-between min-h-[48px]"
-                      style={{
-                        color: item.color,
-                        backgroundColor: item.isShiny ? "rgba(162, 18, 94, 0.08)" : "transparent",
-                        border: item.isShiny ? "1px solid rgba(162, 18, 94, 0.2)" : "1px solid transparent",
-                      }}
+                      className={`w-full text-left px-4 py-3 rounded-2xl text-[14.5px] font-sans font-semibold transition-all active:scale-[0.98] cursor-pointer flex items-center justify-between min-h-[48px] text-[#030e16] ${
+                        item.isShiny
+                          ? "bg-[#030e16]/[0.06] border border-[#030e16]/15"
+                          : "hover:bg-[#030e16]/[0.08]"
+                      }`}
                     >
                       <span>{item.label}</span>
                       {item.isShiny && (
-                        <span
-                          className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full"
-                          style={{ backgroundColor: "rgba(162, 18, 94, 0.12)", color: item.color }}
-                        >
+                        <span className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#030e16]/10 text-[#030e16]/75">
                           Field Notes
                         </span>
                       )}
