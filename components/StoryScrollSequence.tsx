@@ -7,8 +7,6 @@ export function StoryScrollSequence() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const l1Ref = useRef<HTMLParagraphElement>(null);
   const l2Ref = useRef<HTMLParagraphElement>(null);
-  const l3Ref = useRef<HTMLParagraphElement>(null);
-  const countRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -193,14 +191,9 @@ export function StoryScrollSequence() {
     (async function initTaglineAnimation() {
       const l1 = l1Ref.current;
       const l2 = l2Ref.current;
-      const l3 = l3Ref.current;
-      const countEl = countRef.current;
-      if (!l1 || !l2 || !l3 || !countEl) return;
+      if (!l1 || !l2) return;
 
-      if (still) {
-        countEl.textContent = "997";
-        return;
-      }
+      if (still) return;
 
       // Split line 1 into <span> per word at runtime
       const originalText = "you didn't notice anything,";
@@ -208,8 +201,6 @@ export function StoryScrollSequence() {
       l1.innerHTML = words
         .map((w, i) => `<span class="wv-word">${w}</span>${i < words.length - 1 ? " " : ""}`)
         .join("");
-
-      countEl.textContent = "0";
 
       if (typeof document !== "undefined" && document.fonts) {
         await document.fonts.ready;
@@ -232,33 +223,6 @@ export function StoryScrollSequence() {
       setTimeout(() => {
         l2.classList.add("is-visible");
       }, line2StartTime);
-
-      const numEl = countEl;
-
-      // 4. 0.2s after line 2 starts: line 3 fades in (0.6s) and count-up from 0 to 997 over 1.0s
-      const line3StartTime = line2StartTime + 200;
-      setTimeout(() => {
-        l3.classList.add("is-visible");
-
-        const duration = 1000;
-        const target = 997;
-        const countStart = performance.now();
-
-        function countStep(now: number) {
-          const elapsed = now - countStart;
-          const progress = Math.min(1, elapsed / duration);
-          const easeOut = 1 - Math.pow(1 - progress, 3);
-          const current = Math.round(easeOut * target);
-          numEl.textContent = String(current);
-
-          if (progress < 1) {
-            requestAnimationFrame(countStep);
-          } else {
-            numEl.textContent = "997";
-          }
-        }
-        requestAnimationFrame(countStep);
-      }, line3StartTime);
     })();
 
     return () => {
@@ -317,20 +281,6 @@ export function StoryScrollSequence() {
         >
           that was the job.
         </p>
-        <p
-          ref={l3Ref}
-          className="wv-tagline-l3 font-mono text-[9.5px] sm:text-[11px] font-normal text-[#9A9AA3] tracking-[0.18em] uppercase mt-[28px]"
-        >
-          THIS PAGE REACHED YOU IN{" "}
-          <span
-            ref={countRef}
-            className="inline-block min-w-[3ch]"
-            style={{ fontVariantNumeric: "tabular-nums" }}
-          >
-            997
-          </span>{" "}
-          MS FROM FRA
-        </p>
       </div>
 
       <style jsx global>{`
@@ -361,18 +311,10 @@ export function StoryScrollSequence() {
           filter: blur(0);
           transform: translateY(0);
         }
-        .wv-tagline-l3 {
-          opacity: 0;
-          transition: opacity 0.6s ease-out;
-        }
-        .wv-tagline-l3.is-visible {
-          opacity: 1;
-        }
 
         @media (prefers-reduced-motion: reduce) {
           .wv-word,
-          .wv-tagline-l2,
-          .wv-tagline-l3 {
+          .wv-tagline-l2 {
             opacity: 1 !important;
             filter: none !important;
             transform: none !important;
