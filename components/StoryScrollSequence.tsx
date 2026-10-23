@@ -5,7 +5,77 @@ import React, { useEffect, useRef } from "react";
 export function StoryScrollSequence() {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const line1Ref = useRef<HTMLSpanElement>(null);
+  const numRef = useRef<HTMLSpanElement>(null);
+  const linesRef = useRef<HTMLDivElement>(null);
 
+  // Entrance animation for tagline
+  useEffect(() => {
+    const isReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (isReduced) {
+      if (numRef.current) numRef.current.textContent = "997";
+      if (linesRef.current) linesRef.current.classList.add("wv-animate");
+      return;
+    }
+
+    if (numRef.current) numRef.current.textContent = "0";
+
+    // Split Line 1 into words
+    if (line1Ref.current) {
+      const originalText = line1Ref.current.textContent || "you didn't notice anything,";
+      const words = originalText.trim().split(/\s+/);
+      line1Ref.current.innerHTML = words
+        .map((w, i) => {
+          const delay = 0.15 + i * 0.06;
+          return `<span class="wv-word" style="transition-delay: ${delay}s">${w}</span>`;
+        })
+        .join(" ");
+    }
+
+    // Wait for fonts ready then trigger animation
+    let countTimeout: NodeJS.Timeout;
+    let animFrame: number;
+
+    const startAnimation = () => {
+      if (linesRef.current) linesRef.current.classList.add("wv-animate");
+
+      // Count up from 0 to 997 starting 0.2s after line 2 starts (at 0.88s)
+      countTimeout = setTimeout(() => {
+        const start = performance.now();
+        const duration = 1000;
+        function tick(now: number) {
+          const p = Math.min(1, (now - start) / duration);
+          // Ease-out cubic
+          const ease = 1 - Math.pow(1 - p, 3);
+          if (numRef.current) {
+            numRef.current.textContent = String(Math.round(997 * ease));
+          }
+          if (p < 1) {
+            animFrame = requestAnimationFrame(tick);
+          } else if (numRef.current) {
+            numRef.current.textContent = "997";
+          }
+        }
+        animFrame = requestAnimationFrame(tick);
+      }, 880);
+    };
+
+    if (typeof document !== "undefined" && document.fonts) {
+      document.fonts.ready.then(startAnimation);
+    } else {
+      startAnimation();
+    }
+
+    return () => {
+      clearTimeout(countTimeout);
+      if (animFrame) cancelAnimationFrame(animFrame);
+    };
+  }, []);
+
+  // WebGL Corner Pools Shader
   useEffect(() => {
     const section = sectionRef.current;
     const canvas = canvasRef.current;
@@ -47,12 +117,13 @@ export function StoryScrollSequence() {
       float w = 6.2831853 / LOOP;
       float breathe = 1. + 0.28*sin(w*t + ph);
       float spread  = 1. + 0.14*sin(w*t + ph + 1.2);
-      vec2  L = vec2(0.30*S.x, min(0.42*S.y, 0.54*S.x)) * spread;
+      // Responsive pool scaling for desktop and mobile
+      vec2  L = vec2(max(0.30*S.x, 0.40*S.x), min(0.42*S.y, 0.54*S.x)) * spread;
       vec2  d = (p - c) / L;
       float r2 = dot(d,d);
       float s = (abs(p.x-c.x) - abs(p.y-c.y)) * 0.012;
       float wob = 1. + 0.13*sin(s*1.1 - 2.*w*t + ph) + 0.05*sin(s*2.3 + 3.*w*t);
-      float Tmax = clamp(0.135*min(S.x,S.y), 48., 145.);
+      float Tmax = clamp(max(0.135*min(S.x,S.y), 0.16*S.x), 48., 145.);
       return Tmax * breathe * wob * exp(-r2*1.85);
     }
 
@@ -150,7 +221,8 @@ export function StoryScrollSequence() {
     const uRad = U("uRad");
     const uTime = U("uTime");
 
-    const radius = 28.0;
+    // Sharp rectangular corners
+    const radius = 0.0;
     let dpr = 1;
 
     function resize() {
@@ -210,21 +282,10 @@ export function StoryScrollSequence() {
       aria-label="Nima Hosseini identity"
       className="relative w-full h-[100vh] min-h-[560px] overflow-hidden flex flex-col items-center justify-center select-none"
       style={{
-        borderRadius: "28px 0 28px 0",
-        background: "radial-gradient(ellipse at 50% 48%, #F2F2F4 0%, #E2E2E6 100%)",
+        borderRadius: "0px",
+        background: "#E2E2E6",
       }}
     >
-      {/* Faint repeating ripple rings with radial mask */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "repeating-radial-gradient(circle at 50% 46%, transparent 0 96px, rgba(0,0,0,0.016) 97px 98.5px, transparent 100px 190px)",
-          WebkitMaskImage: "radial-gradient(circle at 50% 46%, #000 0 55%, transparent 80%)",
-          maskImage: "radial-gradient(circle at 50% 46%, #000 0 55%, transparent 80%)",
-        }}
-      />
-
       {/* WebGL corner pools canvas */}
       <canvas
         ref={canvasRef}
@@ -245,36 +306,98 @@ export function StoryScrollSequence() {
         Nima Hosseini
       </h1>
 
-      {/* Text lines with sequential show up */}
-      <div className="relative text-center z-10 px-4 mt-[clamp(36px,6vh,72px)]">
-        <p className="text-[15px] sm:text-[18px] font-normal text-[#5E5E66] tracking-[-0.01em]">
-          <span
-            className="inline-block opacity-0 translate-y-[6px] mr-[0.3em] motion-reduce:opacity-100 motion-reduce:translate-y-0 motion-reduce:animate-none"
-            style={{
-              animation: "wvFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards",
-            }}
-          >
-            you didn&apos;t notice anything.
-          </span>
-          <span
-            className="inline-block opacity-0 translate-y-[6px] motion-reduce:opacity-100 motion-reduce:translate-y-0 motion-reduce:animate-none"
-            style={{
-              animation: "wvFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards",
-            }}
-          >
-            that was the job.
+      {/* Tagline lines: Line 1 & Line 2 on separate lines */}
+      <div
+        ref={linesRef}
+        className="relative text-center z-10 px-4 mt-[clamp(36px,6vh,72px)] transition-none"
+      >
+        {/* Line 1: Word by word entrance */}
+        <p className="wv-l1 text-[15px] sm:text-[18px] font-normal text-[#5E5E66] leading-[1.4]" aria-label="you didn't notice anything,">
+          <span ref={line1Ref} className="wv-l1-text">
+            you didn&apos;t notice anything,
           </span>
         </p>
-        <p className="font-mono text-[9.5px] sm:text-[11px] font-normal text-[#9A9AA3] tracking-[0.18em] uppercase mt-[28px]">
-          THIS PAGE REACHED YOU IN 997 MS FROM FRA
+
+        {/* Line 2: Single unit quiet conclusion */}
+        <p
+          className="wv-l2 text-[15px] sm:text-[18px] font-normal text-[#5E5E66] leading-[1.4] mt-[4px]"
+          aria-label="that was the job."
+          style={{ transitionDelay: "0.68s" }}
+        >
+          that was the job.
+        </p>
+
+        {/* Line 3: Fades in and counts up 0 to 997 with tabular-nums */}
+        <p
+          className="wv-l3 font-mono text-[9.5px] sm:text-[11px] font-normal text-[#9A9AA3] tracking-[0.18em] uppercase mt-[28px]"
+          style={{
+            fontVariantNumeric: "tabular-nums",
+            transitionDelay: "0.88s",
+          }}
+        >
+          THIS PAGE REACHED YOU IN <span ref={numRef} className="wv-num">997</span> MS FROM FRA
         </p>
       </div>
 
-      <style jsx>{`
-        @keyframes wvFadeIn {
-          to {
-            opacity: 1;
-            transform: translateY(0);
+      <style jsx global>{`
+        .wv-num {
+          font-variant-numeric: tabular-nums;
+          display: inline-block;
+        }
+
+        /* Initial state before entrance animation */
+        .wv-word {
+          display: inline-block;
+          opacity: 0;
+          filter: blur(6px);
+          transform: translateY(0.25em);
+          transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                      filter 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: opacity, filter, transform;
+        }
+
+        .wv-l2 {
+          opacity: 0;
+          filter: blur(4px);
+          transform: translateY(0.25em);
+          transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                      filter 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: opacity, filter, transform;
+        }
+
+        .wv-l3 {
+          opacity: 0;
+          transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: opacity;
+        }
+
+        /* Active entrance state */
+        .wv-animate .wv-word {
+          opacity: 1;
+          filter: blur(0);
+          transform: translateY(0);
+        }
+
+        .wv-animate .wv-l2 {
+          opacity: 1;
+          filter: blur(0);
+          transform: translateY(0);
+        }
+
+        .wv-animate .wv-l3 {
+          opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .wv-word,
+          .wv-l2,
+          .wv-l3 {
+            opacity: 1 !important;
+            filter: none !important;
+            transform: none !important;
+            transition: none !important;
           }
         }
       `}</style>
