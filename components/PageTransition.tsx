@@ -124,11 +124,17 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
             >
               <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#6B7280]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#030e16]" />
-                <span>{transitionState.title} &bull; ROUTING</span>
+                <span>
+                  {transitionState.title.length > 25 ? "FIELD NOTE" : transitionState.title} &bull; ROUTING
+                </span>
               </div>
 
               <h2
-                className="text-[clamp(48px,11vw,110px)] font-[900] tracking-[-0.04em] text-[#010c14] leading-[0.92] select-none"
+                className={`font-[900] tracking-[-0.04em] text-[#010c14] select-none text-center ${
+                  transitionState.title.length > 25
+                    ? "text-[clamp(26px,5.5vw,52px)] leading-[1.08] max-w-[24ch]"
+                    : "text-[clamp(48px,11vw,110px)] leading-[0.92]"
+                }`}
                 style={{
                   fontFamily: "var(--font-inter-tight), 'Inter Tight', var(--font-inter), sans-serif",
                 }}
@@ -136,7 +142,7 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
                 {transitionState.title}
               </h2>
 
-              <p className="text-[14px] sm:text-[16px] text-[#4B5563] font-normal tracking-[-0.01em] max-w-[42ch]">
+              <p className="text-[13px] sm:text-[15px] text-[#4B5563] font-normal tracking-[-0.01em] max-w-[42ch]">
                 {transitionState.subtitle}
               </p>
             </motion.div>
