@@ -15,6 +15,10 @@ interface NavItem {
   href?: string;
   isShiny?: boolean;
   subtitle: string;
+  color: string;
+  hoverBg: string;
+  accentPing: string;
+  poolGradient: string;
 }
 
 const navItems: NavItem[] = [
@@ -22,34 +26,70 @@ const navItems: NavItem[] = [
     label: "Work",
     id: "projects",
     subtitle: "architectural labs, projects, and cloud systems",
+    color: "#0047BA",
+    hoverBg: "rgba(0, 71, 186, 0.08)",
+    accentPing: "#00C8FF",
+    poolGradient:
+      "radial-gradient(ellipse 50% 50% at 100% 0%, #001f54 0%, #003087 28%, rgba(0,71,186,0.32) 48%, rgba(0,200,255,0.18) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #001f54 0%, #003087 28%, rgba(0,71,186,0.32) 48%, rgba(127,243,255,0.18) 68%, transparent 84%)",
   },
   {
     label: "Writing",
     href: "/blog",
     isShiny: true,
     subtitle: "systems, cloud infrastructure, and technical field notes",
+    color: "#A2125E",
+    hoverBg: "rgba(162, 18, 94, 0.12)",
+    accentPing: "#FF1F7A",
+    poolGradient:
+      "radial-gradient(ellipse 50% 50% at 100% 0%, #3b0520 0%, #610b37 28%, rgba(162,18,94,0.32) 48%, rgba(255,31,122,0.18) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #3b0520 0%, #610b37 28%, rgba(162,18,94,0.32) 48%, rgba(255,106,176,0.18) 68%, transparent 84%)",
   },
   {
     label: "About",
     id: "about",
     subtitle: "operational background, architecture, and principles",
+    color: "#0A6B4A",
+    hoverBg: "rgba(10, 107, 74, 0.08)",
+    accentPing: "#10B981",
+    poolGradient:
+      "radial-gradient(ellipse 50% 50% at 100% 0%, #022c1e 0%, #064e3b 28%, rgba(10,107,74,0.32) 48%, rgba(16,185,129,0.18) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #022c1e 0%, #064e3b 28%, rgba(10,107,74,0.32) 48%, rgba(52,211,153,0.18) 68%, transparent 84%)",
   },
   {
     label: "CV",
     action: "cv",
     subtitle: "verified credentials, history, and engineering experience",
+    color: "#5E27B6",
+    hoverBg: "rgba(94, 39, 182, 0.08)",
+    accentPing: "#8B5CF6",
+    poolGradient: "",
   },
   {
     label: "Contact",
     id: "contact",
     subtitle: "direct lines, consultations, and channels",
+    color: "#B83800",
+    hoverBg: "rgba(184, 56, 0, 0.08)",
+    accentPing: "#FF6A3D",
+    poolGradient:
+      "radial-gradient(ellipse 50% 50% at 100% 0%, #431407 0%, #7c2d12 28%, rgba(184,56,0,0.32) 48%, rgba(255,106,61,0.18) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #431407 0%, #7c2d12 28%, rgba(184,56,0,0.32) 48%, rgba(251,146,60,0.18) 68%, transparent 84%)",
   },
 ];
+
+const WVRNER_OVERLAY = {
+  title: "WVRNER",
+  subtitle: "returning to home surface",
+  color: "#020d15",
+  accentPing: "#00C8FF",
+  poolGradient:
+    "radial-gradient(ellipse 50% 50% at 100% 0%, #010c14 0%, #1A1240 28%, rgba(47,75,255,0.32) 48%, rgba(0,200,255,0.16) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #010c14 0%, #1A1240 28%, rgba(47,75,255,0.32) 48%, rgba(127,243,255,0.18) 68%, transparent 84%)",
+};
 
 interface NavOverlayState {
   active: boolean;
   title: string;
   subtitle: string;
+  accentColor: string;
+  pingColor: string;
+  poolGradient: string;
 }
 
 export function Navigation({ onOpenCV }: NavigationProps) {
@@ -91,20 +131,34 @@ export function Navigation({ onOpenCV }: NavigationProps) {
 
     if (targetId) {
       const getDetails = (id: string) => {
-        switch (id) {
-          case "projects":
-            return { title: "Work", subtitle: "architectural labs, projects, and cloud systems" };
-          case "about":
-            return { title: "About", subtitle: "operational background, architecture, and principles" };
-          case "contact":
-            return { title: "Contact", subtitle: "direct lines, consultations, and channels" };
-          default:
-            return { title: "WVRNER", subtitle: "returning to home surface" };
+        const matched = navItems.find((n) => n.id === id);
+        if (matched) {
+          return {
+            title: matched.label,
+            subtitle: matched.subtitle,
+            accentColor: matched.color,
+            pingColor: matched.accentPing,
+            poolGradient: matched.poolGradient,
+          };
         }
+        return {
+          title: WVRNER_OVERLAY.title,
+          subtitle: WVRNER_OVERLAY.subtitle,
+          accentColor: WVRNER_OVERLAY.color,
+          pingColor: WVRNER_OVERLAY.accentPing,
+          poolGradient: WVRNER_OVERLAY.poolGradient,
+        };
       };
 
-      const { title, subtitle } = getDetails(targetId);
-      setNavOverlay({ active: true, title, subtitle });
+      const details = getDetails(targetId);
+      setNavOverlay({
+        active: true,
+        title: details.title,
+        subtitle: details.subtitle,
+        accentColor: details.accentColor,
+        pingColor: details.pingColor,
+        poolGradient: details.poolGradient,
+      });
 
       const performScroll = () => {
         if (targetId === "top") {
@@ -135,7 +189,14 @@ export function Navigation({ onOpenCV }: NavigationProps) {
   }, [pathname]);
 
   /* Liquid Corner Pools Loading Screen with Blurred Big Text */
-  const showNavLoading = (title: string, subtitle: string, onExecute: () => void) => {
+  const showNavLoading = (
+    title: string,
+    subtitle: string,
+    accentColor: string,
+    pingColor: string,
+    poolGradient: string,
+    onExecute: () => void
+  ) => {
     const prefersReduced =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -145,7 +206,14 @@ export function Navigation({ onOpenCV }: NavigationProps) {
       return;
     }
 
-    setNavOverlay({ active: true, title, subtitle });
+    setNavOverlay({
+      active: true,
+      title,
+      subtitle,
+      accentColor,
+      pingColor,
+      poolGradient,
+    });
 
     // Execute navigation at peak blur and coverage
     setTimeout(() => {
@@ -160,58 +228,78 @@ export function Navigation({ onOpenCV }: NavigationProps) {
 
   const handleLogoClick = () => {
     setMobileMenuOpen(false);
-    showNavLoading("WVRNER", "returning to home surface", () => {
-      if (pathname !== "/") {
-        try {
-          sessionStorage.setItem("wvrner_pending_spawn", "top");
-        } catch {
-          // Ignore
+    showNavLoading(
+      WVRNER_OVERLAY.title,
+      WVRNER_OVERLAY.subtitle,
+      WVRNER_OVERLAY.color,
+      WVRNER_OVERLAY.accentPing,
+      WVRNER_OVERLAY.poolGradient,
+      () => {
+        if (pathname !== "/") {
+          try {
+            sessionStorage.setItem("wvrner_pending_spawn", "top");
+          } catch {
+            // Ignore
+          }
+          router.push("/");
+        } else {
+          window.scrollTo({ top: 0, behavior: "auto" });
         }
-        router.push("/");
-      } else {
-        window.scrollTo({ top: 0, behavior: "auto" });
       }
-    });
+    );
   };
 
   const handleClick = (item: (typeof navItems)[number]) => {
     setMobileMenuOpen(false);
 
+    // CV drawer opens immediately with zero loading screen
     if (item.action === "cv") {
-      showNavLoading("CV", item.subtitle, () => {
-        onOpenCV?.();
-      });
+      onOpenCV?.();
       return;
     }
 
     if (item.href) {
-      showNavLoading(item.label, item.subtitle, () => {
-        if (pathname === item.href) {
-          window.scrollTo({ top: 0, behavior: "auto" });
-        } else {
-          router.push(item.href!);
+      showNavLoading(
+        item.label,
+        item.subtitle,
+        item.color,
+        item.accentPing,
+        item.poolGradient,
+        () => {
+          if (pathname === item.href) {
+            window.scrollTo({ top: 0, behavior: "auto" });
+          } else {
+            router.push(item.href!);
+          }
         }
-      });
+      );
       return;
     }
 
     if (item.id) {
-      showNavLoading(item.label, item.subtitle, () => {
-        if (pathname !== "/") {
-          try {
-            sessionStorage.setItem("wvrner_pending_spawn", item.id!);
-          } catch {
-            // Ignore
-          }
-          router.push(`/#${item.id}`);
-        } else {
-          const el = document.getElementById(item.id!);
-          if (el) {
-            const top = el.getBoundingClientRect().top + window.scrollY - 80;
-            window.scrollTo({ top, behavior: "auto" });
+      showNavLoading(
+        item.label,
+        item.subtitle,
+        item.color,
+        item.accentPing,
+        item.poolGradient,
+        () => {
+          if (pathname !== "/") {
+            try {
+              sessionStorage.setItem("wvrner_pending_spawn", item.id!);
+            } catch {
+              // Ignore
+            }
+            router.push(`/#${item.id}`);
+          } else {
+            const el = document.getElementById(item.id!);
+            if (el) {
+              const top = el.getBoundingClientRect().top + window.scrollY - 80;
+              window.scrollTo({ top, behavior: "auto" });
+            }
           }
         }
-      });
+      );
     }
   };
 
@@ -227,12 +315,11 @@ export function Navigation({ onOpenCV }: NavigationProps) {
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-[100] pointer-events-none bg-[#E2E2E6] flex flex-col items-center justify-center text-[#010c14] select-none"
           >
-            {/* Liquid corner pools with blue inner spectral fringe */}
+            {/* Liquid corner pools with signature button color spectrum */}
             <div
-              className="absolute inset-0 pointer-events-none"
+              className="absolute inset-0 pointer-events-none transition-opacity duration-300"
               style={{
-                background:
-                  "radial-gradient(ellipse 50% 50% at 100% 0%, #010c14 0%, #1A1240 28%, rgba(47,75,255,0.32) 48%, rgba(0,200,255,0.16) 68%, transparent 84%), radial-gradient(ellipse 55% 55% at 0% 100%, #010c14 0%, #1A1240 28%, rgba(47,75,255,0.32) 48%, rgba(127,243,255,0.18) 68%, transparent 84%)",
+                background: navOverlay.poolGradient,
               }}
             />
             <motion.div
@@ -243,13 +330,17 @@ export function Navigation({ onOpenCV }: NavigationProps) {
               className="relative z-10 flex flex-col items-center gap-3 text-center px-6"
             >
               <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px] tracking-[0.25em] uppercase text-[#71717A]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00C8FF] animate-ping" />
+                <span
+                  className="w-1.5 h-1.5 rounded-full animate-ping"
+                  style={{ backgroundColor: navOverlay.pingColor }}
+                />
                 <span>LOADING &bull; {navOverlay.title}</span>
               </div>
               <span
-                className="text-[clamp(48px,11vw,110px)] font-[900] tracking-[-0.04em] text-[#010c14] leading-[0.92]"
+                className="text-[clamp(48px,11vw,110px)] font-[900] tracking-[-0.04em] leading-[0.92]"
                 style={{
                   fontFamily: "var(--font-inter-tight), 'Inter Tight', var(--font-inter), sans-serif",
+                  color: navOverlay.accentColor,
                 }}
               >
                 {navOverlay.title}
@@ -282,55 +373,55 @@ export function Navigation({ onOpenCV }: NavigationProps) {
       >
         <nav aria-label="Main Navigation" className="pointer-events-auto w-full sm:w-auto flex flex-col items-center max-w-md sm:max-w-none">
           
-          {/* MOBILE PILL: Full-width closed bar with WVRNER on left and 2-line hamburger on right */}
-          <div className="flex sm:hidden items-center justify-between w-full rounded-full bg-black/85 backdrop-blur-2xl px-5 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.14)] border border-white/20">
+          {/* MOBILE PILL: Platinum container #e1e2e5 with dark #020d15 contents */}
+          <div className="flex sm:hidden items-center justify-between w-full rounded-full bg-[#e1e2e5]/90 backdrop-blur-2xl px-5 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.12),0_0_0_1px_rgba(2,13,21,0.06)] border border-[#020d15]/15">
             <button
               onClick={handleLogoClick}
               className="flex items-center font-[family-name:var(--font-plus-jakarta)] text-[14px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer py-1"
               title="WVRNER Home"
               aria-label="WVRNER Home"
             >
-              <span className="font-black wv-mark wv-mark--light">
+              <span className="font-black wv-mark wv-mark--dark">
                 WVRNER
               </span>
             </button>
 
-            {/* 2-line hamburger button */}
+            {/* 2-line hamburger button in #020d15 */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-expanded={mobileMenuOpen}
               aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-              className="w-9 h-9 rounded-full flex flex-col items-center justify-center gap-[5px] hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+              className="w-9 h-9 rounded-full flex flex-col items-center justify-center gap-[5px] hover:bg-[#020d15]/10 active:scale-95 transition-all cursor-pointer"
             >
               <span
-                className={`w-4 h-[1.5px] bg-white rounded-full transition-transform duration-250 ease-out origin-center ${
+                className={`w-4 h-[1.5px] bg-[#020d15] rounded-full transition-transform duration-250 ease-out origin-center ${
                   mobileMenuOpen ? "rotate-45 translate-y-[3.25px]" : ""
                 }`}
               />
               <span
-                className={`w-4 h-[1.5px] bg-white rounded-full transition-transform duration-250 ease-out origin-center ${
+                className={`w-4 h-[1.5px] bg-[#020d15] rounded-full transition-transform duration-250 ease-out origin-center ${
                   mobileMenuOpen ? "-rotate-45 -translate-y-[3.25px]" : ""
                 }`}
               />
             </button>
           </div>
 
-          {/* DESKTOP PILL: Full Navigation */}
-          <div className="hidden sm:flex items-center gap-1 sm:gap-3 md:gap-4 rounded-full bg-black/85 backdrop-blur-2xl px-2.5 py-1.5 sm:px-5 sm:py-2 md:px-6 md:py-2.5 shadow-[0_16px_40px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.14)] border border-white/20">
-            {/* Logo return home action */}
+          {/* DESKTOP PILL: Platinum container #e1e2e5 with dark #020d15 contents and colored buttons */}
+          <div className="hidden sm:flex items-center gap-1 sm:gap-2 md:gap-2.5 rounded-full bg-[#e1e2e5]/90 backdrop-blur-2xl px-2.5 py-1.5 sm:px-4 sm:py-2 md:px-5 md:py-2 shadow-[0_16px_40px_rgba(0,0,0,0.12),0_0_0_1px_rgba(2,13,21,0.06)] border border-[#020d15]/15">
+            {/* Logo return home action (dark wordmark) */}
             <button
               onClick={handleLogoClick}
               className="flex items-center gap-1.5 px-2.5 py-1 rounded-full font-[family-name:var(--font-plus-jakarta)] text-[13px] sm:text-[14px] font-extrabold tracking-[-0.02em] uppercase transition-colors cursor-pointer"
               title="WVRNER Home"
               aria-label="WVRNER Home"
             >
-              <span className="font-black wv-mark wv-mark--light">
+              <span className="font-black wv-mark wv-mark--dark">
                 WVRNER
               </span>
             </button>
 
-            <span className="w-px h-3.5 bg-white/20 inline-block" aria-hidden="true" />
+            <span className="w-px h-3.5 bg-[#020d15]/20 inline-block" aria-hidden="true" />
 
             {navItems.map((item) => {
               if (item.isShiny) {
@@ -338,10 +429,14 @@ export function Navigation({ onOpenCV }: NavigationProps) {
                   <button
                     key={item.label}
                     onClick={() => handleClick(item)}
-                    className="relative group text-[13.5px] sm:text-[14.5px] md:text-[15px] font-sans font-medium tracking-tight cursor-pointer whitespace-nowrap px-3.5 sm:px-4 py-1.5 rounded-full text-white active:scale-95 min-h-[36px] sm:min-h-[38px] flex items-center justify-center overflow-hidden transition-all duration-300 bg-white/[0.14] hover:bg-white/[0.24] border border-white/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.4),0_4px_16px_rgba(0,0,0,0.25)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_6px_24px_rgba(255,255,255,0.2)]"
+                    className="relative group text-[13.5px] sm:text-[14.5px] md:text-[15px] font-sans font-semibold tracking-tight cursor-pointer whitespace-nowrap px-3.5 sm:px-4 py-1.5 rounded-full active:scale-95 min-h-[36px] sm:min-h-[38px] flex items-center justify-center overflow-hidden transition-all duration-300 shadow-[0_2px_8px_rgba(162,18,94,0.12)] border border-[#A2125E]/25"
+                    style={{
+                      backgroundColor: "rgba(162, 18, 94, 0.08)",
+                      color: item.color,
+                    }}
                   >
                     <span className="relative z-10 tracking-[-0.01em]">{item.label}</span>
-                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
+                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-[#A2125E]/20 to-transparent pointer-events-none" />
                   </button>
                 );
               }
@@ -350,12 +445,14 @@ export function Navigation({ onOpenCV }: NavigationProps) {
                 <button
                   key={item.label}
                   onClick={() => handleClick(item)}
-                  className="text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-sans font-medium tracking-tight transition-all duration-200 cursor-pointer whitespace-nowrap px-2.5 sm:px-3.5 py-1.5 rounded-full hover:bg-white/15 active:scale-95 min-h-[38px] flex items-center justify-center"
-                  style={{ color: "rgba(225, 224, 204, 0.9)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FFFFFF")}
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "rgba(225, 224, 204, 0.9)")
-                  }
+                  className="text-[13.5px] sm:text-[14.5px] md:text-[15.5px] font-sans font-semibold tracking-tight transition-all duration-200 cursor-pointer whitespace-nowrap px-2.5 sm:px-3.5 py-1.5 rounded-full active:scale-95 min-h-[38px] flex items-center justify-center"
+                  style={{ color: item.color }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = item.hoverBg;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "transparent";
+                  }}
                 >
                   {item.label}
                 </button>
@@ -363,7 +460,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
             })}
           </div>
 
-          {/* MOBILE DROPDOWN MENU: Full-width 85% transparency with backdrop blur */}
+          {/* MOBILE DROPDOWN MENU: Platinum container #e1e2e5 with dark contents */}
           <AnimatePresence>
             {mobileMenuOpen && (
               <motion.div
@@ -371,22 +468,26 @@ export function Navigation({ onOpenCV }: NavigationProps) {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -8, scale: 0.98 }}
                 transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                className="sm:hidden mt-2.5 w-full rounded-3xl bg-black/85 backdrop-blur-2xl border border-white/20 p-2.5 shadow-[0_25px_60px_rgba(0,0,0,0.7)] overflow-hidden"
+                className="sm:hidden mt-2.5 w-full rounded-3xl bg-[#e1e2e5]/95 backdrop-blur-2xl border border-[#020d15]/15 p-2.5 shadow-[0_25px_60px_rgba(0,0,0,0.22)] overflow-hidden"
               >
                 <div className="flex flex-col space-y-1.5">
                   {navItems.map((item) => (
                     <button
                       key={item.label}
                       onClick={() => handleClick(item)}
-                      className={`w-full text-left px-4 py-3 rounded-2xl text-[14.5px] font-sans font-medium transition-all active:scale-[0.98] cursor-pointer flex items-center justify-between min-h-[48px] ${
-                        item.isShiny
-                          ? "bg-white/[0.14] text-white border border-white/25 shadow-sm"
-                          : "text-white/85 hover:text-white hover:bg-white/10"
-                      }`}
+                      className="w-full text-left px-4 py-3 rounded-2xl text-[14.5px] font-sans font-semibold transition-all active:scale-[0.98] cursor-pointer flex items-center justify-between min-h-[48px]"
+                      style={{
+                        color: item.color,
+                        backgroundColor: item.isShiny ? "rgba(162, 18, 94, 0.08)" : "transparent",
+                        border: item.isShiny ? "1px solid rgba(162, 18, 94, 0.2)" : "1px solid transparent",
+                      }}
                     >
                       <span>{item.label}</span>
                       {item.isShiny && (
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-white/60">
+                        <span
+                          className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full"
+                          style={{ backgroundColor: "rgba(162, 18, 94, 0.12)", color: item.color }}
+                        >
                           Field Notes
                         </span>
                       )}

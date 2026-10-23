@@ -85,6 +85,13 @@ h1, h2, h3, .font-display {
   --red-in: #FFD6EC;
 }
 
+/* on light backgrounds: dark core and deep tints */
+.wv-mark--dark {
+  --core: #020917;
+  --blue-in: #0A1440;
+  --red-in:  #2A1FA8;
+}
+
 /* Liquid wave animation inside letters (smooth undulation matching Nima Hosseini section) */
 .wv-mark--wave {
   animation: wv-liquid-wave 10s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
