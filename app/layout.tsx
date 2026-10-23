@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope, Geist, Geist_Mono, Instrument_Serif, Plus_Jakarta_Sans, Source_Serif_4, Inter, JetBrains_Mono, Inter_Tight } from "next/font/google";
+import { ViewTransitions } from "next-view-transitions";
 import "./globals.css";
 import { PWARegistration } from "@/components/PWARegistration";
 import { PageTransitionProvider } from "@/components/PageTransition";
@@ -138,38 +139,40 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${interTight.variable} ${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} selection:bg-[#0A0A0A] selection:text-white`}
-    >
-      <head>
-        {/* Speculation Rules API for sub-5ms instant page loads across modern browsers */}
-        <script
-          type="speculationrules"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              prerender: [
-                {
-                  where: {
-                    and: [
-                      { href_matches: "/*" },
-                      { not: { href_matches: "/cdn-cgi/*" } },
-                      { not: { href_matches: "/ghost/*" } },
-                      { not: { href_matches: "/admin/*" } },
-                    ],
+    <ViewTransitions>
+      <html
+        lang="en"
+        className={`${inter.variable} ${interTight.variable} ${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} selection:bg-[#0A0A0A] selection:text-white`}
+      >
+        <head>
+          {/* Speculation Rules API for sub-5ms instant page loads across modern browsers */}
+          <script
+            type="speculationrules"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                prerender: [
+                  {
+                    where: {
+                      and: [
+                        { href_matches: "/*" },
+                        { not: { href_matches: "/cdn-cgi/*" } },
+                        { not: { href_matches: "/ghost/*" } },
+                        { not: { href_matches: "/admin/*" } },
+                      ],
+                    },
+                    eagerness: "moderate",
                   },
-                  eagerness: "moderate",
-                },
-              ],
-            }),
-          }}
-        />
-      </head>
-      <body className="min-h-[100dvh] bg-white text-[#242424] font-sans antialiased relative selection:bg-[#EAEAEA] selection:text-[#242424]">
-        <PWARegistration />
-        <div className="fixed inset-0 pointer-events-none select-none bg-noise-grain opacity-40 z-50" aria-hidden="true" />
-        <PageTransitionProvider>{children}</PageTransitionProvider>
-      </body>
-    </html>
+                ],
+              }),
+            }}
+          />
+        </head>
+        <body className="min-h-[100dvh] bg-white text-[#242424] font-sans antialiased relative selection:bg-[#EAEAEA] selection:text-[#242424]">
+          <PWARegistration />
+          <div className="fixed inset-0 pointer-events-none select-none bg-noise-grain opacity-40 z-50" aria-hidden="true" />
+          <PageTransitionProvider>{children}</PageTransitionProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

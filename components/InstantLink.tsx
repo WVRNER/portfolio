@@ -2,6 +2,7 @@
 
 import Link, { type LinkProps } from "next/link";
 import { useRouter } from "next/navigation";
+import { useTransitionRouter } from "next-view-transitions";
 import { useCallback, type ComponentPropsWithoutRef } from "react";
 import { shouldPrefetch } from "@/lib/prefetch";
 import { usePageTransition } from "@/components/PageTransition";
@@ -12,6 +13,7 @@ export type InstantLinkProps = Omit<ComponentPropsWithoutRef<"a">, keyof LinkPro
     className?: string;
     transitionTitle?: string;
     transitionSubtitle?: string;
+    viewTransition?: boolean;
   };
 
 /**
@@ -20,6 +22,7 @@ export type InstantLinkProps = Omit<ComponentPropsWithoutRef<"a">, keyof LinkPro
  * Disables aggressive viewport prefetch to save battery and mobile bandwidth.
  * Pre-warms the destination route on mouse hover or touch start (100-300ms before click),
  * enabling instantaneous navigation while respecting Save-Data and slow connections.
+ * Automatically leverages View Transitions API for blog post card-to-article fluid morphing.
  */
 export function InstantLink({
   href,
@@ -28,10 +31,12 @@ export function InstantLink({
   onTouchStart,
   transitionTitle,
   transitionSubtitle,
+  viewTransition,
   children,
   ...props
 }: InstantLinkProps) {
   const router = useRouter();
+  const transitionRouter = useTransitionRouter();
   const { triggerTransition } = usePageTransition();
 
   const handleWarmup = useCallback(() => {
@@ -56,24 +61,33 @@ export function InstantLink({
       }
 
       const target = typeof href === "string" ? href : href.pathname;
-      if (target && target.startsWith("/")) {
-        e.preventDefault();
-        const displayTitle =
-          transitionTitle ||
-          (typeof props["aria-label"] === "string" && props["aria-label"]) ||
-          (typeof props.title === "string" && props.title) ||
-          (target.startsWith("/blog/")
-            ? "Writing"
-            : target === "/blog"
-            ? "Writing"
-            : "WVRNER");
-        const displaySubtitle =
-          transitionSubtitle || "systems, cloud infrastructure, and technical field notes";
-
-        triggerTransition(displayTitle, displaySubtitle, target);
+      if (!target || !target.startsWith("/")) {
+        return;
       }
+
+      // Card-to-article fluid morphing using View Transitions API
+      const isBlogArticle =
+        viewTransition ?? (target.startsWith("/blog/") && target !== "/blog");
+
+      if (isBlogArticle) {
+        e.preventDefault();
+        transitionRouter.push(target);
+        return;
+      }
+
+      // Top-level routing screen transition (for navbar buttons: Work, Writing, About, Contact)
+      e.preventDefault();
+      const displayTitle =
+        transitionTitle ||
+        (typeof props["aria-label"] === "string" && props["aria-label"]) ||
+        (typeof props.title === "string" && props.title) ||
+        (target === "/blog" ? "Writing" : "WVRNER");
+      const displaySubtitle =
+        transitionSubtitle || "systems, cloud infrastructure, and technical field notes";
+
+      triggerTransition(displayTitle, displaySubtitle, target);
     },
-    [href, onClick, props, transitionTitle, transitionSubtitle, triggerTransition]
+    [href, onClick, props, transitionTitle, transitionSubtitle, triggerTransition, transitionRouter, viewTransition]
   );
 
   return (

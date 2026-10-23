@@ -6,6 +6,7 @@ import { FeaturedStarIcon } from "@/components/FeaturedStarIcon";
 import { InstantLink } from "@/components/InstantLink";
 import { BlurImage } from "@/components/BlurImage";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
+import { getPostTransitionName } from "@/lib/viewTransitions";
 import {
   BLOG_POSTS,
   formatDisplayDate,
@@ -77,8 +78,11 @@ export function WritingSection() {
                 {/* Left Text Block */}
                 <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
                   <div className="space-y-1.5">
-                    {/* Super bold punchy headline with strict 2-line clamp */}
-                    <h3 className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[18px] sm:text-[20px] md:text-[21px] text-[#242424] group-hover:text-[#242424]/75 transition-colors leading-[1.25] tracking-[-0.03em] line-clamp-2 no-underline">
+                    {/* Super bold punchy headline with strict 2-line clamp and View Transition */}
+                    <h3
+                      className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[18px] sm:text-[20px] md:text-[21px] text-[#242424] group-hover:text-[#242424]/75 transition-colors leading-[1.25] tracking-[-0.03em] line-clamp-2 no-underline"
+                      style={{ viewTransitionName: getPostTransitionName("title", post.slug) }}
+                    >
                       {post.title}
                     </h3>
 
@@ -105,9 +109,12 @@ export function WritingSection() {
                   </div>
                 </div>
 
-                {/* Right Compact Thumbnail Image with Blur-up */}
+                {/* Right Compact Thumbnail Image with Blur-up and View Transition */}
                 {post.featureImage && (
-                  <div className="w-[84px] h-[58px] sm:w-[120px] sm:h-[80px] md:w-[136px] md:h-[90px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-center">
+                  <div
+                    className="w-[84px] h-[58px] sm:w-[120px] sm:h-[80px] md:w-[136px] md:h-[90px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-center"
+                    style={{ viewTransitionName: getPostTransitionName("cover", post.slug) }}
+                  >
                     <BlurImage
                       src={post.featureImage}
                       alt={post.title}

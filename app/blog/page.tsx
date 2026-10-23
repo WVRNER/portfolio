@@ -10,6 +10,7 @@ import { InstantLink } from "@/components/InstantLink";
 import { BlurImage } from "@/components/BlurImage";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
+import { getPostTransitionName } from "@/lib/viewTransitions";
 import {
   BLOG_POSTS,
   formatDisplayDate,
@@ -179,9 +180,10 @@ export default function BlogIndexPage() {
                         
                         {/* Left Text Block */}
                         <div className="flex-1 min-w-0 space-y-2">
-                          {/* Big Bold Headline */}
+                          {/* Big Bold Headline with View Transition */}
                           <h2
                             className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[22px] sm:text-[25px] md:text-[26px] text-[#242424] dark:text-[#e5e5e5] leading-[1.2] tracking-[-0.03em] line-clamp-2"
+                            style={{ viewTransitionName: getPostTransitionName("title", post.slug) }}
                           >
                             {post.title}
                           </h2>
@@ -208,10 +210,11 @@ export default function BlogIndexPage() {
                           </div>
                         </div>
 
-                        {/* Right Thumbnail Image with Blur-up */}
+                        {/* Right Thumbnail Image with Blur-up and View Transition */}
                         {post.featureImage && (
                           <div
                             className="w-[96px] h-[64px] sm:w-[160px] sm:h-[108px] md:w-[172px] md:h-[116px] rounded-[3px] overflow-hidden bg-neutral-100 dark:bg-[#262626] shrink-0 self-center"
+                            style={{ viewTransitionName: getPostTransitionName("cover", post.slug) }}
                           >
                             <BlurImage
                               src={post.featureImage}

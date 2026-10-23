@@ -19,6 +19,8 @@ import { BlurImage } from "@/components/BlurImage";
 import { GitHubCard } from "@/components/GitHubCard";
 import { QuoteImageModal } from "@/components/QuoteImageModal";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { useTransitionRouter } from "next-view-transitions";
+import { getPostTransitionName } from "@/lib/viewTransitions";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { getGitHubRepoCard } from "@/lib/githubDataHelper";
 import {
@@ -66,6 +68,7 @@ function buildTextFragmentDirective(text: string): string {
 }
 
 export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
+  const transitionRouter = useTransitionRouter();
   const [cvOpen, setCvOpen] = useState(false);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -454,6 +457,20 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         <div className="mb-8 pb-4 border-b border-[#F2F2F2] dark:border-[#2a2a2a] flex items-center justify-between text-[13px] text-[#6B6B6B] dark:text-[#e5e5e5]">
           <Link
             href="/blog"
+            onClick={(e) => {
+              if (
+                e.defaultPrevented ||
+                e.button !== 0 ||
+                e.metaKey ||
+                e.ctrlKey ||
+                e.altKey ||
+                e.shiftKey
+              ) {
+                return;
+              }
+              e.preventDefault();
+              transitionRouter.push("/blog");
+            }}
             className="inline-flex items-center gap-2 text-[#6B6B6B] dark:text-[#e5e5e5] hover:text-[#242424] dark:hover:text-white transition-colors group cursor-pointer font-medium"
           >
             <ArrowLeft className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-1" />
@@ -466,9 +483,10 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
         {/* Story Header */}
         <header className="space-y-4 mb-8">
           
-          {/* Super bold punchy headline */}
+          {/* Super bold punchy headline with View Transition */}
           <h1
             className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),-apple-system,BlinkMacSystemFont,sans-serif] text-[34px] sm:text-[44px] md:text-[48px] text-[#242424] dark:text-[#e5e5e5] leading-[1.1] tracking-[-0.035em]"
+            style={{ viewTransitionName: getPostTransitionName("title", post.slug) }}
           >
             {post.title}
           </h1>
@@ -519,10 +537,11 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
 
         </header>
 
-        {/* Feature / Cover Image (Blur-up placeholder) */}
+        {/* Feature / Cover Image (Blur-up placeholder & View Transition) */}
         {post.featureImage && (
           <div
             className="my-8 rounded-[3px] overflow-hidden bg-neutral-100 dark:bg-neutral-900"
+            style={{ viewTransitionName: getPostTransitionName("cover", post.slug) }}
           >
             <BlurImage
               src={post.featureImage}

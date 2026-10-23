@@ -445,3 +445,24 @@ article blockquote {
   animation: quoteTargetGlow 3.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   border-radius: 4px;
 }
+
+/* Card-to-Article View Transitions API (Fluid Shared Element Morphing) */
+::view-transition-group(*) {
+  animation-duration: 0.38s;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.25s;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-image-pair(*) {
+    animation: none !important;
+  }
+}
