@@ -22,6 +22,7 @@ export interface BlogPost {
   nextSlug?: string;
   nextTeaser?: string;
   featured?: boolean;
+  isDraft?: boolean;
   content: {
     lead: string;
     sections: Array<{
@@ -39,6 +40,10 @@ export interface BlogPost {
       list?: string[];
     }>;
   };
+}
+
+export function isPostDraft(post: BlogPost): boolean {
+  return post.isDraft !== false;
 }
 
 /**

@@ -11,6 +11,7 @@ import {
   BLOG_POSTS,
   formatDisplayDate,
   getPrimaryToolTag,
+  isPostDraft,
 } from "@/lib/blogData";
 
 /**
@@ -51,13 +52,13 @@ export function WritingSection() {
           </h2>
         </div>
 
-        {/* View all writing action */}
+        {/* View all writing action: Apple Liquid Glass */}
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-[#242424] hover:text-[#242424] hover:underline underline-offset-4 cursor-pointer shrink-0 pb-1"
+          className="relative group inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-sans font-semibold text-[#030e16] bg-white/75 hover:bg-white/95 backdrop-blur-md border border-white/80 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.95),0_2px_8px_rgba(3,14,22,0.06)] hover:shadow-[inset_0_1px_1.5px_rgba(255,255,255,1),0_4px_12px_rgba(3,14,22,0.1)] transition-all active:scale-95 shrink-0 pb-1"
         >
           <span>See all writing</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>
 
@@ -92,7 +93,7 @@ export function WritingSection() {
                     </p>
                   </div>
 
-                  {/* Bottom Meta: Date before read time, then Tool Tag - anchored at bottom */}
+                  {/* Bottom Meta: Date before read time, then Tool Tag & Draft Badge */}
                   <div className="pt-2 flex flex-wrap items-center gap-2 text-[12px] sm:text-[12.5px] text-[#6B6B6B] font-sans shrink-0">
                     {post.featured && (
                       <span title="Featured Story" className="inline-flex items-center shrink-0">
@@ -106,6 +107,11 @@ export function WritingSection() {
                     <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] text-[#242424] font-medium text-[11px] font-mono tracking-tight shrink-0">
                       {getPrimaryToolTag(post)}
                     </span>
+                    {isPostDraft(post) && (
+                      <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 font-mono text-[10.5px] font-semibold tracking-wider uppercase shrink-0">
+                        DRAFT
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -131,14 +137,14 @@ export function WritingSection() {
         ))}
       </div>
 
-      {/* Bottom Archive Action */}
+      {/* Bottom Archive Action: Apple Liquid Glass Button */}
       <div className="pt-8 sm:pt-10 flex justify-center">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F5F5F7] hover:bg-[#EBEBEB] text-[#242424] border border-black/[0.06] text-[13px] font-medium transition-all active:scale-95 cursor-pointer outline-none focus:outline-none"
+          className="relative group inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-[13.5px] sm:text-[14px] font-sans font-semibold text-[#030e16] bg-white/80 hover:bg-white/95 backdrop-blur-xl border border-white/90 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),0_6px_20px_rgba(0,0,0,0.06)] hover:shadow-[inset_0_1.5px_2px_rgba(255,255,255,1),0_8px_24px_rgba(0,0,0,0.1)] transition-all active:scale-95 cursor-pointer outline-none focus:outline-none before:absolute before:inset-x-0 before:top-0 before:h-[45%] before:rounded-t-full before:bg-gradient-to-b before:from-white/70 before:to-transparent before:pointer-events-none"
         >
-          <span>Browse all writing in the archive</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+          <span className="relative z-10">Browse all writing in the archive</span>
+          <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </Link>
       </div>
     </section>

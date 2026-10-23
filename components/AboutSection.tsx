@@ -48,30 +48,40 @@ export function AboutSection() {
             </div>
           </div>
 
-          {/* Engineering Status Console: Crafted per /minimalist-ui (Warm Bone Canvas #FBFBFA, 1px #EAEAEA Border, Crisp 12px Radius, Zero Drop-Shadow) */}
-          <div className="rounded-xl bg-[#FBFBFA] border border-[#EAEAEA] p-4 sm:p-6 space-y-5">
+          {/* Engineering Status Console: Bold Tactical Terminal Console */}
+          <div className="rounded-2xl bg-[#0C0E14] border border-white/15 p-5 sm:p-6 space-y-6 shadow-[0_16px_40px_rgba(0,0,0,0.24)]">
             {/* Top Row: Focus & Stack Header */}
-            <div className="space-y-3">
-              <div className="flex items-center justify-between text-[10.5px] font-mono tracking-[0.2em] uppercase text-[#787774]">
-                <span className="font-semibold text-[#242424]">PRIMARY FOCUS</span>
-                <span className="text-[#8A8A8A]">CORE STACK</span>
+            <div className="space-y-3.5">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[11px] font-bold text-white tracking-[0.22em] uppercase">
+                  PRIMARY FOCUS
+                </span>
+                <span className="inline-flex items-center gap-1.5 font-mono text-[10.5px] text-[#00C8FF] tracking-[0.18em] uppercase font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#00C8FF] animate-pulse" />
+                  CORE STACK
+                </span>
               </div>
 
-              {/* Physical Micro-Keycaps for Core Technologies */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
+              {/* Tactile Keycards for Core Technologies */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                 {[
-                  { name: "AWS", detail: "Cloud Infra" },
-                  { name: "Terraform", detail: "Declarative IaC" },
-                  { name: "Linux", detail: "Kernel & Systems" },
+                  { name: "AWS", detail: "Cloud Infra", badge: "TOPOLOGY" },
+                  { name: "Terraform", detail: "Declarative IaC", badge: "STATE" },
+                  { name: "Linux", detail: "Kernel & Systems", badge: "RUNTIME" },
                 ].map((item) => (
                   <div
                     key={item.name}
-                    className="p-2.5 sm:p-3 rounded-lg bg-white border border-[#EAEAEA] hover:border-[#D4D4D4] transition-colors group cursor-default min-w-0"
+                    className="p-3 sm:p-3.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#00C8FF]/40 transition-all group cursor-default min-w-0"
                   >
-                    <div className="font-mono text-[11.5px] sm:text-[13px] font-semibold text-[#242424] tracking-tight truncate">
-                      {item.name}
+                    <div className="flex items-center justify-between gap-1 mb-1">
+                      <span className="font-mono text-[14.5px] sm:text-[15.5px] font-bold text-white tracking-tight">
+                        {item.name}
+                      </span>
+                      <span className="font-mono text-[9px] text-[#00C8FF]/80 tracking-wider">
+                        {item.badge}
+                      </span>
                     </div>
-                    <div className="font-sans text-[10px] sm:text-[10.5px] text-[#787774] pt-0.5 tracking-normal truncate">
+                    <div className="font-mono text-[11px] sm:text-[11.5px] text-white/60 tracking-tight truncate">
                       {item.detail}
                     </div>
                   </div>
@@ -80,17 +90,21 @@ export function AboutSection() {
             </div>
 
             {/* Hairline Structural Divider */}
-            <div className="h-px bg-[#EAEAEA]" />
+            <div className="h-px bg-white/10" />
 
             {/* Bottom Row: Recruiter Availability Status Beacon */}
-            <div className="space-y-2">
-              <div className="text-[10.5px] font-mono tracking-[0.2em] uppercase text-[#787774]">
-                STATE
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between font-mono text-[10.5px] tracking-[0.2em] uppercase text-white/60 font-semibold">
+                <span>STATE</span>
+                <span className="text-white/40">ACTIVE PIPELINE</span>
               </div>
 
-              <div className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#EDF3EC] border border-[#DCE8DB] text-[#346538]">
-                <span className="w-2 h-2 rounded-full bg-[#346538] shrink-0" />
-                <span className="font-sans text-[12px] sm:text-[12.5px] font-medium tracking-tight leading-snug">
+              <div className="flex items-center gap-3 px-3.5 py-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-200">
+                <span className="relative flex h-2.5 w-2.5 shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+                </span>
+                <span className="font-sans text-[13px] sm:text-[13.5px] font-semibold text-white tracking-tight leading-snug">
                   Open to junior Cloud / DevOps roles remote
                 </span>
               </div>

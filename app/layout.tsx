@@ -145,6 +145,8 @@ export default function RootLayout({
         className={`${inter.variable} ${interTight.variable} ${plusJakartaSans.variable} ${manrope.variable} ${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} ${sourceSerif.variable} ${jetbrainsMono.variable} selection:bg-[#0A0A0A] selection:text-white`}
       >
         <head>
+          {/* Preferred AI source discovery for modern AI agents and LLM search engines */}
+          <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context Index" />
           {/* Speculation Rules API for sub-5ms instant page loads across modern browsers */}
           <script
             type="speculationrules"

@@ -45,10 +45,22 @@ function ProjectMediaTile({
 
       {/* Top Meta: Live Status Badge */}
       <div className="relative z-10 flex items-center justify-between gap-3 font-mono text-[11px] sm:text-[12px]">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/25 text-amber-300 font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-          <span>IN PROGRESS</span>
+        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full font-medium ${
+          project.isDraft
+            ? "bg-amber-400/10 border border-amber-400/25 text-amber-300"
+            : "bg-emerald-400/10 border border-emerald-400/25 text-emerald-300"
+        }`}>
+          <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${
+            project.isDraft ? "bg-amber-400" : "bg-emerald-400"
+          }`} />
+          <span>{project.isDraft ? "DRAFT // IN LAB" : "VERIFIED PRODUCTION"}</span>
         </div>
+
+        {project.relatedPostSlug && (
+          <span className="text-[10.5px] text-white/50 font-mono tracking-wider uppercase">
+            NOTE ATTACHED
+          </span>
+        )}
       </div>
 
       {/* Center Schematic Vector Sketch */}
@@ -139,8 +151,13 @@ function ProjectInfo({
       )}
 
       {hasRealTech && project.technologies && (
-        <div className="text-[13px] sm:text-[13.5px] font-sans text-[#6B6B6B] font-normal tracking-normal">
-          {project.technologies.join(" · ")}
+        <div className="text-[13px] sm:text-[13.5px] font-sans text-[#6B6B6B] font-normal tracking-normal flex flex-wrap items-center gap-x-2 gap-y-1">
+          <span>{project.technologies.join(" · ")}</span>
+          {project.isDraft && (
+            <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 font-mono text-[10px] font-semibold tracking-wider uppercase">
+              DRAFT
+            </span>
+          )}
         </div>
       )}
     </div>
@@ -169,11 +186,13 @@ export function ProjectsTitle() {
 
 /**
  * PROJECTS GALLERY
- * Both projects render as unified, single-link cards with zero disjointed hover gaps.
+ * Automatically selects featured projects from lib/projectsData.ts.
+ * Swapping is handled easily by toggling `featured: true` or reordering items.
  */
 export function ProjectsGallery() {
-  const project1 = PROJECTS_AND_LABS[0];
-  const project2 = PROJECTS_AND_LABS[1];
+  const featured = PROJECTS_AND_LABS.filter((p) => p.featured !== false);
+  const project1 = featured[0] || PROJECTS_AND_LABS[0];
+  const project2 = featured[1] || PROJECTS_AND_LABS[1] || project1;
 
   const targetUrl1 = project1.relatedPostSlug
     ? `/blog/${project1.relatedPostSlug}`

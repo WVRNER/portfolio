@@ -18,14 +18,15 @@ export interface ProjectOrLab {
   slug: string;
   number: string;
   title: string;
-  kind?: string;
+  kind?: "PROJECT" | "LAB";
   year?: string;
   shortDescription: string;
   technologies?: string[];
   imageUrl?: string;
-  isUpcoming?: boolean;
+  isDraft?: boolean;
+  featured?: boolean;
   relatedPostSlug?: string;
-  // Optional Case-Study Content Sections (Rendered on dedicated /projects/[slug] route)
+  // Optional Case-Study Content Sections
   overview?: string;
   whatIBuilt?: string[];
   architecture?: string;
@@ -39,14 +40,30 @@ export interface ProjectOrLab {
 }
 
 /**
- * PROJECTS & LABS REPOSITORY
+ * ==============================================================================
+ * PROJECTS & ARCHITECTURAL LABS REPOSITORY (EASY USER EDIT GUIDE)
+ * ==============================================================================
  * 
- * The two primary project media surfaces:
- * 1. Wide Project 01
- * 2. Square Project 02 (Lab)
+ * HOW TO SWAP OR CHANGE PROJECTS ON THE HOMEPAGE:
+ * 1. TO SWAP PROJECTS:
+ *    - The homepage automatically displays the projects where `featured: true`
+ *      (or the first 2 items in this array).
+ *    - Position 01 (Left / Wide): Wide architectural project.
+ *    - Position 02 (Right / Square): Lab / sandbox environment.
+ *    - To swap, simply change which items have `featured: true` or reorder them!
  * 
- * Reusable content structure for real engineering systems.
- * Renders real titles, technologies, images, and blog write-ups when configured.
+ * 2. TO DRAFT OR PUBLISH:
+ *    - Set `isDraft: true` -> Displays a clean [DRAFT // IN LAB] badge.
+ *    - Set `isDraft: false` -> Marks it as a live verified production system.
+ * 
+ * 3. TO CONNECT A PROJECT TO A WRITING / BLOG ARTICLE:
+ *    - Set `relatedPostSlug: "your-blog-slug"` (must match a slug in lib/blogData.ts).
+ *    - Clicking the card will smoothly morph directly into that article!
+ * 
+ * 4. TO ADD A CUSTOM IMAGE:
+ *    - Place an image in public/projects/ (e.g., /projects/my-arch.png)
+ *    - Set `imageUrl: "/projects/my-arch.png"`
+ * ==============================================================================
  */
 export const PROJECTS_AND_LABS: ProjectOrLab[] = [
   {
@@ -54,6 +71,8 @@ export const PROJECTS_AND_LABS: ProjectOrLab[] = [
     number: "01",
     title: "Autonomous Multi-Region State Engine",
     kind: "PROJECT",
+    isDraft: true,
+    featured: true,
     shortDescription: "Declarative infrastructure state reconciliation and automated drift remediation across AWS.",
     technologies: ["AWS", "Terraform", "GitHub OIDC", "Docker"],
     imageUrl: undefined,
@@ -64,6 +83,8 @@ export const PROJECTS_AND_LABS: ProjectOrLab[] = [
     number: "02",
     title: "Ephemeral Sandbox Mesh",
     kind: "LAB",
+    isDraft: true,
+    featured: true,
     shortDescription: "On-demand isolated preview environments running on AWS Fargate with verified OIDC.",
     technologies: ["AWS Fargate", "ECS", "Terraform", "Docker"],
     imageUrl: undefined,
