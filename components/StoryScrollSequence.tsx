@@ -47,25 +47,25 @@ export function StoryScrollSequence() {
       float w = 6.2831853 / LOOP;
       float breathe = 1. + 0.28*sin(w*t + ph);
       float spread  = 1. + 0.14*sin(w*t + ph + 1.2);
-      vec2  L = vec2(0.24*S.x, min(0.34*S.y, 0.45*S.x)) * spread;
+      vec2  L = vec2(0.30*S.x, min(0.42*S.y, 0.54*S.x)) * spread;
       vec2  d = (p - c) / L;
       float r2 = dot(d,d);
       float s = (abs(p.x-c.x) - abs(p.y-c.y)) * 0.012;
       float wob = 1. + 0.13*sin(s*1.1 - 2.*w*t + ph) + 0.05*sin(s*2.3 + 3.*w*t);
-      float Tmax = clamp(0.10*min(S.x,S.y), 36., 110.);
-      return Tmax * breathe * wob * exp(-r2*2.2);
+      float Tmax = clamp(0.135*min(S.x,S.y), 48., 145.);
+      return Tmax * breathe * wob * exp(-r2*1.85);
     }
 
     void main(){
       vec2 S  = uRes / uDpr;
       vec2 px = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;
       float edge  = -sdRoundRect(px - S*0.5, S*0.5, uRad);
-      float bigR  = 0.22*min(S.x,S.y);
+      float bigR  = 0.28*min(S.x,S.y);
       float depth = -sdRoundRect(px - S*0.5, S*0.5, bigR);
 
       float t = uTime;
       float T = max(pool(px, vec2(S.x, 0.), S, t, 0.), pool(px, vec2(0., S.y), S, t, 3.14159));
-      vec3 ink = hex(11.,11.,18.);
+      vec3 ink = hex(5.,12.,26.);
 
       if(edge < 0.){
         float g = smoothstep(0., 14., -edge);
@@ -235,8 +235,9 @@ export function StoryScrollSequence() {
 
       {/* Title: Nima Hosseini in bold Plus Jakarta Sans */}
       <h1
-        className="relative font-extrabold text-[#0B0B12] leading-[0.9] tracking-[-0.03em] whitespace-nowrap z-10 select-none"
+        className="relative font-extrabold text-[#050c1a] leading-[0.9] tracking-[-0.03em] whitespace-nowrap z-10 select-none"
         style={{
+          color: "#050c1a",
           fontFamily: "var(--font-plus-jakarta), -apple-system, BlinkMacSystemFont, sans-serif",
           fontSize: "clamp(40px, 11.5vw, 220px)",
         }}
