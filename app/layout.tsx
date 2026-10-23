@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Manrope, Geist, Geist_Mono, Instrument_Serif, Plus_Jakarta_Sans, Source_Serif_4, Inter, JetBrains_Mono, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import { PWARegistration } from "@/components/PWARegistration";
+import { PageTransitionProvider } from "@/components/PageTransition";
 
 const interTight = Inter_Tight({
   variable: "--font-inter-tight",
@@ -167,7 +168,7 @@ export default function RootLayout({
       <body className="min-h-[100dvh] bg-white text-[#242424] font-sans antialiased relative selection:bg-[#EAEAEA] selection:text-[#242424]">
         <PWARegistration />
         <div className="fixed inset-0 pointer-events-none select-none bg-noise-grain opacity-40 z-50" aria-hidden="true" />
-        {children}
+        <PageTransitionProvider>{children}</PageTransitionProvider>
       </body>
     </html>
   );

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/react";
+import { usePageTransition } from "@/components/PageTransition";
 
 interface NavigationProps {
   onOpenCV?: () => void;
@@ -15,10 +16,6 @@ interface NavItem {
   href?: string;
   isShiny?: boolean;
   subtitle: string;
-  color: string;
-  hoverBg: string;
-  accentPing: string;
-  poolGradient: string;
 }
 
 const navItems: NavItem[] = [
@@ -26,77 +23,35 @@ const navItems: NavItem[] = [
     label: "Work",
     id: "projects",
     subtitle: "architectural labs, projects, and cloud systems",
-    color: "#00C8FF",
-    hoverBg: "rgba(0, 0, 0, 0.05)",
-    accentPing: "#00C8FF",
-    poolGradient:
-      "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(0, 200, 255, 0.12) 0%, rgba(2, 14, 38, 0.6) 45%, transparent 75%), radial-gradient(ellipse 55% 55% at 100% 100%, rgba(0, 140, 255, 0.10) 0%, transparent 70%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(2, 10, 25, 0.8) 0%, transparent 60%)",
   },
   {
     label: "Writing",
     href: "/blog",
     isShiny: true,
     subtitle: "systems, cloud infrastructure, and technical field notes",
-    color: "#FF1F7A",
-    hoverBg: "rgba(0, 0, 0, 0.05)",
-    accentPing: "#FF1F7A",
-    poolGradient:
-      "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(255, 31, 122, 0.12) 0%, rgba(35, 6, 22, 0.6) 45%, transparent 75%), radial-gradient(ellipse 55% 55% at 100% 100%, rgba(217, 27, 116, 0.10) 0%, transparent 70%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(25, 3, 15, 0.8) 0%, transparent 60%)",
   },
   {
     label: "About",
     id: "about",
     subtitle: "operational background, architecture, and principles",
-    color: "#10B981",
-    hoverBg: "rgba(0, 0, 0, 0.05)",
-    accentPing: "#10B981",
-    poolGradient:
-      "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(16, 185, 129, 0.10) 0%, rgba(4, 30, 20, 0.6) 45%, transparent 75%), radial-gradient(ellipse 55% 55% at 100% 100%, rgba(5, 120, 85, 0.08) 0%, transparent 70%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(2, 20, 14, 0.8) 0%, transparent 60%)",
   },
   {
     label: "CV",
     action: "cv",
     subtitle: "verified credentials, history, and engineering experience",
-    color: "#A78BFA",
-    hoverBg: "rgba(0, 0, 0, 0.05)",
-    accentPing: "#A78BFA",
-    poolGradient: "",
   },
   {
     label: "Contact",
     id: "contact",
     subtitle: "direct lines, consultations, and channels",
-    color: "#F97316",
-    hoverBg: "rgba(0, 0, 0, 0.05)",
-    accentPing: "#F97316",
-    poolGradient:
-      "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(249, 115, 22, 0.10) 0%, rgba(45, 18, 5, 0.6) 45%, transparent 75%), radial-gradient(ellipse 55% 55% at 100% 100%, rgba(194, 65, 12, 0.08) 0%, transparent 70%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(25, 10, 2, 0.8) 0%, transparent 60%)",
   },
 ];
-
-const WVRNER_OVERLAY = {
-  title: "WVRNER",
-  subtitle: "returning to home surface",
-  color: "#FFFFFF",
-  accentPing: "#00C8FF",
-  poolGradient:
-    "radial-gradient(ellipse 65% 55% at 50% 0%, rgba(255, 255, 255, 0.06) 0%, rgba(15, 20, 30, 0.6) 45%, transparent 75%), radial-gradient(ellipse 55% 55% at 100% 100%, rgba(0, 200, 255, 0.08) 0%, transparent 70%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(10, 12, 18, 0.8) 0%, transparent 60%)",
-};
-
-interface NavOverlayState {
-  active: boolean;
-  title: string;
-  subtitle: string;
-  accentColor: string;
-  pingColor: string;
-  poolGradient: string;
-}
 
 export function Navigation({ onOpenCV }: NavigationProps) {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [navOverlay, setNavOverlay] = useState<NavOverlayState | null>(null);
+  const { triggerTransition } = usePageTransition();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -111,55 +66,16 @@ export function Navigation({ onOpenCV }: NavigationProps) {
     }
   });
 
-  // Handle direct hash navigation or cross-page dreamy spawn
+  // Handle direct hash navigation when arriving from external or cross-page routes
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     let targetId: string | null = null;
-    try {
-      targetId = sessionStorage.getItem("wvrner_pending_spawn");
-      if (targetId) {
-        sessionStorage.removeItem("wvrner_pending_spawn");
-      }
-    } catch {
-      // Ignore
-    }
-
-    if (!targetId && window.location.hash) {
+    if (window.location.hash) {
       targetId = window.location.hash.replace("#", "");
     }
 
     if (targetId) {
-      const getDetails = (id: string) => {
-        const matched = navItems.find((n) => n.id === id);
-        if (matched) {
-          return {
-            title: matched.label,
-            subtitle: matched.subtitle,
-            accentColor: matched.color,
-            pingColor: matched.accentPing,
-            poolGradient: matched.poolGradient,
-          };
-        }
-        return {
-          title: WVRNER_OVERLAY.title,
-          subtitle: WVRNER_OVERLAY.subtitle,
-          accentColor: WVRNER_OVERLAY.color,
-          pingColor: WVRNER_OVERLAY.accentPing,
-          poolGradient: WVRNER_OVERLAY.poolGradient,
-        };
-      };
-
-      const details = getDetails(targetId);
-      setNavOverlay({
-        active: true,
-        title: details.title,
-        subtitle: details.subtitle,
-        accentColor: details.accentColor,
-        pingColor: details.pingColor,
-        poolGradient: details.poolGradient,
-      });
-
       const performScroll = () => {
         if (targetId === "top") {
           window.scrollTo({ top: 0, behavior: "auto" });
@@ -176,189 +92,61 @@ export function Navigation({ onOpenCV }: NavigationProps) {
       const retry1 = setTimeout(performScroll, 80);
       const retry2 = setTimeout(performScroll, 220);
 
-      const fadeTimer = setTimeout(() => {
-        setNavOverlay(null);
-      }, 750);
-
       return () => {
         clearTimeout(retry1);
         clearTimeout(retry2);
-        clearTimeout(fadeTimer);
       };
     }
   }, [pathname]);
 
-  /* Liquid Corner Pools Loading Screen with Blurred Big Text */
-  const showNavLoading = (
-    title: string,
-    subtitle: string,
-    accentColor: string,
-    pingColor: string,
-    poolGradient: string,
-    onExecute: () => void
-  ) => {
-    const prefersReduced =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (prefersReduced) {
-      onExecute();
-      return;
-    }
-
-    setNavOverlay({
-      active: true,
-      title,
-      subtitle,
-      accentColor,
-      pingColor,
-      poolGradient,
-    });
-
-    // Execute navigation at peak blur and coverage
-    setTimeout(() => {
-      onExecute();
-    }, 420);
-
-    // Dissolve smoothly once destination is rendered
-    setTimeout(() => {
-      setNavOverlay(null);
-    }, 850);
-  };
-
   const handleLogoClick = () => {
     setMobileMenuOpen(false);
-    showNavLoading(
-      WVRNER_OVERLAY.title,
-      WVRNER_OVERLAY.subtitle,
-      WVRNER_OVERLAY.color,
-      WVRNER_OVERLAY.accentPing,
-      WVRNER_OVERLAY.poolGradient,
-      () => {
-        if (pathname !== "/") {
-          try {
-            sessionStorage.setItem("wvrner_pending_spawn", "top");
-          } catch {
-            // Ignore
-          }
-          router.push("/");
-        } else {
-          window.scrollTo({ top: 0, behavior: "auto" });
-        }
-      }
-    );
+    if (pathname !== "/") {
+      triggerTransition("WVRNER", "returning to home surface", "/");
+    } else {
+      triggerTransition("WVRNER", "returning to home surface", () => {
+        window.scrollTo({ top: 0, behavior: "auto" });
+      });
+    }
   };
 
   const handleClick = (item: (typeof navItems)[number]) => {
     setMobileMenuOpen(false);
 
-    // CV drawer opens immediately with zero loading screen
+    // CV drawer opens immediately with zero animation
     if (item.action === "cv") {
       onOpenCV?.();
       return;
     }
 
     if (item.href) {
-      showNavLoading(
-        item.label,
-        item.subtitle,
-        item.color,
-        item.accentPing,
-        item.poolGradient,
-        () => {
-          if (pathname === item.href) {
-            window.scrollTo({ top: 0, behavior: "auto" });
-          } else {
-            router.push(item.href!);
-          }
-        }
-      );
+      if (pathname === item.href) {
+        triggerTransition(item.label, item.subtitle, () => {
+          window.scrollTo({ top: 0, behavior: "auto" });
+        });
+      } else {
+        triggerTransition(item.label, item.subtitle, item.href);
+      }
       return;
     }
 
     if (item.id) {
-      showNavLoading(
-        item.label,
-        item.subtitle,
-        item.color,
-        item.accentPing,
-        item.poolGradient,
-        () => {
-          if (pathname !== "/") {
-            try {
-              sessionStorage.setItem("wvrner_pending_spawn", item.id!);
-            } catch {
-              // Ignore
-            }
-            router.push(`/#${item.id}`);
-          } else {
-            const el = document.getElementById(item.id!);
-            if (el) {
-              const top = el.getBoundingClientRect().top + window.scrollY - 80;
-              window.scrollTo({ top, behavior: "auto" });
-            }
+      if (pathname !== "/") {
+        triggerTransition(item.label, item.subtitle, `/#${item.id}`);
+      } else {
+        triggerTransition(item.label, item.subtitle, () => {
+          const el = document.getElementById(item.id!);
+          if (el) {
+            const top = el.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top, behavior: "auto" });
           }
-        }
-      );
+        });
+      }
     }
   };
 
   return (
     <>
-      {/* Dark Cinematic Loading Screen with Monumental Blurred Typography */}
-      <AnimatePresence>
-        {navOverlay?.active && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[100] pointer-events-none bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center text-white select-none overflow-hidden"
-          >
-            {/* Subtle atmospheric ambient lighting */}
-            <div
-              className="absolute inset-0 pointer-events-none transition-opacity duration-500"
-              style={{
-                background: navOverlay.poolGradient,
-              }}
-            />
-
-            {/* Depth vignette */}
-            <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
-
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0, y: 14, filter: "blur(32px)" }}
-              animate={{ scale: 1, opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ scale: 1.04, opacity: 0, y: -8, filter: "blur(24px)" }}
-              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 flex flex-col items-center gap-3 text-center px-6"
-            >
-              <div className="flex items-center gap-2.5 font-mono text-[10px] sm:text-[11px] tracking-[0.28em] uppercase text-white/40">
-                <span
-                  className="w-1.5 h-1.5 rounded-full"
-                  style={{
-                    backgroundColor: navOverlay.pingColor,
-                    boxShadow: `0 0 10px ${navOverlay.pingColor}`,
-                  }}
-                />
-                <span>{navOverlay.title} &bull; ROUTING</span>
-              </div>
-              <h2
-                className="text-[clamp(52px,11vw,116px)] font-[900] tracking-[-0.045em] text-white leading-[0.9] select-none drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)]"
-                style={{
-                  fontFamily: "var(--font-inter-tight), 'Inter Tight', var(--font-inter), sans-serif",
-                }}
-              >
-                {navOverlay.title}
-              </h2>
-              <p className="text-[13px] sm:text-[15px] text-white/50 font-normal tracking-[-0.01em] max-w-[42ch]">
-                {navOverlay.subtitle}
-              </p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Invisible backdrop to dismiss mobile menu when tapping outside */}
       {mobileMenuOpen && (
         <div
