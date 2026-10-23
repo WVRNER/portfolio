@@ -27,6 +27,7 @@ import {
   BLOG_POSTS,
   formatDisplayDate,
   getPrimaryToolTag,
+  isPostDraft,
   type BlogPost,
 } from "@/lib/blogData";
 
@@ -512,6 +513,11 @@ export function ArticleClientWrapper({ post }: ArticleClientWrapperProps) {
             <span className="px-2.5 py-0.5 rounded-full bg-[#F2F2F2] dark:bg-[#262626] text-[#242424] dark:text-[#e5e5e5] font-medium text-[11px] font-mono tracking-tight dark:border dark:border-white/10">
               {getPrimaryToolTag(post)}
             </span>
+            {isPostDraft(post) && (
+              <span className="px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 font-mono text-[11px] font-semibold tracking-wider uppercase">
+                DRAFT
+              </span>
+            )}
           </div>
 
           {/* Share Pill Button */}

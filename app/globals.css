@@ -58,6 +58,7 @@ h1, h2, h3, .font-display {
 /* wvrner wordmark (colors and spectrum from wvrner-wordmark.html) */
 .wv-mark {
   --core: #020917;
+  --wave-dark: #020d15;
   --blue-in: #0A1440;
   --red-in:  #2A1FA8;
   --wv-tr-x: 100%;
@@ -73,21 +74,23 @@ h1, h2, h3, .font-display {
       #FF6A3D 0%, #FF2D3D 16%, #FF1F7A 32%, #FF4FB0 48%, var(--red-in) 66%, transparent 84%),
     radial-gradient(ellipse var(--wv-bl-w) var(--wv-bl-h) at var(--wv-bl-x) var(--wv-bl-y),
       #7FF3FF 0%, #00C8FF 14%, #1E8BFF 30%, #2F4BFF 46%, var(--blue-in) 66%, transparent 84%),
-    linear-gradient(var(--core), var(--core));
+    linear-gradient(135deg, var(--core) 0%, var(--wave-dark) 50%, var(--core) 100%);
   -webkit-background-clip: text;
           background-clip: text;
   color: transparent;
 }
-/* on dark backgrounds: light core and light tints */
+/* on dark backgrounds (hero): light core #e2e2e6 and deep #020d15 wave tints */
 .wv-mark--light {
-  --core: #F2F2F4;
+  --core: #e2e2e6;
+  --wave-dark: #020d15;
   --blue-in: #BFF8FF;
   --red-in: #FFD6EC;
 }
 
 /* on light backgrounds: dark core and deep tints */
 .wv-mark--dark {
-  --core: #020917;
+  --core: #020d15;
+  --wave-dark: #020917;
   --blue-in: #0A1440;
   --red-in:  #2A1FA8;
 }

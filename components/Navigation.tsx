@@ -223,10 +223,10 @@ export function Navigation({ onOpenCV }: NavigationProps) {
                   <button
                     key={item.label}
                     onClick={() => handleClick(item)}
-                    className="relative group text-[13.5px] sm:text-[14.5px] md:text-[15px] font-sans font-semibold tracking-tight cursor-pointer whitespace-nowrap px-3.5 sm:px-4 py-1.5 rounded-full active:scale-95 min-h-[36px] sm:min-h-[38px] flex items-center justify-center overflow-hidden transition-all duration-300 text-[#030e16] bg-[#030e16]/[0.06] hover:bg-[#030e16]/[0.10] border border-[#030e16]/15 shadow-[0_2px_8px_rgba(3,14,22,0.06)]"
+                    className="relative group text-[13.5px] sm:text-[14.5px] md:text-[15px] font-sans font-semibold tracking-tight cursor-pointer whitespace-nowrap px-4 py-1.5 rounded-full active:scale-95 min-h-[36px] sm:min-h-[38px] flex items-center justify-center overflow-hidden transition-all duration-300 text-[#030e16] bg-white/75 hover:bg-white/95 backdrop-blur-md border border-white/80 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.95),0_2px_8px_rgba(3,14,22,0.08)] before:absolute before:inset-x-0 before:top-0 before:h-[45%] before:rounded-t-full before:bg-gradient-to-b before:from-white/70 before:to-transparent before:pointer-events-none"
                   >
                     <span className="relative z-10 tracking-[-0.01em]">{item.label}</span>
-                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-[#030e16]/12 to-transparent pointer-events-none" />
+                    <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-white/50 to-transparent pointer-events-none" />
                   </button>
                 );
               }
@@ -260,7 +260,7 @@ export function Navigation({ onOpenCV }: NavigationProps) {
                       onClick={() => handleClick(item)}
                       className={`w-full text-left px-4 py-3 rounded-2xl text-[14.5px] font-sans font-semibold transition-all active:scale-[0.98] cursor-pointer flex items-center justify-between min-h-[48px] text-[#030e16] ${
                         item.isShiny
-                          ? "bg-[#030e16]/[0.06] border border-[#030e16]/15"
+                          ? "bg-white/80 backdrop-blur-md border border-white/80 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.9),0_2px_8px_rgba(3,14,22,0.08)]"
                           : "hover:bg-[#030e16]/[0.08]"
                       }`}
                     >
