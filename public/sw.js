@@ -1,5 +1,5 @@
 // WVRNER Service Worker - Offline reading & installable PWA
-const CACHE_VERSION = "wvrner-v1";
+const CACHE_VERSION = "wvrner-v2";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const POSTS_CACHE = `${CACHE_VERSION}-posts`;
 
@@ -52,17 +52,30 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
 
-  // Ignore non-GET requests and browser extensions
-  if (request.method !== "GET" || !url.protocol.startsWith("http")) {
+  // 1. Strictly same-origin GET requests only
+  if (
+    request.method !== "GET" ||
+    !url.protocol.startsWith("http") ||
+    url.origin !== self.location.origin
+  ) {
     return;
   }
 
-  // Never cache Ghost Admin or Preview routes
+  // 2. Never cache large media (videos, audio, range requests)
+  if (
+    request.destination === "video" ||
+    request.destination === "audio" ||
+    url.pathname.match(/\.(mp4|webm|ogg|mp3|wav|mov)$/i)
+  ) {
+    return;
+  }
+
+  // 3. Never cache Ghost Admin or Preview routes
   if (isBypassedRoute(url)) {
     return;
   }
 
-  // 1. Navigation / HTML pages (Stories, Home, Articles)
+  // 4. Navigation / HTML pages (Stories, Home, Articles)
   // Strategy: Network-First so updates/new posts appear immediately when online.
   // When offline, serves previously opened pages from cache, or falls back to /offline.html.
   if (request.mode === "navigate" || request.headers.get("accept")?.includes("text/html")) {
@@ -91,7 +104,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // 2. Static Assets (_next/static, images, fonts, styles)
+  // 5. Static Assets (_next/static, images, fonts, styles)
   // Strategy: Stale-While-Revalidate (Fast response from cache, background refresh)
   if (
     url.pathname.startsWith("/_next/static/") ||

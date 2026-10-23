@@ -43,7 +43,7 @@ export default function NotFoundPage() {
           muted
           playsInline
           preload="auto"
-          poster="/hero-poster.jpg"
+          poster="/hero-poster.webp"
           src="/hero-master-endless.mp4"
           className="absolute inset-0 h-full w-full object-cover will-change-transform opacity-75"
         />

@@ -24,8 +24,10 @@ export function AboutSection() {
             {/* Visual Portrait Surface */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/hero-poster.jpg"
+              src="/hero-poster.webp"
               alt="Nima Hosseini"
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover grayscale contrast-110 group-hover:scale-[1.02] transition-transform duration-500 ease-out"
             />
 

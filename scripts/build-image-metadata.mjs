@@ -66,13 +66,23 @@ async function processImage(post) {
   if (!url) return null;
 
   try {
-    const res = await fetch(url, { headers: { "User-Agent": "WvrnerBuild/1.0" } });
-    if (!res.ok) {
-      console.warn(`Failed to fetch ${url} (HTTP ${res.status})`);
-      return null;
+    let buffer;
+    if (url.startsWith("/")) {
+      const localPath = path.join(process.cwd(), "public", url);
+      if (!fs.existsSync(localPath)) {
+        console.warn(`Local image not found: ${localPath}`);
+        return null;
+      }
+      buffer = fs.readFileSync(localPath);
+    } else {
+      const res = await fetch(url, { headers: { "User-Agent": "WvrnerBuild/1.0" } });
+      if (!res.ok) {
+        console.warn(`Failed to fetch ${url} (HTTP ${res.status})`);
+        return null;
+      }
+      buffer = Buffer.from(await res.arrayBuffer());
     }
 
-    const buffer = Buffer.from(await res.arrayBuffer());
     const img = sharp(buffer);
     const meta = await img.metadata();
     const stats = await img.stats();

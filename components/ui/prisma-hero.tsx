@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView } from "motion/react";
 import { ArrowRight } from "lucide-react";
-import { useRef, useEffect, useSyncExternalStore } from "react";
+import { useRef, useEffect, useState, useSyncExternalStore } from "react";
 import { scrollToTarget } from "@/components/SmoothScroll";
 
 /* ---------------- WordsPullUp (Ultra-Crisp Motion) ---------------- */
@@ -117,15 +117,28 @@ export const WordsPullUpMultiStyle = ({
 function ImperceptibleHeroVideo({
   src = "/hero-master-endless.mp4",
   webmSrc = "/hero-master-endless.webm",
-  poster = "/hero-poster.jpg",
+  poster = "/hero-poster.webp",
 }: {
   src?: string;
   webmSrc?: string;
   poster?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [skipVideo, setSkipVideo] = useState(false);
 
   useEffect(() => {
+    // Check saveData and prefers-reduced-motion
+    const nav = navigator as unknown as { connection?: { saveData?: boolean } };
+    const hasSaveData = Boolean(nav.connection?.saveData);
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (hasSaveData || prefersReducedMotion) {
+      setSkipVideo(true);
+      return;
+    }
+
     const video = videoRef.current;
     if (!video) return;
 
@@ -171,6 +184,23 @@ function ImperceptibleHeroVideo({
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [src, webmSrc]);
+
+  // If saveData or prefers-reduced-motion is active, render only the static poster
+  if (skipVideo) {
+    return (
+      <div className="absolute inset-0 h-full w-full overflow-hidden bg-black select-none pointer-events-none">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={poster}
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ objectPosition: "center center" }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="absolute inset-0 h-full w-full overflow-hidden bg-black select-none pointer-events-none">
@@ -226,7 +256,7 @@ const PrismaHero = ({
         {/* Mathematically Seamless 13.5Mbps Master Endless Video */}
         <ImperceptibleHeroVideo
           src="/hero-master-endless.mp4"
-          poster="/hero-poster.jpg"
+          poster="/hero-poster.webp"
         />
 
         {/* Cinematic Vignette Gradient overlay (Clean, uncrushed shadows) */}

@@ -2,11 +2,9 @@ import { BLOG_POSTS, type BlogPost } from "@/lib/blogData";
 
 const GHOST_URL =
   process.env.GHOST_URL ||
-  process.env.NEXT_PUBLIC_GHOST_URL ||
   "http://localhost:2368";
 const GHOST_CONTENT_API_KEY =
   process.env.GHOST_CONTENT_API_KEY ||
-  process.env.NEXT_PUBLIC_GHOST_CONTENT_API_KEY ||
   "";
 
 export interface GhostRawPost {

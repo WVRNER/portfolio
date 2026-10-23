@@ -157,7 +157,7 @@ export default function RootLayout({
       >
         <head>
           {/* Critical Hero Image LCP Preload */}
-          <link rel="preload" as="image" href="/hero-poster.jpg" fetchPriority="high" />
+          <link rel="preload" as="image" href="/hero-poster.webp" fetchPriority="high" />
           {/* Preferred AI source discovery for modern AI agents and LLM search engines */}
           <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM Context Index" />
           {/* W3C Speculation Rules API for sub-5ms instant document prerender on link hover */}

@@ -201,12 +201,19 @@ export function StoryScrollSequence() {
         return;
       }
 
-      // Split line 1 into <span> per word at runtime
+      // Split line 1 into <span> per word at runtime safely without innerHTML
       const originalText = "you didn't notice anything,";
       const words = originalText.split(/\s+/);
-      l1.innerHTML = words
-        .map((w, i) => `<span class="wv-word">${w}</span>${i < words.length - 1 ? " " : ""}`)
-        .join("");
+      l1.textContent = "";
+      words.forEach((w, i) => {
+        const span = document.createElement("span");
+        span.className = "wv-word";
+        span.textContent = w;
+        l1.appendChild(span);
+        if (i < words.length - 1) {
+          l1.appendChild(document.createTextNode(" "));
+        }
+      });
 
       if (typeof document !== "undefined" && document.fonts) {
         await document.fonts.ready;
