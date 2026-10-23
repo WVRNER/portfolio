@@ -14,6 +14,15 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
     if (prefersReducedMotion) return;
 
+    // Use native 120Hz momentum scrolling on touch devices to eliminate lag
+    const isTouch =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia("(pointer: coarse)").matches);
+
+    if (isTouch) return;
+
     // High responsiveness: tight duration and direct wheel multiplier
     const lenis = new Lenis({
       duration: 0.75,

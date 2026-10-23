@@ -273,7 +273,7 @@ export function StoryScrollSequence() {
 
   return (
     <section
-      id="story"
+      id="nima-hosseini"
       ref={sectionRef}
       aria-label="Nima Hosseini identity"
       className="relative w-full h-[100vh] min-h-[560px] overflow-hidden flex flex-col items-center justify-center select-none bg-[#E2E2E6]"

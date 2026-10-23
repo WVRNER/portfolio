@@ -40,23 +40,17 @@ export function CompleteStaticRegister() {
                 className="group py-8 sm:py-10 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-start hover:bg-white/[0.02] transition-colors -mx-4 sm:-mx-6 px-4 sm:px-6 rounded-2xl"
               >
                 {/* Left Index Column: Number & Domain */}
-                <div className="lg:col-span-5 space-y-2">
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-[13px] sm:text-[14px] font-semibold text-white/45 tracking-wider">
-                      {item.number}
-                    </span>
-                    <h3 className="font-mono text-[14.5px] sm:text-[15.5px] font-semibold text-white tracking-[0.14em] uppercase">
-                      {item.category}
-                    </h3>
-                  </div>
-
-                  <p className="text-[13.5px] sm:text-[14.5px] text-white/60 font-sans leading-normal max-w-[42ch]">
-                    {item.description}
-                  </p>
+                <div className="lg:col-span-4 flex items-center gap-3">
+                  <span className="font-mono text-[13px] sm:text-[14px] font-semibold text-white/45 tracking-wider">
+                    {item.number}
+                  </span>
+                  <h3 className="font-mono text-[14.5px] sm:text-[15.5px] font-semibold text-white tracking-[0.14em] uppercase">
+                    {item.category}
+                  </h3>
                 </div>
 
                 {/* Right Stack Column: Bold, Large, Legible Tools */}
-                <div className="lg:col-span-7 flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-3 pt-1 lg:pt-0">
+                <div className="lg:col-span-8 flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-3 pt-1 lg:pt-0">
                   {allTools.map((tool, idx) => (
                     <span
                       key={tool}

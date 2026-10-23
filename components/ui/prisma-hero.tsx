@@ -264,10 +264,11 @@ const PrismaHero = ({
                 initial={{ y: 28, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                className="font-wvrner font-[800] leading-[0.82] text-[clamp(3.2rem,8.8vw,10.2rem)] select-none whitespace-nowrap pr-4 sm:pr-8 overflow-visible wv-mark wv-mark--light wv-mark--wave"
+                className="font-wvrner font-[800] leading-[0.82] text-[clamp(3.2rem,8.8vw,10.2rem)] select-none whitespace-nowrap pr-4 sm:pr-8 overflow-visible wv-mark wv-mark--light wv-mark--wave text-[#e2e2e6]"
                 style={{
                   fontFamily: "var(--font-plus-jakarta), sans-serif",
                   fontWeight: 800,
+                  color: "#e2e2e6",
                 }}
               >
                 <span className="inline-flex items-baseline overflow-visible">
@@ -304,7 +305,12 @@ const PrismaHero = ({
                     href="#nima-hosseini"
                     onClick={(e) => {
                       e.preventDefault();
-                      scrollToTarget("#nima-hosseini", { duration: 1.2 });
+                      const target = document.getElementById("nima-hosseini") || document.getElementById("projects");
+                      if (target) {
+                        target.scrollIntoView({ behavior: "smooth" });
+                      } else {
+                        scrollToTarget("#nima-hosseini", { duration: 1.2 });
+                      }
                     }}
                     className="group relative inline-flex items-center gap-3 rounded-full bg-[#E1E0CC] hover:bg-white text-[#121211] py-2 pl-5 pr-2 text-[14px] font-medium tracking-tight transition-all duration-300 shadow-[0_10px_25px_rgba(0,0,0,0.35)] active:scale-95 cursor-pointer overflow-hidden"
                   >

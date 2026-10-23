@@ -83,7 +83,7 @@ export function InstantLink({
         (typeof props.title === "string" && props.title) ||
         (target === "/blog" ? "Writing" : "WVRNER");
       const displaySubtitle =
-        transitionSubtitle || "systems, cloud infrastructure, and technical field notes";
+        transitionSubtitle || "systems, cloud infrastructure, and architecture notes";
 
       triggerTransition(displayTitle, displaySubtitle, target);
     },
