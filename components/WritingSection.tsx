@@ -40,7 +40,7 @@ export function WritingSection() {
       <div id="stories" className="absolute -top-12" />
 
       {/* Editorial Header Row */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 mb-8 border-b border-[#F2F2F2]">
+      <div className="pb-6 mb-8 border-b border-[#F2F2F2]">
         <div className="space-y-2">
           <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-black/[0.04] text-[11px] font-mono tracking-wider uppercase text-[#6E6E73] font-medium">
             <BookOpen className="w-3.5 h-3.5 text-[#242424]" />
@@ -51,17 +51,6 @@ export function WritingSection() {
             Writing
           </h2>
         </div>
-
-        {/* View all writing action: Apple Liquid Glass */}
-        <InstantLink
-          href="/blog"
-          transitionTitle="Writing"
-          transitionSubtitle="systems, cloud infrastructure, and technical notes"
-          className="relative group inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-sans font-semibold text-[#030e16] bg-white/75 hover:bg-white/95 backdrop-blur-md border border-white/80 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.95),0_2px_8px_rgba(3,14,22,0.06)] hover:shadow-[inset_0_1px_1.5px_rgba(255,255,255,1),0_4px_12px_rgba(3,14,22,0.1)] transition-all active:scale-95 shrink-0 pb-1"
-        >
-          <span>See all writing</span>
-          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-        </InstantLink>
       </div>
 
       {/* BALANCED 2-COLUMN EDITORIAL STORIES GRID ALIGNED TO SITE WIDTH */}
@@ -69,7 +58,7 @@ export function WritingSection() {
         {displayedPosts.map((post) => (
           <article
             key={post.slug}
-            className="w-full h-auto sm:h-[155px] md:h-[165px] flex flex-col justify-between overflow-hidden"
+            className="w-full h-auto sm:min-h-[160px] md:min-h-[170px] flex flex-col justify-between overflow-hidden"
           >
             <InstantLink
               href={`/blog/${post.slug}`}
@@ -89,8 +78,8 @@ export function WritingSection() {
                       {post.title}
                     </h3>
 
-                    {/* Subtitle / Excerpt in Serif with strict 2-line clamp */}
-                    <p className="text-[13.5px] sm:text-[14.5px] text-[#555555] leading-[1.4] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                    {/* Subtitle / Excerpt in Serif with strict 2-line clamp and relaxed line-height */}
+                    <p className="text-[13.5px] sm:text-[14.5px] text-[#555555] leading-[1.6] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                       {post.subtitle || post.excerpt}
                     </p>
                   </div>
