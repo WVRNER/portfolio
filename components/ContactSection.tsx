@@ -122,11 +122,11 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
         <h2
           className="select-none text-[#01030E] inline-flex items-baseline relative"
           style={{
-            fontFamily: 'var(--font-inter-tight), "Inter Tight", -apple-system, BlinkMacSystemFont, sans-serif',
-            fontWeight: 500,
-            fontSize: "clamp(64px, 9.5vw, 148px)",
-            lineHeight: 0.88,
-            letterSpacing: "-0.055em",
+            fontFamily: 'var(--font-plus-jakarta), var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif',
+            fontWeight: 800,
+            fontSize: "clamp(60px, 9.2vw, 142px)",
+            lineHeight: 0.9,
+            letterSpacing: "-0.045em",
           }}
         >
           <span>Let&rsquo;s talk.</span>
