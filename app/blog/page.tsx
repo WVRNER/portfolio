@@ -20,7 +20,7 @@ import {
 /**
  * Editorial Blog Archive - Writing
  * 
- * - Each post sized at 680x225 on desktop with responsive mobile scaling
+ * - Each post sized at 680x235 on desktop with responsive mobile scaling
  * - Dark mode toggle scoped to blog surfaces with persistent user state
  * - Super bold punchy titles (font-black / font-extrabold)
  * - Mobile & desktop compact thumbnail layout
@@ -172,37 +172,39 @@ export default function BlogIndexPage() {
             </div>
           ) : (
             <div>
-              {/* WRITING STREAM: Each post card 680x225 on desktop */}
+              {/* WRITING STREAM: Each post card 680x235 on desktop */}
               <div className="divide-y divide-[#F2F2F2] dark:divide-[#262626]">
                 {paginatedPosts.map((post, pIdx) => (
                   <article
                     key={post.slug}
-                    className="w-full max-w-[680px] min-h-[170px] sm:min-h-[200px] flex flex-col justify-center py-6 sm:py-7"
+                    className="w-full max-w-[680px] min-h-[210px] sm:min-h-[235px] md:h-[235px] flex flex-col justify-between py-5 sm:py-6"
                   >
                     <InstantLink
                       href={`/blog/${post.slug}`}
                       transitionTitle={post.title}
-                      className="group block w-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
+                      className="group flex flex-col justify-between h-full w-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
                     >
-                      <div className="flex items-start justify-between gap-6 sm:gap-10 md:gap-12 w-full">
+                      <div className="flex items-start justify-between gap-6 sm:gap-10 md:gap-12 w-full flex-1 min-h-0">
                         
                         {/* Left Text Block */}
-                        <div className="flex-1 min-w-0 space-y-2">
-                          {/* Big Bold Headline with View Transition */}
-                          <h2
-                            className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[18px] sm:text-[20px] md:text-[21px] text-[#242424] dark:text-[#e5e5e5] leading-[1.28] tracking-[-0.025em] line-clamp-2"
-                            style={{ viewTransitionName: getPostTransitionName("title", post.slug) }}
-                          >
-                            {post.title}
-                          </h2>
+                        <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
+                          <div className="space-y-2">
+                            {/* Big Bold Headline with View Transition */}
+                            <h2
+                              className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[18px] sm:text-[20px] md:text-[21px] text-[#242424] dark:text-[#e5e5e5] leading-[1.28] tracking-[-0.025em] line-clamp-2"
+                              style={{ viewTransitionName: getPostTransitionName("title", post.slug) }}
+                            >
+                              {post.title}
+                            </h2>
 
-                          {/* Subtitle / Excerpt in Serif with relaxed line-height */}
-                          <p className="text-[14px] sm:text-[14.5px] text-[#555555] dark:text-[#b3b3b3] leading-[1.6] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
-                            {post.subtitle || post.excerpt}
-                          </p>
+                            {/* Subtitle / Excerpt in Serif with relaxed line-height */}
+                            <p className="text-[14px] sm:text-[14.5px] text-[#555555] dark:text-[#b3b3b3] leading-[1.6] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                              {post.subtitle || post.excerpt}
+                            </p>
+                          </div>
 
                           {/* Date before read time, then Tool Tag (one per post only) */}
-                          <div className="pt-1 flex flex-wrap items-center gap-2.5 text-[12.5px] sm:text-[13px] text-[#6B6B6B] dark:text-[#8E8E93] font-sans">
+                          <div className="pt-2 flex flex-wrap items-center gap-2.5 text-[12.5px] sm:text-[13px] text-[#6B6B6B] dark:text-[#8E8E93] font-sans shrink-0">
                             {post.featured && (
                               <span title="Featured Story" className="inline-flex items-center">
                                 <FeaturedStarIcon className="w-3.5 h-3.5" />

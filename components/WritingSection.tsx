@@ -58,12 +58,12 @@ export function WritingSection() {
         {displayedPosts.map((post) => (
           <article
             key={post.slug}
-            className="w-full h-auto sm:min-h-[160px] md:min-h-[170px] flex flex-col justify-between overflow-hidden"
+            className="w-full max-w-[680px] min-h-[210px] sm:min-h-[235px] md:h-[235px] flex flex-col justify-between overflow-hidden"
           >
             <InstantLink
               href={`/blog/${post.slug}`}
               transitionTitle={post.title}
-              className="group flex flex-col justify-between h-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none no-underline ring-0"
+              className="group flex flex-col justify-between h-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none no-underline ring-0 py-2 sm:py-3"
             >
               <div className="flex items-start justify-between gap-6 sm:gap-8 md:gap-10 flex-1 min-h-0">
                 
