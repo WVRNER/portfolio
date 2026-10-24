@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "prebuild": "node --experimental-strip-types scripts/build-image-metadata.mjs && node --experimental-strip-types scripts/build-github-cards.mjs",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "sync:ghost": "node scripts/sync-ghost.mjs",
