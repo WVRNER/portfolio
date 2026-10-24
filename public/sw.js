@@ -111,7 +111,7 @@ self.addEventListener("fetch", (event) => {
     url.pathname.match(/\.(png|jpg|jpeg|webp|svg|ico|woff2?|css|js)$/i)
   ) {
     event.respondWith(
-      caches.match(request).then((cachedResponse) => {
+      caches.match(request, { ignoreSearch: true }).then((cachedResponse) => {
         const fetchPromise = fetch(request)
           .then((networkResponse) => {
             if (networkResponse.ok) {

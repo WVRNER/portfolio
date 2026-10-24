@@ -90,7 +90,7 @@ export function getLiveProjectsAndLabs(posts?: BlogPost[]): [ProjectOrLab, Proje
   const allPosts = posts && posts.length > 0 ? posts : BLOG_POSTS.filter((p) => p.isDraft !== true);
 
   const cleanTechTags = (tags?: string[]) =>
-    (tags || []).filter((t) => !/^(#)?(project(-?[12])?|lab(s)?)$/i.test(t.trim()));
+    (tags || []).filter((t) => !/^(#)?(project(s|-?[12])?|lab(s)?)$/i.test(t.trim()));
 
   // 1. Check for explicit slot 1: tagged 'project-1', '#project-1', 'project1'
   let p1Post = allPosts.find((p) =>
