@@ -172,39 +172,39 @@ export default function BlogIndexPage() {
             </div>
           ) : (
             <div>
-              {/* WRITING STREAM: Each post card 680x235 on desktop */}
+              {/* WRITING STREAM: Each post card tightened on desktop */}
               <div className="divide-y divide-[#F2F2F2] dark:divide-[#262626]">
                 {paginatedPosts.map((post, pIdx) => (
                   <article
                     key={post.slug}
-                    className="w-full max-w-[680px] min-h-[210px] sm:min-h-[235px] md:h-[235px] flex flex-col justify-between py-5 sm:py-6"
+                    className="w-full max-w-[680px] min-h-[210px] sm:min-h-[235px] md:min-h-0 md:h-[218px] flex flex-col justify-between py-5 sm:py-6 md:py-4"
                   >
                     <InstantLink
                       href={`/blog/${post.slug}`}
                       transitionTitle={post.title}
                       className="group flex flex-col justify-between h-full w-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
                     >
-                      <div className="flex items-start justify-between gap-6 sm:gap-10 md:gap-12 w-full flex-1 min-h-0">
+                      <div className="flex items-start justify-between gap-6 sm:gap-10 md:gap-8 lg:gap-10 w-full flex-1 min-h-0">
                         
                         {/* Left Text Block */}
                         <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
-                          <div className="space-y-2">
+                          <div className="space-y-2 md:space-y-1.5">
                             {/* Big Bold Headline with View Transition */}
                             <h2
-                              className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[18px] sm:text-[20px] md:text-[21px] text-[#242424] dark:text-[#e5e5e5] leading-[1.28] tracking-[-0.025em] line-clamp-2"
+                              className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[18px] sm:text-[20px] md:text-[20.5px] text-[#242424] dark:text-[#e5e5e5] leading-[1.28] md:leading-[1.24] tracking-[-0.025em] line-clamp-2"
                               style={{ viewTransitionName: getPostTransitionName("title", post.slug) }}
                             >
                               {post.title}
                             </h2>
 
-                            {/* Subtitle / Excerpt in Serif with relaxed line-height */}
-                            <p className="text-[14px] sm:text-[14.5px] text-[#555555] dark:text-[#b3b3b3] leading-[1.6] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                            {/* Subtitle / Excerpt in Serif - bigger on desktop */}
+                            <p className="text-[14px] sm:text-[14.5px] md:text-[16px] text-[#555555] dark:text-[#b3b3b3] leading-[1.6] md:leading-[1.48] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                               {post.subtitle || post.excerpt}
                             </p>
                           </div>
 
                           {/* Date before read time, then Tool Tag (one per post only) */}
-                          <div className="pt-2 flex flex-wrap items-center gap-2.5 text-[12.5px] sm:text-[13px] text-[#6B6B6B] dark:text-[#8E8E93] font-sans shrink-0">
+                          <div className="pt-2 md:pt-1.5 flex flex-wrap items-center gap-2.5 text-[12.5px] sm:text-[13px] text-[#6B6B6B] dark:text-[#8E8E93] font-sans shrink-0">
                             {post.featured && (
                               <span title="Featured Story" className="inline-flex items-center">
                                 <FeaturedStarIcon className="w-3.5 h-3.5" />
@@ -223,7 +223,7 @@ export default function BlogIndexPage() {
                         {/* Right Thumbnail Image with Blur-up and View Transition */}
                         {post.featureImage && (
                           <div
-                            className="w-[96px] h-[64px] sm:w-[152px] sm:h-[102px] md:w-[160px] md:h-[108px] rounded-[3px] overflow-hidden bg-neutral-100 dark:bg-[#262626] shrink-0 self-start mt-0.5"
+                            className="w-[96px] h-[64px] sm:w-[152px] sm:h-[102px] md:w-[152px] md:h-[102px] rounded-[3px] overflow-hidden bg-neutral-100 dark:bg-[#262626] shrink-0 self-start mt-0.5"
                             style={{ viewTransitionName: getPostTransitionName("cover", post.slug) }}
                           >
                             <BlurImage
