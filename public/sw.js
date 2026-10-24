@@ -1,5 +1,5 @@
 // WVRNER Service Worker - Offline reading & installable PWA
-const CACHE_VERSION = "wvrner-v2";
+const CACHE_VERSION = "wvrner-v3";
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
 const POSTS_CACHE = `${CACHE_VERSION}-posts`;
 

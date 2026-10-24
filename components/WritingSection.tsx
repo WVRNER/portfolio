@@ -53,38 +53,38 @@ export function WritingSection() {
       </div>
 
       {/* BALANCED 2-COLUMN EDITORIAL STORIES GRID ALIGNED TO SITE WIDTH */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-7 sm:gap-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-12 gap-y-7 sm:gap-y-8 md:gap-y-6 lg:gap-y-7">
         {displayedPosts.map((post) => (
           <article
             key={post.slug}
-            className="w-full max-w-[640px] flex flex-col justify-between overflow-hidden"
+            className="w-full max-w-[640px] md:max-w-[560px] lg:max-w-[580px] flex flex-col justify-between overflow-hidden"
           >
             <InstantLink
               href={`/blog/${post.slug}`}
               transitionTitle={post.title}
-              className="group flex flex-col justify-between h-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none no-underline ring-0 py-1"
+              className="group flex flex-col justify-between h-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none no-underline ring-0 py-1 md:py-0.5"
             >
-              <div className="flex items-start justify-between gap-4 sm:gap-6 md:gap-7 flex-1 min-h-0">
+              <div className="flex items-start justify-between gap-4 sm:gap-6 md:gap-5 lg:gap-6 flex-1 min-h-0">
                 
                 {/* Left Text Block */}
                 <div className="flex-1 min-w-0 flex flex-col justify-between">
-                  <div className="space-y-1.5">
+                  <div className="space-y-1.5 md:space-y-1">
                     {/* Super bold punchy headline with strict 2-line clamp and View Transition */}
                     <h3
-                      className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[16.5px] sm:text-[18px] md:text-[19px] text-[#242424] group-hover:text-[#242424]/75 transition-colors leading-[1.3] tracking-[-0.025em] line-clamp-2 no-underline"
+                      className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[16.5px] sm:text-[18px] md:text-[18.5px] text-[#242424] group-hover:text-[#242424]/75 transition-colors leading-[1.3] tracking-[-0.025em] line-clamp-2 no-underline"
                       style={{ viewTransitionName: getPostTransitionName("title", post.slug) }}
                     >
                       {post.title}
                     </h3>
 
                     {/* Subtitle / Excerpt in Serif with strict 2-line clamp and relaxed line-height */}
-                    <p className="text-[13px] sm:text-[13.5px] md:text-[14px] text-[#555555] leading-[1.5] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                    <p className="text-[13px] sm:text-[13.5px] md:text-[13.5px] text-[#555555] leading-[1.5] md:leading-[1.42] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                       {post.subtitle || post.excerpt}
                     </p>
                   </div>
 
                   {/* Bottom Meta: Date before read time, then Tool Tag & Draft Badge */}
-                  <div className="pt-2 sm:pt-2.5 flex flex-wrap items-center gap-2 text-[12px] sm:text-[12.5px] text-[#6B6B6B] font-sans shrink-0">
+                  <div className="pt-2 sm:pt-2.5 md:pt-1.5 flex flex-wrap items-center gap-2 text-[12px] sm:text-[12.5px] text-[#6B6B6B] font-sans shrink-0">
                     {post.featured && (
                       <span title="Featured Story" className="inline-flex items-center shrink-0">
                         <FeaturedStarIcon className="w-3.5 h-3.5" />
@@ -103,7 +103,7 @@ export function WritingSection() {
                 {/* Right Compact Thumbnail Image with Blur-up and View Transition */}
                 {post.featureImage && (
                   <div
-                    className="w-[84px] h-[58px] sm:w-[112px] sm:h-[76px] md:w-[124px] md:h-[84px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-0.5"
+                    className="w-[84px] h-[58px] sm:w-[112px] sm:h-[76px] md:w-[116px] md:h-[78px] lg:w-[120px] lg:h-[80px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-0.5"
                     style={{ viewTransitionName: getPostTransitionName("cover", post.slug) }}
                   >
                     <BlurImage

@@ -40,7 +40,37 @@ async function sync() {
     const count = data.posts?.length || 0;
     console.log(`✓ Successfully fetched ${count} post(s) from Ghost CMS.`);
 
-    for (const post of data.posts || []) {
+    const formattedPosts = (data.posts || []).map((raw) => {
+      const rawTagNames = (raw.tags || []).map((t) => t.name.trim());
+      const rawTagSlugs = (raw.tags || []).map((t) => t.slug.replace(/^hash-/, "#").trim());
+      const combinedTags = Array.from(new Set([...rawTagNames, ...rawTagSlugs]));
+      const publicTags = rawTagNames.filter((t) => !t.startsWith("#"));
+
+      const dateObj = raw.published_at ? new Date(raw.published_at) : new Date();
+      const dateStr = dateObj
+        .toLocaleDateString("en-US", { month: "short", year: "numeric" })
+        .toUpperCase();
+
+      return {
+        slug: raw.slug,
+        title: raw.title,
+        date: dateStr,
+        category: publicTags[0] || "Infrastructure",
+        readingTime: `${Math.max(1, raw.reading_time || 5)} min read`,
+        excerpt: raw.custom_excerpt || "",
+        tags: combinedTags,
+        featureImage: raw.feature_image || undefined,
+        subtitle: raw.custom_excerpt || undefined,
+        featured: Boolean(raw.featured),
+        isDraft: false,
+      };
+    });
+
+    const publicOut = path.resolve("public/ghost-posts.json");
+    fs.writeFileSync(publicOut, JSON.stringify(formattedPosts, null, 2));
+    console.log(`✓ Saved ${formattedPosts.length} posts to ${publicOut}`);
+
+    for (const post of formattedPosts) {
       console.log(`  • [${post.slug}] ${post.title}`);
     }
 

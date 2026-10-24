@@ -25,8 +25,13 @@ export interface GhostRawPost {
 export function transformGhostPost(raw: GhostRawPost): BlogPost {
   const matchingLocal = BLOG_POSTS.find((p) => p.slug === raw.slug);
 
-  const tags = (raw.tags || []).map((t) => t.name);
-  const category = tags[0] || matchingLocal?.category || "Infrastructure";
+  const rawTagNames = (raw.tags || []).map((t) => t.name.trim());
+  const rawTagSlugs = (raw.tags || []).map((t) => t.slug.replace(/^hash-/, "#").trim());
+  const combinedTags = Array.from(new Set([...rawTagNames, ...rawTagSlugs]));
+
+  // Public category (omit internal # tags)
+  const publicTags = rawTagNames.filter((t) => !t.startsWith("#"));
+  const category = publicTags[0] || matchingLocal?.category || "Infrastructure";
 
   const dateObj = raw.published_at ? new Date(raw.published_at) : new Date();
   const dateStr = dateObj
@@ -40,7 +45,7 @@ export function transformGhostPost(raw: GhostRawPost): BlogPost {
     category,
     readingTime: `${Math.max(1, raw.reading_time || 5)} min read`,
     excerpt: raw.custom_excerpt || matchingLocal?.excerpt || "",
-    tags: tags.length > 0 ? tags : (matchingLocal?.tags || ["Cloud", "DevOps"]),
+    tags: combinedTags.length > 0 ? combinedTags : (matchingLocal?.tags || ["Cloud", "DevOps"]),
     featureImage: raw.feature_image || matchingLocal?.featureImage || undefined,
     subtitle: matchingLocal?.subtitle || raw.custom_excerpt || undefined,
     pullQuote: matchingLocal?.pullQuote,
