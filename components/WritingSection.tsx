@@ -65,27 +65,27 @@ export function WritingSection() {
               transitionTitle={post.title}
               className="group flex flex-col justify-between h-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none no-underline ring-0"
             >
-              <div className="flex items-start justify-between gap-4 sm:gap-6 flex-1 min-h-0">
+              <div className="flex items-start justify-between gap-6 sm:gap-8 md:gap-10 flex-1 min-h-0">
                 
                 {/* Left Text Block */}
                 <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     {/* Super bold punchy headline with strict 2-line clamp and View Transition */}
                     <h3
-                      className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[18px] sm:text-[20px] md:text-[21px] text-[#242424] group-hover:text-[#242424]/75 transition-colors leading-[1.25] tracking-[-0.03em] line-clamp-2 no-underline"
+                      className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[16.5px] sm:text-[18px] md:text-[19px] text-[#242424] group-hover:text-[#242424]/75 transition-colors leading-[1.3] tracking-[-0.025em] line-clamp-2 no-underline"
                       style={{ viewTransitionName: getPostTransitionName("title", post.slug) }}
                     >
                       {post.title}
                     </h3>
 
                     {/* Subtitle / Excerpt in Serif with strict 2-line clamp and relaxed line-height */}
-                    <p className="text-[13.5px] sm:text-[14.5px] text-[#555555] leading-[1.6] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                    <p className="text-[13px] sm:text-[13.5px] md:text-[14px] text-[#555555] leading-[1.55] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                       {post.subtitle || post.excerpt}
                     </p>
                   </div>
 
                   {/* Bottom Meta: Date before read time, then Tool Tag & Draft Badge */}
-                  <div className="pt-2 flex flex-wrap items-center gap-2 text-[12px] sm:text-[12.5px] text-[#6B6B6B] font-sans shrink-0">
+                  <div className="pt-2.5 flex flex-wrap items-center gap-2 text-[12px] sm:text-[12.5px] text-[#6B6B6B] font-sans shrink-0">
                     {post.featured && (
                       <span title="Featured Story" className="inline-flex items-center shrink-0">
                         <FeaturedStarIcon className="w-3.5 h-3.5" />
@@ -104,7 +104,7 @@ export function WritingSection() {
                 {/* Right Compact Thumbnail Image with Blur-up and View Transition */}
                 {post.featureImage && (
                   <div
-                    className="w-[84px] h-[58px] sm:w-[120px] sm:h-[80px] md:w-[136px] md:h-[90px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-0.5"
+                    className="w-[84px] h-[58px] sm:w-[116px] sm:h-[78px] md:w-[128px] md:h-[86px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-0.5"
                     style={{ viewTransitionName: getPostTransitionName("cover", post.slug) }}
                   >
                     <BlurImage
