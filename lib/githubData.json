@@ -9,18 +9,18 @@
     "languageColor": "#3178c6",
     "url": "https://github.com/aws-actions/configure-aws-credentials",
     "forks": 581,
-    "fetchedAt": 1792749171342
+    "fetchedAt": 1792841707576
   },
   "hashicorp/terraform": {
     "fullName": "hashicorp/terraform",
     "name": "terraform",
     "owner": "hashicorp",
     "description": "Terraform enables you to safely and predictably create, change, and improve infrastructure. It is a source-available tool that codifies APIs into declarative configuration files that can be shared amongst team members, treated as code, edited, reviewed, and versioned.",
-    "stars": 50078,
+    "stars": 50101,
     "language": "Go",
     "languageColor": "#00ADD8",
     "url": "https://github.com/hashicorp/terraform",
-    "forks": 10596,
-    "fetchedAt": 1792749171793
+    "forks": 10599,
+    "fetchedAt": 1792841707949
   }
 }
