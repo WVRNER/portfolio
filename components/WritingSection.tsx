@@ -68,23 +68,23 @@ export function WritingSection() {
                 
                 {/* Left Text Block */}
                 <div className="flex-1 min-w-0 flex flex-col justify-between">
-                  <div className="space-y-1.5 md:space-y-1">
+                  <div className="space-y-2.5 sm:space-y-2 md:space-y-1">
                     {/* Super bold punchy headline with strict 2-line clamp and View Transition */}
                     <h3
-                      className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[16.5px] sm:text-[18px] md:text-[18.5px] text-[#242424] group-hover:text-[#242424]/75 transition-colors leading-[1.3] tracking-[-0.025em] line-clamp-2 no-underline"
+                      className="title-thick font-[family-name:var(--font-inter),var(--font-plus-jakarta),sans-serif] text-[16.5px] sm:text-[18px] md:text-[18.5px] text-[#242424] group-hover:text-[#242424]/75 transition-colors leading-[1.35] md:leading-[1.3] tracking-[-0.025em] line-clamp-2 no-underline"
                       style={{ viewTransitionName: getPostTransitionName("title", post.slug) }}
                     >
                       {post.title}
                     </h3>
 
                     {/* Subtitle / Excerpt in Serif with strict 2-line clamp and relaxed line-height */}
-                    <p className="text-[13px] sm:text-[13.5px] md:text-[13.5px] text-[#555555] leading-[1.5] md:leading-[1.42] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
+                    <p className="text-[13px] sm:text-[13.5px] md:text-[13.5px] text-[#555555] leading-[1.55] sm:leading-[1.5] md:leading-[1.42] line-clamp-2 font-normal font-[family-name:var(--font-source-serif),Charter,Georgia,serif]">
                       {post.subtitle || post.excerpt}
                     </p>
                   </div>
 
                   {/* Bottom Meta: Date before read time, then Tool Tag & Draft Badge */}
-                  <div className="pt-2 sm:pt-2.5 md:pt-1.5 flex flex-wrap items-center gap-2 text-[12px] sm:text-[12.5px] text-[#6B6B6B] font-sans shrink-0">
+                  <div className="pt-3 sm:pt-2.5 md:pt-1.5 flex flex-wrap items-center gap-2 text-[12px] sm:text-[12.5px] text-[#6B6B6B] font-sans shrink-0">
                     {post.featured && (
                       <span title="Featured Story" className="inline-flex items-center shrink-0">
                         <FeaturedStarIcon className="w-3.5 h-3.5" />
