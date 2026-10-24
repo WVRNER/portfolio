@@ -104,7 +104,7 @@ export function WritingSection() {
                 {/* Right Compact Thumbnail Image with Blur-up and View Transition */}
                 {post.featureImage && (
                   <div
-                    className="w-[84px] h-[58px] sm:w-[120px] sm:h-[80px] md:w-[136px] md:h-[90px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-center"
+                    className="w-[84px] h-[58px] sm:w-[120px] sm:h-[80px] md:w-[136px] md:h-[90px] rounded-[3px] overflow-hidden bg-neutral-100 shrink-0 self-start mt-0.5"
                     style={{ viewTransitionName: getPostTransitionName("cover", post.slug) }}
                   >
                     <BlurImage
@@ -123,16 +123,30 @@ export function WritingSection() {
         ))}
       </div>
 
-      {/* Bottom Archive Action: Apple Liquid Glass Button with Smooth Routing Animation */}
+      {/* Bottom Archive Action: Liquid Glass Button */}
       <div className="pt-8 sm:pt-10 flex justify-center">
         <InstantLink
           href="/blog"
           transitionTitle="Writing"
           transitionSubtitle="systems, cloud infrastructure, and technical notes"
-          className="relative group inline-flex items-center gap-2.5 px-6 py-3 rounded-full text-[13.5px] sm:text-[14px] font-sans font-semibold text-[#030e16] bg-white/80 hover:bg-white/95 backdrop-blur-xl border border-white/90 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.95),0_6px_20px_rgba(0,0,0,0.06)] hover:shadow-[inset_0_1.5px_2px_rgba(255,255,255,1),0_8px_24px_rgba(0,0,0,0.1)] transition-all active:scale-95 cursor-pointer outline-none focus:outline-none before:absolute before:inset-x-0 before:top-0 before:h-[45%] before:rounded-t-full before:bg-gradient-to-b before:from-white/70 before:to-transparent before:pointer-events-none"
+          className="relative group inline-flex items-center gap-3 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full text-[13.5px] sm:text-[14px] font-sans font-medium text-[#111111] bg-gradient-to-b from-white/90 via-white/55 to-white/35 backdrop-blur-2xl border border-black/[0.08] shadow-[0_8px_30px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.04),inset_0_1.5px_1px_rgba(255,255,255,1),inset_0_-1px_1px_rgba(0,0,0,0.04)] hover:shadow-[0_14px_36px_rgba(0,0,0,0.09),0_2px_6px_rgba(0,0,0,0.05),inset_0_1.5px_1px_rgba(255,255,255,1),inset_0_-1px_1px_rgba(0,0,0,0.05)] hover:border-black/[0.14] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 cursor-pointer overflow-hidden outline-none focus:outline-none"
         >
-          <span className="relative z-10">Browse all writing in the archive</span>
-          <ArrowRight className="relative z-10 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          {/* Top specular meniscus highlight */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-3 top-0.5 h-[40%] rounded-t-full bg-gradient-to-b from-white/95 via-white/40 to-transparent"
+          />
+
+          {/* Liquid refraction sheen sweep */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/70 to-transparent"
+          />
+
+          <span className="relative z-10 tracking-tight">Browse all writing in the archive</span>
+          <span className="relative z-10 w-5 h-5 rounded-full bg-black/[0.05] flex items-center justify-center group-hover:bg-[#171717] group-hover:text-white transition-colors duration-200">
+            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-200" />
+          </span>
         </InstantLink>
       </div>
     </section>

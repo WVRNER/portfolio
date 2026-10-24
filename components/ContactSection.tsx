@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Copy, Check, ArrowUpRight, Mail, ArrowUp } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
 import { scrollToTarget } from "@/components/SmoothScroll";
 
 /* Clean Brand Icons */
@@ -53,25 +52,7 @@ interface ContactSectionProps {
  */
 export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const prefersReduced = useReducedMotion();
   const email = "wvrner@outlook.com";
-
-  const headingRef = useRef<HTMLDivElement>(null);
-  const isHeadingInView = useInView(headingRef, {
-    once: true,
-    amount: 0.5,
-  });
-  const [hasStartedDrop, setHasStartedDrop] = useState(false);
-
-  useEffect(() => {
-    if (isHeadingInView) {
-      // Delay just a bit so the user arrives and sees "Let's Talk.." resting first
-      const timer = setTimeout(() => {
-        setHasStartedDrop(true);
-      }, 750);
-      return () => clearTimeout(timer);
-    }
-  }, [isHeadingInView]);
 
   const handleCopy = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -136,8 +117,8 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
       aria-label="Contact and Channels"
       className="relative py-20 sm:py-28 lg:py-36 px-5 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-black/[0.08] bg-white text-[#242424]"
     >
-      {/* Header: Pure "Let's Talk.." with lingering, dropping dot */}
-      <div ref={headingRef} className="overflow-visible pb-3 mb-6 relative">
+      {/* Header: Pure "Let's talk." */}
+      <div className="pb-3 mb-6 relative">
         <h2
           className="select-none text-[#01030E] inline-flex items-baseline relative"
           style={{
@@ -148,248 +129,94 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
             letterSpacing: "-0.055em",
           }}
         >
-          <span>Let&rsquo;s Talk</span>
-          {/* First dot: stays fixed */}
-          <span className="inline-block">.</span>
-          {/* Second dot: lingers, stretches like liquid, drops, and splashes onto floor */}
-          <motion.span
-            className="inline-block origin-top text-[#01030E] select-none"
-            initial={prefersReduced ? false : { y: 0, x: 0, opacity: 1, scale: 1, scaleY: 1 }}
-            animate={
-              prefersReduced
-                ? {}
-                : hasStartedDrop
-                ? {
-                    // 0.0s - 0.75s: Lingering & stretching downwards at the baseline (viscous hesitation)
-                    // 0.75s - 1.15s: Snaps free and drops down to the floor line
-                    // 1.15s - 1.25s: Splashes onto the floor and flattens/dissolves
-                    y: [0, 2, 8, 14, 16, 50, 84, 86],
-                    x: [0, 0, 1, 2, 2, 6, 10, 10],
-                    scaleX: [1, 0.92, 0.78, 0.65, 0.65, 0.8, 3.2, 0],
-                    scaleY: [1, 1.25, 1.75, 2.1, 2.1, 1.6, 0.25, 0],
-                    opacity: [1, 1, 1, 1, 1, 1, 0.85, 0],
-                  }
-                : { y: 0, x: 0, opacity: 1, scale: 1, scaleY: 1 }
-            }
-            transition={
-              prefersReduced
-                ? { duration: 0 }
-                : {
-                    duration: 1.25,
-                    times: [0, 0.28, 0.5, 0.68, 0.75, 0.95, 1.15, 1.25],
-                    ease: "easeInOut",
-                  }
-            }
-          >
-            .
-          </motion.span>
+          <span>Let&rsquo;s talk.</span>
         </h2>
       </div>
 
-      {/* Floor line & Splash Impact Zone */}
+      {/* Floor Divider Line */}
       <div className="relative w-full mb-5 sm:mb-7">
-        {/* The Floor line onto which the drop splashes */}
-        <motion.div
-          initial={prefersReduced ? false : { scaleX: 0, opacity: 0 }}
-          animate={
-            prefersReduced || hasStartedDrop
-              ? { scaleX: 1, opacity: 1 }
-              : { scaleX: 0, opacity: 0 }
-          }
-          transition={{
-            duration: 0.7,
-            delay: 1.18,
-            ease: [0.16, 1, 0.3, 1],
-          }}
-          style={{ transformOrigin: "12% 50%" }}
-          className="h-px w-full bg-gradient-to-r from-black/20 via-black/10 to-transparent"
-        />
-
-        {/* Splash impact ripple on the floor */}
-        {!prefersReduced && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.2 }}
-            animate={
-              hasStartedDrop
-                ? {
-                    opacity: [0, 0.75, 0.35, 0],
-                    scaleX: [0.2, 1.8, 3.2, 4.2],
-                    scaleY: [0.2, 0.6, 0.9, 1.1],
-                  }
-                : { opacity: 0 }
-            }
-            transition={{
-              duration: 0.8,
-              delay: 1.16,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            style={{ left: "clamp(160px, 26vw, 360px)" }}
-            className="pointer-events-none absolute -top-3 w-16 h-6 rounded-full bg-black/[0.08] border border-black/20 filter blur-[0.5px]"
-          />
-        )}
-
-        {/* Splash droplet beads popping off the floor */}
-        {!prefersReduced && (
-          <>
-            <motion.span
-              initial={{ opacity: 0, y: 0, x: 0 }}
-              animate={
-                hasStartedDrop
-                  ? {
-                      opacity: [0, 1, 0.8, 0],
-                      y: [0, -18, -10, 2],
-                      x: [0, -16, -24, -30],
-                      scale: [1, 0.9, 0.6, 0.2],
-                    }
-                  : { opacity: 0 }
-              }
-              transition={{
-                duration: 0.55,
-                delay: 1.18,
-                ease: [0.2, 0.8, 0.4, 1],
-              }}
-              style={{ left: "clamp(160px, 26vw, 360px)" }}
-              className="pointer-events-none absolute -top-1 w-2 h-2 rounded-full bg-[#01030E]"
-            />
-            <motion.span
-              initial={{ opacity: 0, y: 0, x: 0 }}
-              animate={
-                hasStartedDrop
-                  ? {
-                      opacity: [0, 1, 0.8, 0],
-                      y: [0, -22, -14, 4],
-                      x: [0, 14, 24, 32],
-                      scale: [1, 0.85, 0.5, 0.2],
-                    }
-                  : { opacity: 0 }
-              }
-              transition={{
-                duration: 0.58,
-                delay: 1.18,
-                ease: [0.2, 0.8, 0.4, 1],
-              }}
-              style={{ left: "clamp(160px, 26vw, 360px)" }}
-              className="pointer-events-none absolute -top-1 w-2 h-2 rounded-full bg-[#01030E]"
-            />
-          </>
-        )}
+        <div className="h-px w-full bg-gradient-to-r from-black/20 via-black/10 to-transparent" />
       </div>
 
-      {/* Container Tray Formed by the Splash */}
-      <motion.div
-        initial={prefersReduced ? false : { opacity: 0, scaleY: 0.94, y: 12 }}
-        animate={
-          prefersReduced || hasStartedDrop
-            ? { opacity: 1, scaleY: 1, y: 0 }
-            : { opacity: 0, scaleY: 0.94, y: 12 }
-        }
-        transition={{
-          duration: 0.85,
-          delay: 1.22,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        style={{ transformOrigin: "top center" }}
-        className="relative rounded-[2rem] sm:rounded-[2.75rem] bg-[#F7F7F9] border border-black/[0.07] p-4 sm:p-7 md:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.025)] overflow-hidden"
-      >
+      {/* Container Tray */}
+      <div className="relative rounded-[2rem] sm:rounded-[2.75rem] bg-[#F7F7F9] border border-black/[0.07] p-4 sm:p-7 md:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.025)] overflow-hidden">
         {/* Subtle top specular sheen along the container rim */}
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
 
         {/* Main Grid: Direct Line Card + Social Channels Bento */}
         <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
           
-          {/* Direct Email Card (Appears smoothly inside the container) */}
-          <motion.div
-            initial={prefersReduced ? false : { opacity: 0, scale: 0.96, y: 18, filter: "blur(8px)" }}
-            animate={
-              prefersReduced || hasStartedDrop
-                ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }
-                : { opacity: 0, scale: 0.96, y: 18, filter: "blur(8px)" }
-            }
-            transition={{ duration: 0.85, delay: 1.42, ease: [0.16, 1, 0.3, 1] }}
-            whileHover={prefersReduced ? {} : { y: -3, transition: { duration: 0.25, ease: "easeOut" } }}
-            className="lg:col-span-5 p-6 sm:p-8 md:p-9 rounded-3xl bg-white border border-black/[0.07] flex flex-col justify-between gap-6 sm:gap-8 relative overflow-hidden group hover:shadow-[0_16px_36px_rgba(0,0,0,0.05)] hover:border-black/15 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
-          >
-          {/* Subtle top specular sheen */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
+          {/* Direct Email Card */}
+          <div className="lg:col-span-5 p-6 sm:p-8 md:p-9 rounded-3xl bg-white border border-black/[0.07] flex flex-col justify-between gap-6 sm:gap-8 relative overflow-hidden group hover:shadow-[0_16px_36px_rgba(0,0,0,0.05)] hover:border-black/15 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+            {/* Subtle top specular sheen */}
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
 
-          {/* Interactive hover sweep sheen */}
-          <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
+            {/* Interactive hover sweep sheen */}
+            <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/40 to-transparent pointer-events-none" />
 
-          <div className="space-y-4 relative z-10">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white shadow-sm border border-black/[0.06] flex items-center justify-center text-[#171717] group-hover:scale-105 transition-transform duration-300">
-              <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
+            <div className="space-y-4 relative z-10">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-white shadow-sm border border-black/[0.06] flex items-center justify-center text-[#171717] group-hover:scale-105 transition-transform duration-300">
+                <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
+
+              <div className="space-y-1">
+                <h3 className="font-display text-[22px] sm:text-[26px] font-semibold text-[#171717] tracking-tight">
+                  Send a direct dispatch.
+                </h3>
+              </div>
+
+              <p className="text-[14px] sm:text-[14.5px] text-[#6E6E73] leading-relaxed max-w-[42ch]">
+                For architecture reviews, infrastructure delivery, or engineering inquiries.
+              </p>
             </div>
 
-            <div className="space-y-1">
-              <h3 className="font-display text-[22px] sm:text-[26px] font-semibold text-[#171717] tracking-tight">
-                Send a direct dispatch.
-              </h3>
-            </div>
-
-            <p className="text-[14px] sm:text-[14.5px] text-[#6E6E73] leading-relaxed max-w-[42ch]">
-              For architecture reviews, infrastructure delivery, or engineering inquiries.
-            </p>
-          </div>
-
-          <div className="space-y-3 pt-5 sm:pt-6 border-t border-black/[0.06] relative z-10">
-            <a
-              href={`mailto:${email}`}
-              className="text-[17px] sm:text-[22px] font-semibold text-[#171717] hover:text-[#555] transition-colors break-all block"
-            >
-              {email}
-            </a>
-
-            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 pt-1">
+            <div className="space-y-3 pt-5 sm:pt-6 border-t border-black/[0.06] relative z-10">
               <a
                 href={`mailto:${email}`}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#171717] text-white text-[13px] font-medium hover:bg-[#2e2e32] transition-all cursor-pointer shadow-sm active:scale-95 min-h-[42px]"
+                className="text-[17px] sm:text-[22px] font-semibold text-[#171717] hover:text-[#555] transition-colors break-all block"
               >
-                <span>Compose Mail</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
+                {email}
               </a>
 
-              <button
-                type="button"
-                onClick={() => handleCopy(email, "email")}
-                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-black/[0.04] text-[#242424] border border-black/[0.08] text-[13px] font-medium transition-all cursor-pointer active:scale-95 min-h-[42px]"
-              >
-                {copiedKey === "email" ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-[#242424]" />
-                    <span>Copied</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5 text-[#86868B]" />
-                    <span>Copy</span>
-                  </>
-                )}
-              </button>
+              <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-2.5 pt-1">
+                <a
+                  href={`mailto:${email}`}
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#171717] text-white text-[13px] font-medium hover:bg-[#2e2e32] transition-all cursor-pointer shadow-sm active:scale-95 min-h-[42px]"
+                >
+                  <span>Compose Mail</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+
+                <button
+                  type="button"
+                  onClick={() => handleCopy(email, "email")}
+                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-full bg-white hover:bg-black/[0.04] text-[#242424] border border-black/[0.08] text-[13px] font-medium transition-all cursor-pointer active:scale-95 min-h-[42px]"
+                >
+                  {copiedKey === "email" ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-[#242424]" />
+                      <span>Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-[#86868B]" />
+                      <span>Copy</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
           </div>
-        </motion.div>
 
-        {/* 4 Social Channels Grid (Cascading Tactile Snap) */}
+        {/* 4 Social Channels Grid */}
         <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
-          {contactChannels.map((channel, i) => {
+          {contactChannels.map((channel) => {
             const IconComponent = channel.IconComponent;
             const isCopied = copiedKey === channel.key;
 
             return (
-              <motion.div
+              <div
                 key={channel.key}
-                initial={prefersReduced ? false : { opacity: 0, scale: 0.95, y: 18, filter: "blur(8px)" }}
-                animate={
-                  prefersReduced || hasStartedDrop
-                    ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }
-                    : { opacity: 0, scale: 0.95, y: 18, filter: "blur(8px)" }
-                }
-                transition={{
-                  duration: 0.8,
-                  delay: 1.52 + i * 0.08,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                whileHover={prefersReduced ? {} : { y: -3, scale: 1.01, transition: { duration: 0.25, ease: "easeOut" } }}
                 className={`p-5 sm:p-7 rounded-3xl bg-white border border-black/[0.07] ${channel.color} hover:shadow-[0_16px_36px_rgba(0,0,0,0.05)] hover:border-black/20 transition-all duration-300 flex flex-col justify-between gap-5 sm:gap-6 group cursor-default relative overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.02)]`}
               >
                 {/* Micro specular sheen sweep on hover */}
@@ -452,13 +279,13 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
                     )}
                   </button>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
 
       </div>
-    </motion.div>
+    </div>
 
       {/* Clean Colophon Bottom Bar (Desktop & Mobile Optimized) */}
       <div className="pt-10 sm:pt-16 mt-10 sm:mt-16 border-t border-black/[0.07] flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-4 text-[12px] text-[#86868B] text-center sm:text-left">

@@ -184,7 +184,7 @@ export default function BlogIndexPage() {
                       transitionTitle={post.title}
                       className="group block w-full cursor-pointer outline-none focus:outline-none focus-visible:outline-none hover:outline-none"
                     >
-                      <div className="flex items-center justify-between gap-4 sm:gap-6 w-full">
+                      <div className="flex items-start justify-between gap-4 sm:gap-6 w-full">
                         
                         {/* Left Text Block */}
                         <div className="flex-1 min-w-0 space-y-2">
@@ -221,7 +221,7 @@ export default function BlogIndexPage() {
                         {/* Right Thumbnail Image with Blur-up and View Transition */}
                         {post.featureImage && (
                           <div
-                            className="w-[96px] h-[64px] sm:w-[160px] sm:h-[108px] md:w-[172px] md:h-[116px] rounded-[3px] overflow-hidden bg-neutral-100 dark:bg-[#262626] shrink-0 self-center"
+                            className="w-[96px] h-[64px] sm:w-[160px] sm:h-[108px] md:w-[172px] md:h-[116px] rounded-[3px] overflow-hidden bg-neutral-100 dark:bg-[#262626] shrink-0 self-start mt-0.5"
                             style={{ viewTransitionName: getPostTransitionName("cover", post.slug) }}
                           >
                             <BlurImage
