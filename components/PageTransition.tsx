@@ -51,7 +51,7 @@ export function PageTransitionProvider({ children }: { children: React.ReactNode
       }, 350);
       return () => clearTimeout(dissolveTimer);
     }
-  }, [pathname]);
+  }, [pathname, transitionState?.active]);
 
   const triggerTransition = useCallback(
     (title: string, subtitle: string, onExecuteOrHref: string | (() => void)) => {

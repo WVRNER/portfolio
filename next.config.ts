@@ -33,10 +33,7 @@ const nextConfig: NextConfig = {
     agentUpgrade: "security",
     optimizePackageImports: [
       "lucide-react",
-      "framer-motion",
       "motion",
-      "three",
-      "@phosphor-icons/react",
     ],
   },
   poweredByHeader: false,

@@ -135,7 +135,9 @@ function ImperceptibleHeroVideo({
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (hasSaveData || prefersReducedMotion) {
-      setSkipVideo(true);
+      requestAnimationFrame(() => {
+        setSkipVideo(true);
+      });
       return;
     }
 

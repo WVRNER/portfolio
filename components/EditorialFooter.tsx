@@ -18,7 +18,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
         await navigator.clipboard.writeText(email);
         setCopied(true);
         setTimeout(() => setCopied(false), 1800);
-      } catch (e) {}
+      } catch {}
     }
   };
 
@@ -315,7 +315,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
                 View CV
               </button>
             ) : (
-              <a className="ct-cv" href="/cv.pdf" target="_blank" rel="noopener">
+              <a className="ct-cv" href="/cv.pdf" target="_blank" rel="noopener noreferrer">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                   <path d="M4 1.5h5.5L13 5v9.5H4z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
                   <path d="M9 1.5V5h4M6.5 8.5h4M6.5 11h4" stroke="currentColor" strokeWidth="1.4" />
@@ -329,7 +329,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
             <span className="ct-eyebrow mono">Elsewhere</span>
             <ul className="ct-links">
               <li>
-                <a href="https://github.com/wvrner" target="_blank" rel="noopener">
+                <a href="https://github.com/wvrner" target="_blank" rel="noopener noreferrer">
                   <span className="ct-name">GitHub</span>
                   <span className="ct-handle mono">wvrner</span>
                   <span className="ct-arrow" aria-hidden="true">
@@ -338,7 +338,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
                 </a>
               </li>
               <li>
-                <a href="https://www.linkedin.com/in/wvrner" target="_blank" rel="noopener">
+                <a href="https://www.linkedin.com/in/wvrner" target="_blank" rel="noopener noreferrer">
                   <span className="ct-name">LinkedIn</span>
                   <span className="ct-handle mono">in/wvrner</span>
                   <span className="ct-arrow" aria-hidden="true">
@@ -347,7 +347,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
                 </a>
               </li>
               <li>
-                <a href="https://t.me/wvrner" target="_blank" rel="noopener">
+                <a href="https://t.me/wvrner" target="_blank" rel="noopener noreferrer">
                   <span className="ct-name">Telegram</span>
                   <span className="ct-handle mono">@wvrner</span>
                   <span className="ct-arrow" aria-hidden="true">
@@ -356,7 +356,7 @@ export function EditorialFooter({ onOpenCV }: EditorialFooterProps = {}) {
                 </a>
               </li>
               <li>
-                <a href="https://wa.me/wvrner" target="_blank" rel="noopener">
+                <a href="https://wa.me/wvrner" target="_blank" rel="noopener noreferrer">
                   <span className="ct-name">WhatsApp</span>
                   <span className="ct-handle mono">+ Direct</span>
                   <span className="ct-arrow" aria-hidden="true">

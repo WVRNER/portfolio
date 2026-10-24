@@ -32,5 +32,11 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   },
+  "resolutions": {
+    "zod": ">=4.6.6"
+  },
+  "overrides": {
+    "zod": ">=4.6.6"
+  },
   "packageManager": "pnpm@11.12.0"
 }

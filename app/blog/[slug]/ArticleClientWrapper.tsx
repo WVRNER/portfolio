@@ -24,7 +24,6 @@ import { getPostTransitionName } from "@/lib/viewTransitions";
 import { getImageMetadata } from "@/lib/imageMetadataHelper";
 import { getGitHubRepoCard } from "@/lib/githubDataHelper";
 import {
-  BLOG_POSTS,
   getPublishedPosts,
   formatDisplayDate,
   getPrimaryToolTag,
