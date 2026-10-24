@@ -136,10 +136,10 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
       aria-label="Contact and Channels"
       className="relative py-20 sm:py-28 lg:py-36 px-5 sm:px-12 md:px-16 lg:px-24 max-w-[1400px] mx-auto border-t border-black/[0.08] bg-white text-[#242424]"
     >
-      {/* Header: Pure "Let's Talk.." with dropping second dot */}
-      <div ref={headingRef} className="overflow-visible pb-4 sm:pb-8 mb-8 sm:mb-14 relative">
+      {/* Header: Pure "Let's Talk.." with lingering, dropping dot */}
+      <div ref={headingRef} className="overflow-visible pb-3 mb-6 relative">
         <h2
-          className="select-none text-[#01030E] inline-flex items-baseline"
+          className="select-none text-[#01030E] inline-flex items-baseline relative"
           style={{
             fontFamily: 'var(--font-inter-tight), "Inter Tight", -apple-system, BlinkMacSystemFont, sans-serif',
             fontWeight: 500,
@@ -151,30 +151,33 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
           <span>Let&rsquo;s Talk</span>
           {/* First dot: stays fixed */}
           <span className="inline-block">.</span>
-          {/* Second dot: gracefully drops and kinda forms the socials & email below */}
+          {/* Second dot: lingers, stretches like liquid, drops, and splashes onto floor */}
           <motion.span
-            className="inline-block origin-center text-[#01030E]"
-            initial={prefersReduced ? false : { y: 0, x: 0, opacity: 1, scale: 1 }}
+            className="inline-block origin-top text-[#01030E] select-none"
+            initial={prefersReduced ? false : { y: 0, x: 0, opacity: 1, scale: 1, scaleY: 1 }}
             animate={
               prefersReduced
                 ? {}
                 : hasStartedDrop
                 ? {
-                    y: [0, 8, 42, 88, 120],
-                    x: [0, 2, 8, 18, 26],
-                    scale: [1, 1.05, 1.3, 1.6, 2.4],
-                    scaleY: [1, 1.25, 1.35, 1.1, 0.6],
-                    opacity: [1, 1, 0.95, 0.7, 0],
+                    // 0.0s - 0.75s: Lingering & stretching downwards at the baseline (viscous hesitation)
+                    // 0.75s - 1.15s: Snaps free and drops down to the floor line
+                    // 1.15s - 1.25s: Splashes onto the floor and flattens/dissolves
+                    y: [0, 2, 8, 14, 16, 50, 84, 86],
+                    x: [0, 0, 1, 2, 2, 6, 10, 10],
+                    scaleX: [1, 0.92, 0.78, 0.65, 0.65, 0.8, 3.2, 0],
+                    scaleY: [1, 1.25, 1.75, 2.1, 2.1, 1.6, 0.25, 0],
+                    opacity: [1, 1, 1, 1, 1, 1, 0.85, 0],
                   }
-                : { y: 0, x: 0, opacity: 1, scale: 1 }
+                : { y: 0, x: 0, opacity: 1, scale: 1, scaleY: 1 }
             }
             transition={
               prefersReduced
                 ? { duration: 0 }
                 : {
-                    duration: 1.15,
-                    times: [0, 0.2, 0.5, 0.8, 1],
-                    ease: [0.22, 1, 0.36, 1],
+                    duration: 1.25,
+                    times: [0, 0.28, 0.5, 0.68, 0.75, 0.95, 1.15, 1.25],
+                    ease: "easeInOut",
                   }
             }
           >
@@ -183,42 +186,129 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
         </h2>
       </div>
 
-      {/* Main Grid: Direct Line Card + Social Channels Bento (Formed by the dropping dot) */}
-      <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 items-stretch">
-        
-        {/* Soothing organic liquid ripple expanding when the droplet lands */}
+      {/* Floor line & Splash Impact Zone */}
+      <div className="relative w-full mb-5 sm:mb-7">
+        {/* The Floor line onto which the drop splashes */}
+        <motion.div
+          initial={prefersReduced ? false : { scaleX: 0, opacity: 0 }}
+          animate={
+            prefersReduced || hasStartedDrop
+              ? { scaleX: 1, opacity: 1 }
+              : { scaleX: 0, opacity: 0 }
+          }
+          transition={{
+            duration: 0.7,
+            delay: 1.18,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          style={{ transformOrigin: "12% 50%" }}
+          className="h-px w-full bg-gradient-to-r from-black/20 via-black/10 to-transparent"
+        />
+
+        {/* Splash impact ripple on the floor */}
         {!prefersReduced && (
           <motion.div
             initial={{ opacity: 0, scale: 0.2 }}
             animate={
               hasStartedDrop
                 ? {
-                    opacity: [0, 0.4, 0.18, 0],
-                    scale: [0.2, 1.0, 1.9, 2.6],
+                    opacity: [0, 0.75, 0.35, 0],
+                    scaleX: [0.2, 1.8, 3.2, 4.2],
+                    scaleY: [0.2, 0.6, 0.9, 1.1],
                   }
-                : { opacity: 0, scale: 0.2 }
+                : { opacity: 0 }
             }
             transition={{
-              duration: 1.3,
-              delay: 0.72,
+              duration: 0.8,
+              delay: 1.16,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="pointer-events-none absolute -top-8 left-8 sm:left-16 w-36 h-36 rounded-full border border-black/15 bg-black/[0.015] filter blur-[1px] z-0"
+            style={{ left: "clamp(160px, 26vw, 360px)" }}
+            className="pointer-events-none absolute -top-3 w-16 h-6 rounded-full bg-black/[0.08] border border-black/20 filter blur-[0.5px]"
           />
         )}
-        
-        {/* Direct Email Card (Smooth, relaxing materialization from the droplet) */}
-        <motion.div
-          initial={prefersReduced ? false : { opacity: 0, scale: 0.95, y: 24, filter: "blur(12px)" }}
-          animate={
-            prefersReduced || hasStartedDrop
-              ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }
-              : { opacity: 0, scale: 0.95, y: 24, filter: "blur(12px)" }
-          }
-          transition={{ duration: 0.95, delay: 0.68, ease: [0.16, 1, 0.3, 1] }}
-          whileHover={prefersReduced ? {} : { y: -4, transition: { duration: 0.3, ease: "easeOut" } }}
-          className="lg:col-span-5 p-6 sm:p-9 md:p-10 rounded-3xl bg-[#F5F5F7] border border-black/[0.07] flex flex-col justify-between gap-6 sm:gap-8 relative overflow-hidden group hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:border-black/15 transition-colors duration-300 z-10"
-        >
+
+        {/* Splash droplet beads popping off the floor */}
+        {!prefersReduced && (
+          <>
+            <motion.span
+              initial={{ opacity: 0, y: 0, x: 0 }}
+              animate={
+                hasStartedDrop
+                  ? {
+                      opacity: [0, 1, 0.8, 0],
+                      y: [0, -18, -10, 2],
+                      x: [0, -16, -24, -30],
+                      scale: [1, 0.9, 0.6, 0.2],
+                    }
+                  : { opacity: 0 }
+              }
+              transition={{
+                duration: 0.55,
+                delay: 1.18,
+                ease: [0.2, 0.8, 0.4, 1],
+              }}
+              style={{ left: "clamp(160px, 26vw, 360px)" }}
+              className="pointer-events-none absolute -top-1 w-2 h-2 rounded-full bg-[#01030E]"
+            />
+            <motion.span
+              initial={{ opacity: 0, y: 0, x: 0 }}
+              animate={
+                hasStartedDrop
+                  ? {
+                      opacity: [0, 1, 0.8, 0],
+                      y: [0, -22, -14, 4],
+                      x: [0, 14, 24, 32],
+                      scale: [1, 0.85, 0.5, 0.2],
+                    }
+                  : { opacity: 0 }
+              }
+              transition={{
+                duration: 0.58,
+                delay: 1.18,
+                ease: [0.2, 0.8, 0.4, 1],
+              }}
+              style={{ left: "clamp(160px, 26vw, 360px)" }}
+              className="pointer-events-none absolute -top-1 w-2 h-2 rounded-full bg-[#01030E]"
+            />
+          </>
+        )}
+      </div>
+
+      {/* Container Tray Formed by the Splash */}
+      <motion.div
+        initial={prefersReduced ? false : { opacity: 0, scaleY: 0.94, y: 12 }}
+        animate={
+          prefersReduced || hasStartedDrop
+            ? { opacity: 1, scaleY: 1, y: 0 }
+            : { opacity: 0, scaleY: 0.94, y: 12 }
+        }
+        transition={{
+          duration: 0.85,
+          delay: 1.22,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        style={{ transformOrigin: "top center" }}
+        className="relative rounded-[2rem] sm:rounded-[2.75rem] bg-[#F7F7F9] border border-black/[0.07] p-4 sm:p-7 md:p-8 shadow-[0_8px_32px_rgba(0,0,0,0.025)] overflow-hidden"
+      >
+        {/* Subtle top specular sheen along the container rim */}
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
+
+        {/* Main Grid: Direct Line Card + Social Channels Bento */}
+        <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 items-stretch">
+          
+          {/* Direct Email Card (Appears smoothly inside the container) */}
+          <motion.div
+            initial={prefersReduced ? false : { opacity: 0, scale: 0.96, y: 18, filter: "blur(8px)" }}
+            animate={
+              prefersReduced || hasStartedDrop
+                ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }
+                : { opacity: 0, scale: 0.96, y: 18, filter: "blur(8px)" }
+            }
+            transition={{ duration: 0.85, delay: 1.42, ease: [0.16, 1, 0.3, 1] }}
+            whileHover={prefersReduced ? {} : { y: -3, transition: { duration: 0.25, ease: "easeOut" } }}
+            className="lg:col-span-5 p-6 sm:p-8 md:p-9 rounded-3xl bg-white border border-black/[0.07] flex flex-col justify-between gap-6 sm:gap-8 relative overflow-hidden group hover:shadow-[0_16px_36px_rgba(0,0,0,0.05)] hover:border-black/15 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.02)]"
+          >
           {/* Subtle top specular sheen */}
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/80 to-transparent" />
 
@@ -288,16 +378,19 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
             return (
               <motion.div
                 key={channel.key}
-                initial={prefersReduced ? false : { opacity: 0, scale: 0.94, y: 22, filter: "blur(10px)" }}
-                whileInView={prefersReduced ? {} : { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}
-                viewport={{ once: true, margin: "-40px" }}
+                initial={prefersReduced ? false : { opacity: 0, scale: 0.95, y: 18, filter: "blur(8px)" }}
+                animate={
+                  prefersReduced || hasStartedDrop
+                    ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }
+                    : { opacity: 0, scale: 0.95, y: 18, filter: "blur(8px)" }
+                }
                 transition={{
-                  duration: 0.9,
-                  delay: 0.76 + i * 0.08,
+                  duration: 0.8,
+                  delay: 1.52 + i * 0.08,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                whileHover={prefersReduced ? {} : { y: -4, scale: 1.01, transition: { duration: 0.25, ease: "easeOut" } }}
-                className={`p-5 sm:p-7 rounded-3xl bg-white border border-black/[0.07] ${channel.color} hover:shadow-[0_20px_40px_rgba(0,0,0,0.05)] hover:border-black/20 transition-colors duration-300 flex flex-col justify-between gap-5 sm:gap-6 group cursor-default relative overflow-hidden z-10`}
+                whileHover={prefersReduced ? {} : { y: -3, scale: 1.01, transition: { duration: 0.25, ease: "easeOut" } }}
+                className={`p-5 sm:p-7 rounded-3xl bg-white border border-black/[0.07] ${channel.color} hover:shadow-[0_16px_36px_rgba(0,0,0,0.05)] hover:border-black/20 transition-all duration-300 flex flex-col justify-between gap-5 sm:gap-6 group cursor-default relative overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.02)]`}
               >
                 {/* Micro specular sheen sweep on hover */}
                 <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-900 ease-out bg-gradient-to-r from-transparent via-black/[0.02] to-transparent pointer-events-none" />
@@ -365,6 +458,7 @@ export function ContactSection({ onOpenCV }: ContactSectionProps = {}) {
         </div>
 
       </div>
+    </motion.div>
 
       {/* Clean Colophon Bottom Bar (Desktop & Mobile Optimized) */}
       <div className="pt-10 sm:pt-16 mt-10 sm:mt-16 border-t border-black/[0.07] flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-4 text-[12px] text-[#86868B] text-center sm:text-left">
